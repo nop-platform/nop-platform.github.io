@@ -5,9 +5,13 @@ node_modules/
 
 /src/source/_data/knosys/
 /src/source/knosys/
-/src/source/_posts/
-/src/themes/*/layout/_ksio/
-/src/themes/*/source/*/ksio/
+/src/source/_posts/*
+!/src/source/_posts/hello-world.md
+/src/themes/*/layout/*
+!/src/themes/*/layout/_nop/
+/src/themes/*/scripts/
+/src/themes/*/source/
+!/src/themes/*/_config.yml
 /src/public/
 /src/.deploy*/
 /src/_multiconfig.yml
