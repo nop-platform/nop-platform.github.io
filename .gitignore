@@ -1,0 +1,16 @@
+.DS_Store
+
+.vscode/
+node_modules/
+
+/src/source/_data/knosys/
+/src/source/knosys/
+/src/source/_posts/
+/src/themes/*/layout/_ksio/
+/src/themes/*/source/*/ksio/
+/src/public/
+/src/.deploy*/
+/src/_multiconfig.yml
+/src/Thumbs.db
+/src/db.json
+/src/package.json

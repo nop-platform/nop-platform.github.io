@@ -1,0 +1,10 @@
+{
+  "$path": "../../digital-truth/knosys/knosys",
+  "command": "./bin",
+  "site": {
+    "default": {
+      "source": "./src",
+      "generator": "hexo"
+    }
+  }
+}
