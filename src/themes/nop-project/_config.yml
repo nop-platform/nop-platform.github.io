@@ -1,11 +1,8 @@
 meta:
-  url: /
+  url: https://nop-platform.gitee.io
 brand:
-  text: Project Docs
+  text: Nop
   color: "#0871ab"
-  parent:
-    text: Nop
-    url: https://nop-platform.gitee.io
 copyright:
   owner:
     text: Nop 社区

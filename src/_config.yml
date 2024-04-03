@@ -120,6 +120,8 @@ ksio:
             - javascripts/ksio/vendors/share.min
             - javascripts/ksio/components/page
             - javascripts/ksio/components/toc
+      _nop/layouts/doc:
+        extends: ksio/doc
     page:
       - scope:
           type: posts
@@ -135,7 +137,7 @@ ksio:
       - scope:
           type: knosys
         values:
-          layout: ksio/doc
+          layout: _nop/layouts/doc
           ksio_asset_css:
             - stylesheets/pages/post
             - stylesheets/pages/doc
@@ -145,7 +147,6 @@ ksio:
             - javascripts/ksio/initializers/time
             - javascripts/ksio/vendors/jquery.lazyload
             - javascripts/ksio/initializers/lazyload
-          repo: cookbook
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
