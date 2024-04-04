@@ -1,9 +1,0 @@
-{
-  "command": "./bin",
-  "site": {
-    "default": {
-      "source": "./src",
-      "generator": "hexo"
-    }
-  }
-}
