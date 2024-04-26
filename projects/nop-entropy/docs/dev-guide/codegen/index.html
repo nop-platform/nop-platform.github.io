@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Maven集成代码生成器 - Nop</title>
+
+
+  <meta property="og:title" content="Maven集成代码生成器">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a class="is-selected" href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Maven集成代码生成器</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>Nop平台提供了与Maven相集成的代码生成能力，但是并没有做成maven插件，而是利用<code>exec-maven-plugin</code>插件来执行<code>CodeGenTask</code>类的<code>main</code>函数来实现。</p>
+<p>只需要在pom文件中增加以下配置，在执行<code>maven package</code>的时候，就会自动执行工程的precompile和postcompile目录下的xgen代码，其中precompile在compile阶段之前执行，执行环境可以访问所有依赖库，但是不能访问当前工程的类目录，而postcompile在compile阶段之后执行，可以访问已编译的类和资源文件。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">pom</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nop-entropy<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.entropy-cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>exec-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pom</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果不使用pom的parent继承机制，则需要为<code>exec-maven-plugin</code>插件提供更多的参数配置，具体可以参见<a href="../../../pom.xml">nop-entropy&#x2F;pom.xml</a>中的配置</p>
+<blockquote>
+<p>例如<code>nop-auth-service</code>模块中precompile阶段根据<code>nop-auth-dao</code>模块中的orm模型生成meta模型，而postcompile阶段根据当前工程中的meta模型生成i18n配置文件。</p>
+</blockquote>
+<h2 id="在Maven之外调用代码生成器"><a href="#在Maven之外调用代码生成器" class="headerlink" title="在Maven之外调用代码生成器"></a>在Maven之外调用代码生成器</h2><p><code>CodeGenTask</code>是一个普通的java类，可以在Maven外直接调用。例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NopOrmCodeGen</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        AppConfig.getConfigProvider().updateConfigValue(CoreConfigs.CFG_CORE_MAX_INITIALIZE_LEVEL,<br>                CoreConstants.INITIALIZER_PRIORITY_ANALYZE);<br>        <br>        CoreInitialization.initialize();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">File</span> <span class="hljs-variable">projectDir</span> <span class="hljs-operator">=</span> MavenDirHelper.projectDir(NopOrmCodeGen.class);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">targetRootPath</span> <span class="hljs-operator">=</span> FileHelper.getFileUrl(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(projectDir, <span class="hljs-string">&quot;src/main/java&quot;</span>));<br>            <span class="hljs-type">XCodeGenerator</span> <span class="hljs-variable">generator</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">XCodeGenerator</span>(<span class="hljs-string">&quot;/nop/templates/orm-entity&quot;</span>, targetRootPath);<br>            <span class="hljs-type">IResource</span> <span class="hljs-variable">resource</span> <span class="hljs-operator">=</span> VirtualFileSystem.instance().getResource(<span class="hljs-string">&quot;/nop/test/orm/app.orm.xml&quot;</span>);<br>            <span class="hljs-type">OrmModel</span> <span class="hljs-variable">ormModel</span> <span class="hljs-operator">=</span> (OrmModel) DslModelHelper.loadDslModel(resource);<br>            generator.execute(<span class="hljs-string">&quot;&quot;</span>, Collections.singletonMap(<span class="hljs-string">&quot;ormModel&quot;</span>, ormModel), XLang.newEvalScope());<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            CoreInitialization.destroy();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Nop平台提供了XLang语言的Idea调试插件，可以在xgen文件中增加断点进行调试。参见<a href="../../user-guide/idea/idea-plugin/">idea-plugin.md</a></p>
+<p>根据Excel数据模型生成的代码工程中， <code>xxx-codegen</code>模块以及<code>xxx-web</code>模块中都包含了一个<code>CodeGen.java</code>类，例如<code>NopAuthCodeGen</code>和<code>NopAuthWebCodeGen</code>，<br>使用它们可以在IDEA中直接执行代码生成逻辑，而不用通过Maven工具来执行。Maven工具执行时总是先执行Java编译过程，影响性能。</p>
+<h2 id="Analyze模式"><a href="#Analyze模式" class="headerlink" title="Analyze模式"></a>Analyze模式</h2><p>代码生成的时候一般不需要启动IoC容器，因此可以如下配置控制Nop平台的初始化级别。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">AppConfig.getConfigProvider().updateConfigValue(CoreConfigs.CFG_CORE_MAX_INITIALIZE_LEVEL,<br>              CoreConstants.INITIALIZER_PRIORITY_ANALYZE);<br></code></pre></td></tr></table></figure>
+
+<p>设置最大初始化级别这个配置变量为ANALYZE之后，再调用CoreInitialization就不会调用IoC容器的start方法。</p>
+<p>analyze是Nop平台提供的最强的静态分析模式。在这个模式下，Nop平台会解析所有配置文件，但是并不会创建任何的bean，不会真的进入运行状态。</p>
+<h3 id="通过nop-cli命令行工具执行代码生成"><a href="#通过nop-cli命令行工具执行代码生成" class="headerlink" title="通过nop-cli命令行工具执行代码生成"></a>通过nop-cli命令行工具执行代码生成</h3><p><code>nop-cli</code>工具的<code>gen</code>指令封装了<code>CodeGenTask</code>工具类的功能，将它包装为一个命令行调用。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">nop-cli gen model/app-mall.orm.xlsx -t=/nop/templates/orm<br></code></pre></td></tr></table></figure>
+
+<p>上面的例子表示读取<code>app-mall.orm.xlsx</code>模型，应用虚拟文件系统中的<code>/nop/templates/orm</code>目录下的模板文件，生成代码到当前工程目录下。</p>
+<h2 id="在Nop平台之外增加代码生成模板"><a href="#在Nop平台之外增加代码生成模板" class="headerlink" title="在Nop平台之外增加代码生成模板"></a>在Nop平台之外增加代码生成模板</h2><ol>
+<li>在自己的工程（例如<code>myapp-templates</code>）中增加模板目录，必须要放到<code>src/resources/_vfs</code>目录下，例如<code>src/resources/_vfs/xxx/yyy</code>，然后在其中增加xgen文件。</li>
+<li>代码生成器执行时引入<code>myapp-templates.jar</code>的依赖，这样虚拟文件系统初始化时会自动扫描所有jar包中的<code>_vfs</code>目录，并把它们合成为一个统一的虚拟文件系统。<br>此时就可以在代码生成时指定<code>-t=/xxx/yyy</code>来生成代码。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -Xbootclasspath/a:myapp-templates.jar -jar nop-cli-2.0.0-BETA.1.jar  gen model/demo.orm.xlsx -t=/xxx/yyy<br></code></pre></td></tr></table></figure>
+
+<p>如果是使用maven集成的代码生成工具，可以在test scope中引入自己新建的模板工程</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">pom</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>me.app<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>myapp-template<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>exec-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pom</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="数据驱动的代码生成器"><a href="#数据驱动的代码生成器" class="headerlink" title="数据驱动的代码生成器"></a>数据驱动的代码生成器</h2><p><code>CodeGenTask</code>实际调用的是<code>nop-codegen</code>模块中的数据驱动的代码生成器<code>XCodeGenerator</code>。所谓的数据驱动，指的是<strong>生成过程的所有逻辑控制由输入的模板文件来指定</strong>，即由外部提供的模板数据来驱动代码生成的过程。</p>
+<h3 id="一-1-2-通过模板路径编码判断和循环"><a href="#一-1-2-通过模板路径编码判断和循环" class="headerlink" title="一. 1.2 通过模板路径编码判断和循环"></a>一. 1.2 通过模板路径编码判断和循环</h3><p><code>XCodeGenerator</code>的做法与传统的代码生成器不同，它<strong>将模板路径看作是一种微格式的DSL，把判断和循环逻辑编码在路径格式中</strong>，从而由模板自身的组织结构来控制代码生成过程。具体规则如下：</p>
+<ol>
+<li>所有以xgen为后缀的文件作为模板文件，而没有xgen后缀的文件为静态文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">xxx.java.xgen --&gt; xxx.java  生成到去除xgen后缀的文件中<br>xxx.xrun      --&gt; ignore    如果是xrun后缀，则直接作为xpl模板代码运行<br>xxx.java      --&gt; xxx.java  没有xgen后缀的直接拷贝<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>所有以<code>@</code>为前缀的文件为内部使用，不作为模板解析，也不拷贝到目标目录。其中<code>@init.xrun</code>文件为初始化文件，当运行该目录下的模板之前需要先执行<code>@init.xrun</code>完成初始化。例如在<code>@init.xrun</code>中可以定义哪些变量是循环变量，同时规定这些循环变量之间的关系</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">gen:DefineLoop</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/codegen/xlib/gen.xlib&quot;</span> <span class="hljs-attr">xpl:slotScope</span>=<span class="hljs-string">&quot;builder&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>builder.defineGlobalVar(&quot;ormModel&quot;,ormModel);<br>builder.defineLoopVar(&quot;entityModel&quot;,&quot;ormModel&quot;, model =&gt; model.entityModelsInTopoOrder);<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">gen:DefineLoop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>目录和文件名中通过<code>&#123;a.b.c&#125;</code>形式的变量表达式来指定循环变量，从而以一种自然的方式表达多重嵌套循环，例如</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">/nop/base/generator/test/&#123;globalVar&#125;/&#123;var1&#125;/sub/&#123;var2.<span class="hljs-property">packagePath</span>&#125;/&#123;var3&#125;.<span class="hljs-property">java</span>.<span class="hljs-property">xgen</span><br><br><span class="hljs-comment">// 相当于三重循环</span><br><span class="hljs-keyword">if</span>(globalVar)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> var1 <span class="hljs-keyword">of</span> ...)&#123;<br>     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> var2 <span class="hljs-keyword">of</span> ...)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> var3 <span class="hljs-keyword">of</span> ...)&#123;<br>            <span class="hljs-keyword">if</span>(var1 &amp;&amp; var2 &amp;&amp; var2.<span class="hljs-property">packagePath</span> &amp;&amp; var3)&#123;<br>                <span class="hljs-keyword">let</span> path = <span class="hljs-string">&#x27;/nop/base/generator/test/&#x27;</span><br>                +globalVar+<span class="hljs-string">&#x27;/&#x27;</span>+var1+<span class="hljs-string">&#x27;/sub/&#x27;</span>+var2.<span class="hljs-property">packagePath</span><br>                +<span class="hljs-string">&#x27;/&#x27;</span>+var3+<span class="hljs-string">&#x27;.java&#x27;</span>;<br>                ...<br>            &#125;<br>        &#125;<br>     &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>&#123;var2.packagePath&#125;</code>表示按照循环变量<code>var2</code>进行循环，每次循环时取<code>var2.packagePath</code>属性</p>
+</li>
+<li><p>嵌套循环引用父循环变量的值为固定值。例如对于<code>&#123;var1&#125;/&#123;var2&#125;/&#123;var1&#125;_&#123;var2&#125;.java.xgen</code>, 在<code>&#123;var2&#125;</code>的子目录中再引用<code>var1</code>和<code>var2</code>时，它们都是固定值。</p>
+</li>
+</ul>
+<ol start="4">
+<li>目录和文件名中通过<code>&#123;a.b.c&#125;</code>形式的变量表达式来指定开关变量。当变量值返回<code>false</code>或者<code>null</code>的时候表示跳过该目录或者文件，而返回<code>true</code>的时候则自动忽略该内容。例如</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">控制是否生成某个目录下的文件<br>/src/&#123;package.name&#125;/&#123;webEnabled&#125;/&#123;model.name&#125;Controller.java.xgen<br>                                /&#123;model.name&#125;Service.java.xgen<br><br>也可以控制单个文件是否生成<br>/src/&#123;package.name&#125;/&#123;webEnabled&#125;&#123;model.name&#125;Controller.java.xgen<br></code></pre></td></tr></table></figure>
+
+<h3 id="表达式特殊约定"><a href="#表达式特殊约定" class="headerlink" title="表达式特殊约定"></a>表达式特殊约定</h3><ol>
+<li><p><code>&#123;!!entity.field&#125;</code> 这样的表达式中!表示取反，<code>!!</code>表示连续取反，因此对于空值它会返回false。<br>表达式如果返回false，则会跳过此次处理，但是对于空值，则该表达式的值将会被忽略。因此空值与false并不等价。</p>
+</li>
+<li><p><code>&#123;data.@mapper&#125;</code> 属性表达式存在一种特殊的约定。对于HashSet或者LinkedHashSet类型，<code>@mapper</code>属性会判断集合中是否存在该文本值。<br>相当于 <code>((Set)data).contains(&#39;mapper&#39;)</code></p>
+</li>
+</ol>
+<h2 id="二-差量化的代码生成器"><a href="#二-差量化的代码生成器" class="headerlink" title="二. 差量化的代码生成器"></a>二. 差量化的代码生成器</h2><p>如果我们不把代码生成器看作是某种一次性的、临时使用的外围工具，而是把它作为元编程的一个有机组成部分，则代码生成器必然是支持增量生成的。所谓增量生成，是指代码生成器允许反复执行，且同时允许手工修改输出产物，自动生成和手工修改的部分都可以看作是对初次生成结果的增量化修改，并且它们会自动合并在一起。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Result = FirstGeneration + AutoGenDelta + ManualDelta<br></code></pre></td></tr></table></figure>
+
+<p>可逆计算理论明确提出了可逆的差量合并这一概念，指出全量是差量的一种特例，为一系列差量相关的程序实践提供了统一的理论解释，并指明了未来的发展方向。</p>
+<blockquote>
+<p><code>全量= 单位元 + 差量</code>，例如<code>1 = 0 + 1</code>，<code>1</code>既是<code>0+1</code>合并得到的全量结果，又是<code>0</code>和<code>1</code>之间的差量</p>
+</blockquote>
+<p>依据可逆计算理论的思想，<code>XCodeGenerator</code>将手工修改部分看作是对自动生成部分的定制化差量，综合利用各种技术手段来实现它们之间的差量合并。</p>
+<h3 id="2-1-利用面向对象语言的类继承机制"><a href="#2-1-利用面向对象语言的类继承机制" class="headerlink" title="2.1. 利用面向对象语言的类继承机制"></a>2.1. 利用面向对象语言的类继承机制</h3><p>对于常见的面向对象语言，我们可以利用类继承机制来实现手工修改代码与自动生成代码的隔离。<code>XCodeGenerator</code>规定了如下覆盖规则：</p>
+<ol>
+<li>以<code>_</code>为前缀的文件总是被覆盖</li>
+<li><code>_gen</code>目录下的文件总是被覆盖</li>
+<li>如果文件的前250个字符中包含了<code>__XGEN_FORCE_OVERRIDE__</code>这个字符串，则该文件自动被覆盖</li>
+</ol>
+<p>实际使用的一般是所谓的<strong>三明治架构</strong>: 定制类继承自动生成的类，而自动生成的类继承平台所提供的某种基础类，这种结构下自动生成的代码可以从平台基类中获取辅助函数和通用变量环境，而定制类可以使用自动生成的变量与函数，并在必要的时候定制自动生成的函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">CustomClass extends _AutoGenClass extends BaseClass<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SqlSubqueryTableSource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">_SqlSubqueryTableSource</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isGeneratedAlias</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> alias != <span class="hljs-literal">null</span> &amp;&amp; alias.isGenerated();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> ISqlTableMeta <span class="hljs-title function_">getResolvedTableMeta</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> getQuery().getResolvedTableMeta();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">normalize</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">_SqlSubqueryTableSource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">SqlTableSource</span>&#123;...&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SqlTableSource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">_SqlTableSource</span> &#123;...&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">_SqlTableSource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">EqlASTNode</span> &#123;...&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-针对通用Tree结构的x-extends算子"><a href="#2-2-针对通用Tree结构的x-extends算子" class="headerlink" title="2.2. 针对通用Tree结构的x:extends算子"></a>2.2. 针对通用Tree结构的x:extends算子</h3><p>对于一般性的XML和JSON格式，因为它们都对应于通用的Tree结构，可以使用可逆计算理论中所定义的通用的<code>x:extends</code>算子来实现差量化合并。比如百度AMIS框架是一个json格式的前台低代码框架，对它进行差量化改造，可以采用如下形式</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;x:extends&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;_page_crud.json5&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;x:id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;operation&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;buttons&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;x:id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;row-update-button&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;visibleOn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;chgSts == &#x27;1&#x27;&quot;</span><br>          <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;x:id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;row-delete-button&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;visibleOn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;chgSts == &#x27;1&#x27;&quot;</span><br>          <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">]</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的示例演示了如何为自动生成的标准增删改查列表中的行按钮增加显示状态控制。</p>
+<h3 id="2-3-通用的Delta定制"><a href="#2-3-通用的Delta定制" class="headerlink" title="2.3. 通用的Delta定制"></a>2.3. 通用的Delta定制</h3><p>整个Nop平台都是基于可逆计算理论来实现的，因此它在各个层面都支持差量定制。特别是<code>XCodeGenerator</code>本身可以通过Nop平台内置的delta customization机制来实现定制。</p>
+<ol>
+<li><p>所有的模板文件都支持delta定制，即如果存在<code>/_delta/xxx/yyy.xgen</code>文件，则它将自动取代内置的<code>/xxx/yyy.xgen</code>文件</p>
+</li>
+<li><p>模板文件使用xpl模板语言来实现，因此可以通过xpl标签库来实现函数级别的定制。即通过在<code>/_delta</code>目录下增加定制标签库，可以修改系统中被使用的标签定义。</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">lib</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 通过x:extends表示继承此前的标签库实现，在本文件中可以</span><br><span class="hljs-comment">    对继承的标签定义进行增加/修改/删除操作 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tags</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">CustomTag</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>                这里的实现将取代标签库缺省的实现。所有对CustomTag标签的调用都会使用这里的实现<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">CustomTag</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tags</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="1-precompile和postcompile有什么区别"><a href="#1-precompile和postcompile有什么区别" class="headerlink" title="1. precompile和postcompile有什么区别"></a>1. precompile和postcompile有什么区别</h3><ul>
+<li>precompile是在编译前执行，不能访问当前工程中的类和资源文件。</li>
+<li>precompile2是在编译前执行，但是可以访问当前工程中的资源文件。</li>
+<li>postcompile是在编译后执行，会检查IoC容器中bean的配置，并可以访问当前工程中的类和资源文件。</li>
+</ul>
+<h3 id="2-如何定制已有的模板，比如说ORM生成时只生成某些工程"><a href="#2-如何定制已有的模板，比如说ORM生成时只生成某些工程" class="headerlink" title="2. 如何定制已有的模板，比如说ORM生成时只生成某些工程"></a>2. 如何定制已有的模板，比如说ORM生成时只生成某些工程</h3><ul>
+<li>增加一个模板目录</li>
+<li>在其中增加一个<code>a-impl.xrun</code>文件。<code>xrun</code>表示只执行代码不生成文件。<code>a-impl</code>的名称可以随意取，可以通过文件名控制它的执行顺序，所有模板文件按照文本顺序排序。</li>
+<li>在xrun文件中通过<code>gen:Render</code>标签来引用已有的模板</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:unit</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">gen:Render</span> <span class="hljs-attr">template</span>=<span class="hljs-string">&quot;/nop/templates/orm/&#123;appName&#125;-dao&quot;</span> <span class="hljs-attr">targetDir</span>=<span class="hljs-string">&quot;$&#123;targetResource.path.$filePath()&#125;&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/codegen/xlib/gen.xlib&quot;</span> <span class="hljs-attr">inheritCodeGenLoop</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:unit</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/codegen.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

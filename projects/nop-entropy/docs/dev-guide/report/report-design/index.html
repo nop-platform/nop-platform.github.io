@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>非线性中国式报表引擎NopReport源码解析 - Nop</title>
+
+
+  <meta property="og:title" content="非线性中国式报表引擎NopReport源码解析">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">非线性中国式报表引擎NopReport源码解析</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>日常开发中我们经常需要导入导出Excel数据，生成Excel和Word报表等，常用的<a target="_blank" rel="noopener" href="https://gitee.com/easyexcel/easyexcel">easyexcel</a>, <a target="_blank" rel="noopener" href="https://gitee.com/mirrors/poi-tl">poi-tl</a>等软件包都依赖底层的POI引擎，体积臃肿，同时在功能方面也难以处理结构复杂的异形表格。在制作复杂的中国式报表时，一般还是需要使用润乾和帆软这样的专业报表软件公司所提供的报表引擎。</p>
+<p>很多年前，润乾公司首创了支持行列对称展开的非线性报表生成算法，后来发展成为商业报表软件的翘楚，后续的报表软件如帆软等也都模仿了类似的报表生成算法。NopReport报表引擎为这个算法提供了一个非常精简的开源实现（约3000行代码），可以很容易的进行定制和扩展。本文详细介绍了NopReport报表引擎的基本实现原理，以及非线性报表生成算法的技术细节。</p>
+<p>算法讲解视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17g4y1o7wr/">https://www.bilibili.com/video/BV17g4y1o7wr/</a><br>使用示例视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Sa4y1K7tD/">https://www.bilibili.com/video/BV1Sa4y1K7tD/</a><br>引擎使用文档：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/620250740">https://zhuanlan.zhihu.com/p/620250740</a></p>
+<h2 id="一-报表模型DSL的设计"><a href="#一-报表模型DSL的设计" class="headerlink" title="一. 报表模型DSL的设计"></a>一. 报表模型DSL的设计</h2><h2 id="报表模型作为Excel模型的扩展"><a href="#报表模型作为Excel模型的扩展" class="headerlink" title="报表模型作为Excel模型的扩展"></a>报表模型作为Excel模型的扩展</h2><p>根据可逆计算理论，模板(Template)可以看作是原始模型对象的一种抽象化，在结构层面它可以看作是原始模型对象的一种增强。也就是说，任何一个原始模型对象都应该可以被看作是一种合法的模板对象。在这种设计思想指引下，NopReport中将报表模型的DSL设计为Excel模型的扩展模型，它在Excel的DSL的基础上增加了model子节点。</p>
+<blockquote>
+<p>任意一个Excel都可以看作是一个合法的报表模板，报表模板可以看作是普通Excel+扩展模型信息</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br>  Workbook --&gt; Sheet<br>  Sheet -.-&gt; x1[[XptSheetModel]]<br>  Workbook --&gt; Row<br>  Row -.-&gt; x2[[XptRowModel]]<br>  Workbook --&gt; Cell<br>  Cell -.-&gt; x3[[XptCellModel]]<br>  Workbook -.-&gt; x4[[XptWorkbokModel]]<br><br>  style x1 fill:#eecc00<br>  style x2 fill:#eecc00<br>  style x3 fill:#eecc00<br>  style x4 fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<p>对应的元模型定义为</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">workbook</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">model</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">model</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">sheets</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">sheet</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!string&quot;</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">model</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">model</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">rows</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">row</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">model</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">model</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">cell</span>  <span class="hljs-attr">mergeAcross</span>=<span class="hljs-string">&quot;!int=0&quot;</span> <span class="hljs-attr">mergeDown</span>=<span class="hljs-string">&quot;!int=0&quot;</span> <span class="hljs-attr">styleId</span>=<span class="hljs-string">&quot;string&quot;</span> &gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">model</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">model</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">value</span> <span class="hljs-attr">xdef:value</span>=<span class="hljs-string">&quot;any&quot;</span>/&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">comment</span> <span class="hljs-attr">xdef:value</span>=<span class="hljs-string">&quot;string&quot;</span> /&gt;</span><br>                  <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>               <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">row</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">rows</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">sheet</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">sheets</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">workbook</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>DSL的属性设计与OOXML标准中Excel的属性设置基本保持一致，便于实现与Excel格式的双向转换。</p>
+<h2 id="利用Excel内置的机制实现可视化"><a href="#利用Excel内置的机制实现可视化" class="headerlink" title="利用Excel内置的机制实现可视化"></a>利用Excel内置的机制实现可视化</h2><p>我们可以利用Excel内置的一些扩展机制来保存扩展模型信息，从而将Excel改造为可视化报表设计器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR;<br><br>subgraph DSL<br>   direction LR<br>   Excel模型 --&gt; 扩展模型<br>end<br><br>subgraph UI<br>   direction LR<br>   Excel可视化 --&gt; 扩展可视化<br>end<br><br>DSL &lt;-..-&gt; UI<br><br><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>利用单元格的Comment来保存扩展模型信息</li>
+</ol>
+<p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/cell-model-as-comment.png"></p>
+<ol start="2">
+<li>利用单独的Sheet页来保存扩展模型信息<br><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/model-as-sheet.png"></li>
+</ol>
+<p><strong>如果Excel工具引入一种自定义Schema机制，就可以自动实现对扩展模型的格式校验。</strong></p>
+<p><strong>如果上下游所有的工具都满足可逆计算原理，则这些工具可以自动实现无缝融合</strong></p>
+<h2 id="二-非线性中国式报表理论"><a href="#二-非线性中国式报表理论" class="headerlink" title="二. 非线性中国式报表理论"></a>二. 非线性中国式报表理论</h2><p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/runqian-report.png"></p>
+<p>润乾公司的创始人蒋步星学长发明了非线性中国式报表模型的相关理论，是报表引擎领域一项真正原创的技术。后续的商业报表公司如帆软报表等都延续了这种类Excel单元格展开的设计思想。</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/chinese-style-report.png"><br><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/nonlinear-report-model.png"></p>
+<blockquote>
+<p>所谓的非线性报表是相对于线性报表而言。国外的水晶报表只能沿着一个方向延展，列方向一般是固定的，所以被定义为线性报表。非线性报表是行与列都构成复杂的树形嵌套关系，不再是线性平铺</p>
+</blockquote>
+<p>NopReport提供了非线性报表展开算法的一个开源实现，但是它的具体实现细节是根据相关报表工具的用户使用文档推理得到，与原报表工具的实现方案并没有直接的关系。</p>
+<h2 id="报表引擎的执行逻辑"><a href="#报表引擎的执行逻辑" class="headerlink" title="报表引擎的执行逻辑"></a>报表引擎的执行逻辑</h2><p>NopReport的功能功能在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/ReportEngine.java">ReportEngine</a>对象中实现，它的主要工作可以分为如下三个部分：</p>
+<ol>
+<li>Parse: 从xpt文件或者xpt.xlsx文件解析得到报表模型<ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-ooxml/nop-ooxml-xlsx/src/main/java/io/nop/ooxml/xlsx/parse/ExcelWorkbookParser.java">解析Excel文件得到ExcelWorkbook对象</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/build/ExcelToXptModelTransformer.java">将ExcelWorkbook转换为报表模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/build/XptModelInitializer.java">分析单元格的父子关系，初始化报表模型中的各类关联信息</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/ExpandedSheetGenerator.java">Generate</a>: 根据报表模型动态展开，生成ExpandedSheet<ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/expand/TableExpander.java">Expand</a>: 先按照父子关系执行展开</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/ExpandedSheetEvaluator.java">Evaluate</a>: 执行每个单元格的valueExpr，生成单元格的值和显示文本</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/renderer/HtmlReportRendererFactory.java">Render</a>: 根据renderType选择不同的Renderer来生成输出文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br>      ReportEngine --&gt; a1[/Parse/]<br>      ReportEngine --&gt; a2[/Generate/]<br>      ReportEngine --&gt; a3[/Render/]<br>      a1 --&gt; ExcelWorkbookParser<br>      a1 --&gt; ExcelToXptModelTransformer<br>      a1 --&gt; XptModelInitializer<br><br>      a2 --&gt; TableExpander<br>      TableExpander --&gt; CellRowExpander<br>      TableExpander --&gt; CellColExpander<br>      a2 --&gt; ExpandedSheetEvaluator<br><br>      a3 --&gt; HtmlReportRendererFactory<br>      a3 --&gt; XlsxReportRendererFactory<br><br>      style a1 fill:#eecc00<br>      style a2 fill:#eecc00<br>      style a3 fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<h2 id="表格展开"><a href="#表格展开" class="headerlink" title="表格展开"></a>表格展开</h2><p>非线性报表引擎的关键技术就是报表模板的展开算法，基本思想是<strong>父格展开时自动递归复制所有子单元格，而子单元格展开时，自动延展同一行或者同一列的父单元格</strong>。</p>
+<blockquote>
+<p>如果父单元格与展开单元格不在同一行或者同一列中，则不需要被延展。</p>
+</blockquote>
+<p>具体流程：</p>
+<ol>
+<li>自上而下，自左而右，依次执行单元格的展开逻辑</li>
+<li>如果父格尚未展开，则先展开父格</li>
+</ol>
+<p>实现代码在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/engine/expand/TableExpander.java">TableExpander.java</a>中</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">expand</span><span class="hljs-params">(IXptRuntime xptRt)</span> &#123;<br>   <span class="hljs-keyword">do</span> &#123;<br>      <span class="hljs-type">ExpandedCell</span> <span class="hljs-variable">cell</span> <span class="hljs-operator">=</span> processing.poll();<br>      <span class="hljs-keyword">if</span> (cell == <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span>;<br><br>      <span class="hljs-keyword">if</span> (cell.isRemoved() || cell.isExpanded())<br>            <span class="hljs-keyword">continue</span>;<br><br>      <span class="hljs-keyword">if</span> (cell.getColParent() != <span class="hljs-literal">null</span> &amp;&amp; !cell.getColParent().isExpanded()) &#123;<br>            processing.push(cell);<br>            processing.push(cell.getColParent());<br>            <span class="hljs-keyword">continue</span>;<br>      &#125;<br><br>      <span class="hljs-keyword">if</span> (cell.getRowParent() != <span class="hljs-literal">null</span> &amp;&amp; !cell.getRowParent().isExpanded()) &#123;<br>            processing.push(cell);<br>            processing.push(cell.getRowParent());<br>            <span class="hljs-keyword">continue</span>;<br>      &#125;<br><br>      getCellExpander(cell).expand(cell, processing, xptRt);<br>   &#125; <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="单元格展开"><a href="#单元格展开" class="headerlink" title="单元格展开"></a>单元格展开</h2><ol>
+<li>运行expandExpr得到展开对象列表</li>
+<li>复用当前单元格作为展开后的第一个单元格</li>
+<li>然后以这个单元格为模板复制n-1次</li>
+<li>扩展父单元格</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// CellRowExpander</span><br>expandList = <span class="hljs-title function_">runExpandExpr</span>(cell, xptRt)<br>cell.<span class="hljs-property">expandIndex</span> = <span class="hljs-number">0</span><br>cell.<span class="hljs-property">expandedValue</span> = expandList[<span class="hljs-number">0</span>]<br><br>expandCount = <span class="hljs-title function_">duplicate</span>(expandedList, cell)<br><span class="hljs-title function_">expandCells</span>(cell, expandCount)<br></code></pre></td></tr></table></figure>
+
+<p>新插入的单元格需要建立父子关系，需要注意维护所有父格的rowDescendants集合。这里采用了空间换时间的方案。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addRowChild</span><span class="hljs-params">(ExpandedCell cell)</span> &#123;<br>    <span class="hljs-keyword">if</span> (rowDescendants == <span class="hljs-literal">null</span>)<br>        rowDescendants = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    addToList(rowDescendants, cell);<br><br>    <span class="hljs-type">ExpandedCell</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> rowParent;<br>    <span class="hljs-keyword">while</span> (p != <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (p.rowDescendants == <span class="hljs-literal">null</span>)<br>            p.rowDescendants = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        addToList(p.rowDescendants, cell);<br>        p = p.getRowParent();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>行父格和行子格不一定在同一行，但是一个行父格会管辖一块包含所有行子格的连续区域。<strong>处于不同的父格的区域不会出现交叉，只会嵌套，构成严格的树形关系</strong>。</li>
+<li>同理，列父格的逻辑类似。</li>
+</ul>
+<p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/expand-span.png"></p>
+<h2 id="层次坐标"><a href="#层次坐标" class="headerlink" title="层次坐标"></a>层次坐标</h2><p>非线性报表模型理论中发明的层次坐标概念提供了一种访问展开后的单元格的一种精确、快捷的方式，使用它可以极大简化报表计算逻辑的表达。<br>类似同步、环比这样的常见计算都可以使用层次坐标来进行简单的表达。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br>层次坐标 --&gt; ExpandedCellSet<br></code></pre></td></tr></table></figure>
+
+<p>一个层次坐标相当于是一个选择符，通过层次坐标可以在父子单元格组成的树结构中定位选择出满足条件的单元格集合。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">层次坐标格式： CellName[rowCoordinates ; colCoordinates]<br></code></pre></td></tr></table></figure>
+
+<p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/absolute-coord-value.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph RL<br>B1 --&gt; A1<br>C1 --&gt; B1<br>A1 --&gt; D1<br></code></pre></td></tr></table></figure>
+
+<p>D1是A1的rowParent，所以A1展开的时候，D1会自动延展。</p>
+<p>层次坐标中可以利用相对坐标来访问兄弟节点。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br><br>A-0 --&gt; B-00<br>A-0 --&gt; B-01<br>A-0 --&gt; C-0<br>B-00 --&gt; D-0<br>C-0 --&gt; F-0<br><br>A-1 --&gt; B-10<br><br>style B-10 fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<p>假设有如上的一个父子结构，在B-10节点中如下坐标<code>D[A:-1,B:1]</code>指向的是D-0节点</p>
+<ol>
+<li>A:-1表示当前A节点的前一个节点，即A-0</li>
+<li>B:1表示A-0节点范围内的第一个B节点，即B-00</li>
+<li>在B-00范围内查找D节点，得到D-0</li>
+</ol>
+<h2 id="三-核心数据结构讲解"><a href="#三-核心数据结构讲解" class="headerlink" title="三. 核心数据结构讲解"></a>三. 核心数据结构讲解</h2><h2 id="展开单元格：ExpandedCell"><a href="#展开单元格：ExpandedCell" class="headerlink" title="展开单元格：ExpandedCell"></a>展开单元格：ExpandedCell</h2><p>非线性报表的单元格展开算法中核心的数据结构是ExpandedCell。它的设计需要支持快速插入和复制，而且行和列处于对称地位（所有针对行的操作都可以直接翻译为针对列的操作）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br><br>ExpandedCell --&gt; a3[/行列关系/]<br>ExpandedCell --&gt; a2[/父子关系/]<br>ExpandedCell --&gt; a1[/值/]<br>ExpandedCell --&gt; a4[/合并单元格/]<br><br>a2[/父子关系/] --&gt; rowParent --&gt; rowDescendants<br>a2[/父子关系/] --&gt; colParent --&gt; colDescendants<br><br>a3[/行列关系/] --&gt; right --&gt; row<br>a3[/行列关系/] --&gt; down --&gt; col<br><br><br>a1[/值/] --expandExpr--&gt; expandedValue<br>a1[/值/] --valueExpr--&gt; value<br>a1[/值/] --formatExpr--&gt; formattedValue<br><br>a4[/合并单元格/] --&gt; realCell<br><br>style a1 fill:#eecc00<br>style a2 fill:#eecc00<br>style a3 fill:#eecc00<br>style a4 fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExpandedCell</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ICellView</span> &#123;<br>   ExpandedRow row;<br>   ExpandedCol col;<br><br>   ExpandedCell right;<br>   ExpandedCell down;<br><br><br>   <span class="hljs-comment">// 对于合并单元格，realCell设置为左上角的单元格</span><br>   ExpandedCell realCell;<br>   <span class="hljs-type">int</span> mergeDown;<br>   <span class="hljs-type">int</span> mergeAcross;<br><br><br>   ExpandedCell rowParent;<br>   ExpandedCell colParent;<br><br>   <span class="hljs-comment">// 递归包含所有子单元格</span><br>   Map&lt;String, List&lt;ExpandedCell&gt;&gt; rowDescendants = <span class="hljs-literal">null</span>;<br>   Map&lt;String, List&lt;ExpandedCell&gt;&gt; colDescendants = <span class="hljs-literal">null</span>;<br><br>   <span class="hljs-comment">// expandExpr计算得到的值</span><br>   Object expandedValue;<br>   <span class="hljs-type">int</span> expandedIndex;<br><br>   <span class="hljs-comment">// valueExpr计算得到的值，在父子单元格展开完毕后执行</span><br>   Object value;<br><br>   <span class="hljs-comment">// value为内存中的值，显示到界面上时执行formatExpr得到显示用的值</span><br>   Object formattedValue;<br><br>   <span class="hljs-type">boolean</span> removed;<br><br>   <span class="hljs-comment">// valueExpr已经执行完毕，value值可用</span><br>   <span class="hljs-type">boolean</span> evaluated;<br><br>   <span class="hljs-comment">// 缓存与单元格有关的动态计算的值</span><br>   Map&lt;String, Object&gt; computedValues;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>ExpandedCell同时处在Row和Col中，行列对称</li>
+<li>通过down和right形成两个单向链表</li>
+<li>对于单元格合并的情况，插入单元格占位，通过realCell指向左上角的单元格</li>
+<li>行和列分别维护父子单元格关系</li>
+</ol>
+<p>NopReport区分了expandedValue, value和formattedValue</p>
+<ol>
+<li>expandedValue是expandExpr的计算结果，即在父子单元格展开过程中得到的值。执行expandExpr的时候层次坐标系还没有建立，因此不能使用层次坐标去访问其他的单元格</li>
+<li>在父子格展开完毕之后，根据valueExpr可以计算得到单元格的值。在计算过程中可以通过层次坐标访问其他单元格的值。如果没有指定valueExpr，则value&#x3D;expandedValue</li>
+<li>单元格的值作为文本显示时会执行formatExpr，如果配置，则formattedValue&#x3D;value</li>
+</ol>
+<h2 id="动态数据集：DynamicReportDataSet"><a href="#动态数据集：DynamicReportDataSet" class="headerlink" title="动态数据集：DynamicReportDataSet"></a>动态数据集：DynamicReportDataSet</h2><p>报表引擎中用户最常用的数据类型就是数据集，一般是通过JDBC请求读取到的列表数据。NopReport提供了DynamicReportDataSet结构来简化报表引擎对表格数据的使用。</p>
+<p>参见代码<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/dataset/DynamicReportDataSet.java">DynamicReportDataSet.java</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br><br>DynamicReportDataSet --&gt; a1[/current/]<br>DynamicReportDataSet --&gt; a2[group]<br>DynamicReportDataSet --&gt; a3[field]<br><br>style a1 fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>DynamicReportDataSet提供了group&#x2F;groupBy&#x2F;where&#x2F;filter&#x2F;sort&#x2F;field&#x2F;select&#x2F;sum&#x2F;max&#x2F;min等大量集合选择和运算函数。</li>
+<li>它的计算结果与当前单元格密切相关，它根据xptRt.cell来获取到当前单元格，然后根据父格的expandedValue取交集得到当前所处理的数据集合。</li>
+<li>current()函数实现动态查找当前实际可用数据列表。</li>
+</ol>
+<blockquote>
+<p>ds&#x3D;ds1, expandType&#x3D;r, field&#x3D;xxx这种配置实际等价于 expandType&#x3D;r,expandExpr&#x3D;ds1.group(“xxx”)，它会设置展开单元格的expandedValue为分组汇总后的子数据集。</p>
+<p>单元格可能同时具有行父格和列父格，它自身在执行ds1.field(name)这样的函数时，会取行父格与列父格中子数据集的<strong>交集</strong>，得到一个当前可见的集合列表，然后再执行相关操作</p>
+</blockquote>
+<h2 id="报表上下文：-XptRuntime"><a href="#报表上下文：-XptRuntime" class="headerlink" title="报表上下文： XptRuntime"></a>报表上下文： XptRuntime</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br><br>XptRuntime --&gt; scope<br>XptRuntime --&gt; var[/内置变量/]<br>var --&gt; cell<br>var --&gt; row<br>var --&gt; sheet<br>var --&gt; workbook<br>XptRuntime --&gt; helpFn[/帮助函数/]<br>helpFn --&gt; a1[getNamedCell]<br>helpFn --&gt; a2[getNamedCellSet]<br>helpFn --&gt; a3[incAndGet]<br><br>style var fill:#eecc00<br>style helpFn fill:#eecc00<br></code></pre></td></tr></table></figure>
+
+<p>XptRuntime在报表展开算法执行的过程中会记录当前正在处理的单元格，从而在表达式中可以使用相对层次坐标来定位单元格。</p>
+<p>XptRuntime还提供了一些使用相对坐标的函数，比如getNamedCells(cellName)返回指定模板单元格生成的、当前单元格可见的所有单元格。这里的可见指的是同属于同一个最近的父单元格。</p>
+<h2 id="四-报表表达式引擎设计"><a href="#四-报表表达式引擎设计" class="headerlink" title="四. 报表表达式引擎设计"></a>四. 报表表达式引擎设计</h2><p>报表引擎中的表达式需要引入层次坐标语法，从而简化数据获取逻辑的编写。</p>
+<p>NopReport中的ReportExpr完全基于内置的XScript表达式引擎进行扩展，因此保留了对象方法调用和局部函数定义的能力。同时，通过使用Lambda表达式也避免了在表达式语言中引入特殊的程序语法。参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/expr/ReportExpressionParser.java">ReportExpressionParser.java</a></p>
+<p><strong>与一般的报表引擎不同，NopReport的表达式引擎没有内置任何关于数据集的知识</strong></p>
+<blockquote>
+<p>早期的报表引擎在开发的时候函数式编程概念还没有普及，所以一般会在表达式引擎中引入一些特殊语法来支持对数据集的转换和过滤，但是现在使用map、filter、flatMap、reduce等集合函数即可完成类似功能，没有必要再引入特殊语法。这也简化了表达式引擎的实现。</p>
+</blockquote>
+<h2 id="通过接口实现简化"><a href="#通过接口实现简化" class="headerlink" title="通过接口实现简化"></a>通过接口实现简化</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br><br> 层次坐标 --&gt; a[ExpandedCellSet]<br><br> a[ExpandedCellSet] --&gt; iterator<br> a[ExpandedCellSet] --&gt; value<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p><code>A1</code>，<code>A1:B5</code>以及<code>A3[A2:-1]</code>这样的层次坐标表达式在运行期会返回<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/model/ExpandedCellSet.java">ExpandedCellSet</a>对象。</p>
+</li>
+<li><p>ExpandedCellSet实现<code>Iterable&lt;Object&gt;</code>接口，可以被看作是一个值集合，在编程时可以像普通值列表一样被统一处理。参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/functions/ReportFunctions.java">ReportFunctions.java</a>中的Excel函数实现。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Number <span class="hljs-title function_">SUM</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;values&quot;)</span> Object values)</span> &#123;<br>   <span class="hljs-keyword">if</span> (values == <span class="hljs-literal">null</span>)<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br><br>   Iterator&lt;Object&gt; it = CollectionHelper.toIterator(values, <span class="hljs-literal">true</span>);<br>   <span class="hljs-type">Number</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br>   <span class="hljs-keyword">while</span> (it.hasNext()) &#123;<br>      <span class="hljs-type">Object</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> it.next();<br>      <span class="hljs-keyword">if</span> (!(value <span class="hljs-keyword">instanceof</span> Number))<br>            <span class="hljs-keyword">continue</span>;<br>      ret = MathHelper.add(ret, value);<br>   &#125;<br>   <span class="hljs-keyword">return</span> ret;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>对于<code>A3 + 2 &gt; B5</code>这样的表达式，会在编译期识别出层次坐标，并把它转换为<code>A3.value + 2 &gt; B5.value</code>。而ExpandedCellSet上定义了getValue方法，用于返回集合中第一个单元格的值。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getValue</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">if</span> (cells.isEmpty())<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-type">ExpandedCell</span> <span class="hljs-variable">cell</span> <span class="hljs-operator">=</span> cells.get(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> cell.getValue();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h2><ul>
+<li><p>通过<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/functions/ReportFunctionProvider.java">ReportFunctionProvider</a>向报表引擎中注册全局函数。</p>
+</li>
+<li><p>NopReport并没有定义任何特殊的函数接口，可以将任意的Java静态函数注册为表达式函数。而一般的报表引擎中定义的函数专为报表引擎设计，无法在报表引擎之外使用。编写也要符合一定的规范，需要有报表引擎相关的知识才能编写。</p>
+</li>
+<li><p>目前内置的函数参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/functions/ReportFunctions.java">ReportFunctions.java</a></p>
+</li>
+</ul>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><ul>
+<li><p>NopReport没有使用POI库，甚至XML解析器都是手工实现，自行实现了一套Excel文件的流式解析和生成工具，从而避免了POI库所带来的一系列复杂性和性能损耗，同时也极大降低了运行时代码体积。</p>
+</li>
+<li><p>报表展开为纯函数式运算，因此表达式的计算结果可以进行缓存。ExpandedCell提供了一个缓存集合，可以通过</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">ExpandedCell</span> <span class="hljs-variable">firstCell</span> <span class="hljs-operator">=</span> xptRt.getNamedCell(cellName);<br><span class="hljs-comment">// 利用第一个单元格的计算属性来缓存汇总结果</span><br><span class="hljs-type">Number</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> (Number) firstCell.getComputed(XptConstants.KEY_ALL_SUM,<br>         c -&gt; SUM(xptRt.getNamedCellSet(cellName)));<br></code></pre></td></tr></table></figure>
+
+<p>具体实例可以参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-report/nop-report-core/src/main/java/io/nop/report/core/functions/ReportFunctions.java">ReportFunctions.java</a>中PROPORTION等函数的实现。</p>
+<h2 id="五-可扩展设计"><a href="#五-可扩展设计" class="headerlink" title="五. 可扩展设计"></a>五. 可扩展设计</h2><p>与一般的报表引擎不同，NopReport没有引入任何额外的插件机制，也没有设计SPI服务提供接口机制。它利用Nop平台内置的Delta定制能力以及XPL模板语言，可以实现其他引擎所无法达到的可扩展性。</p>
+<ol>
+<li>报表DSL的设计中大量配置支持XPL模板语言，例如beginLoop, beforeExpand等</li>
+<li>在xpl段中，可以使用<code>&lt;c:import&gt;</code>标签引入外部模板库，模板库可以通过Delta定制机制进行定制</li>
+<li>在xpl段中，可以通过import语句引入Java类，可以通过<code>inject(beanName)</code>函数使用IoC容器中的bean</li>
+<li>通过ReportFunctionProvider可以将任意的Java静态函数注册为报表表达式可以使用的函数</li>
+</ol>
+<p>例如，可以通过spl.xlib标签库引入润乾SPL计算引擎来计算得到数据集。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beforeExpand</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">spl:MakeDataSet</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/report/spl/spl.xlib&quot;</span> <span class="hljs-attr">dsName</span>=<span class="hljs-string">&quot;ds1&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/nop/report/demo/spl/test-data.splx&quot;</span>/&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>      import xx.MyBean;<br><br>      const myHelper = inject(&quot;myHelper&quot;);<br>      assign(&quot;ds2&quot;, myHelper.genDataSet())<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beforeExpand</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>有了IoC容器和模板语言，一般不再需要额外设计插件机制</strong>，即使是远程加载Jar包，动态初始化bean等复杂的扩展机制，也可以通过Xpl标签库引入，通过标签调用屏蔽所有底层的复杂性。</p>
+<h2 id="模型化数据导入"><a href="#模型化数据导入" class="headerlink" title="模型化数据导入"></a>模型化数据导入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br><br>ImportExcelParser --&gt; TreeTableDataParser --&gt; ImportDataCollector --&gt; DynamicObject<br></code></pre></td></tr></table></figure>
+
+<p>ImportExcelParser会分析ExcelWorkbook中单元格的布局，按照通用的规则识别出Tree结构，解析得到对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br><br>ExcelTemplateToXptModelTransformer --&gt; TreeTableDataParser --&gt; BuildXptModelListener --&gt; XptModel<br></code></pre></td></tr></table></figure>
+
+<p>ExcelTemplateToXptModelTransformer分析ExcelWorkbook的结构，自动将它转换为报表模型</p>
+<p>基于可逆计算理论设计的低代码平台NopPlatform已开源：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">https://gitee.com/canonical-entropy/nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">https://github.com/entropy-cloud/nop-entropy</a></li>
+<li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md</a></li>
+<li>文档入口：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/index.md">https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/index.md</a></li>
+<li>理论介绍：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64004026">https://zhuanlan.zhihu.com/p/64004026</a></li>
+<li>可逆计算原理和Nop平台介绍及答疑: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14u411T715/">https://www.bilibili.com/video/BV14u411T715/</a></li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/report/report-design.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

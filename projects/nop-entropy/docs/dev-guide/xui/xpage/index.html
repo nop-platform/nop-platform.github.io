@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>前端配置 - Nop</title>
+
+
+  <meta property="og:title" content="前端配置">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">前端配置</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="1-input-tree缺省设置了最大高度-max-height-300px"><a href="#1-input-tree缺省设置了最大高度-max-height-300px" class="headerlink" title="1. input-tree缺省设置了最大高度 max-height:300px"></a>1. input-tree缺省设置了最大高度 max-height:300px</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;input-tree&#x27;</span>,<br>  <span class="hljs-attr">treeContainerClassName</span>: <span class="hljs-string">&#x27;h-full&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>h-full可以去除max-height设置</p>
+<h2 id="2-设置page的aside区域的宽度"><a href="#2-设置page的aside区域的宽度" class="headerlink" title="2. 设置page的aside区域的宽度"></a>2. 设置page的aside区域的宽度</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;page&#x27;</span>,<br>  <span class="hljs-attr">aside</span>: [&#123;<br>    type : <span class="hljs-string">&#x27;input-text&#x27;</span><br>  &#125;],<br>  <span class="hljs-attr">asideResizor</span>: <span class="hljs-literal">true</span><br>  <span class="hljs-attr">asideClassName</span>: w-<span class="hljs-number">60</span><br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>可配置的宽度类参见 amis-ui&#x2F;helper&#x2F;sizing&#x2F;_width.scss</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Properties</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-px</td>
+<td>width: 0.0625rem</td>
+</tr>
+<tr>
+<td>w-0</td>
+<td>width: 0</td>
+</tr>
+<tr>
+<td>w-none</td>
+<td>width: 0</td>
+</tr>
+<tr>
+<td>w-0.5</td>
+<td>width: 0.125rem</td>
+</tr>
+<tr>
+<td>w-1</td>
+<td>width: 0.25rem</td>
+</tr>
+<tr>
+<td>w-1.5</td>
+<td>width: 0.375rem</td>
+</tr>
+<tr>
+<td>w-2</td>
+<td>width: 0.5rem</td>
+</tr>
+<tr>
+<td>w-2.5</td>
+<td>width: 0.625rem</td>
+</tr>
+<tr>
+<td>w-3</td>
+<td>width: 0.75rem</td>
+</tr>
+<tr>
+<td>w-3.5</td>
+<td>width: 0.875rem</td>
+</tr>
+<tr>
+<td>w-4</td>
+<td>width: 1rem</td>
+</tr>
+<tr>
+<td>w-5</td>
+<td>width: 1.25rem</td>
+</tr>
+<tr>
+<td>w-6</td>
+<td>width: 1.5rem</td>
+</tr>
+<tr>
+<td>w-7</td>
+<td>width: 1.75rem</td>
+</tr>
+<tr>
+<td>w-8</td>
+<td>width: 2rem</td>
+</tr>
+<tr>
+<td>w-9</td>
+<td>width: 2.25rem</td>
+</tr>
+<tr>
+<td>w-10</td>
+<td>width: 2.5rem</td>
+</tr>
+<tr>
+<td>w-11</td>
+<td>width: 2.75rem</td>
+</tr>
+<tr>
+<td>w-12</td>
+<td>width: 3rem</td>
+</tr>
+<tr>
+<td>w-14</td>
+<td>width: 3.5rem</td>
+</tr>
+<tr>
+<td>w-16</td>
+<td>width: 4rem</td>
+</tr>
+<tr>
+<td>w-18</td>
+<td>width: 4.5rem</td>
+</tr>
+<tr>
+<td>w-20</td>
+<td>width: 5rem</td>
+</tr>
+<tr>
+<td>w-24</td>
+<td>width: 6rem</td>
+</tr>
+<tr>
+<td>w-28</td>
+<td>width: 7rem</td>
+</tr>
+<tr>
+<td>w-32</td>
+<td>width: 8rem</td>
+</tr>
+<tr>
+<td>w-36</td>
+<td>width: 9rem</td>
+</tr>
+<tr>
+<td>w-40</td>
+<td>width: 10rem</td>
+</tr>
+<tr>
+<td>w-44</td>
+<td>width: 11rem</td>
+</tr>
+<tr>
+<td>w-48</td>
+<td>width: 12rem</td>
+</tr>
+<tr>
+<td>w-52</td>
+<td>width: 13rem</td>
+</tr>
+<tr>
+<td>w-56</td>
+<td>width: 14rem</td>
+</tr>
+<tr>
+<td>w-60</td>
+<td>width: 15rem</td>
+</tr>
+<tr>
+<td>w-64</td>
+<td>width: 16rem</td>
+</tr>
+<tr>
+<td>w-72</td>
+<td>width: 18rem</td>
+</tr>
+<tr>
+<td>w-80</td>
+<td>width: 20rem</td>
+</tr>
+<tr>
+<td>w-96</td>
+<td>width: 24rem</td>
+</tr>
+<tr>
+<td>w-auto</td>
+<td>width: auto</td>
+</tr>
+<tr>
+<td>w-1x</td>
+<td>width: 1em</td>
+</tr>
+<tr>
+<td>w-2x</td>
+<td>width: 2em</td>
+</tr>
+<tr>
+<td>w-3x</td>
+<td>width: 3em</td>
+</tr>
+<tr>
+<td>w-1&#x2F;2</td>
+<td>width: 50%</td>
+</tr>
+<tr>
+<td>w-1&#x2F;3</td>
+<td>width: 33.333333%</td>
+</tr>
+<tr>
+<td>w-2&#x2F;3</td>
+<td>width: 66.666667%</td>
+</tr>
+<tr>
+<td>w-1&#x2F;4</td>
+<td>width: 25%</td>
+</tr>
+<tr>
+<td>w-2&#x2F;4</td>
+<td>width: 50%</td>
+</tr>
+<tr>
+<td>w-3&#x2F;4</td>
+<td>width: 75%</td>
+</tr>
+<tr>
+<td>w-1&#x2F;5</td>
+<td>width: 20%</td>
+</tr>
+<tr>
+<td>w-2&#x2F;5</td>
+<td>width: 40%</td>
+</tr>
+<tr>
+<td>w-3&#x2F;5</td>
+<td>width: 60%</td>
+</tr>
+<tr>
+<td>w-4&#x2F;5</td>
+<td>width: 80%</td>
+</tr>
+<tr>
+<td>w-1&#x2F;6</td>
+<td>width: 16.666667%</td>
+</tr>
+<tr>
+<td>w-2&#x2F;6</td>
+<td>width: 33.333333%</td>
+</tr>
+<tr>
+<td>w-3&#x2F;6</td>
+<td>width: 50%</td>
+</tr>
+<tr>
+<td>w-4&#x2F;6</td>
+<td>width: 66.666667%</td>
+</tr>
+<tr>
+<td>w-5&#x2F;6</td>
+<td>width: 83.333333%</td>
+</tr>
+<tr>
+<td>w-1&#x2F;12</td>
+<td>width: 8.333333%</td>
+</tr>
+<tr>
+<td>w-2&#x2F;12</td>
+<td>width: 16.666667%</td>
+</tr>
+<tr>
+<td>w-3&#x2F;12</td>
+<td>width: 25%</td>
+</tr>
+<tr>
+<td>w-4&#x2F;12</td>
+<td>width: 33.333333%</td>
+</tr>
+<tr>
+<td>w-5&#x2F;12</td>
+<td>width: 41.666667%</td>
+</tr>
+<tr>
+<td>w-6&#x2F;12</td>
+<td>width: 50%</td>
+</tr>
+<tr>
+<td>w-7&#x2F;12</td>
+<td>width: 58.333333%</td>
+</tr>
+<tr>
+<td>w-8&#x2F;12</td>
+<td>width: 66.666667%</td>
+</tr>
+<tr>
+<td>w-9&#x2F;12</td>
+<td>width: 75%</td>
+</tr>
+<tr>
+<td>w-10&#x2F;12</td>
+<td>width: 83.333333%</td>
+</tr>
+<tr>
+<td>w-11&#x2F;12</td>
+<td>width: 91.666667%</td>
+</tr>
+<tr>
+<td>w-full</td>
+<td>width: 100%</td>
+</tr>
+<tr>
+<td>w-screen</td>
+<td>width: 100vw</td>
+</tr>
+<tr>
+<td>w-min</td>
+<td>width: min-content</td>
+</tr>
+<tr>
+<td>w-max</td>
+<td>width: max-content</td>
+</tr>
+<tr>
+<td>min-w-0</td>
+<td>min-width: 0px</td>
+</tr>
+<tr>
+<td>min-w-full</td>
+<td>min-width: 100%</td>
+</tr>
+<tr>
+<td>min-w-min</td>
+<td>min-width: min-content</td>
+</tr>
+<tr>
+<td>min-w-max</td>
+<td>min-width: max-content</td>
+</tr>
+<tr>
+<td>max-w-none</td>
+<td>max-width: none</td>
+</tr>
+<tr>
+<td>max-w-0</td>
+<td>max-width: 0rem</td>
+</tr>
+<tr>
+<td>max-w-xs</td>
+<td>max-width: 20rem</td>
+</tr>
+<tr>
+<td>max-w-sm</td>
+<td>max-width: 24rem</td>
+</tr>
+<tr>
+<td>max-w-md</td>
+<td>max-width: 28rem</td>
+</tr>
+<tr>
+<td>max-w-lg</td>
+<td>max-width: 32rem</td>
+</tr>
+<tr>
+<td>max-w-xl</td>
+<td>max-width: 36rem</td>
+</tr>
+<tr>
+<td>max-w-2xl</td>
+<td>max-width: 42rem</td>
+</tr>
+<tr>
+<td>max-w-3xl</td>
+<td>max-width: 48rem</td>
+</tr>
+<tr>
+<td>max-w-4xl</td>
+<td>max-width: 56rem</td>
+</tr>
+<tr>
+<td>max-w-5xl</td>
+<td>max-width: 64rem</td>
+</tr>
+<tr>
+<td>max-w-6xl</td>
+<td>max-width: 72rem</td>
+</tr>
+<tr>
+<td>max-w-7xl</td>
+<td>max-width: 80rem</td>
+</tr>
+<tr>
+<td>max-w-full</td>
+<td>max-width: 100%</td>
+</tr>
+<tr>
+<td>max-w-min</td>
+<td>max-width: min-content</td>
+</tr>
+<tr>
+<td>max-w-max</td>
+<td>max-width: max-content</td>
+</tr>
+<tr>
+<td>max-w-prose</td>
+<td>max-width: 65ch</td>
+</tr>
+</tbody></table>
+<h2 id="Service调用返回string类型，希望设置到上下文中成为一个变量x"><a href="#Service调用返回string类型，希望设置到上下文中成为一个变量x" class="headerlink" title="Service调用返回string类型，希望设置到上下文中成为一个变量x"></a>Service调用返回string类型，希望设置到上下文中成为一个变量x</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;service&#x27;</span>,<br>  <span class="hljs-attr">api</span>: &#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;xxx&quot;</span><br>    <span class="hljs-attr">responseKey</span>: <span class="hljs-string">&quot;x&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>responseKey是Nop平台的ajaxFetch函数负责识别的，amis本身并不支持。</p>
+<h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><ul>
+<li>可以通过表达式函数GETRENDERERDATA(id, path)和GETRENDERERPROP(id, path)分别获取指定组件的数据和属性。</li>
+<li>http 请求动作执行结束后，后面的动作可以通过 ${responseResult}或$来获取请求响应结果</li>
+</ul>
+<h2 id="设置combo数据"><a href="#设置combo数据" class="headerlink" title="设置combo数据"></a>设置combo数据</h2><ol>
+<li>需要给 combo 设置个 id 属性，用来给事件动作指定目标用。</li>
+<li>弹窗按钮配置了数据映射 {comboIndex: “${index}”} 因为 crud 的行数据上也有 index 变量，派送动作时获取 index 变量是 crud 所在行的序号。所以弹出弹窗的时候，先把 combo 的序号赋值给 comboIndex</li>
+<li>crud 操作栏里面添加了个按钮，close: true 设置是让动作完成后关闭弹窗。</li>
+<li>按钮里面添加了 onEvent 配置，click 时做 setValue 动作，并设置参数 index 为 ‘${comboIndex}’ 值为 ${&amp;}。其中 {&amp;} 是特殊语法，用来取整个上下数据。</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;combo&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;combo&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;thecombo&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;multiple&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;engine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;engine&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-text&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Copy&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;button&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;actionType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dialog&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;size&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;md&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;dialog&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;历史记录&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;actions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;comboIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;index&#125;&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>          <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;crud&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;api&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/amis/api/mock2/sample&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>              <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Engine&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;engine&quot;</span><br>              <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;operation&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;操作&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;buttons&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                  <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;复制&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;button&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;close&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;onEvent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                      <span class="hljs-attr">&quot;click&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                        <span class="hljs-attr">&quot;actions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                          <span class="hljs-punctuation">&#123;</span><br>                            <span class="hljs-attr">&quot;componentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;thecombo&quot;</span><span class="hljs-punctuation">,</span><br>                            <span class="hljs-attr">&quot;actionType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;setValue&quot;</span><span class="hljs-punctuation">,</span><br>                            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                              <span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;comboIndex&#125;&quot;</span><span class="hljs-punctuation">,</span><br>                              <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;&amp;&#125;&quot;</span><br>                            <span class="hljs-punctuation">&#125;</span><br>                          <span class="hljs-punctuation">&#125;</span><br>                        <span class="hljs-punctuation">]</span><br>                      <span class="hljs-punctuation">&#125;</span><br>                    <span class="hljs-punctuation">&#125;</span><br>                  <span class="hljs-punctuation">&#125;</span><br>                <span class="hljs-punctuation">]</span><br>              <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><br>          <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">]</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="将多个输入控件组织到一起，但是每个输入控件对应一个变量"><a href="#将多个输入控件组织到一起，但是每个输入控件对应一个变量" class="headerlink" title="将多个输入控件组织到一起，但是每个输入控件对应一个变量"></a>将多个输入控件组织到一起，但是每个输入控件对应一个变量</h2><figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-group&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-group&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;输入组合校验&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-text&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;placeholder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请输入长度不超过6的数字类型&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;group-input1&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;子元素一&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;validations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;isNumeric&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;maxLength&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">6</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-text&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;placeholder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;请输入长度不少于5的文本&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;group-input2&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;validations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;minLength&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="API返回列表数据"><a href="#API返回列表数据" class="headerlink" title="API返回列表数据"></a>API返回列表数据</h2><p>返回列表数据时会normalizeApiResponseData函数会自动将列表包装为 {items:list}，这样确保返回的data在使用时始终是Map对象。</p>
+<h2 id="表格编辑"><a href="#表格编辑" class="headerlink" title="表格编辑"></a>表格编辑</h2><ul>
+<li>行编辑时上下文环境中存在变量index，对应于当前行的下标</li>
+<li>TableRow具有itemIndex属性</li>
+<li>IRow.change(values)可以修改值</li>
+<li>TableStore.getRowById(id)得到IRow</li>
+<li>props.store.row可以得到当前行，store.rowIndex对应行下标</li>
+</ul>
+<h2 id="store操作"><a href="#store操作" class="headerlink" title="store操作"></a>store操作</h2><ul>
+<li>store.changeValue(‘x’,123)</li>
+<li></li>
+</ul>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>可以在onClick事件中插入debugger指令。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&quot;onClick&quot;: &quot;debugger; props.store.closeDialog()&quot;<br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/xui/xpage.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

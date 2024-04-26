@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>AMIS框架扩展 - Nop</title>
+
+
+  <meta property="og:title" content="AMIS框架扩展">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">AMIS框架扩展</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>Nop平台对百度开源的AMIS框架进行了一定的扩展。</p>
+<h2 id="1-1-XML与JSON的自动转化"><a href="#1-1-XML与JSON的自动转化" class="headerlink" title="1.1 XML与JSON的自动转化"></a>1.1 XML与JSON的自动转化</h2><p>在手工编写和阅读的时候，XML格式相对于JSON格式是有一定优势的，特别是集成外部模板引擎用于动态生成的时候。Nop平台为AMIS增加了XML格式的语法表达形式，可以按照简单的几条规则实现XML和JSON之间的双向转换。具体规则如下:</p>
+<ol>
+<li><p><code>type</code>属性对应于标签名</p>
+</li>
+<li><p>简单类型的属性对应于XML的属性名</p>
+</li>
+<li><p>复杂类型的属性对应于XML的子节点</p>
+</li>
+<li><p>如果是列表类型，则在节点上标注<code>j:list=true</code></p>
+</li>
+<li><p><code>body</code>属性会被特殊识别，不用明确标注<code>j:list</code></p>
+</li>
+</ol>
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;operation&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;操作&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;buttons&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>          <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;详情&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;button&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;link&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;actionType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dialog&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dialog&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;查看详情&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;form&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                  <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-text&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;browser&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Browser&quot;</span><br>                  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                  <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;control&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;grade&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tag&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;grade&#125;&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;displayMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;normal&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span><br>                    <span class="hljs-punctuation">&#125;</span><br>                  <span class="hljs-punctuation">&#125;</span><br>                <span class="hljs-punctuation">]</span><br>              <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>          <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>对应于XML格式</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">operation</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;操作&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">buttons</span> <span class="hljs-attr">j:list</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;详情&quot;</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;link&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;dialog&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">titl</span>=<span class="hljs-string">&quot;查看详情&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">input-text</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;browser&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;Browser&quot;</span> /&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">control</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;grade&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">tag</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;$&#123;grade&#125;&quot;</span> <span class="hljs-attr">displayMode</span>=<span class="hljs-string">&quot;normal&quot;</span> <span class="hljs-attr">color</span>=<span class="hljs-string">&quot;active&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br>              <span class="hljs-tag">&lt;/<span class="hljs-name">control</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">buttons</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">operation</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop平台中的XPL模板语言为动态生成XML提供了诸多简化帮助，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">xpl:if</span>=<span class="hljs-string">&quot;xxx&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;$&#123;&#x27;$&#x27;&#125;&#123;grade&#125;&quot;</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;$&#123;icon&#125;&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>作为模板运行时<code>xpl:if</code>表示条件表达式，只有表达式返回<code>true</code>时整个节点才会被生成。所有XML属性生成的时候，如果属性值为<code>null</code>，则它将被自动忽略，不会输出到最终的结果中。借助于这一<code>null</code>属性过滤机制，我们可以很简单的控制哪些属性会被生成。</p>
+<p>AMIS的语法设计相对比较规整，转成XML之后很接近于普通的HTML或者Vue模板。相比之下，LowCodeEngine的DSL设计更像是针对领域对象的一种序列化协议，而不是一种便于手工编写和阅读的DSL语言。</p>
+<blockquote>
+<p>AMIS早期版本的DSL设计中也存在着大量不一致的地方，比如容器控件的内容部分，有时叫做<code>children</code>，有时叫做<code>controls</code>，有时叫做<code>content</code>，最近重构后才普遍改成了<code>body</code>。</p>
+</blockquote>
+<h3 id="XView模型中配置gen-control"><a href="#XView模型中配置gen-control" class="headerlink" title="XView模型中配置gen-control"></a>XView模型中配置gen-control</h3><p>在<code>XView</code>模型的grid或者form配置中，如果根据数据类型和数据域自动推定的控件不满足要求，我们可以手工实现<code>gen-control</code>。例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span>fldA fldB<span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fldA&quot;</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>            return &#123; 这里写json格式的配置&#125;<br>         <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>在json中可以通过<code>x:extends</code>来继承已有的页面。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;gen-control&gt;<br>  // title会覆盖继承的页面中的title配置, 而initApi.url会覆盖对应的initApi对象中的url属性。依此类推，可以覆盖任意深度的属性<br>  return &#123; &quot;x:extends&quot;: &quot;/nop/xxx/pages/zzz.page.yaml&quot;, title:&quot;xxx&quot;, initApi: &#123;url: &quot;xxx&quot;&#125; &#125;<br>&lt;/gen-control&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>gen-control</code>段中也可以采用XML格式输出</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">input-text</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>XML格式将按照前面介绍的转换规则转换为对应的json. 在<code>gen-control</code>段中使用xml格式时，如果要用<code>x:extends</code>机制，则因为编译器解析XView时也要处理<code>x:extends</code>属性,<br>所以我们必须回避这个名字，使用<code>xdsl:extends</code>来代替。例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">xdsl:extends</span>=<span class="hljs-string">&quot;/nop/xxx/pages/yyy.page.yaml&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;ss&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-可逆计算分解"><a href="#1-2-可逆计算分解" class="headerlink" title="1.2 可逆计算分解"></a>1.2 可逆计算分解</h2><p>Nop平台基于可逆计算理论针对JSON和XML实现了通用的分解合并机制，可以按照通用的规则将很大的JSON文件分解为多个小型文件，相当于是为AMIS补充了某种模块组织语法。最常用的是两个语法，<code>x:extends</code>用于表示继承外部的某个文件，<code>x:gen-extends</code>表示动态生成可以被继承的JSON对象。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br><span class="hljs-string">  &lt;web:GenPage view=&quot;NopAuthDept.view.xml&quot; page=&quot;main&quot; xpl:lib=&quot;/nop/web/xlib/web.xlib&quot; /&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-attr">body:</span><br>   <span class="hljs-attr">name:</span> <span class="hljs-string">crud-grid</span><br>   <span class="hljs-attr">bulk-actions:</span><br>       <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">action</span><br>         <span class="hljs-attr">id:</span> <span class="hljs-string">test-button</span><br>         <span class="hljs-attr">label:</span> <span class="hljs-string">&#x27;Test&#x27;</span><br>         <span class="hljs-attr">actionType:</span> <span class="hljs-string">dialog</span><br>         <span class="hljs-attr">dialog:</span><br>            <span class="hljs-attr">&quot;x:extends&quot;:</span> <span class="hljs-string">test.page.yaml</span><br>            <span class="hljs-attr">&quot;title&quot;:</span> <span class="hljs-string">&quot;Test Dialog&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上示例表示，首先根据<code>NopAuthDept.view.xml</code>的配置动态生成一个CRUD页面，然后再在批量操作按钮区增加一个<code>Test</code>按钮，点击这个按钮的时候会弹出一个对话框，对话框的实现代码是复用已有的<code>test.page.yaml</code>文件。<code>title</code>属性会覆盖<code>x:extends</code>继承的内容，将对话框的标题设置为<code>Test Dialog</code>。</p>
+<p><code>x:extends</code>相当于是某种在Tree结构上执行的，类似面向对象的继承操作的通用操作符。</p>
+<p>对于任意的JSON格式的外部文件，我们只需要将普通的JSON文件的加载函数修改为Nop平台所提供的<code>ResourceLoader</code>调用即可自动获得可逆计算所定义的分解、合并操作，并支持编译期元编程，允许在编译期进行一系列复杂的结构变换。</p>
+<p>具体介绍参见</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/531474176">从张量积看低代码平台的设计</a></p>
+<h2 id="1-3-Action模块化"><a href="#1-3-Action模块化" class="headerlink" title="1.3 Action模块化"></a>1.3 Action模块化</h2><p>AMIS的DSL本身只支持编写嵌入在页面中的JS片段代码，并不直接支持引入外部编写的JS函数。Nop平台为AMIS引入了一个<code>xui:import</code>属性，允许引入外部的JS库，把其中的函数作为事件响应函数来使用。</p>
+<blockquote>
+<p>这一机制是通用的，可以用于集成其他的低代码引擎</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type: page<br>xui:import: /nop/auth/pages/DemoPage/demo.lib.js<br>body:<br>  type: form<br>  api:<br>    url: &quot;@action:demo.testAction&quot;<br>    data:<br>      a: 1<br></code></pre></td></tr></table></figure>
+
+<p>以上示例表示，我们导入一个<code>demo.lib.js</code>库，然后通过<code>demo.testAction</code>引用其中的函数。</p>
+<p><code>url: &quot;@action:demo.testAction&quot;</code>这一语法是我们在AMIS的环境抽象基础上所提供的一个<code>action</code>触发机制。它通过拦截AMIS的<code>fetcher</code>调用，识别<code>@action:</code>前缀，然后映射到已加载的JS函数上，调用时传入<code>data</code>指定的参数。</p>
+<p>脚本库的代码存放在<code>demo.lib.xjs</code>中（注意后缀名是xjs而不是js，我们会通过graalvm-js脚本引擎调用rollup打包工具将xjs转换为js文件，并打包成SystemJs模块结构）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/* @x:gen-extends:</span><br><span class="hljs-comment">  &lt;!--这里可以用XPL模板语言来生成js代码 --&gt;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">import</span> &#123; ajaxFetch&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nop/utils&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;myAction&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./sub.lib.js&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;myAction2&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./parts/sub2.lib.js&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;ajaxRequest&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nop/utils&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">testAction</span>(<span class="hljs-params">options, page</span>)&#123;<br>    page.<span class="hljs-property">env</span>.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;xx&quot;</span>);<br>    <span class="hljs-title function_">ajaxFetch</span>(options)<br>    <span class="hljs-title function_">ajaxRequest</span>(options)<br>    <span class="hljs-title function_">myAction</span>(options,page)<br>    <span class="hljs-title function_">myAction2</span>(options,page)<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(&#123;<br>        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span> ,<br>        <span class="hljs-attr">data</span>: &#123;<br>            <span class="hljs-attr">status</span>: <span class="hljs-number">0</span><br>        &#125;<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>xjs文件可以按照普通的ESM模块文件的格式进行编写。我们通过在注释区增加<code>@x:gen-extends</code>为它增加了编译期动态生成的能力（这一能力在工作流编辑器的动态生成中会使用）。</p>
+<p><code>export</code>的函数是暴露给外部调用的接口函数。<code>import</code>调用会被转化为SystemJs的dependency。这里有一个特殊处理，对于<code>/parts/</code>目录下的文件，我们会调用rollup把它的代码和主文件的代码打包在一起，即<code>parts</code>下的文件认为是内部实现文件，不会暴露为外部可访问的js库。<br>打包后生成的结果参见文件 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-auth/nop-auth-app/_dump/nop-app/nop/auth/pages/DemoPage/demo.lib.js">demo.lib.js</a></p>
+<p>除了<code>action</code>调用之外，外部库函数可以用在一切允许嵌入js脚本的地方，为此我们提供了另一个前缀<code>@fn:</code>，使用它的时候需要明确传递函数参数（<code>action</code>的函数参数已经约定为<code>options</code>,<code>page</code>）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-string">&quot;onClick&quot;</span>:<span class="hljs-string">&quot;@fn:demo.myListener(event,props)&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>重新思考一下<code>onClick</code>的调用过程，我们会发现根据函数名查找到函数实现体的过程很类似于DOM组件的事件冒泡处理过程。事件冒泡时传递的是事件名，逐层向上查找，找到响应函数后处理。AMIS的<code>action</code>响应处理过程是由每个组件检查自己的<code>handleAction</code>是否可以处理对应的<code>actionType</code>，如果不能处理，则调用父组件传入的<code>onAction</code>来进行处理。</p>
+<p><strong>如果我们直接约定向上传递的事件名就是函数名，则事件冒泡处理的过程可以被看作是一个在词法作用域中解析函数名的过程</strong>。在不同层级引入的<code>xui:import</code>相当于是创建了不同的词法作用域，我们总是在最近的词法作用域中查找对应的函数，如果未找到，则继续向上在父作用域中查找。</p>
+<h2 id="1-4-GraphQL简化"><a href="#1-4-GraphQL简化" class="headerlink" title="1.4 GraphQL简化"></a>1.4 GraphQL简化</h2><p>GraphQL总是需要指定返回字段列表，但是对于一个低代码平台来说，表单中具有哪些字段是一件可以根据模型分析得到的事情，所以我们可以根据表单模型自动推定它需要哪些字段而不需要手工指定。</p>
+<p>Nop平台为AMIS增加了一个扩展，使得我们可以通过如下语法构造GraphQL请求</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-attr">url</span>: <span class="hljs-string">&quot;@graphql:NopAuthUser__get/&#123;@formSelection&#125;?id=$id&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>具体介绍可以参见<a href="../../graphql/graphql-java/">graphql-java.md</a></p>
+<h2 id="1-5-多语言国际化"><a href="#1-5-多语言国际化" class="headerlink" title="1.5 多语言国际化"></a>1.5 多语言国际化</h2><p>AMIS的JSON格式，可以很容易的被读取和处理。因此很多结构变换工作完全可以脱离AMIS框架，由后端进行统一的处理。<br>Nop平台中对JSON提供了统一的i18n字符串替换机制，它规定了如下两种方式：</p>
+<ol>
+<li><p>使用前缀引导语法识别并替换所有具有<code>@i18n:</code>的值</p>
+</li>
+<li><p>为每个需要被国际化的key，增加对应的<code>@i18n:key</code>属性<br>例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br><span class="hljs-attr">label</span>: <span class="hljs-string">&quot;@i18n:common.batchDelete|批量删除&quot;</span><br>&#125;<br>或者<br>&#123;<br><span class="hljs-attr">label</span>: <span class="hljs-string">&quot;批量删除&quot;</span><br><span class="hljs-string">&quot;@i18n:label&quot;</span> : <span class="hljs-string">&quot;common.batchDelete&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="1-6-权限控制"><a href="#1-6-权限控制" class="headerlink" title="1.6 权限控制"></a>1.6 权限控制</h2><p>Nop平台规定了<code>xui:roles</code>和<code>xui:permissions</code>等权限相关的属性，在接收到JSON格式的页面数据之后，会自动验证权限属性是否满足，并删除所有不满足权限要求的节点。这一处理过程在JSON结构上进行，不涉及到任何前端框架特有的知识。</p>
+<h2 id="1-7-Vue组件集成"><a href="#1-7-Vue组件集成" class="headerlink" title="1.7 Vue组件集成"></a>1.7 Vue组件集成</h2><p>AMIS底层是基于React技术开发，而Nop平台的前端主要基于Vue3.0技术开发，为了便于集成第三方的vue组件, Nop平台提供了一个通用的包装组件。在AMIS的配置文件中我们可以这样使用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;vue-form-item&quot;</span>,<br>  <span class="hljs-string">&quot;vueComponent&quot;</span>: <span class="hljs-string">&quot;Vue组件名&quot;</span>,<br>  <span class="hljs-string">&quot;props&quot;</span>: &#123;<br>    传给vue组件的属性<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-8-复杂GraphQL调用"><a href="#1-8-复杂GraphQL调用" class="headerlink" title="1.8 复杂GraphQL调用"></a>1.8 复杂GraphQL调用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">api:&#123;<br>  url: &#x27;@graphql:query($id:String)&#123; NopAuthUser_get(id:$id)&#123;nickName&#125;&#125;&#x27;,<br>  data: &#123;<br>    id: &quot;3&quot;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过<code>@graphql:</code>前缀来表示graphql请求，此时需要使用完整的graphql语法，参数需要指定类型。 通过<code>data</code>属性可以传递graphql请求所需的<code>variables</code>参数。</p>
+<h2 id="使用Vue3实现AMIS控件"><a href="#使用Vue3实现AMIS控件" class="headerlink" title="使用Vue3实现AMIS控件"></a>使用Vue3实现AMIS控件</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> appva <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../../views/breadcrumb_example/Elbutton.vue&#x27;</span><br> <span class="hljs-keyword">function</span> <span class="hljs-title function_">CustomComponent</span>(<span class="hljs-params">props</span>) &#123;<br>    <span class="hljs-keyword">let</span> dom = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useRef</span>(<span class="hljs-literal">null</span>);<br>    <span class="hljs-title class_">React</span>.<span class="hljs-title function_">useEffect</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">var</span> app = <span class="hljs-title function_">createApp</span>(&#123; <span class="hljs-attr">render</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">h</span>(appva) &#125;)<br>      app.<span class="hljs-title function_">mount</span>(dom.<span class="hljs-property">current</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> app.<span class="hljs-title function_">unmount</span>()<br>    &#125;);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>, &#123;<br>      <span class="hljs-attr">ref</span>: dom<br>    &#125;);<br>  &#125;<br>  amisLib.<span class="hljs-title class_">Renderer</span>(&#123;<br>    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/(^|\/)my-custom/</span><br>  &#125;)(<span class="hljs-title class_">CustomComponent</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
+<li>缺少一种通用的方案，对前台控件的值进行自定义转换</li>
+<li>缺少一种通用的方案，可以通过弹出框来编辑指定字段的值。</li>
+</ol>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/xui/amis.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

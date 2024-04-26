@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>业务开发如何才能独立于框架 - Nop</title>
+
+
+  <meta property="og:title" content="业务开发如何才能独立于框架">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">业务开发如何才能独立于框架</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>在<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/645412474">如何评价一种框架技术的好坏</a>一文中，我提到一个概念，<strong>框架中立性</strong>（framework agnostic），并指出，<strong>最理想的框架，应该是在开发业务代码时完全意识不到它存在的框架</strong>。有些人读后提出疑问：就目前而言，没有任何业务开发完全独立于框架，这个概念有什么意义？讨论群中有热心同学回复到：</p>
+<blockquote>
+<p>软件开发依赖框架是因为要用到框架提供的输入输出，事件回调，依赖注入，外部数据读写，上下文等，大多数都是程序运行依赖的副作用。如果做一个业务的时候，按照一个库去设计，将所有的副作用都显式的声明为接口和上下文对象， 有个中间层去衔接框架和设计出来的业务库，那么这个业务库就可以不依赖框架了</p>
+</blockquote>
+<p>有人试图反驳：那这种情况不还是制定一种内部标准，既然如此，我用spring的标准又有什么问题？关于这个问题的解答有点微妙，需要有一定的精细概念的分辨能力才能够理解，在这里我简单做一些概念辨析。</p>
+<h2 id="一-最小化信息表达"><a href="#一-最小化信息表达" class="headerlink" title="一. 最小化信息表达"></a>一. 最小化信息表达</h2><blockquote>
+<p>framework agnosticism allows create technology solutions that are independent of any <strong>predefined</strong> frameworks or platforms.</p>
+</blockquote>
+<p>首先，我们需要认识到框架中立是最终表现出来的一种结果，并不一定是我们明确追求的目标。我们应该追求的第一个目标是<strong>如何实现信息的最小化表达</strong>。</p>
+<p><strong>最小化的表达一定是业务特定的</strong>。本质上，业务逻辑是技术中立的，它必然是可以独立于任何框架被表达、被实现，因此如果剥离了所有额外的信息，剩下的概念就只能是业务领域内部的概念。比如说</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">void activateCard(HttpServletRequest req)&#123;<br>    String cardNo = req.getParameter(&quot;cardNo&quot;);<br>    ...<br>&#125;<br><br>void activateCard(CardActivateRequest req)&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对比上面两个函数，第一个函数的表达不是最小化的，因为它引入了额外的Http上下文信息，而第二个函数的表达只使用了专门针对当前业务定制的CardActivateRequest对象信息。</p>
+<p>如何判断我们实现了最小化表达？第一个检测手段就是单元测试。执行单元测试所作的准备工作都是直接和当前的业务逻辑相关吗？比如说，如果业务函数不依赖数据库，那么在不启动数据库的情况下可以测试吗？在不启动Web环境的情况下可以测试吗？难道同样的业务逻辑不能在批处理环境中执行吗，它为什么要依赖Web服务器的存在？</p>
+<p>在Nop平台中，不仅仅业务实现代码的信息表达是最小化的，底层引擎的表达也是最小化的。例如NopGraphQL引擎可以脱离Http环境进行测试</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">GraphQLRequestBean</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> ,,,<br><span class="hljs-type">IGraphQLExecutionContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> graphQLEngine.newGraphQLContext(request);<br><span class="hljs-type">GraphQLResponsebean</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> graphQLEngine.executeGraphQL(ctx);<br></code></pre></td></tr></table></figure>
+
+<p>一般在测试Web框架层面的功能时，我们要么通过mock机制提供虚拟的Web运行时环境，要么启动真实的Web服务器，占用服务器端口，启动线程池。但是NopGraphQL引擎的信息表达是最小化的，它只是接收POJO的请求对象，派发服务请求逻辑并执行结果数据剪裁，返回POJO的响应对象，不需要Web服务器的知识，也不需要内置线程池。正是因为这种最小化的表达，整个NopGraphQL引擎以及通过这个引擎实现的业务代码都可以脱离Web运行时环境运行，可以直接发布为批处理服务、消息队列处理服务、GRpc服务等。</p>
+<h2 id="二-最小化表达必然是描述式的"><a href="#二-最小化表达必然是描述式的" class="headerlink" title="二. 最小化表达必然是描述式的"></a>二. 最小化表达必然是描述式的</h2><p>最小化当前的信息表达，从反方向理解，就是最大化未来可能出现的信息表达。如果表达是最小化的，那么我们必然就只会描述我们希望达到的目标，而省略为了达到目标所需的各类执行细节信息，例如使用什么方式达到、按照什么样的执行顺序达到等。也就是说，我们会尽可能的延迟做出具体的技术决策，尽可能的延迟表达与具体执行相关的信息。因此，最小化的信息表达必然是描述式的，执行细节信息应该在运行时再指定，或者由底层运行时引擎根据某种最优化策略自动推导得到。</p>
+<p>首先看一下传统的MVC框架</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyController</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Controller</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title function_">findAccount</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> &#123;<br>       ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用传统的框架编写业务代码时，我们总是围绕着框架的概念进行编程，大量信息处理都要触及到Controller&#x2F;HttpServletRequest&#x2F;ModelAndView这种框架内置的结构，而且业务代码与框架代码的纠缠是由代码具体的执行路径来确定的。</p>
+<p>现在的Web框架普遍通过描述式的元数据来向程序注入框架相关的信息，框架与业务代码不再直接接触。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@Path(&quot;/account/:id&quot;)<br>@GET<br>MyResponse findAccount(@PathParam(&quot;id&quot;) String id)&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是如果和Nop平台的实现比较，上面的表达仍然不是最小化的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@BizQuery<br>MyResponse findAccount(@Name(&quot;id&quot;)String id)&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@Path</code>和<code>@GET</code>这种注解看起来是一种描述式信息，但是它们仍然引入了与当前业务不相关的信息假定：URL访问路径以及HTTP方法等信息仅对Web框架有用，如果我们现在改用GRpc服务协议，这些信息就是多余的。<strong>在Nop平台的表达中，所有的注解所指向的都是业务领域内的信息，而不是指向领域外的技术框架。</strong>。<code>@BizQuery</code>是对findAccount方法内部的领域信息的一种补充标记，而不是专门为外部的某个技术框架服务的（<strong>注意，这一点很微妙，我再强调一下，@BizQuery这一信息指向的是业务领域而不是外部技术框架</strong>）。同样的，<code>@Name(&quot;id&quot;)</code>这个注解也只是为函数参数补充名称信息，它与任何外部的使用方式都无关，它对于任何的技术框架来说都是一种可用的信息。</p>
+<p>正是因为这种最小化的表达，所有的信息都与领域逻辑有关，所以当我们把服务函数发布为GRpc服务时，<code>@BizQuery</code>和<code>@Name</code>属性所表达的信息都可以直接被使用。我们无需做任何额外的配置，就可以直接将同一个服务函数暴露为多种协议接口。</p>
+<h2 id="三-描述式信息之间的形式变换"><a href="#三-描述式信息之间的形式变换" class="headerlink" title="三. 描述式信息之间的形式变换"></a>三. 描述式信息之间的形式变换</h2><p>在说到框架中立这个概念的时候，我也会经常混用<strong>框架无关</strong>这个说法。有些人听了之后可能会有疑问：框架无关最后不还是自己写一套标准协议，不耦合到别人的框架上最后不还是耦合到自己自制的框架上？没有框架怎么可能实现各个独立实体之间的协调呢？</p>
+<p>要真正理解这里的微妙之处，需要有一点近现代数学的知识（大概是19世纪末的内容）。在现代数学中，我们说到A就是B的时候，它并不意味着A和B是同一的，并不意味着A和B是完完全全、一模一样的东西，而是说A和B之间可以通过某种等价运算进行相互转化。</p>
+<p>$$<br>A \cong B \Longrightarrow A &#x3D; f(B), B &#x3D; g(A)<br>\Rightarrow f\circ g &#x3D; I_A, g\circ f &#x3D; I_B<br>$$</p>
+<p>同样的，当我们说到业务代码与框架无关的时候，并不意味着业务代码与任何框架都没有关系，而是说它<strong>与特定的某一个框架的运行时无关</strong>。我们使用框架A表达的代码，在编译期可以通过某种形式变换自动的变换为适配另外一个框架B，这个框架B甚至可以目前还没有被编写出来！</p>
+<p>举例来说，在Fiegn RPC框架中我们即可以使用JAX-RS注解来标注服务函数，也可以使用SpringMVC注解来标注。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(name = &quot;springMvcExampleClient&quot;, url = &quot;http://example.com&quot;)</span>  <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">SpringMvcExampleClient</span> &#123;  <br><br>    <span class="hljs-meta">@GetMapping(&quot;/hello&quot;)</span>  <br>    String <span class="hljs-title function_">hello</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;message&quot;)</span> String message)</span>;  <br>&#125;<br><br><span class="hljs-meta">@FeignClient(name = &quot;jaxRsExampleClient&quot;, url = &quot;http://example.com&quot;)</span>  <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">JaxRsExampleClient</span> &#123;  <br><br>    <span class="hljs-meta">@GET</span>  <br>    <span class="hljs-meta">@Path(&quot;/hello&quot;)</span>  <br>    <span class="hljs-meta">@Produces(MediaType.TEXT_PLAIN)</span>  <br>    String <span class="hljs-title function_">hello</span><span class="hljs-params">(<span class="hljs-meta">@QueryParam(&quot;message&quot;)</span> String message)</span>;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>原则上在内部实现上，Feign底层的实现只要针对一种注解形式编写，对于另一种注解形式只需要进行一个形式变换，转换到已经支持的格式上即可。我们并不需要针对每种注解形式都分别编写一种不同的运行时框架支持。</p>
+<p>需要注意的是，这种转换可以在编译期完成，而且完全是一种纯形式层面的变换，不涉及到任何运行时状态的管理问题，因此它<strong>本质上是一种双向可逆的数学变换</strong>。</p>
+<p>总结一下，<strong>如果我们在实现框架的时候，总是要求最小化的信息表达，并且最终达到了某种全局最小值，那么这时所表达的信息内容必然会具有某种唯一性。因为如果不唯一，就可以继续比较哪种表达信息量更小，从而选择信息量更小的那个解。如果多个不同的框架都实现了最小化信息表达，这种最小化信息表达的唯一性就保证了不同的框架表达形式之间必然是可以进行等价变换的（可逆变换）</strong>。如果我们在框架设计中，总是允许插入一个形式变换适配层，再结合最小化信息表达原则，那么很自然的就可以实现框架中立的效果。</p>
+<p>这里还需要解释一下，最小化信息表达仅仅是约束了业务层的表达结构，并不意味着不同的框架具有相同的能力。实际上不同的框架可以采用不同的实现技术和实现架构，在性能、适用场景等方面都存在这本质性区别，但是业务层的代码却可以不做修改或仅需要执行一遍编译期预处理，就可以迁移到不同的运行时框架上执行。因为最小化的业务表达是描述式的，它具体执行的效果由运行时框架最终决定，甚至可能出现同样的业务表达，在不同的运行时框架上执行时实际语义不同的情况。举个例子，我们可以表达一个数据处理函数，它可以在一个嵌入式的本地运行时框架执行，此时它具有一个简单的数据处理的语义，但是我们也可以把它放到一个分布式的大数据运行时框架执行，此时大数据框架会自动引入大量与分布式相关的执行语义和状态细节。</p>
+<p>必须要承认的是，目前的主流框架并没有清晰的意识到以上构造原理，因此无法通过自动化的形式变换来实现框架中立。例如，虽然Feign RPC同时支持JAX-RS注解和SpringMVC注解形式，在服务端的SpringMVC实现中，却无法通过简单的方式引入JAX-RS注解，一般情况下我们都被锁定在SpringMVC的原生注解形式中。</p>
+<p>只有Nop平台的实现真正遵循了最小化信息表达原则，它的实现也演示了如何实现信息在不同形式之间的自由转换和流动，这些设计都远远超越了业内主流框架的能力。</p>
+<p>有人可能会提出一个疑问，最小化信息表达只是表达了部分信息，那些与框架相关的信息比如优化配置在哪里表达呢？在Nop平台中，信息结构具有良好的规划，相当于是建立了无所不在的领域坐标系，并且通过各种Delta差量机制可以在指定坐标处插入任意信息，所以我们可以将框架相关的配置独立存放，然后再通过坐标系定位合并到总体信息结构中。</p>
+<h2 id="四-具体如何实现框架中立？"><a href="#四-具体如何实现框架中立？" class="headerlink" title="四. 具体如何实现框架中立？"></a>四. 具体如何实现框架中立？</h2><p>前几节的内容主要是理论分析，具体如何实现框架中立，还是存在一些具体的经验和方法。讨论群中有位同学提出了一个很好的见解：</p>
+<blockquote>
+<p>具体来说，我们需要以框架中立的方式处理以下内容：</p>
+<ol>
+<li>数据(数据输入输出与存储)</li>
+<li>控制(命令、事件等)</li>
+<li>副作用</li>
+<li>上下文</li>
+</ol>
+</blockquote>
+<h2 id="1-输入和输出"><a href="#1-输入和输出" class="headerlink" title="1. 输入和输出"></a>1. 输入和输出</h2><p>在数学层面上理解，最小化信息表达会导致与外界相关的信息都集中在边界层中，写成公式就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">output = biz_process(input)<br></code></pre></td></tr></table></figure>
+
+<p>在理想情况下，biz_process可以应用到所有可能的应用场景中，也就是说我们只需要检查一下局部条件，发现可以满足input和output结构要求，那么就可以在处理过程中插入biz_process这个步骤。biz_process与外部世界的所有依赖和约束关系都体现为边界元素(input&#x2F;output)的适配条件。</p>
+<p>input和output要做到框架中立，等价于要求它们不包含特定的运行时依赖，最简单的方式是实现为POJO对象，从而在所有的框架中都是按照同样的方式去操纵。但是也不一定必须实现为POJO。举例来说，大数据领域我们可以选择input和output采用Arrow数据格式，这是一种二进制的列存格式。Arrow标准中定义了一组抽象操作，在不同的程序语言中由对应的SDK提供这种抽象操作的具体实现。</p>
+<p>Nop平台提供了XML&#x2F;JSON&#x2F;Java&#x2F;Excel等多种信息表示形式之间的双向转换机制，并且通过NopORM统一了存储层的数据表示形式，这使得我们在编写业务代码的时候基本只需要针对纯粹的业务对象进行编写。</p>
+<blockquote>
+<p>NopORM的实体定义本质上也是框架中立的，也就是说如果JPA设计良好，我们也可以直接集成JPA作为底层运行时来存取Nop平台中的OrmEntity对象。</p>
+</blockquote>
+<h2 id="2-事件处理"><a href="#2-事件处理" class="headerlink" title="2. 事件处理"></a>2. 事件处理</h2><p>事件处理传统的做法是向组件传入事件响应函数，然后在组件内部回调这个函数。这个过程与异步回调函数的处理过程本质上是一致的。目前在异步处理领域，大部分现代框架都放弃了回调函数的做法，转向了Promise抽象和async&#x2F;await语法。类似的，对于事件处理，我们同样可以将事件触发抽象为一个Stream流对象，然后在output中返回这个流对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Callback&lt;E&gt; ==&gt; Promise&lt;E&gt;<br><br>EventListener&lt;E&gt; ==&gt; Stream&lt;E&gt;<br></code></pre></td></tr></table></figure>
+
+<p>所以，事件处理本质上可以化归为Output的一种特殊情况来处理。在系统中有必要引入标准化的流处理接口，例如Java中的Flow接口。</p>
+<h2 id="3-副作用"><a href="#3-副作用" class="headerlink" title="3. 副作用"></a>3. 副作用</h2><p>仅仅将业务逻辑与外部世界的相互纠缠理解为输入和输出，很多时候都过分简单了一些。更精细的描述可以表达为如下公式：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">[output, side_effect] = biz_process(input, context)<br></code></pre></td></tr></table></figure>
+
+<p>副作用的问题是它一般具有执行语义，很容易引入对特定的运行时环境的依赖。例如，在一般的Web框架中实现文件下载，我们会写</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">void</span> <span class="hljs-title function_">download</span>(<span class="hljs-params">HttpServletResponse response</span>) &#123;<br>    <span class="hljs-title class_">OutputStream</span> out = response.<span class="hljs-title function_">getOutputStream</span>();<br>    <span class="hljs-title class_">InputStream</span> <span class="hljs-keyword">in</span> = ...<br>    <span class="hljs-title class_">IoHelper</span>.<span class="hljs-title function_">copy</span>(<span class="hljs-keyword">in</span>, out);<br>    out.<span class="hljs-title function_">flush</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为我们需要使用运行时框架所提供的response对象，导致我们的业务代码和Servlet接口绑定，这样的话我们编写的文件下载的业务代码就无法自动的兼容Spring和Quarkus这两种运行时框架了。</p>
+<blockquote>
+<p>Quarkus一般使用RESTEasy作为Web层，它不支持Servlet接口</p>
+</blockquote>
+<p>为了解决这个问题，一个标准化的解决方案来自于函数式编程：我们可以不实际执行副作用，而是把副作用所对应的信息封装为一个描述式对象作为返回值返回。例如，在Nop平台中，文件下载采用如下方式实现：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">@<span class="hljs-title class_">BizQuery</span><br>public <span class="hljs-title class_">WebContentBean</span> <span class="hljs-title function_">download</span>(<span class="hljs-params">@Name(<span class="hljs-string">&quot;fileId&quot;</span>) <span class="hljs-built_in">String</span> fileId,</span><br><span class="hljs-params">                               @Name(<span class="hljs-string">&quot;contentType&quot;</span>) <span class="hljs-built_in">String</span> contentType,                                            IServiceContext ctx</span>) &#123;<br>    <span class="hljs-title class_">IFileRecord</span> record = <span class="hljs-title function_">loadFileRecord</span>(fileId, ctx);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">StringHelper</span>.<span class="hljs-title function_">isEmpty</span>(contentType))<br>        contentType = <span class="hljs-title class_">MediaType</span>.<span class="hljs-property">APPLICATION_OCTET_STREAM</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebContentBean</span>(contentType, record.<span class="hljs-title function_">getResource</span>(),     <br>              record.<span class="hljs-title function_">getFileName</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Nop平台的做法是并不实际执行下载动作，而是把待下载的文件包装为WebContentBean返回，然后在框架层统一识别WebContentBean，使用不同运行时框架所提供的下载机制去执行具体的下载过程。<strong>在业务层面上，我们<br>只需要表达“需要下载某个文件”这一意图即可，没有必要真的由自己执行下载动作</strong>。</p>
+<p>应用代码中另外一种常见的副作用是数据保存操作，每次执行dao.save都会产生数据库交互，很多情况下这会破坏业务函数的可组合性，并有可能导致潜在的数据更新冲突。比如说，在一个服务处理函数的执行过程中，我们在三个地方修改了某个实体上的属性，原则上只要保存一次就可以，但是如果调用了三次dao，就会导致三次数据库访问。</p>
+<p>Nop平台的解决方式是使用NopORM引擎引入OrmSession的概念。在业务逻辑代码中可以完全删除所有的<code>dao.save/dao.update</code>这样的保存函数，在数据库事务提交前，由ORM框架检查是否有实体被修改，如果有，则自动计算差量更新信息，生成update&#x2F;insert&#x2F;delete语句来实现内存中状态与数据库持久化状态的同步。本质上，这是利用UnitOfWork模式使用Session来缓存副作用的实际执行。</p>
+<h2 id="4-上下文"><a href="#4-上下文" class="headerlink" title="4. 上下文"></a>4. 上下文</h2><p>传统框架中的上下文对象是最容易引入运行时框架依赖的地方。一般的框架作者很难避免诱惑在上下文对象上增加一些通用方法，这直接导致框架锁定。例如 HttpServletRequest对象提供了具有执行语义的Dispatcher对象</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">// 获取RequestDispatcher对象，指定要转发的资源路径<br>        RequestDispatcher dispatcher =           request.getRequestDispatcher(&quot;/targetServlet&quot;);<br><br>        // 调用forward方法进行转发<br>        dispatcher.forward(request, response);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>这直接导致HttpServletRequest对象与Servlet容器环境绑定，我们很难在应用代码中自己创建一个Request对象来使用。我们编写的业务代码中如果无意中引入了HttpServletRequest依赖，那么它就很难在其他框架的上下文环境中运行。</p>
+<p>Nop平台的做法是<strong>弱化上下文对象的行为语义，将它退化为一个通用的数据容器</strong>。具体来说，Nop平台统一使用IServiceContext来作为服务上下文对象（不同的引擎都采用这一个上下文接口），但是它没有特殊的执行语义，本质上就是一个可以随时创建和销毁的Map容器。</p>
+<p>此外，Nop平台通过NopIoC容器提供统一的依赖注入机制。依赖注入可以看作是对上下文环境对象的一种按需使用，从而避免一次性获取到上下文的所有可执行信息，产生不必要的依赖。NopIoC使用<code>@Inject</code>等Java标准注解，借此实现框架无关的依赖注入功能。</p>
+<p>必须要说明的是，现有的框架设计大部分都不满足框架中立的设计要求。以Spring为例，虽然它最早的时候号称是描述式编程，面向POJO，但是发展到今天，它已经引入了太多特殊的接口依赖和隐式的执行顺序依赖。特别令人抓狂的是，针对Spring编写的依赖注入配置信息，不仅仅对迁移到其他IoC容器无用，甚至很有可能还会阻塞我们迁移的道路。比如说，我们在private变量上标记了<code>@Autowired</code>注解，通过它来实现依赖注入。这导致如果我们不使用Spring容器，就压根没有办法对这个bean进行配置了。</p>
+<p>NopIoC的设计回归到了声明式依赖注入容器的初心，它在概念层面确保，使用NopIoC容器所管理的bean永远可以都可以交由其他IoC容器来进行配置。</p>
+<h2 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h2><ol>
+<li><p>按照文中的说法，是否意味着业务代码中不应该直接表达sql逻辑？</p>
+<p>答：是的。在Nop平台中NorORM引擎定义了EQL语法，通过Dialect抽象屏蔽多个数据库之间的差异，并引入面向对象的属性访问语法。除此之外，IEntityDao接口层使用QueryBean等结构表达复杂过滤条件，底层可以运行在Redis&#x2F;ElasticSearch&#x2F;TDengine&#x2F;MongoDB等非关系型数据存储上。我们总是尽量在更高的抽象层次上进行操作，在更高的抽象层面上更容易执行自动化的数学推理。比如前台框架会自动将请求数据包装为QueryBean格式，在规则引擎中可以直接使用QueryBean格式，这些都无需编程实现。如果直接使用SQL语言，大量的结构转换和实现层适配就要自己去完成，而且会阻塞自动推理路径，破坏系统内在的概念一致性。</p>
+</li>
+<li><p>文中的做法是不是和我在某ddd视频里看到过的做法类似？</p>
+<p>作者所提出的解决方案是在可逆计算理论指导下完成的，它要发挥最大作用需要重构底层的所有软件结构，所以Nop平台没有使用现有的开源框架，而是按照可逆计算理论指导从零开始重新实现。目前能够见到的其他实践方案原则上是缺少数学理论指导的，只是由各个架构师根据各人工作经验所作的一些朴素理解，难以保证大范围、整体性的概念一致性，因此无法实现系统化的自动推理。</p>
+</li>
+<li><p>这种最小化表达带来的负担是不是太大了？比如我用kafka，懒得做一层通用mq的抽象了，就是直接调用kafka api。</p>
+<p>这是一种误解。最小化信息表达并不意味着你需要提供一个通用的MQ抽象，通过它来屏蔽Kafka&#x2F;RocketMQ&#x2F;Pulsar等不同消息队列之间的区别。因为要搞清楚这些队列之间的差异性，提出合适的抽象方法来封装通用功能，同时还保留消息队列自身的独特特性，这种设计是很难的。<strong>最小化信息表达的指向是业务领域自身，而不是外部技术框架</strong>。也就是说我们可能搞不清楚多个MQ的所有功能，无法提出一种合适的封装接口，但是我们了解自己的业务需求啊，而且我们的业务所使用到的消息队列的功能肯定只是MQ全部功能中的非常小的一个子集。因此最小化信息表达实际要求的是定义一个接口，它仅包含我们在当前业务中需要使用到的功能，而且这种封装并不需要是通用性的，完全可以是只针对我们自己的业务来定义的。最基本的，它意味着你把所有kafka直接相关的内容写到少数几个类中，把kafka相关的知识屏蔽在面向业务的接口之下。在实际编程实践中，我的发现是凡是到处直接使用kafka的api，不在自己的业务代码中做适量隔离的项目，最后维护成本都更高，一般会缺失合适的配置，甚至出现对kafka的误用，导致业务逻辑出现问题。</p>
+<p>在Nop平台中，我们的做法是提供了IMessageService这样一种通用的封装接口，它为Nop平台提供了数学意义上的单向信息发送和接收能力。但这就是另外一个故事了。</p>
+<p>如果要提供最小化信息表达，我们一定不是去封装消息队列本身，因为每个消息队列都是一系列独特技术决策的组合，它们之间一般并不存在整体性的、公共的统一接口。可行的做法是从业务出发或者从第一性的数学原理出发，提出一系列最小化的功能性要求，然后针对每一个窄小的功能接口，再为每个消息队列提供具体实现。</p>
+</li>
+</ol>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/framework-agnostic.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

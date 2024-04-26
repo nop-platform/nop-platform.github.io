@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>XView视图模型 - Nop</title>
+
+
+  <meta property="og:title" content="XView视图模型">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">XView视图模型</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="功能设计"><a href="#功能设计" class="headerlink" title="功能设计"></a>功能设计</h2><p>XView是与前台框架无关、面向业务领域的前端界面描述。它通过页面(page)、表格(grid)、表单(form)、操作(action)等少量概念来表达前台的核心交互逻辑。最终使用的前台页面<code>page.yaml</code>可以利用<code>x:gen-extends</code>元编程机制根据xview模型来动态生成AMIS页面。</p>
+<p>XView模型将前端界面的构造分解为字段级、表单&#x2F;表格级、页面级。</p>
+<ol>
+<li><code>control.xlib</code>按照数据类型、数据域和编辑模式推断单个字段使用的显示控件</li>
+<li>表单的layout模型控制页面如何布局，在不改变字段控件的情况下可以调整页面布局</li>
+<li>构造页面的使用可以直接引用已定义的表单和表格。</li>
+</ol>
+<h3 id="增删改查标准页面"><a href="#增删改查标准页面" class="headerlink" title="增删改查标准页面"></a>增删改查标准页面</h3><p>一般<code>xxx-web</code>模块在maven打包的时候会执行precompile目录下的代码生成器，根据xmeta来生成web前端的代码,例如<code>nop-auth-web/precompile/gen-page.xgen</code>中</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>// 根据xmeta生成页面文件view.xml和page.yaml<br>codeGenerator.withTplDir(&#x27;/nop/templates/orm-web&#x27;).execute(&quot;/&quot;,&#123; moduleId: &quot;nop/auth&quot; &#125;,$scope);<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>例如根据<code>NopAuthUser.xmeta</code>模型生成的<code>_NopAuthUser.view.xml</code>模型:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">...</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">objMeta</span>&gt;</span>/nop/auth/model/NopAuthUser/NopAuthUser.xmeta<span class="hljs-tag">&lt;/<span class="hljs-name">objMeta</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">controlLib</span>&gt;</span>/nop/web/xlib/control.xlib<span class="hljs-tag">&lt;/<span class="hljs-name">controlLib</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">grids</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">grid</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">cols</span>&gt;</span><br><br>                <span class="hljs-comment">&lt;!--用户名--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userName&quot;</span> <span class="hljs-attr">mandatory</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">sortable</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>                ..<br>                <span class="hljs-comment">&lt;!--生日--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;birthday&quot;</span> <span class="hljs-attr">sortable</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">cols</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">grid</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">grid</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;pick-list&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">grids</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">forms</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;view&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;view&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;查看-用户&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;View User&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br> userName[用户名] nickName[昵称]<br> deptId[部门] openId[用户外部标识]<br> ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;新增-用户&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;Add User&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;edit&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;edit&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;update&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;编辑-用户&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;Edit User&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;查询条件&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;Query Condition&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;asideFilter&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">submitOnChange</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;batchUpdate&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;update&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;修改-用户&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;Update User&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">forms</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">pages</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;main&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">asideFilterForm</span>=<span class="hljs-string">&quot;asideFilter&quot;</span> <span class="hljs-attr">filterForm</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            ...<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;picker&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;pick-list&quot;</span> <span class="hljs-attr">asideFilterForm</span>=<span class="hljs-string">&quot;asideFilter&quot;</span> <span class="hljs-attr">filterForm</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            ...<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">form</span>=<span class="hljs-string">&quot;add&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@mutation:NopAuthUser__save/id&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">simple</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;view&quot;</span> <span class="hljs-attr">form</span>=<span class="hljs-string">&quot;view&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@query:NopAuthUser__get/&#123;@formSelection&#125;?id=$id&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">simple</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">simple</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;update&quot;</span> <span class="hljs-attr">form</span>=<span class="hljs-string">&quot;edit&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">initApi</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@query:NopAuthUser__get/&#123;@formSelection&#125;?id=$id&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@mutation:NopAuthUser__update/id?id=$id&quot;</span> <span class="hljs-attr">withFormData</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">simple</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">pages</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>生成的很多节点上都标记了<code>x:abstract=&quot;true&quot;</code>，它表示该节点是一个虚拟节点，在派生的模型中必须明确声明该节点，才会保留相应内容。这个设计类似于spring beans xml中的abstract属性的设计，即<code>x:abstract</code>表示该节点是作为模板存在的节点。</p>
+<ol>
+<li><code>objMeta</code>表示当前xview模型会使用指定XMeta文件中的字段配置</li>
+<li><code>controlLib</code>控制字段类型如何到前端的具体控件，一般不需要修改。但是如果我们需要针对Mobile使用不同于普通的Web页面组件库来显示，则可以指定一个针对Mobile显示的控件库。</li>
+<li>缺省情况下会生成备选的表格<code>list</code>和<code>pick-list</code>，<code>pick-list</code>是用于弹出选择时使用的列表页面。<code>pick-list</code>上的属性<code>x:prototype=&quot;list&quot;</code>表示<code>pick-list</code>根据兄弟节点<code>list</code>的结构生成，即选择列表页面与普通列表页面是相同的。在派生的xview模型中通过定制<code>pick-list</code>可以定制选择列表页面。</li>
+<li>类似于<code>pick-list</code>与<code>list</code>的关系，新增表单<code>add</code>缺省情况下从<code>edit</code>继承，表示除非特殊定制，新增页面的布局与编辑页面相同。每个表单都有自己对应的编辑模式<code>editMode</code>，这样可以使得新增、修改、选择、查看的时候，同一个字段可以使用不同的控件来显示。</li>
+<li><code>main</code>页面设置了<code>filterForm=&quot;query&quot;</code>, <code>asiderFilterForm=&quot;asideFilter&quot;</code>。这表示如果query表单会作为main页面的查询条件表单。如果配置了<code>asideFilter</code>表单，则会在main页面上通过左侧的side边栏用于显示一部分查询条件。</li>
+</ol>
+<h3 id="表格基本配置"><a href="#表格基本配置" class="headerlink" title="表格基本配置"></a>表格基本配置</h3><p>具体配置选项可以参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xdefs/src/main/resources/_vfs/nop/schema/xui/grid.xdef">grid.xdef</a>元模型定义。</p>
+<h4 id="1-控制列表显示哪些字段，以及字段的顺序"><a href="#1-控制列表显示哪些字段，以及字段的顺序" class="headerlink" title="1. 控制列表显示哪些字段，以及字段的顺序"></a>1. 控制列表显示哪些字段，以及字段的顺序</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">grid</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">cols</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;bounded-merge&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fieldA&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">col</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fieldB&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">col</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">cols</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">grid</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>x:override=&quot;bounded-merge&quot;</code>表示<code>cols</code>子节点的范围限制在当前指定的范围之内，在被继承的基础模型中定义的多余的字段会被自动删除。如果不指定<code>x:override</code>，则缺省为<code>merge</code>模式，执行结果是向基础模型增加字段以及修改字段，除非显式通过<code>x:override=&quot;remove&quot;</code>来表示删除字段。</p>
+<h4 id="2-指定列表字段的表头、宽度、对齐模式等"><a href="#2-指定列表字段的表头、宽度、对齐模式等" class="headerlink" title="2. 指定列表字段的表头、宽度、对齐模式等"></a>2. 指定列表字段的表头、宽度、对齐模式等</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span> <span class="hljs-attr">align</span>=<span class="hljs-string">&quot;right&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fieldA&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;My Field&quot;</span> /&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-指定显式控件"><a href="#3-指定显式控件" class="headerlink" title="3. 指定显式控件"></a>3. 指定显式控件</h4><p>缺省情况下表格字段的显式控件是根据字段类型和表格上指定的<code>editMode</code>来确定，具体使用的控件在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-web/src/main/resources/_vfs/nop/web/xlib/control.xlib">control.xlib</a>中定义。</p>
+<p>如果需要特殊指定显示控件，可以使用<code>gen-control</code>配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fieldA&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>       return &#123;<br>         &#x27;type&#x27;: &#x27;my-control&#x27;<br>       &#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">col</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="表单基本配置"><a href="#表单基本配置" class="headerlink" title="表单基本配置"></a>表单基本配置</h3><p>表单布局使用的DSL参见<a href="../layout/">layout.md</a>。</p>
+<p>表单的配置选项可以参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xdefs/src/main/resources/_vfs/nop/schema/xui/form.xdef">form.xdef</a>元模型定义。</p>
+<h2 id="常见功能配置"><a href="#常见功能配置" class="headerlink" title="常见功能配置"></a>常见功能配置</h2><h3 id="1-左侧以树形结构展示过滤条件"><a href="#1-左侧以树形结构展示过滤条件" class="headerlink" title="1. 左侧以树形结构展示过滤条件"></a>1. 左侧以树形结构展示过滤条件</h3><p>例如<code>NopAuthUser</code>对应的用户管理页面，它左侧是单位树，点击单位后，会按照单位过滤右侧的用户列表。用户列表已有的查询条件和左侧单位树的查询条件会合并在一起传到后台。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;asideFilter&quot;</span> <span class="hljs-attr">submitOnChange</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>        ==dept[部门]==<br>        !deptId<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;deptId&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">input-tree</span></span><br><span class="hljs-tag">                        <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;@query:NopAuthDept__findList/value:id,label:deptName,children @TreeChildren(max:5)?filter_parentId=__null&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>只需要增加<code>id=&quot;asideFilter&quot;</code>的form。<code>submitOnChange</code>表示点击后立刻提交查询。</p>
+<h3 id="2-列表数据具有嵌套的父子关系"><a href="#2-列表数据具有嵌套的父子关系" class="headerlink" title="2. 列表数据具有嵌套的父子关系"></a>2. 列表数据具有嵌套的父子关系</h3><p>例如单位树，<code>父单位-子单位</code>构成Tree结构。</p>
+<p>按照前台AMIS组件的要求，只要后台返回的数据中具有<code>children</code>字段，它就会自动按照Tree结构展开。Nop平台为GraphQL增加了Tree结构扩展，可以很容易的通过<code>@TreeChildren</code>这个指令来指定Tree数据的递归获取。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">url:</span> <span class="hljs-string">&quot;@query:NopAuthDept__findList/value:id,label:deptName,children @TreeChildren(max:5)?filter_parentId=__null&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上调用表示调用后台的<code>NopAuthDept__findList</code>函数，要求返回<code>children</code>字段，通过<code>@TreeChildren</code>指令指定最多递归返回5层的数据。</p>
+<p><code>filter_parentId=__null</code>表示按照<code>parentId=null</code>条件过滤得到根节点列表。</p>
+<h3 id="3-把多个已有的页面采用Tab页的形式组织成一个复合页面"><a href="#3-把多个已有的页面采用Tab页的形式组织成一个复合页面" class="headerlink" title="3. 把多个已有的页面采用Tab页的形式组织成一个复合页面"></a>3. 把多个已有的页面采用Tab页的形式组织成一个复合页面</h3><p>参见<code>NopAuthDept.view.xml</code>中部门管理功能所使用的<code>tab</code>页</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">tabs</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;tabsView&quot;</span> <span class="hljs-attr">tabsMode</span>=<span class="hljs-string">&quot;vertical&quot;</span> <span class="hljs-attr">mountOnEnter</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">unmountOnExit</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tab</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;main&quot;</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;main&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;@i18n:common.treeView&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tab</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;@i18n:common.listView&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">tabs</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-为列表页面增加多个查询条件"><a href="#4-为列表页面增加多个查询条件" class="headerlink" title="4. 为列表页面增加多个查询条件"></a>4. 为列表页面增加多个查询条件</h3><p>参考<code>NopAuthUser.view.xml</code>中，只要在<code>id=&quot;query&quot;</code>的form中增加字段即可。缺省生成的crud页面会使用<code>filterForm</code>属性来引用<code>query</code>表单</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>        userName gender nickName phone status<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">pages</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">filterForm</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">...</span> &gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pages</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>缺省情况下字段总是采用等于条件进行查询，可以在<code>NopAuthUser.xmeta</code>文件中定制属性设置，指定查询算符。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userName&quot;</span> <span class="hljs-attr">allowFilterOp</span>=<span class="hljs-string">&quot;eq,contains&quot;</span> <span class="hljs-attr">xui:defaultFilterOp</span>=<span class="hljs-string">&quot;contains&quot;</span>/&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>以上条件表示<code>userName</code>允许按照<code>eq</code>和<code>contains</code>两种关系过滤算符进行查询，<code>eq</code>表示相等条件，<code>contains</code>表示包含，通过<code>like</code>来实现。<code>xui:defaultFilterOp</code>表示缺省过滤算符采用<code>contains</code>。</p>
+<p>所有支持的过滤算符在<code>FilterOp.java</code>类中定义，常用的有<code>eq</code>、<code>ne</code>、<code>gt</code>、<code>ge</code>、<code>lt</code>、<code>le</code>、<code>contains</code>、<code>in</code>、<code>startsWith</code>、<code>endsWith</code>等</p>
+<h3 id="5-列表页面没有行操作按钮，希望隐藏操作按钮列"><a href="#5-列表页面没有行操作按钮，希望隐藏操作按钮列" class="headerlink" title="5. 列表页面没有行操作按钮，希望隐藏操作按钮列"></a>5. 列表页面没有行操作按钮，希望隐藏操作按钮列</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xxx&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">noOperations</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-增加一个页面，与缺省的增删改查页面类似，但是列表的查询条件不同"><a href="#6-增加一个页面，与缺省的增删改查页面类似，但是列表的查询条件不同" class="headerlink" title="6. 增加一个页面，与缺省的增删改查页面类似，但是列表的查询条件不同"></a>6. 增加一个页面，与缺省的增删改查页面类似，但是列表的查询条件不同</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;main&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">x:prototype-override</span>=<span class="hljs-string">&quot;replace&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@query:NopAuthDept__findPage/&#123;@pageSelection&#125;&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p><code>x:prototype</code>表示从兄弟节点继承。 <code>x:prototype-override=replace</code>表示使用本节点覆盖得来的<code>table</code>节点，缺省情况下是合并(<code>merge</code>)而不是完全覆盖。</p>
+<h3 id="7-点击按钮，弹出一个对话框，填写完毕后执行后台操作，关闭对话框，并刷新原页面"><a href="#7-点击按钮，弹出一个对话框，填写完毕后执行后台操作，关闭对话框，并刷新原页面" class="headerlink" title="7. 点击按钮，弹出一个对话框，填写完毕后执行后台操作，关闭对话框，并刷新原页面"></a>7. 点击按钮，弹出一个对话框，填写完毕后执行后台操作，关闭对话框，并刷新原页面</h3><p>参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-app-mall/blob/master/app-mall-web/src/main/resources/_vfs/app/mall/pages/LitemallGoods/LitemallGoods.view.xml">LitemallGoods.view.xml</a></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;role-users&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;simple-list&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">listActions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;select-user-button&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;@i18n:common.selectUser&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;select-role-users&quot;</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;md&quot;</span> <span class="hljs-attr">noActions</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">listActions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;select-role-users&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;pick-list&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;@i18n:common.selectUser&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">listActions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;batch-add-user-button&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;@i18n:common.submit&quot;</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;primary&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">batch</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">close</span>=<span class="hljs-string">&quot;select-role-users&quot;</span> <span class="hljs-attr">reload</span>=<span class="hljs-string">&quot;role-users-grid&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@mutation:NopAuthRole__addRoleUsers&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">data</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">roleId</span>&gt;</span>$roleId<span class="hljs-tag">&lt;/<span class="hljs-name">roleId</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">userIds</span>&gt;</span>$ids<span class="hljs-tag">&lt;/<span class="hljs-name">userIds</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">data</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">api</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">listActions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>action</code>配置如果具有<code>dialog</code>子节点，则表示使用弹出对话框显示。<code>dialog</code>上的<code>page</code>属性可以直接引用已经定义好的页面。如果是完整路径则对应于外部定义的完整页面，如果是<code>page</code>的名称，则表示引用当前XView模型中定义的页面。</li>
+<li><code>dialog</code>的<code>noActions=&quot;true&quot;</code>表示不使用对话框内置的提交、取消按钮。</li>
+<li><code>action</code>上<code>batch=&quot;true&quot;</code>表示是针对批量选择的列表条目的操作。<code>close</code>表示执行完当前操作后会关闭窗口。而<code>reload</code>表示会重新加载指定名称的表格，即<code>role-users</code>页面中的增删改查表格。</li>
+</ul>
+<h3 id="8-将子表数据和主表一起提交"><a href="#8-将子表数据和主表一起提交" class="headerlink" title="8. 将子表数据和主表一起提交"></a>8. 将子表数据和主表一起提交</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;edit&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;products&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 可以引用外部view模型中的grid来显示子表 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/app/mall/pages/LitemallGoodsProduct/LitemallGoodsProduct.view.xml&quot;</span></span><br><span class="hljs-tag">              <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;ref-edit&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>为子表属性增加一个view配置，指定用哪个表格去编辑该子表的数据。XView模型会自动分析view配置，得到表格字段列表，合并到当前表单所对应的GraphQL请求中。</p>
+<h3 id="9-定制列表行上的按钮"><a href="#9-定制列表行上的按钮" class="headerlink" title="9. 定制列表行上的按钮"></a>9. 定制列表行上的按钮</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;main&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- bounded-merge表示合并结果在当前模型范围内。基础模型中有，当前模型中没有的子节点，会被自动删除。</span><br><span class="hljs-comment">         缺省生成的代码中已经定义了row-update-button和row-delete-button，只是配置了x:abstract=true，</span><br><span class="hljs-comment">         因此这里只要声明id，表示启用继承的按钮即可，可以避免编写重复的代码。</span><br><span class="hljs-comment">     --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rowActions</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;bounded-merge&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">            使用drawer而不是对话框来显示编辑表单</span><br><span class="hljs-comment">        --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;row-update-button&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;drawer&quot;</span>/&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;row-delete-button&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">rowActions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="10-表单数据过多，希望采用tab页的形式显示"><a href="#10-表单数据过多，希望采用tab页的形式显示" class="headerlink" title="10. 表单数据过多，希望采用tab页的形式显示"></a>10. 表单数据过多，希望采用tab页的形式显示</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;view&quot;</span> <span class="hljs-attr">layoutControl</span>=<span class="hljs-string">&quot;tabs&quot;</span> &gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>配置<code>layoutControl=&quot;tabs&quot;</code>。</p>
+<h3 id="11-点击行上按钮弹出关联子表的增删改查页面"><a href="#11-点击行上按钮弹出关联子表的增删改查页面" class="headerlink" title="11. 点击行上按钮弹出关联子表的增删改查页面"></a>11. 点击行上按钮弹出关联子表的增删改查页面</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;row-edit-rule-nodes&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;@i18n:rule.ruleNodes|规则节点&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;drawer&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">page</span>=<span class="hljs-string">&quot;/nop/rule/pages/NopRuleNode/ref-ruleDefinition.page.yaml&quot;</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;xl&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">data</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ruleId</span>&gt;</span>$ruleId<span class="hljs-tag">&lt;/<span class="hljs-name">ruleId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ruleDefinition</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">displayName</span>&gt;</span>$displayName<span class="hljs-tag">&lt;/<span class="hljs-name">displayName</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">ruleDefinition</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">data</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>弹出对话框时通过<code>data</code>段指定在弹出页面中哪些字段的值为固定值。</p>
+<blockquote>
+<p><code>ruleId</code>字段转换为使用查看控件显示时，需要使用<code>ruleDefinition.displayName</code>作为显示文本，所以需要传入这个值</p>
+</blockquote>
+<p>在弹出页面文件<code>ref-ruleDefinition.page.yaml</code>中我们可以引用已有的crud页面，但是通过<code>fixedProps</code>指定哪些字段使用固定值，不允许用户编辑</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br>  <span class="hljs-string">&lt;web:GenPage</span> <span class="hljs-string">view=&quot;NopRuleNode.view.xml&quot;</span> <span class="hljs-string">page=&quot;main&quot;</span> <span class="hljs-string">fixedProps=&quot;ruleId&quot;</span> <span class="hljs-string">xpl:lib=&quot;/nop/web/xlib/web.xlib&quot;</span> <span class="hljs-string">/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="12-适用Combo组件显示递归数据结构"><a href="#12-适用Combo组件显示递归数据结构" class="headerlink" title="12. 适用Combo组件显示递归数据结构"></a>12. 适用Combo组件显示递归数据结构</h3><p>参考<code>NopRuleDefinition.view.xml</code>中<code>ruleInputs</code>的配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ruleInputs&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>        return &#123; &quot;$ref&quot;: &quot;viewInputDefinition&quot; &#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>在<code>page.yaml</code>文件中引入<code>definitions</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    &lt;web:GenPage view=&quot;NopRuleDefinition.view.xml&quot; page=&quot;main&quot; xpl:lib=&quot;/nop/web/xlib/web.xlib&quot; /&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-attr">definitions:</span><br>    <span class="hljs-attr">&quot;x:extends&quot;:</span> <span class="hljs-string">&quot;var-definitions.json5&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="13-增加一个仅在前台使用的字段，它的值不会提交到后台"><a href="#13-增加一个仅在前台使用的字段，它的值不会提交到后台" class="headerlink" title="13. 增加一个仅在前台使用的字段，它的值不会提交到后台"></a>13. 增加一个仅在前台使用的字段，它的值不会提交到后台</h3><p><code>custom=&quot;true&quot;</code>表示此字段不需要在meta中定义。两个下划线作为前缀表示此字段仅在前端使用，不会提交到后台</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;__useImportFile&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;导入模型文件&quot;</span> <span class="hljs-attr">custom</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">stdDomain</span>=<span class="hljs-string">&quot;boolean&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="14-通过url指定查询条件和排序条件"><a href="#14-通过url指定查询条件和排序条件" class="headerlink" title="14. 通过url指定查询条件和排序条件"></a>14. 通过url指定查询条件和排序条件</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;@query:NopAuthUser__findList?filter_userStatus=1<span class="hljs-symbol">&amp;amp;</span>orderField=userName<span class="hljs-symbol">&amp;amp;</span>orderDir=asc&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>排序条件通过<code>orderField=&#123;fieldName&#125;&amp;orderDir=&#123;asc|desc&#125;</code>来表示，也可以传入Array格式的</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/xui/xview.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>低代码平台中的分布式RPC框架(约3000行代码) - Nop</title>
+
+
+  <meta property="og:title" content="低代码平台中的分布式RPC框架(约3000行代码)">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">低代码平台中的分布式RPC框架(约3000行代码)</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>RPC是分布式系统设计中不可或缺的一个部分。国内开源的RPC框架很多，它们的设计大都受到了dubbo框架的影响，核心的抽象概念与dubbo类似。从今天的角度上看，dubbo的设计已经过于繁琐冗长，如果基于现在的技术环境，重新审视RPC框架的定位和设计，我们可以得到更简单、扩展性更好的实现方案。本文将介绍Nop平台中的NopRPC框架的设计思想和具体实现，它充分利用了成熟的技术设施，如IoC容器、JSON序列化、GraphQL引擎、Nacos注册中心、Sentinel熔断限流器等，通过大概3000行代码即可实现一个具备实用价值的分布式RPC框架。NopRPC具有如下特点：</p>
+<ol>
+<li><p><strong>可以将NopGraphQL服务封装为普通的强类型的RPC接口，同时保留GraphQL的响应字段选择能力</strong></p>
+</li>
+<li><p><strong>可以将任意支持单向信息发送和接收的消息接口封装为等待响应消息的RPC接口</strong></p>
+</li>
+<li><p><strong>Http、Socket、WebSocket、消息队列、批处理文件等都只是一种接口形式，通过配置可以将同一个服务实现适配到多种不同的接口形式</strong></p>
+</li>
+<li><p><strong>支持取消正在执行的RPC调用，取消时可以调用远程服务上的cancelMethod</strong></p>
+</li>
+<li><p><strong>支持将配对的startTask和checkTaskStatus两个调用封装为一个异步RPC接口</strong></p>
+</li>
+<li><p>支持灰度发布。可以在网关处设置路由选择header，直接控制后续调用链路中的服务路由。</p>
+</li>
+<li><p>支持广播式调用、选主调用（只调用选举得到的主服务器），以及指定服务器调用（直接指定被调用服务的地址和端口）</p>
+</li>
+<li><p>利用NopTcc引擎实现分布式事务</p>
+</li>
+<li><p>利用NopTask引擎实现服务端的低代码模型驱动开发</p>
+</li>
+<li><p>支持端到端的RPC超时控制</p>
+</li>
+<li><p>支持国际化多语言消息</p>
+</li>
+<li><p>支持错误码映射（例如将多个内部错误码统一映射为同一个外部错误码或者将同一个错误码根据错误参数不同映射为不同的外部错误码和错误消息）</p>
+</li>
+<li><p>支持云原生的服务网格</p>
+</li>
+<li><p>支持GraalVM原生应用编译</p>
+</li>
+</ol>
+<p>NopRPC的具体使用文档参见<a href="../rpc/">rpc.md</a></p>
+<h2 id="一-请求和响应消息设计"><a href="#一-请求和响应消息设计" class="headerlink" title="一. 请求和响应消息设计"></a>一. 请求和响应消息设计</h2><p>RPC的核心功能是发送请求消息和接收响应消息，所以请求消息和响应消息的结构是RPC中的一项关键性设计。NopRPC框架中的消息结构定义如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiRequest</span>&lt;T&gt;&#123;<br>    Map&lt;String,Object&gt; headers;<br>    T data;<br>    FieldSelectionBean selection;<br>    Map&lt;String,Object&gt; properties;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiResponse</span>&lt;T&gt;&#123;<br>    Map&lt;String,Object&gt; headers;<br>    <span class="hljs-type">int</span> status;<br>    String code;<br>    String msg;<br>    T data;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>根据可逆计算原理，Nop平台中所有的核心数据结构都要采取（data, metadata)这种配对的结构设计，在metadata中可以存放data之外的扩展数据，因此我们为消息对象增加了headers字段，在传输时可以映射到底层信道支持的headers字段，例如通过http传输时headers对应于http的headers，而通过Kafka消息队列传输时，对应于Kafka消息的headers。</p>
+</li>
+<li><p>GraphQL的一个特别之处是支持调用端选择返回哪些数据，这样可以减少返回的数据量并可以优化服务端数据处理过程。<strong>ApiRequest增加的selection字段将这种能力扩展到了所有RPC调用过程</strong>。</p>
+</li>
+<li><p>headers是与data一起被发送到远端的扩展数据，除了这些扩展数据之外，我们经常还需要使用一些仅存在于当前处理过程中的扩展对象，例如responseNormalizer等，因此ApiRequest中定义了一个properties扩展数据集合，它不支持json序列化，可以用于存放那些不需要被发送到远端的临时数据。</p>
+</li>
+<li><p>NopRPC对错误码和错误消息的处理进行了统一规范化，前端页面的Ajax请求直接使用ApiResponse返回消息格式，统一了RPC和Web请求的输入输出规范。具体错误码规范参见<a href="../../error-code/">error-code.md</a></p>
+</li>
+<li><p>为了支持可以通过命令行调用RPC服务，ApiResponse通过整数类型的status字段来表示是否调用成功。如果调用成功，则返回0。作为命令行程序被调用时，status可以直接被映射为命令行的返回值。</p>
+</li>
+</ol>
+<p>一般的RPC框架中，Request和Response消息往往会包含大量实现细节，导致它们仅限于在框架实现层面作为内部类来使用，而NopRPC的设计则是将ApiRequest和ApiResponse通用化，在所有需要传输消息、返回信息的地方都采用统一的消息结构，实现了RPC、Web框架、消息队列、批处理服务、命令行应用等一系列接口的无缝对接。</p>
+<h2 id="二-RPC的解构"><a href="#二-RPC的解构" class="headerlink" title="二. RPC的解构"></a>二. RPC的解构</h2><p>NopRPC的核心接口是IRpcService</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">IRpcService</span>&#123;<br>   CompletionStage&lt;ApiResponse&lt;?&gt;&gt; callAsync(String serviceMethod, <br>           ApiRequest&lt;?&gt; request, ICancelToken cancelToken);<br>&#125;<br><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">ICancelToken</span>&#123;<br>   <span class="hljs-type">boolean</span> <span class="hljs-title function_">isCancelled</span><span class="hljs-params">()</span>;<br>   String <span class="hljs-title function_">getCancelReason</span><span class="hljs-params">()</span>;<br>   <span class="hljs-keyword">void</span> <span class="hljs-title function_">appendOnCancel</span><span class="hljs-params">(Consumer&lt;String&gt; task)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过以上接口定义，我们可以获知如下信息：</p>
+<ol>
+<li><p>NopRPC是一个面向异步处理的框架，而且它支持取消机制</p>
+</li>
+<li><p>ApiRequest和ApiResponse都是POJO对象，框架本身没有任何运行时假定，因此可以脱离Web环境以及Socket环境来使用。</p>
+</li>
+</ol>
+<blockquote>
+<p>现在有些RPC框架采用ReactiveStream的设计，每个RPC请求可能产生多个响应消息，并且支持通过RPC来下载大附件。但是在Nop平台中，RPC的定位就是实现应用之间一对一的信息交换：每发送一个请求消息，接收且必然接收到唯一的一个响应消息。因为按照ReactiveStream方式来实现RPC会导致服务端和客户端的管理控制变得更加复杂，而在实际使用过程中大部分情况下却用不到多个返回消息的情况。另外，在消息系统的抽象中，本身就提供了发送和接收消息流的功能，如果通过RPC再次暴露类似的功能就显得有些多余。至于大文件的上传下载现在一般都是封装为单独的文件服务，可以专门定义针对云存储优化的接口，也没有必要在RPC框架中再提供类似的功能。</p>
+</blockquote>
+<h2 id="2-1-RPC-over-GraphQL"><a href="#2-1-RPC-over-GraphQL" class="headerlink" title="2.1 RPC over GraphQL"></a>2.1 RPC over GraphQL</h2><p>一般的RPC服务端都是根据消息类型直接映射到某个服务方法，然后所有业务处理都在这个消息服务函数中执行。但是在Nop平台中，RPC调用在服务端会将消息投递给NopGraphQL引擎，然后由GraphQLExecutor负责协调组织多个DataLoader协同工作。例如在服务端我们实现了如下BizModel</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;MyEntity&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEntityBizModel</span>&#123;<br>    <span class="hljs-meta">@BizQuery</span><br>    <span class="hljs-keyword">public</span> List&lt;MyEntity&gt; <span class="hljs-title function_">findList</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequestBean request,             </span><br><span class="hljs-params">             FieldSelectionBean selection)</span>&#123;<br>        <span class="hljs-comment">//....</span><br>    &#125;<br><br>    <span class="hljs-meta">@BizLoader(&quot;children&quot;)</span><br>    <span class="hljs-meta">@GraphQLReturn(bizObjName = &quot;MyEntity&quot;)</span><br>    <span class="hljs-keyword">public</span> List&lt;MyEntity&gt; <span class="hljs-title function_">loadChildren</span><span class="hljs-params">(<span class="hljs-meta">@ContextSource</span> MyEntity entity)</span> &#123;<br>        <span class="hljs-comment">//...</span><br>        <span class="hljs-keyword">return</span> children;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyEntity</span>&#123;<br>   <span class="hljs-keyword">private</span> String name;<br>   <span class="hljs-keyword">private</span> List&lt;MyEntity&gt; children;<br><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>      <span class="hljs-keyword">return</span> name;<br>   &#125;<br><br>   <span class="hljs-meta">@LazyLoad</span><br>   <span class="hljs-keyword">public</span> List&lt;MyEntity&gt; <span class="hljs-title function_">getChildren</span><span class="hljs-params">()</span>&#123;<br>      <span class="hljs-keyword">return</span> children;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上代码中，我们在服务端定义了一个业务对象MyEntity，并对外提供了一个查询服务函数<code>MyEntity__findList</code>，这个查询函数会返回MyEntity对象列表， MyEntity对象上的children属性为延迟加载属性，除非明确指定，否则它并不会自动返回给前端。而加载children属性时会触发MyEntityBizModel上的loadChildren函数。借助于这种设计，我们可以将一个庞大复杂的领域对象模型暴露为统一的RPC接口服务，而不用担心无关信息过多影响性能。<br>在客户端我们可以使用如下接口来调用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;MyEntity&quot;)</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">MyEntityService</span>&#123;<br>   <span class="hljs-meta">@BizQuery</span><br>   CompletionStage&lt;ApiResponse&lt;List&lt;MyEntity&gt;&gt;&gt; <span class="hljs-title function_">findListAsync</span><span class="hljs-params">(ApiRequest&lt;MyRequestBean&gt; request, ICancelToken cancelToken)</span>;<br><br>   <span class="hljs-meta">@BizQuery</span><br>   List&lt;MyEntity&gt; <span class="hljs-title function_">findList</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequestBean request)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>多个Java方法可以映射到同一个后台服务调用，可以同时支持同步调用和异步调用。一般情况下约定异步调用方法名的后缀为Async，返回类型为CompletionStage。如果不需要设置selection和headers，我们也可以使用普通java对象作为输入参数, 返回普通的Java对象，出错时会自动将ApiResponse中的错误码和错误消息包装为NopRebuildException对外抛出。</p>
+<p>Java接口通过Aop Proxy会被转换为对IRpcService接口的调用，以上方法调用将会被转换为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">rpcService.callAsync(&quot;MyEntity__findList&quot;, apiRequest, cancelToken)<br></code></pre></td></tr></table></figure>
+
+<p>对应于前端的REST请求格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/MyEntity__findList?@selection=a,b,children&#123;a,b&#125;<br>&#123;<br>    json body <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过内置的@selection参数可以为REST请求补充响应字段选择能力</p>
+<p>NopGraphQL引擎本质上采用的是框架中立的设计，相当于是针对POJO的Request对象的一种纯逻辑处理函数，没有任何特定的运行时依赖，因此包装为RPC接口之后可以适配到各类输入输出信道上。例如作为批处理文件的处理函数，通过配置读取批处理文件的每一行，构造为ApiRequest对象后调用对应的GraphQL服务。</p>
+<p>关于NopGraphQL引擎更进一步的介绍可以参见<a href="../../graphql/graphql-java/">graphql-java.md</a></p>
+<h2 id="2-2-RPC-over-Message-Queue"><a href="#2-2-RPC-over-Message-Queue" class="headerlink" title="2.2 RPC over Message Queue"></a>2.2 RPC over Message Queue</h2><p>很多RPC框架在实现层面都会引入大量内部接口，这些接口仅对该RPC框架有意义，无法在RPC框架之外作为一般应用接口来使用。NopRPC非常强调概念层面的抽象性和通用性，提供了<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/message/MessageRpcClient.java">MessageRpcClient</a>和<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/message/MessageRpcServer.java">MessageRpcServer</a>等缺省实现，可以在任意消息队列的基础上建立RPC调用机制。<br>消息队列在Nop平台中的定位就是单向信息发送，它的核心抽象接口如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">IMessageService</span>&#123;<br>     CompletionStage&lt;Void&gt; <span class="hljs-title function_">sendAsync</span><span class="hljs-params">(String topic, Object message,  </span><br><span class="hljs-params">                   MessageSendOptions options)</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 响应消息发送到一个相关的topic上</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topic 请求消息所属的topic</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> reply消息所对应的队列</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">default</span> String <span class="hljs-title function_">getReplyTopic</span><span class="hljs-params">(String topic)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;reply-&quot;</span> + topic;<br>    &#125;<br><br>    IMessageSubscription <span class="hljs-title function_">subscribe</span><span class="hljs-params">(String topic, IMessageConsumer listener, </span><br><span class="hljs-params">            MessageSubscribeOptions options)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>基于消息队列实现RPC客户端的做法如下：</p>
+<ol>
+<li>在ApiRequest的header中增加nop-id唯一标识，设置nop-svc-action为服务方法标识</li>
+<li>在实际发送前将消息注册到waiting队列中</li>
+<li>发送消息到topic并监听reply topic</li>
+<li>从reply topic接收到响应或者超时发生时从waiting队列中取到CompletableFuture对象，并设置返回结果。</li>
+</ol>
+<p>服务端实现比较简单：</p>
+<ol>
+<li>监听topic并对接收到的ApiRequest消息调用本地的IRpcService服务实现</li>
+<li>对rpcService返回的ApiReponse对象，设置nop-rel-id这个header的值为ApiRequest中的nop-id。</li>
+<li>将ApiResponse发送到reply topic。</li>
+</ol>
+<p>这个消息队列的实现非常通用。比如说<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-rpc/nop-rpc-simple">nop-rpc-simple</a>模块将Socket信道抽象为IMessageService服务，实现了基于TCP进行简单RPC调用的机制。此外我们还可以基于Kafka或者Pulsar等消息队列实现RPC，或者利用Redis的PUB&#x2F;SUB机制来实现。</p>
+<p><strong>再次强调一下<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-api-core/src/main/java/io/nop/api/core/message/IMessageService.java">IMessageService</a>是Nop平台在应用层提供的对消息服务的统一抽象接口，并不是专为RPC内部实现所设计的一种专用接口</strong>。</p>
+<p>NopRPC这一双向信息交互抽象可以建筑在单向的消息流抽象之上，有趣的是，我们也可以反过来，基于IRpcService抽象来提供IMessageService接口的实现。具体参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/message/RpcMessageSender.java">RpcMessageSender,java</a>和<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/message/RpcMessageSubscriber.java">RpcMessageSubscriber.java</a>。这种我中有你，你中有我的现象在数学推理中非常常见，它体现出IRpcService和IMessageService都是某种类似数学概念的通用抽象。</p>
+<p>基于这种通用抽象，NopRPC的实现非常简洁、通用，而很多RPC框架的实现都和底层的Netty交换信道深度绑定，无法轻易应用到新的交换信道上。</p>
+<h2 id="二-负载均衡设计"><a href="#二-负载均衡设计" class="headerlink" title="二. 负载均衡设计"></a>二. 负载均衡设计</h2><p>分布式RPC最核心的价值就在于它提供了自定义的客户端负载均衡机制，从而可以利用集群冗余来扩展系统吞吐能力。分布式RPC的其他部分主要是为了运行负载均衡算法所做的准备工作。</p>
+<p>NopRPC客户端执行逻辑的伪代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 利用服务发现机制获取到所有可用的服务实例</span><br><span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">ServiceInstance</span>&gt; instances = discoveryClient.<span class="hljs-title function_">getInstances</span>(serviceName);<br><br><span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">ServiceInstance</span>&gt; filtered = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(instances);<br><span class="hljs-comment">// 过滤掉所有不符合匹配条件的服务实例</span><br><span class="hljs-keyword">for</span>(<span class="hljs-title class_">IRequestServiceInstanceFilter</span> <span class="hljs-attr">filter</span>: filters)&#123;<br>    <span class="hljs-comment">// 先按照比较严格的规则进行过滤，比如只选择在同一个zone中的服务器</span><br>    filter.<span class="hljs-title function_">filter</span>(filtered, request, <span class="hljs-literal">false</span>);<br>&#125;<br><br><span class="hljs-comment">// 如果没有匹配的服务实例，则尝试按照比较宽松的规则进行过滤</span><br><span class="hljs-keyword">if</span>(filtered.<span class="hljs-title function_">isEmpty</span>())&#123;<br>    filtered = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(instances);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-title class_">IRequestServiceInstanceFilter</span> <span class="hljs-attr">filter</span>: filters)&#123;<br>       filter.<span class="hljs-title function_">filter</span>(filtered, request, <span class="hljs-literal">true</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 利用负载均衡算法从所有可选的服务实例中随机选择一个</span><br><span class="hljs-title class_">ServiceInstance</span> selected = loadBalance.<span class="hljs-title function_">choose</span>(filtered,request);<br><span class="hljs-title class_">IRpcService</span> rpcService = rpcClientInstanceProvider.<span class="hljs-title function_">getRpcClientInstance</span>(selected);<br><span class="hljs-title class_">CompletionStage</span>&lt;<span class="hljs-title class_">ApiResponse</span>&gt; response = rpcService.<span class="hljs-title function_">callAsync</span>(<br>     serviceMethod, request, cancelToken);<br></code></pre></td></tr></table></figure>
+
+<p>本质上是先执行路由过滤逻辑，只保留符合匹配条件的路由条目，然后再执行负载均衡算法实现最终选择。</p>
+<h2 id="失败重试"><a href="#失败重试" class="headerlink" title="失败重试"></a>失败重试</h2><p>如果配置了nop.rpc.cluster-client-retry-count(缺省值是2)，则当连接服务端失败时会自动从备选列表中删除连接失败的服务器，然后重新运行负载均衡算法选择一个实例，重新建立连接。</p>
+<blockquote>
+<p>目前只有连接失败才会重试（抛出NopConnectException），其他失败情况并不会导致重试。</p>
+</blockquote>
+<p>对应的伪代码为:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Exception</span> error = <span class="hljs-literal">null</span>;<br><span class="hljs-keyword">for</span> (int i = <span class="hljs-number">0</span>; i &lt;= retryCount; i++) &#123;<br>    <span class="hljs-title class_">ServiceInstance</span> instance = loadBalance.<span class="hljs-title function_">choose</span>(instances, request);<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_">getRpcClient</span>(instance, request).<span class="hljs-title function_">call</span>(serviceMethod, request, cancelToken);<br>    &#125; <span class="hljs-keyword">catch</span> (<span class="hljs-title class_">Exception</span> e) &#123;<br>        error = e;<br><br>        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isAllowRetry</span>(e)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (instances.<span class="hljs-title function_">size</span>() &gt; <span class="hljs-number">1</span>) &#123;<br>           <span class="hljs-comment">// 删除刚才出错的连接，然后重试</span><br>           instances.<span class="hljs-title function_">remove</span>(instance);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">throw</span> <span class="hljs-title class_">NopException</span>.<span class="hljs-title function_">adapt</span>(error);<br></code></pre></td></tr></table></figure>
+
+<h2 id="灰度发布"><a href="#灰度发布" class="headerlink" title="灰度发布"></a>灰度发布</h2><p>灰度发布可以看作是一种路由逻辑，即满足某些条件的请求只会路由到指定的服务实例。在NopRPC中我们可以利用<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-cluster/nop-cluster-core/src/main/java/io/nop/cluster/chooser/filter/TagServiceInstanceFilter.java">TagServiceInstanceFilter</a>和<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-cluster/nop-cluster-core/src/main/java/io/nop/cluster/chooser/filter/RouteServiceInstanceFilter.java">RouteServiceInstanceFilter</a>来实现灰度发布。</p>
+<ul>
+<li>如果ApiRequest中包含nop-tags这个header，则只会选择具有指定标签的ServiceInstance。例如<code>nop-tags=a,b</code>，则要求ServiceInstance必须同时具有这两个标签。</li>
+<li>通过nop-svc-route这个header可以直接指定服务版本，例如nop-svc-route&#x3D;ServiceA:1.0.0,ServiceB:^2.0.3表示对服务A使用版本1.0.0，而对于ServiceB，则使用2.0.3以上的版本。nop-svc-route的格式为<code>服务名:NPM版本定义，服务名:NPM版本定义</code>，版本定义采用NPM包的语义版本号规则。</li>
+</ul>
+<h2 id="三-取消执行和状态轮询"><a href="#三-取消执行和状态轮询" class="headerlink" title="三. 取消执行和状态轮询"></a>三. 取消执行和状态轮询</h2><p>NopRPC的设计并没有选择利用CompletableFuture对象上的cancel方法，因为在实践中，通过参数传递cancelToken要比返回具有cancel函数的Future对象要容易处理得多，也更容易实现性能优化。</p>
+<p>在执行取消操作时，一般的RPC框架只是会中断当前的请求连接，并不会向服务端主动发送取消消息。而在NopRPC中，可以通过如下配置，表示当执行取消操作时主动执行服务端的一个取消方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;MyEntity&quot;)</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">MyEntityService</span>&#123;<br>    <span class="hljs-meta">@RpcMethod(cancelMethod=&quot;Sys__cancel&quot;)</span><br>    CompletionStage&lt;ApiResponse&lt;MyResponseBean&gt;&gt; <span class="hljs-title function_">myAction</span><span class="hljs-params">(ApiRequest&lt;MyRequestBean&gt; request, ICancelToken cancelToken)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@RpcMethod(cancelMethod=&quot;Sys__cancel&quot;)</code>注解表示当执行取消操作时会主动调用服务端Sys对象上的cancel方法，它是一个系统缺省的取消方法，会在服务端调用cancelToken的cancel操作。如果我们需要在cancel时执行一些业务相关的代码，则可以在服务端的MyEntityBizModel上实现cancel方法，然后使用<code>@RpcMethod(cancelMethod=&quot;cancel&quot;)</code>。</p>
+<blockquote>
+<p>如果cancelMethod中没有包含对象名，则表示调用当前业务对象上的方法。</p>
+</blockquote>
+<p>具体cancelMethod的调用逻辑可以参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/composite/CancellableRpcClient.java">CancellableRpcClient.java</a></p>
+<p>除了cancelMethod之外，RpcMethod注解还支持配置pollingMethod。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">MyEntityService</span>&#123;<br>   <span class="hljs-meta">@RpcMethod(pollingMethod=&quot;checkTaskStatus&quot;)</span><br>   CompletionStage&lt;ApiResponse&lt;TaskResultBean&gt;&gt; <span class="hljs-title function_">startTask</span><span class="hljs-params">(</span><br><span class="hljs-params">          ApiRequest&lt;StartTaskRequestBean&gt; request)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果配置了pollingMethod，则当执行RPC方法之后不会立刻返回，而是不断调用pollingMethod对应的远程服务，直到返回结果信息。</p>
+<p>具体pollingMethod的处理逻辑参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/composite/PollingRpcClient.java">PollingRpcClient.java</a></p>
+<h2 id="四-上下文传播"><a href="#四-上下文传播" class="headerlink" title="四. 上下文传播"></a>四. 上下文传播</h2><p>在微服务架构下，一次业务操作可能会产生多个相关联的RPC调用，必须要建立一种自动的上下文传播机制，将一些共享的信息从上游的服务传播到下游的服务。在NopRPC的具体实现中<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-api/src/main/java/io/nop/rpc/api/ContextBinder.java">ContextBinder</a>负责将ApiRequest的部分header信息复制到异步上下文对象IContext上，而<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rpc/nop-rpc-core/src/main/java/io/nop/rpc/core/interceptors/ClientContextRpcServiceInterceptor.java">ClientContextRpcServiceInterceptor</a>负责将IContext上的信息传播到下游的ApiRequest的headers中。</p>
+<p>缺省情况下，以下header会自动跨系统传播</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nop-svc-tags</td>
+<td>灰度发布时使用的过滤标签</td>
+</tr>
+<tr>
+<td>nop-svc-route</td>
+<td>灰度发布时使用的路由信息</td>
+</tr>
+<tr>
+<td>nop-tenant</td>
+<td>租户ID</td>
+</tr>
+<tr>
+<td>nop-user-id</td>
+<td>当前登录用户</td>
+</tr>
+<tr>
+<td>nop-locale</td>
+<td>返回响应消息时使用的国际化语言</td>
+</tr>
+<tr>
+<td>nop-timezone</td>
+<td>返回消息中时间类型的字段所对应的时区</td>
+</tr>
+<tr>
+<td>nop-txn-id</td>
+<td>分布式式事务所对应的事务id</td>
+</tr>
+<tr>
+<td>nop-txn-branch-id</td>
+<td>分布式事务的分支事务id</td>
+</tr>
+<tr>
+<td>nop-trace</td>
+<td>入口服务所分配的traceId，用于将一系列相关的RPC调用关联在一起</td>
+</tr>
+<tr>
+<td>nop-client-addr</td>
+<td>客户端的真实ip和端口</td>
+</tr>
+<tr>
+<td>nop-timeout</td>
+<td>端到端的超时控制所需要的超时时间参数</td>
+</tr>
+</tbody></table>
+<h2 id="端到端的超时控制"><a href="#端到端的超时控制" class="headerlink" title="端到端的超时控制"></a>端到端的超时控制</h2><p>NopRPC的nop-timeout消息头表示的是整个RPC调用的超时时间，因此当它传播到下一个RPC调用时会减去当前已经消耗的时间。例如 服务A接收到nop-timeout&#x3D;1000，然后经过200ms的处理之后调用下一个RPC服务，传给下游RPC的nop-timeout&#x3D;800。<br>在服务内部，所有耗时的操作（例如数据库查询）都会检查IContext.getCallExpireTime()是否超过当前时间。如果已超时，则直接中断，不再继续执行。通过这种方式可以减轻在系统繁忙的时候因为客户不断重试所导致的系统压力。</p>
+<p>例如下游的服务B还在执行的过程中服务A认为它已经超时了，可能会发起重试，如果服务B没有发现自己已超时，还在继续执行未完成的操作，则可能会同时执行两个业务操作，导致系统的压力倍增。</p>
+<h2 id="五-模型驱动开发"><a href="#五-模型驱动开发" class="headerlink" title="五. 模型驱动开发"></a>五. 模型驱动开发</h2><p>在Nop平台中我们提供了一个API模型，可以在Excel中定义系统对外暴露哪些服务，这些服务的请求和响应消息是什么。具体实例参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/raw/master/nop-wf/model/nop-wf.api.xlsx">nop-wf.api.xlsx</a></p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/microservice/api-model.png"></p>
+<p>在RPC的实现层面，我们也可以直接生成对<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xdefs/src/main/resources/_vfs/nop/schema/task/task.xdef">TaskFlow</a>或者<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xdefs/src/main/resources/_vfs/nop/schema/wf/wf.xdef">Workflow</a>模型的调用，通过可视化编配来实现业务功能。</p>
+<h2 id="六-关于Dubbo的设计"><a href="#六-关于Dubbo的设计" class="headerlink" title="六. 关于Dubbo的设计"></a>六. 关于Dubbo的设计</h2><p>Dubbo框架中大量代码实现的都是辅助性的工作，从今天的角度看已经过时。</p>
+<ol>
+<li><p>SPI插件加载机制。本质上相当于一个不太完善的Bean加载和装配引擎，可以直接用IoC容器来替换</p>
+</li>
+<li><p>序列化机制。在REST的场景下可以使用通用的JSON序列化来实现，而在二进制情况下也可以直接使用现成的protostuff等编码包</p>
+</li>
+<li><p>消息传输信道。可以直接使用JDK内置的Httpclient, 也可以直接使用IMessageService消息队列抽象。</p>
+</li>
+<li><p>Proxy代理接口。本质上是为了实现从强类型的Java对象到通用的IRpcService之间的双向转换，直接提供一个IRpcMessageTransformer接口即可隔离各种转换策略。</p>
+</li>
+<li><p>服务注册发现。直接使用Nacos等专用的服务注册发现机制即可，不需要再对Zookeeper进行封装。</p>
+</li>
+</ol>
+<p>Dubbo框架中内部接口的设计也不尽合理，例如负载均衡算法接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">LoadBalance</span> &#123;<br>    &lt;T&gt; Invoker&lt;T&gt; <span class="hljs-title function_">select</span><span class="hljs-params">(List&lt;Invoker&lt;T&gt;&gt; invokers, URL url, </span><br><span class="hljs-params">        Invocation invocation)</span> <span class="hljs-keyword">throws</span> RpcException;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个设计存在如下问题：</p>
+<ul>
+<li>Invoker导致Loadblance算法和RPC的执行器产生不必要的依赖</li>
+<li>Invocation导致和AOP包装过程产生不必要的依赖</li>
+<li>URL是Dubbo引入的一个自定义的数据结构（与JDK内置的URL并不相同），相比于普通的JSON对象没有任何优势。</li>
+</ul>
+<p>而在NopRPC中，负载均衡接口定义如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">ILoadBalance</span>&lt;T,R&gt;&#123;<br>     T <span class="hljs-title function_">choose</span><span class="hljs-params">(List&lt;T&gt; candidates, R request)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果需要从candidate对象上读取权重配置等信息，可以使用Adapter适配器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">public interface ILoadBalanceAdapter&lt;T&gt; &#123;<br>    int getWeight(T candidate);<br><br>    int getActiveCount(T candidate);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过这种抽象，负载均衡算法成为纯粹的逻辑函数，与RPC的执行逻辑完全解耦，可以应用到所有需要负载均衡算法的地方，而不仅仅限于RPC调用场景。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>NopRPC是从第一性原理出发，重新审视RPC的概念，完全重新设计的Yet Another PRC框架，它的设计非常简洁直观，易于扩展，是Nop平台的一个有机组成部分。</p>
+<p>基于可逆计算理论设计的低代码平台NopPlatform已开源：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">canonical-entropy&#x2F;nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">entropy-cloud&#x2F;nop-entropy</a></li>
+<li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">docs&#x2F;tutorial&#x2F;tutorial.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1u84y1w7kX/">可逆计算原理和Nop平台介绍及答疑_哔哩哔哩_bilibili</a></li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/microservice/rpc-design.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

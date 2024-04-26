@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>如何在不改表的情况下为实体增加扩展字段 - Nop</title>
+
+
+  <meta property="og:title" content="如何在不改表的情况下为实体增加扩展字段">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">如何在不改表的情况下为实体增加扩展字段</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wL411D7g7">视频演示</a></p>
+<p>在Excel数据模型中为数据表增加<code>use-ext-field</code>标签，即可启用全局扩展字段支持。扩展字段将保存到<code>nop_sys_ext_field</code>表中。</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/orm/use-ext-field.png"></p>
+<p><code>nop_sys_ext_field</code>表的结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>entity_name</td>
+<td>VARCHAR</td>
+</tr>
+<tr>
+<td>entity_id</td>
+<td>VARCHAR</td>
+</tr>
+<tr>
+<td>field_name</td>
+<td>VARCHAR</td>
+</tr>
+<tr>
+<td>field_type</td>
+<td>INTEGER</td>
+</tr>
+<tr>
+<td>decimal_value</td>
+<td>DECIMAL</td>
+</tr>
+<tr>
+<td>date_value</td>
+<td>DATE</td>
+</tr>
+<tr>
+<td>timestamp_value</td>
+<td>TIMESTAMP</td>
+</tr>
+<tr>
+<td>string_value</td>
+<td>VARCHAR</td>
+</tr>
+</tbody></table>
+<p>根据<code>field_type</code>字段类型的设置，具体的字段值保存到<code>decimal_value</code>等不同的字段中。</p>
+<h2 id="ORM配置"><a href="#ORM配置" class="headerlink" title="ORM配置"></a>ORM配置</h2><p>在编译期，<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-orm/src/main/resources/_vfs/nop/orm/xlib/orm-gen.xlib"><code>&lt;orm-gen:ExtFieldsSupport&gt;</code></a>标签会识别<code>use-ext-field</code>配置，并自动生成关联属性：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xxx.MyEntity&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">relations</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">to-many</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFields&quot;</span> <span class="hljs-attr">refEntityName</span>=<span class="hljs-string">&quot;io.nop.sys.dao.entity.NopSysExtField&quot;</span> <span class="hljs-attr">keyProp</span>=<span class="hljs-string">&quot;fieldName&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">join</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">on</span> <span class="hljs-attr">leftProp</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">rightProp</span>=<span class="hljs-string">&quot;entityId&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">on</span> <span class="hljs-attr">leftValue</span>=<span class="hljs-string">&quot;xxx.MyEntity&quot;</span> <span class="hljs-attr">rightProp</span>=<span class="hljs-string">&quot;entityName&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">join</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">to-many</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">relations</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>一对多关联的配置中如果设置了<code>keyProp</code>，则表示这个属性是唯一标识属性。<code>IOrmEntitySet</code>集合提供了<code>prop_get/prop_set</code>等扩展方法，可以直接根据这个属性来存取对应的集合条目。</p>
+</blockquote>
+<p>关于扩展字段的使用可以参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-orm/src/test/java/io/nop/orm/dao/TestExtFields.java">TestExtFields.java</a></p>
+<p>在Java程序中我们可以通过如下配置来访问扩展字段</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">IOrmKeyValueTable</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> (IOrmKeyValueTable)entity.getExtFields().prop_get(<span class="hljs-string">&quot;fldA&quot;</span>);<br>entity.getExtFields().prop_set(<span class="hljs-string">&quot;fldA&quot;</span>,value);<br></code></pre></td></tr></table></figure>
+
+<p>在XScript脚本语言中以及在EQL查询语言中 <code>extFields.fldA.string</code> 等价于 <code>entity.getExtFields().prop_get(&quot;fldA&quot;).getString()</code></p>
+<p><code>fldA</code>相当于是按照<code>keyProp</code>从一对多集合对象中查找得到唯一的一条记录。</p>
+<h3 id="扩展字段别名"><a href="#扩展字段别名" class="headerlink" title="扩展字段别名"></a>扩展字段别名</h3><p>为了简化访问，我们可以为扩展字段增加别名</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">relations</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">to-many</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFields&quot;</span> <span class="hljs-attr">...</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">relations</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aliases</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">alias</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFldA&quot;</span> <span class="hljs-attr">propPath</span>=<span class="hljs-string">&quot;extFields.fldA.string&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">alias</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFldB&quot;</span> <span class="hljs-attr">propPath</span>=<span class="hljs-string">&quot;extFields.fldB.int&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;Integer&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aliases</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>增加<code>alias</code>配置之后，<code>extFldA</code>和<code>extFldB</code>会成为实体上的属性，在java中可以通过<code>entity.prop_get(fieldName)</code>来获取扩展属性。<br>在XScript中可以通过<code>entity.extFldA</code>这种属性方式来存取，与普通实体属性完全一致。</p>
+<blockquote>
+<p>如果是根据定义了<code>alias</code>的orm模型文件来生成代码，则会自动生成对应get&#x2F;set方法，这样在java中我们就可以通过<code>entity.getExtFldA()</code>和<code>entity.setExtFldA(value)</code>这两个方法来访问扩展属性。</p>
+<p>如果生成了get&#x2F;set方法，就不能再使用<code>entity.prop_get</code>方法来获取属性值了。因为<code>prop_get</code>是用于获取实体上不存在的扩展属性的方法。如果希望通过统一的方式来获取实体内置字段和扩展字段，可以使用<code>entity.orm_propValueByName(name)</code>方法，或者使用<code>BeanTool.getProperty(entity, propName)</code>反射机制来获取。</p>
+</blockquote>
+<p>不仅如此，在EQL查询语法中，可以直接使用扩展字段来进行过滤和排序，扩展字段的使用方式与实体上的内置字段完全一致</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o.extFldA<br><span class="hljs-keyword">from</span> MyEntity o<br><span class="hljs-keyword">where</span> o.extFldA <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;123&#x27;</span><br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> o.extFldA<br></code></pre></td></tr></table></figure>
+
+<p>利用别名机制我们可以实现扩展字段和内置字段之间的平滑过渡：初次开发的时候可以先使用扩展字段，等到性能出现瓶颈时再在实体上增加基本字段，<br>此时可以保持Java代码中属性名不变。</p>
+<h2 id="GraphQL访问"><a href="#GraphQL访问" class="headerlink" title="GraphQL访问"></a>GraphQL访问</h2><p>在xmeta文件中增加<code>extFldA</code>和<code>extFldB</code>等属性的配置，即可通过GraphQL来实现扩展属性访问。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFldA&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;扩展字段A&quot;</span> <span class="hljs-attr">queryable</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">sortable</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">insertable</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">updatable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span> <span class="hljs-attr">domain</span>=<span class="hljs-string">&quot;email&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="专属的扩展字段表"><a href="#专属的扩展字段表" class="headerlink" title="专属的扩展字段表"></a>专属的扩展字段表</h2><p>缺省情况下系统中所有的扩展字段都存放在<code>nop_sys_ext_field</code>表中，这样可能会导致单个表数据量过大，性能低下。为了缓解这个问题，我们可以为实体表再增加<br><code>local-ext</code>标签，则系统会自动为当前实体生成一个配对的扩展字段表，扩展表表名一般为<code>原表名+&#39;_ext&#39;</code>，例如<code>nop_sys_notice_template_ext</code>。</p>
+<p>扩展表的结构与<code>nop_sys_ext_field</code>类似， 只是缺少<code>entityName</code>字段，不需要按照实体名进行过滤。</p>
+<h2 id="纵表转横表"><a href="#纵表转横表" class="headerlink" title="纵表转横表"></a>纵表转横表</h2><p>很多低代码平台为了实现动态修改数据库结构，都采用纵表来保存所有数据，而纵表转横表的做法是特殊写死的一种变换。Nop平台与此不同，<br>它内置的横纵表换是一个标准数学变换，不仅仅是普通的纵表，任意的一对多关联都可以被转换为一对一关联，而一对一或者多对一关联的属性在EQL层面和使用表上原生的字段完全一致。</p>
+<p>在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-orm/src/test/java/io/nop/orm/dao/TestExtFields.java">TestExtFields</a>单元测试中</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;io.nop.app.SimsExam&quot;</span>&gt;</span><br><br>           <span class="hljs-tag">&lt;<span class="hljs-name">aliases</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">alias</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFldA&quot;</span> <span class="hljs-attr">propPath</span>=<span class="hljs-string">&quot;ext.fldA.string&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span>/&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">alias</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extFldB&quot;</span> <span class="hljs-attr">propPath</span>=<span class="hljs-string">&quot;ext.fldB.boolean&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;Boolean&quot;</span> <span class="hljs-attr">notGenCode</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>           <span class="hljs-tag">&lt;/<span class="hljs-name">aliases</span>&gt;</span><br><br>           <span class="hljs-tag">&lt;<span class="hljs-name">relations</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">to-many</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ext&quot;</span> <span class="hljs-attr">refEntityName</span>=<span class="hljs-string">&quot;io.nop.app.SimsExtField&quot;</span> <span class="hljs-attr">keyProp</span>=<span class="hljs-string">&quot;fieldName&quot;</span>&gt;</span><br>                   <span class="hljs-tag">&lt;<span class="hljs-name">join</span>&gt;</span><br>                       <span class="hljs-tag">&lt;<span class="hljs-name">on</span> <span class="hljs-attr">leftProp</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">rightProp</span>=<span class="hljs-string">&quot;entityId&quot;</span>/&gt;</span><br>                       <span class="hljs-tag">&lt;<span class="hljs-name">on</span> <span class="hljs-attr">leftValue</span>=<span class="hljs-string">&quot;io.nop.app.SimsExam&quot;</span> <span class="hljs-attr">rightProp</span>=<span class="hljs-string">&quot;entityName&quot;</span>/&gt;</span><br>                   <span class="hljs-tag">&lt;/<span class="hljs-name">join</span>&gt;</span><br>               <span class="hljs-tag">&lt;/<span class="hljs-name">to-many</span>&gt;</span><br><br>           <span class="hljs-tag">&lt;/<span class="hljs-name">relations</span>&gt;</span><br>       <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>任何<code>to-many</code>关联上都可以配置<code>keyProp</code>属性，用于在集合中区分出唯一的一条记录。</li>
+<li><code>ext.fldA.string</code>等价于<code>((IOrmEntitySet)entity.getExt()).prop_get(&quot;fldA&quot;).getString()</code></li>
+<li>通过别名机制，可以我们为访问扩展字段的复杂路径起一个别名。例如上面的配置中<code>extFldA</code>等价于<code>ext.fldA.string</code>。</li>
+<li>标记了<code>notGenCode</code>，则生成代码的时候不会为该属性生成java中的get&#x2F;set方法，获取值时需要通过<code>entity.prop_get(&quot;extFldB&quot;)</code>这种方式。</li>
+</ul>
+<p>在XScript脚本或者XPL模板语言中，扩展属性和普通属性的访问语法完全相同，可以直接使用<code>entity.extFldB = true</code>这种方式。</p>
+<p>在EQL查询语言中，也会自动识别<code>keyProp</code>，进行结构变换。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o.children.myKey.value <span class="hljs-keyword">from</span> MyEntity o<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span> 会被转换为<br><span class="hljs-keyword">select</span> u.value <span class="hljs-keyword">from</span> MyEntity o  <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> Children u <span class="hljs-keyword">on</span> o.id <span class="hljs-operator">=</span> u.parent_id <span class="hljs-keyword">and</span> u.key <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;myKey&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>即一个集合只要具有某种唯一标识，那么数学上它就一定能够展平成为具有唯一访问路径的关联属性。而ORM引擎的EQL查询语言负责的就是把<code>o.a.b.c</code>这种关联属性转换为表关联查询。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o.name <span class="hljs-keyword">from</span> MyEntity o<br><span class="hljs-keyword">where</span> o.children.myKey1.intValue <span class="hljs-operator">=</span> <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> o.children.myKey2.strValue <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;a%&#x27;</span><br><br><span class="hljs-comment">-- 会被变换为</span><br><br><span class="hljs-keyword">select</span> o.name <span class="hljs-keyword">from</span> MyEntity o <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> Children u1<br><span class="hljs-keyword">on</span> o.sid <span class="hljs-operator">=</span> u1.parent_id <span class="hljs-keyword">and</span> u1.key <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;myKey1&#x27;</span><br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> Children u2<br><span class="hljs-keyword">on</span> o.sid <span class="hljs-operator">=</span> u2.parent_id <span class="hljs-keyword">and</span> u2.key <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;myKey2&#x27;</span><br><span class="hljs-keyword">where</span> u1.intValue <span class="hljs-operator">=</span> <span class="hljs-number">3</span><br><span class="hljs-keyword">and</span> u2.strValue <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;a%&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>一个一对多关联表，如果增加一个<code>key</code>过滤条件就自然变成一对一关联表了</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o.key1,o.children.myKey1.value,o.children.myKey2.value<br><span class="hljs-keyword">from</span> MyEntity o<br><br><span class="hljs-comment">-- 会被转换为</span><br><span class="hljs-keyword">select</span> o.key1, u1.value, u2.value<br><span class="hljs-keyword">from</span> MyEntity o <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> Children u1 <span class="hljs-keyword">on</span><br><span class="hljs-keyword">on</span> o.sid <span class="hljs-operator">=</span> u1.parent_id <span class="hljs-keyword">and</span> u1.key <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;myKey1&#x27;</span><br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> Children u2<br><span class="hljs-keyword">on</span> o.sid <span class="hljs-operator">=</span> u2.parent_id <span class="hljs-keyword">and</span> u2.key <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;myKey2&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>按照规则，从<code>o.children.myKey</code>抽取出关联表，这在数学层面就是一个具有确定性的局部变换规则</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/orm/ext-field.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

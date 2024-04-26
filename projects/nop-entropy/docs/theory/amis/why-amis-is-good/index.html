@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>为什么说百度AMIS框架是一个优秀的设计 - Nop</title>
+
+
+  <meta property="og:title" content="为什么说百度AMIS框架是一个优秀的设计">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">为什么说百度AMIS框架是一个优秀的设计</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p><a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index">AMIS</a>是百度开源的一个前端低代码框架，公允的说，它是目前前端开源社区中设计最精良的低代码框架之一，代表了国内前端开源低代码领域的最高水平。AMIS采用JSON语法格式，内置了大量开箱即用的成熟组件，<strong>可以很容易的被集成和扩展</strong>。在实际使用层面，AMIS提供了较为丰富的在线文档，并且支持在线测试。根据我的观察，一般的后端开发人员通过自行摸索在较短的时间内就可以掌握AMIS的基本内容，上手搭建较为复杂的增删改查页面。</p>
+<p>AMIS内置的组件主要是后台管理软件常用的组件，但是它的设计本身是一种通用设计，并不受限于目前它所支持的使用场景。在本文中，我将分析一下AMIS框架的一些设计要点，并介绍Nop平台中集成AMIS框架时所做的一些改进工作。</p>
+<blockquote>
+<p>AMIS的代码实现质量并不算高，特别是因为它的发展时间较长，导致内部实现中冗余代码较多，存在很大的可改进空间。最近一两年，百度投入了一定的资源对AMIS进行了比较大的代码重构，整体情况还在持续改进的过程中。本文主要是在概念设计层面所做的一些分析，不涉及到具体实现层面的代码。</p>
+</blockquote>
+<h2 id="一-Env-环境抽象"><a href="#一-Env-环境抽象" class="headerlink" title="一. Env: 环境抽象"></a>一. Env: 环境抽象</h2><p>AMIS与其他开源低代码框架的第一个显著的区别就是，它显式定义了<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/start/getting-started#%E6%8E%A7%E5%88%B6-amis-%E7%9A%84%E8%A1%8C%E4%B8%BA">环境抽象Env</a>，其中包含了输入、输出相关以及页面跳转相关的所有执行逻辑。这一设计极大降低了AMIS框架的集成难度，使得它可以很容易插入到其他的底层界面框架中。例如，在Nop平台中，我们使用Vue3.0开发主界面框架，通过Vue Router实现单页跳转，而在具体页面或者某个嵌入组件的实现上，我们可以使用基于React技术的AMIS来实现。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> env = &#123;<br>     <span class="hljs-comment">// 执行ajax请求</span><br>    <span class="hljs-title function_">fetcher</span>(<span class="hljs-params">options</span>) &#123; ... &#125;,<br>    <span class="hljs-comment">// 通过Router实现单页切换</span><br>    <span class="hljs-title function_">updateLocation</span>(<span class="hljs-params">location,replace</span>)&#123; ... &#125;,<br>     <span class="hljs-comment">// 打开新的浏览器窗口</span><br>    <span class="hljs-title function_">jumpTo</span>(<span class="hljs-params">to,action</span>)&#123; ... &#125;,<br>     <span class="hljs-comment">// 类似window.alert，弹出提示信息</span><br>    alert,<br>     <span class="hljs-comment">// 类似window.confirm，弹出确认信息</span><br>    confirm,<br>    <span class="hljs-comment">// 弹出通知消息和错误提示</span><br>    <span class="hljs-title function_">notify</span>(type,msg)<br>&#125;<br><span class="hljs-comment">// 根据json配置渲染得到页面</span><br><span class="hljs-title function_">renderAmis</span>(<br>     <span class="hljs-comment">// json格式的页面Schema描述</span><br>     jsonPage,<br>     <span class="hljs-comment">// 传入额外的数据</span><br>     &#123;<br>       <span class="hljs-attr">data</span>:&#123;<br>         <span class="hljs-attr">myVar</span>: <span class="hljs-number">123</span>,<br>       &#125;<br>     &#125;,<br>     <span class="hljs-comment">// 传入环境对象</span><br>     env<br>   );<br></code></pre></td></tr></table></figure>
+
+<p>如果我们把AMIS的JSON页面定义看作是一种领域特定语言(DSL)，则<strong>AMIS框架可以看作是负责解释执行这一DSL的虚拟机</strong>。在AMIS内部需要执行AJAX调用或者弹出提示信息、跳转页面等操作的时候，它会调用env上的相应方法来实现，因此<strong>env可以看作是具体负责执行输入、输出操作的某种虚拟化抽象接口</strong>。</p>
+<p>所有的输入、输出动作都被虚拟化之后，output &#x3D; AmisPage(Input)，AMIS页面就可以被看作是某种影响范围受限的局部处理函数，很容易被编织到外部的业务处理流程中。</p>
+<h2 id="二-Api-值与函数的对偶"><a href="#二-Api-值与函数的对偶" class="headerlink" title="二. Api: 值与函数的对偶"></a>二. Api: 值与函数的对偶</h2><p>对于远程服务调用的封装，AMIS框架提供了一个描述式的定义方式，即所谓的<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api">Api对象</a>。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">ApiObject</span>&#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * API 发送类型</span><br><span class="hljs-comment">   */</span><br>  method?: <span class="hljs-string">&#x27;get&#x27;</span> | <span class="hljs-string">&#x27;post&#x27;</span> | <span class="hljs-string">&#x27;put&#x27;</span> | <span class="hljs-string">&#x27;delete&#x27;</span> | <span class="hljs-string">&#x27;patch&#x27;</span> | <span class="hljs-string">&#x27;jsonp&#x27;</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * API 发送目标地址</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-attr">url</span>: <span class="hljs-title class_">SchemaUrlPath</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 用来控制携带数据. 当key 为 `&amp;` 值为 `$$` 时, 将所有原始数据打平设置到 data 中. 当值为 $$ 将所有原始数据赋值到对应的 key 中. 当值为 $ 打头时, 将变量值设置到 key 中.</span><br><span class="hljs-comment">   */</span><br>  data?: &#123;<br>    [<span class="hljs-attr">propName</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span>;<br>  &#125;;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 发送体的格式</span><br><span class="hljs-comment">   */</span><br>  dataType?: <span class="hljs-string">&#x27;json&#x27;</span> | <span class="hljs-string">&#x27;form-data&#x27;</span> | <span class="hljs-string">&#x27;form&#x27;</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 如果是文件下载接口，请配置这个。</span><br><span class="hljs-comment">   */</span><br>  responseType?: <span class="hljs-string">&#x27;blob&#x27;</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 携带 headers，用法和 data 一样，可以用变量。</span><br><span class="hljs-comment">   */</span><br>  headers?: &#123;<br>    [<span class="hljs-attr">propName</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span>;<br>  &#125;;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 设置发送条件。</span><br><span class="hljs-comment">   */</span><br>  sendOn?: <span class="hljs-title class_">SchemaExpression</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 默认都是追加模式，如果想完全替换把这个配置成 true</span><br><span class="hljs-comment">   */</span><br>  replaceData?: <span class="hljs-built_in">boolean</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否自动刷新，当 url 中的取值结果变化时，自动刷新数据。</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@default</span> <span class="hljs-variable">true</span></span><br><span class="hljs-comment">   */</span><br>  autoRefresh?: <span class="hljs-built_in">boolean</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当开启自动刷新的时候，默认是 api 的 url 来自动跟踪变量变化的。</span><br><span class="hljs-comment">   * 如果你希望监控 url 外的变量，请配置 traceExpression。</span><br><span class="hljs-comment">   */</span><br>  trackExpression?: <span class="hljs-built_in">string</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 如果设置了值，同一个接口，相同参数，指定的时间（单位：ms）内请求将直接走缓存。</span><br><span class="hljs-comment">   */</span><br>  cache?: <span class="hljs-built_in">number</span>;<br><br>  <span class="hljs-comment">// 对提交到后台的请求数据进行格式变换</span><br>  requestAdaptor?: <span class="hljs-function">(<span class="hljs-params">api: ApiObject</span>) =&gt;</span> <span class="hljs-title class_">ApiObject</span>;<br><br>  <span class="hljs-comment">// 对后台返回的响应数据进行格式变换</span><br>  adaptor?: <span class="hljs-function">(<span class="hljs-params">payload: <span class="hljs-built_in">object</span>, response: fetcherResult, api: ApiObject</span>) =&gt;</span> <span class="hljs-built_in">any</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 失败时不弹出提示信息</span><br><span class="hljs-comment">   */</span><br>  silent?: <span class="hljs-built_in">boolean</span><br><br>   <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当远程调用成功或者失败时，会到这里查找对应的消息对象，通过toast方式进行提示</span><br><span class="hljs-comment">   */</span><br>   messages?: &#123; [<span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Api对象是响应式的数据结构，当它的参数数据发生变化时会自动执行远程调用，返回的结果数据可以被转换及缓存。</p>
+<p>传统上我们在前端编写代码一般是基于函数视角的，即事件触发后执行某个处理函数，如果要修改某个关联组件的值，我们就调用这个关联组件上的更新函数。例如:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&lt;select id=<span class="hljs-string">&quot;a&quot;</span> onchange=<span class="hljs-string">&quot;handleChange&quot;</span>&gt;<br>&lt;/select&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;b&quot;</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">selection</span>&gt;</span></span><br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleChange</span>(<span class="hljs-params">value</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">fetchRelatedOptions</span>(value).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">result</span>=&gt;</span>&#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">getComponent</span>(<span class="hljs-string">&#x27;b&#x27;</span>).<span class="hljs-title function_">setOptions</span>(result)</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;)</span></span><br><span class="language-javascript"><span class="language-xml">&#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>在AMIS这种更加现代化的前端框架中，我们大多数时候是<strong>采用数据视角</strong>，即不把函数看作是事件发生时执行的动作，而<strong>把函数看作是结果数据的某种动态产生器</strong>，当某些条件发生的时候，结果数据会自动被更新，这个更新的过程就是被执行的函数。例如，在AMIS中实现两个下拉列表联动</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;form&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>           <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;select&quot;</span><span class="hljs-punctuation">,</span><br>           <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;a&quot;</span><span class="hljs-punctuation">,</span><br>           <span class="hljs-attr">&quot;options&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> ...<span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;select&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;b&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;source&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;method&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;post&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;url&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/get-related-options&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                     <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;a&#125;&quot;</span><br>                 <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>第一个下拉选择控件的name为a，表示它的选择值对应于上下文环境中的名称为a的变量，下拉选择控件可以看作是这一变量的查看器和修改器。另一个select控件的source属性对应于一个Api类型的对象，它通过数据绑定表达式监听了变量a的变化，当a发生变化的时候，会自动执行ajax调用获取到新的下拉选项列表。</p>
+<p>如果我们<strong>不只是关注单次事件触发的函数调用过程</strong>，而是强调整体结构，<strong>观察应用运行的完整过程</strong>，我们会发现它的结构为 “…数据 –&gt;函数 –&gt; 数据 –&gt; 函数 –&gt; 数据 …”。**这样一个信息传递网络具有两种对偶的观察视角。一种是”函数–&gt;数据–&gt;函数”，另一种是”数据–&gt; 函数–&gt; 数据”**。我们可以将信息流解释为函数调用其他函数，调用时传递函数参数，也可以解释为数据发生变化后触发响应函数产生新的数据。</p>
+<blockquote>
+<p>具有副作用的void函数，本质上并不是没有返回值，而是改变了某些未被显式表达的状态变量。</p>
+</blockquote>
+<p>如果对比一下Vue3.0的响应式设计，可以发现一些有意思的联系。AMIS的Api对象类似于Vue3.0中的ComputedRef类型，只是它触发的不是某个同步调用的前端函数，而是某个异步调用的远程服务。如果要在Vue3.0中实现类似Api对象的机制，我们可以对Vue做出如下扩展：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">interface <span class="hljs-title class_">Api</span>&lt;T&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Ref</span>&lt;T&gt;&#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 构建Api时所使用的配置对象</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">config</span>: <span class="hljs-title class_">ApiConfig</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当前值，完全等价于vue的ref.value</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">value</span>: T | <span class="hljs-literal">undefined</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否输入参数已变，需要执行远程加载动作。如果当前处于active状态，则会自动发起加载动作.</span><br><span class="hljs-comment">   * 处于suspended状态时会记录shouldRefresh，但是不真正发起请求</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">shouldRefresh</span>: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否远程数据加载动作正在执行过程中</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">loading</span>: boolean<br><br>  readonly <span class="hljs-attr">loaded</span>: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否远程加载超时。超时的时候success设置为false</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">timeouted</span>: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否已经成功获取值。如果请求超时，则设置的值是false</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">success</span>: boolean | <span class="hljs-literal">undefined</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 远程调用失败时的异常对象</span><br><span class="hljs-comment">   */</span><br>  readonly <span class="hljs-attr">error</span>: any<br><br>  <span class="hljs-title function_">suspend</span>(): <span class="hljs-keyword">void</span><br><br>  <span class="hljs-title function_">resume</span>(): <span class="hljs-keyword">void</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 取消当前的加载操作</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">cancel</span>(): <span class="hljs-keyword">void</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 重新获取值. immediately表示跳过debounce设置。suspended状态下调用reload也会执行。</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">reload</span>(immediately?: boolean): <span class="hljs-title class_">Promise</span>&lt;T|<span class="hljs-literal">undefined</span>&gt;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 类似rxjs的接口。每次api的value变化时触发此函数</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">subscribe</span>(<br>    <span class="hljs-attr">next</span>: <span class="hljs-function">(<span class="hljs-params">value: T</span>) =&gt;</span> <span class="hljs-keyword">void</span>,<br>    error?: <span class="hljs-function">(<span class="hljs-params">err: any</span>) =&gt;</span> <span class="hljs-keyword">void</span>,<br>    complete?: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">void</span><br>  ): <span class="hljs-title class_">StreamUnsubscribe</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 应用转换函数后得到结果</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> <span class="hljs-variable">fn</span></span><br><span class="hljs-comment">   */</span><br>  transform&lt;R&gt;(<span class="hljs-attr">fn</span>: <span class="hljs-function">(<span class="hljs-params">v: T | <span class="hljs-literal">undefined</span></span>) =&gt;</span> R): <span class="hljs-title class_">Ref</span>&lt;R&gt;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 销毁本对象，它的值不再更新也不再有效</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-title function_">destroy</span>(): <span class="hljs-keyword">void</span><br>&#125;<br><br>interface <span class="hljs-title class_">ApiConfig</span> &#123;<br>  ... <span class="hljs-title class_">ApiObject</span>中定义的属性和方法<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 获取的值如何与此前的值进行合并，缺省情况下为替换，指定为append时作为数组合并</span><br><span class="hljs-comment">   */</span><br>  merger?: <span class="hljs-function">(<span class="hljs-params">v1: T | <span class="hljs-literal">undefined</span>, v2: T</span>) =&gt;</span> T<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 在没有实际加载成功之前所设置的缺省值</span><br><span class="hljs-comment">   */</span><br>  defaultValue?: T<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 大于0时表示定时去获取数据 ，单位为毫秒</span><br><span class="hljs-comment">   */</span><br>  pollInterval?: number<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 缓存api的返回结果时所使用的key, 可以直接指定，也可以动态计算。如果不指定，则使用JSON.stringify(req)来作为key</span><br><span class="hljs-comment">   */</span><br>  cacheKey?: any | (<span class="hljs-function">(<span class="hljs-params">req: ApiRequest</span>) =&gt;</span> string)<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当值大于0时，会缓存获取的数据一段时间，此后如果参数值相同，则不会重复获取</span><br><span class="hljs-comment">   */</span><br>  cacheTimeout?: number<br><br>  cacheStorage?: string<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当值大于0时，后台请求超过指定时间后认为是超时，会自动取消调用并抛出超时异常</span><br><span class="hljs-comment">   */</span><br>  completeTimeout?: number<br><br>  connectTimeout?: number<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 对于流式数据，一段时间内没有数据，认为超时</span><br><span class="hljs-comment">   */</span><br>  idleTimeout?: number<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 当从后台成功获取到值时回调此函数</span><br><span class="hljs-comment">   */</span><br>  onSuccess?: <span class="hljs-function">(<span class="hljs-params">value: T</span>) =&gt;</span> <span class="hljs-keyword">void</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 无论是超时、后台异常或者手工取消，只要是没有正常获取到值，就会回调此函数</span><br><span class="hljs-comment">   */</span><br>  onFailure?: <span class="hljs-function">(<span class="hljs-params">err: any</span>) =&gt;</span> <span class="hljs-keyword">void</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 获取数据的过程中可能会返回进度信息</span><br><span class="hljs-comment">   */</span><br>  onProgress?: <span class="hljs-function">(<span class="hljs-params">progress: any</span>) =&gt;</span> <span class="hljs-keyword">void</span><br><br>  onStreamComplete?: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">void</span><br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 延迟处理的时间，单位为毫秒</span><br><span class="hljs-comment">   */</span><br>  debounce?: number<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 限流等待时间，单位为毫秒。throttle和debounce的区别在于debounce的起始点会不断向后推移</span><br><span class="hljs-comment">   */</span><br>  throttle?: number<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否是流式数据，不断返回值</span><br><span class="hljs-comment">   */</span><br>  stream?: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否API创建后主动执行加载动作，缺省值为false。当设置为false时，只有当实际访问值的时候才触发加载动作。也即是第一次加载是否自动触发</span><br><span class="hljs-comment">   */</span><br>  eager?: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 如果设置为true, 则创建后自动处于suspended状态，除非主动调用reload()动作否则不会自动执行数据加载</span><br><span class="hljs-comment">   */</span><br>  suspended?: boolean<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 远程加载出错后执行的可选异常处理</span><br><span class="hljs-comment">   */</span><br>  fallback?: <span class="hljs-function">(<span class="hljs-params">err: any, api: Api&lt;T&gt;</span>) =&gt;</span> any<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 加载出错时的重试次数，缺省为0</span><br><span class="hljs-comment">   */</span><br>  retries?: number<br><br>  retryDelay?: number<br><br>  maxRetryDelay?: number<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果不把Api看作是一种函数调用机制，而是看作一种响应式的数据流对象（Stream），则一些程序控制可以很自然的加入到这个概念中，例如debounce延迟触发、retry重试、pollInterval定时刷新，cancel&#x2F;suspend控制等。作为Ref的一种扩展机制，除了具有value值以外，Api对象可以具有loading、status、error等属性，从而将远程调用过程的全部信息状态化。在这种情况下，Api对象的作用基本上就与React Hook中的<a target="_blank" rel="noopener" href="https://juejin.cn/post/6943397563114455048">useSWR机制</a>类似了。</p>
+<p>AMIS的Api对象并没有直接提供流式数据支持，但是它提供了一种专用的<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/components/service">Service容器</a>，可以起到类似的作用。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>   <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;service&quot;</span>,<br>   <span class="hljs-string">&quot;api&quot;</span>: <span class="hljs-string">&quot;/amis/api/mock2/page/initData&quot;</span>,<br>   <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>     <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;panel&quot;</span>,<br>     <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;$title&quot;</span>,<br>     <span class="hljs-string">&quot;body&quot;</span>: <span class="hljs-string">&quot;api返回的结果是一个Map，其中的属性date的值为 $&#123;date&#125;&quot;</span><br>   &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>Service的接口定义为</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">interface <span class="hljs-title class_">ServiceSchema</span>&#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 指定为 Service 数据拉取控件。</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;service&#x27;</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 页面初始化的时候，可以设置一个 API 让其取拉取，发送数据会携带当前 data 数据（包含地址栏参数），获取得数据会合并到 data 中，供组件内使用。</span><br><span class="hljs-comment">   */</span><br>  api?: <span class="hljs-title class_">SchemaApi</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * WebScocket 地址，用于实时获取数据</span><br><span class="hljs-comment">   */</span><br>  ws?: string;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 通过调用外部函数来获取数据</span><br><span class="hljs-comment">   */</span><br>  dataProvider?: <span class="hljs-title class_">ComposedDataProvider</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 内容区域</span><br><span class="hljs-comment">   */</span><br>  body?: <span class="hljs-title class_">SchemaCollection</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@deprecated</span> 改成 api 的 sendOn。</span><br><span class="hljs-comment">   *    从这个设计变动可以看出AMIS中Api对象的规范化也是逐步进行的。</span><br><span class="hljs-comment">   */</span><br>  fetchOn?: <span class="hljs-title class_">SchemaExpression</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否默认就拉取？</span><br><span class="hljs-comment">   */</span><br>  initFetch?: boolean;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否默认就拉取？通过表达式来决定.</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@deprecated</span> 改成 api 的 sendOn。</span><br><span class="hljs-comment">   */</span><br>  initFetchOn?: <span class="hljs-title class_">SchemaExpression</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 用来获取远程 Schema 的 api</span><br><span class="hljs-comment">   */</span><br>  schemaApi?: <span class="hljs-title class_">SchemaApi</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否默认加载 schemaApi</span><br><span class="hljs-comment">   */</span><br>  initFetchSchema?: boolean;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 用表达式来配置。</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@deprecated</span> 改成 api 的 sendOn。</span><br><span class="hljs-comment">   */</span><br>  initFetchSchemaOn?: <span class="hljs-title class_">SchemaExpression</span>;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否轮询拉取</span><br><span class="hljs-comment">   */</span><br>  interval?: number;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 是否静默拉取</span><br><span class="hljs-comment">   */</span><br>  silentPolling?: boolean;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 关闭轮询的条件。</span><br><span class="hljs-comment">   */</span><br>  stopAutoRefreshWhen?: <span class="hljs-title class_">SchemaExpression</span>;<br><br>  messages?: <span class="hljs-title class_">SchemaMessage</span>;<br><br>  name?: <span class="hljs-title class_">SchemaName</span>;<br>&#125;<br><span class="hljs-comment">// ServiceStore中增加了fetching, error等状态变量信息。</span><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">ServiceStore</span> = iRendererStore<br>  .<span class="hljs-title function_">named</span>(<span class="hljs-string">&#x27;ServiceStore&#x27;</span>)<br>  .<span class="hljs-title function_">props</span>(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-attr">error</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">fetching</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">saving</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">busying</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">checking</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">initializing</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">schema</span>: types.<span class="hljs-title function_">optional</span>(types.<span class="hljs-title function_">frozen</span>(), <span class="hljs-literal">null</span>),<br>    <span class="hljs-attr">schemaKey</span>: <span class="hljs-string">&#x27;&#x27;</span><br>  &#125;)<br></code></pre></td></tr></table></figure>
+
+<p>Service支持轮询拉取数据或者通过websocket返回流式数据。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;service&quot;</span>,<br>  <span class="hljs-string">&quot;ws&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;ws://localhost:8777?name=$&#123;name&#125;&quot;</span>,<br>    <span class="hljs-string">&quot;data&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;$&#123;name&#125;&quot;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;名称&quot;</span>,<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;static&quot;</span>,<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;returnVar&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以只设置 ws，通过 ws 来获取所有数据，也可以同时设置 api 和 ws，让 api 用于获取全部数据，而 ws 用于获取实时更新的数据。</p>
+<p><strong>Service拉取到的数据兄弟节点就可以读取到，在这个意义上说，把Service看作容器概念是一种历史遗留的错误，本质上它是一个更灵活组织的、支持流式数据的Api对象</strong>。</p>
+<blockquote>
+<p>除了用于动态获取数据之外，Service的另一个作用是可以动态获取页面片段定义，用返回的schema定义来生成页面，但是根据本文中的分析，获取data与获取schema的功能本质上是不相关的，最好是分离设计。</p>
+</blockquote>
+<p>除了Api对象之外，AMIS还提供了一种轻量级的、类似Vue3.0中computed类型的动态计算机制：formula组件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;b&quot;</span>,<br>  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;B&quot;</span><br>&#125;,<br>&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;formula&quot;</span>,<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;b&quot;</span>,<br>  <span class="hljs-string">&quot;formula&quot;</span>: <span class="hljs-string">&quot;&#x27;&#x27;&quot;</span>,<br>  <span class="hljs-string">&quot;condition&quot;</span>: <span class="hljs-string">&quot;$&#123;radios&#125;&quot;</span>,<br>  <span class="hljs-string">&quot;initSet&quot;</span>: <span class="hljs-literal">false</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上的例子是formula的一个有趣应用。两个控件的名称都是b，但是formula控件带有一个条件，它表示当radios变量变化的时候，会执行公式，设置变量b的值为空。formula控件的作用相当于是radios选项变化时对变量b所执行的一种重置动作。</p>
+<p>formula组件只能写嵌入表达式，无法进行更复杂的函数抽象。因为Api本质上是比computed更高阶的数据类型，所以我们在某种程度上也可以用Api来模拟computed机制。例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&quot;@action:myFunc&quot;</span>,<br>    <span class="hljs-attr">data</span>: &#123;<br>       <span class="hljs-attr">a</span>: <span class="hljs-string">&quot;$&#123;a&#125;&quot;</span> <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@action:myFunc</code>是Nop平台中基于AMIS的Env抽象对AMIS平台所作的一种扩展函数调用机制。上面的Api定义表示当变量a发生变化的时候会触发上下文环境中的myFunc函数，在myFunc中我们在前台执行一些处理逻辑，并不一定需要发起远程调用。</p>
+<p>在1.4.0版本之后，Service容器可以通过dataProvider属性来设置数据加载函数，利用它也可以模拟部分模拟Vue中computed属性的功能。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;service&quot;</span>,<br>    <span class="hljs-string">&quot;data&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;x&quot;</span>: <span class="hljs-number">123</span><br>    &#125;,<br>    <span class="hljs-string">&quot;dataProvider&quot;</span>: <span class="hljs-string">&quot;const timer = setInterval(() =&gt; &#123; setData(&#123;:data.x, date: new Date().toString()&#125;) &#125;, 1000); return () =&gt; &#123; clearInterval(timer) &#125;&quot;</span>,<br>    <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;tpl&quot;</span>,<br>      <span class="hljs-string">&quot;tpl&quot;</span>: <span class="hljs-string">&quot;现在是：$&#123;date&#125;,$&#123;x&#125;&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>dataProvider函数中可以通过data属性来访问data参数数据，通过调用setData来更新store中的数据。</p>
+<p>在一种理想的响应式前端框架中，我们可以期待绑定组件的属性值时，可以使用静态值，动态表达式，响应式Ref引用，或者具有状态跟踪功能的异步Api对象（流数据）。但是，目前在AMIS的实现中我们做不到这一点，所以select控件设置静态配置的选项列表时使用options属性，而如果需要动态获取选项列表时需要使用一个单独定义的source属性。这也意味着控件的哪些属性支持异步Api调用目前是需要逐个控件单独去实现的。</p>
+<h2 id="三-数据链-状态树与词法作用域"><a href="#三-数据链-状态树与词法作用域" class="headerlink" title="三. 数据链: 状态树与词法作用域"></a>三. 数据链: 状态树与词法作用域</h2><p>在Vue3.0之前，Vuex框架为vue组件提供了整个应用层面的单一状态树管理。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">Counter</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">`&lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;`</span>,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    count () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">$store</span>.<span class="hljs-property">state</span>.<span class="hljs-property">count</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从今天的角度上看，Vuex的设计明显过于曲折。当我们需要在组件中使用store中的某个变量的时候，为什么非要从this指针绕一下，把变量从store中拉下来，再包装为对象上的某个computed属性呢？为什么不可以直接使用store上的变量呢？</p>
+<p>在Vue3.0中，<a target="_blank" rel="noopener" href="https://pinia.web3doc.top/introduction.html">Pinia框架</a>取代了Vuex的生态位，它的做法更加贴近人们的直觉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> store = <span class="hljs-title function_">useStore</span>();<br><span class="hljs-keyword">const</span> &#123; count &#125; = <span class="hljs-title function_">storeToRefs</span>(store)<br><span class="hljs-comment">// 可以直接使用store变量，也可以从store中解构出ref变量后再使用</span><br><span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> &#123;mainStore.count&#125; --- &#123;count&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>结合jsx语法，我们可以直接通过Javascript变量名访问到对应状态变量。<strong>变量是按照Javascript中的词法作用域一层层向上查找</strong>，如果存在多个同名的变量，则实际找到的是最近层级的变量。</p>
+<p>AMIS中的所谓<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/datascope-and-datachain">数据链概念</a>，本质上就是由AMIS框架所负责维护的一组词法作用域。当我们在AMIS的DSL语法中为组件设置name属性时，它表示将本控件与当前数据域中的同名变量绑定在一起（双向数据绑定）。使用表达式语法时，表达式中的变量也是在数据域中进行解析。因此这里的所谓数据域可以看作是DSL语法中的词法作用域。AMIS中规定了如下查找规则：</p>
+<ol>
+<li>首先会先尝试在当前组件的数据域中寻找变量，当成功找到变量时，通过数据映射完成渲染，停止寻找过程；</li>
+<li>当在当前数据域中没有找到变量时，则向上寻找，在父组件的数据域中，重复步骤<code>1</code>和<code>2</code>；</li>
+<li>一直寻找，直到顶级节点，也就是<code>page</code>节点，寻找过程结束。</li>
+<li>但是如果 url 中有参数，还会继续向上查找这层，所以很多时候配置中可以直接 <code>$&#123;id&#125;</code> 取地址栏参数。</li>
+</ol>
+<p>Vuex中维护了所谓的单一状态树，将整个应用的状态变量作为一颗单根树进行管理，这是从Redux框架继承来的一个概念。但在实际使用过程中，往往我们并没有把树形结构的这种层级关系很好的利用起来。而在AMIS中，只有少数几个容器组件会创建新的数据域(除了最顶层的 Page，还有 CRUD、Dialog、IFrame、Form、Service 等)。当这些容器组件嵌套组合为页面的时候，会把自己的Store自动挂载到全局的StoreTree结构中，整个页面很自然的构成一颗StateTree。然后<strong>借助于数据链查找机制</strong>，我们在编写业务逻辑的时候<strong>可以只使用最相关的局部变量名，从而使得逻辑表达得到简化</strong>。例如，在表格控件的某个单元格中，数据域首先是数据行，可以直接通过变量名访问到其他列。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;crud&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;api&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/amis/api/mock2/sample&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;columns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;version&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Engine version&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Next Version&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tpl&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;tpl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;version+1&#125;&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>AMIS中专门提供了一个<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/components/form/combo">Combo组件</a>，用于充分利用对象数据的层次结构，实现复杂对象结构的编辑和展现。</p>
+<p>为了更精细的控制数据链上的信息传递，AMIS提供了如下机制</p>
+<ol>
+<li><p>canAccessSuperData属性可以控制不访问父级数据域中的数据</p>
+</li>
+<li><p>通过重置data中的数据为__undefined来覆盖父级数据域中的值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br> <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;dialog&quot;</span>,<br> <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;新增&quot;</span>,<br> <span class="hljs-string">&quot;data&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;__undefined&quot;</span><br> &#125;,<br> ...<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="四-表单：验证与联动"><a href="#四-表单：验证与联动" class="headerlink" title="四. 表单：验证与联动"></a>四. 表单：验证与联动</h2><p>表单字段模型相当于是在原有业务字段值的基础上，增加一些额外的功能，例如：</p>
+<ol>
+<li><p>字段标签label</p>
+</li>
+<li><p>字段是否有效validated，是否正在验证validating</p>
+</li>
+<li><p>字段是否必填required</p>
+</li>
+<li><p>字段是否可见 visible</p>
+</li>
+<li><p>字段录入控件是否失去焦点 focus&#x2F;blur</p>
+</li>
+<li><p>字段录入是否被禁用 disabled</p>
+</li>
+<li><p>验证失败时显示的错误提示 error</p>
+</li>
+<li><p>字段值是否已经被修改，修改前的值是什么</p>
+</li>
+<li><p>字段提示文本remark，表单项描述desc等辅助录入的提示信息</p>
+</li>
+</ol>
+<p>AMIS和其他前端框架的做法类似，都是通过一个FormItem高阶包装控件来实现对普通控件的增强。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyControl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123;value, onChange&#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br><br>    <span class="hljs-comment">// 可以通过 this.props.data 获取当前数据域中的所有的数据</span><br>    <span class="hljs-comment">// 通过this.props.onBulkChange(&#123;a: 1, b: 2&#125;) 来更新其他字段的值</span><br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>这个是个自定义组件<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>当前值：&#123;value&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">a</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;btn btn-default&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> onChange(Math.round(Math.random() * 10000))&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          随机修改</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-title class_">FormItem</span>(&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;my-control&#x27;</span>,<br>&#125;)(<span class="hljs-title class_">MyControl</span>)<br></code></pre></td></tr></table></figure>
+
+<p>经过FormItem包装并注册到Renderer工厂中之后，在表单中就可以通过<code>type:&quot;my-control&quot;</code>来使用该控件并获取到label、remark等附加显示支持。</p>
+<p>借助于AMIS强大的数据链管理和Api对象抽象，AMIS表单对验证和联动的支持非常直观和简单。例如，对于异步验证，只需要配置控件的validateApi属性，通过api的sendOn配置可以进一步控制验证发起条件。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>    <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;email&quot;</span>,<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>     <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;email&quot;</span>,<br>     <span class="hljs-string">&quot;validateApi&quot;</span>: <span class="hljs-string">&quot;/amis/api/mock2/form/formitemSuccess&quot;</span>,<br>     <span class="hljs-string">&quot;required&quot;</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>AMIS内置了一个属性名称约定：所有类似visibleOn&#x2F;requiredOn这样的满足xxxOn模式的属性都会作为表达式被执行，执行结果作为最终的visible&#x2F;required等属性传递给组件。</p>
+<p>借助于响应式的数据绑定表达式，无需编写事件监听函数，即可实现相当复杂的表单内控件联动。例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;idIsNumber&quot;</span>,<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;switch&quot;</span>,<br>  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;id 是数字类型&quot;</span><br>&#125;,<br>&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;id&quot;</span>,<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;id&quot;</span>,<br>  <span class="hljs-string">&quot;visibleOn&quot;</span>: <span class="hljs-string">&quot;$&#123;!idIsNumber&#125;&quot;</span>,<br>  <span class="hljs-string">&quot;validations&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;isEmail&quot;</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;,<br>&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;id&quot;</span>,<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-number&quot;</span>,<br>  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;id&quot;</span>,<br>  <span class="hljs-string">&quot;visibleOn&quot;</span>: <span class="hljs-string">&quot;$&#123;idIsNumber&#125;&quot;</span>,<br>  <span class="hljs-string">&quot;validations&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;isNumeric&quot;</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以在表单中放置多个同名的控件，然后借助于visibleOn表达式进行条件切换，从而实现在不同的条件下执行不同的校验规则的功能。<strong>在数据驱动的前端模型中，数据不再是从属于具体的控件，而是由与界面控件无关的store进行管理，因此多个控件可以共享同样的数据</strong>。</p>
+<blockquote>
+<p>AMIS内置还识别另外一些后缀约定，例如valueExpr表示该字段是表达式类型，实际对应于value属性等。但是目前xxExpr后缀的表达方式应该已经被废弃，在AMIS的文档中没有相关的介绍。现在应该是倾向于直接识别是否存在前后缀来判断是否表达式语法，例如<code>value: &quot;$&#123;a.b.c&#125;&quot;</code>会被自动识别为表达式。在Nop平台中我们一直贯彻<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/548314138">前缀引导语法</a>的设计思想，通过增加特定的值前缀来标识不同的值类型，从而可以保持对象整体结构不变，<strong>将值级别的变化限定在值的表达范围内，而不用上升到对象级别</strong>（不用增加新的属性）。按照这一设计思想，AMIS中visibleOn&#x2F;disabledOn等约定也是多余的，完全可以改为全部使用表达式约定，但考虑到兼容性问题，AMIS大概不会再做这个修改。目前AMIS框架在很多地方缺少全局统一的处理机制，表达式识别和处理一般是下放给每个控件独立进行，所以在实际使用中可能存在隐秘的不一致的地方。</p>
+</blockquote>
+<p><strong>AMIS继承并发扬了DOM模型的优秀设计：所有控件都具有name和id，可以按照name和id进行查找定位</strong>。AMIS很巧妙的引入了所谓target的概念，将name直接作为描述式的定位坐标，从而进一步挖掘了name的价值。例如，借助于target，AMIS中可以实现跨表单的联动。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"> &#123;<br>      <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;查询条件&quot;</span>,<br>      <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;form&quot;</span>,<br>      <span class="hljs-string">&quot;target&quot;</span>: <span class="hljs-string">&quot;my_crud&quot;</span>,<br>      <span class="hljs-string">&quot;body&quot;</span>: [<br>        &#123;<br>          <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>          <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;keywords&quot;</span>,<br>          <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;关键字：&quot;</span><br>        &#125;<br>      ],<br>      <span class="hljs-string">&quot;submitText&quot;</span>: <span class="hljs-string">&quot;搜索&quot;</span><br>    &#125;,<br>    &#123;<br>      <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;crud&quot;</span>,<br>      <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;my_crud&quot;</span>,<br>      <span class="hljs-string">&quot;api&quot;</span>: <span class="hljs-string">&quot;/amis/api/mock2/sample&quot;</span>,<br>      ...<br>    &#125;<br>&#125;    <br></code></pre></td></tr></table></figure>
+
+<p>通过设置form的target为其他控件的名称，可以将form表单的数据作为参数提交到指定控件。</p>
+<p>另外一种常见用法是触发target控件上的reload方法，此时可以传递指定的参数</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"> &#123;<br>         <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;action&quot;</span>,<br>         <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;reload&quot;</span>,<br>         <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;发送到 form2&quot;</span>,<br>         <span class="hljs-string">&quot;target&quot;</span>: <span class="hljs-string">&quot;form2?name=$&#123;name&#125;&amp;email=$&#123;email&#125;&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以一次性刷新多个目标控件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;action&quot;</span>,<br>  <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;reload&quot;</span>,<br>  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;刷新目标组件&quot;</span>,<br>  <span class="hljs-string">&quot;target&quot;</span>: <span class="hljs-string">&quot;target1,target2&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>AMIS对组件的reload语义进行了规范化，所以Formula组件、Service组件、Select组件等都支持reload语义，它们会执行某种缺省的刷新行为，比如Service组件会重新执行Api调用，Select组件会重新加载sourcce选项列表等。</p>
+<p>一个很自然的扩展是支持调用目标组件上的任意方法，而不仅仅是缺省的reload方法。AMIS在1.7.0版本以后开始支持更灵活的组件方法调用机制：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 设置表单的值</span><br>&#123;<br>    <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;setValue&quot;</span>,<br>    <span class="hljs-string">&quot;componentId&quot;</span>: <span class="hljs-string">&quot;myForm&quot;</span>,<br>    <span class="hljs-string">&quot;args&quot;</span>: &#123;<br>       <span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-string">&quot;$&#123;globalData&#125;&quot;</span><br>    &#125;<br> &#125;,<br><span class="hljs-comment">// 切换tab页选项</span><br>&#123;<br>     <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;changeActiveKey&quot;</span>,<br>     <span class="hljs-string">&quot;componentId&quot;</span>: <span class="hljs-string">&quot;tabs-change-receiver&quot;</span>,<br>     <span class="hljs-string">&quot;args&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;activeKey&quot;</span>: <span class="hljs-number">2</span><br>      &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果设计一种定位机制，最简单的要求应该是三点：</p>
+<ol>
+<li><p>绝对定位方式</p>
+</li>
+<li><p>相对定位方式</p>
+</li>
+<li><p>相对定位的复合方式</p>
+</li>
+</ol>
+<p>在AMIS中，id是用于定位的绝对坐标，getComponentById(id)总会先找到root节点，然后再从root节点一层层向下查找。name是用于定位的相对坐标，getComponentByName(name)是查找当前scope中具有指定名称的组件。<strong>当找不到的时候, AMIS会调用parent.getComponentByName(name)继续查找,所以有可能找到其他分支上的节点</strong>。 getComponentByName支持name属性的复合, a.b.c表示先按照name&#x3D;a查找到组件，然后再在其中查找name&#x3D;b的子组件，依此类推。</p>
+<p>在AMIS最新的action触发设计中，componentId只支持id绝对定义，而不支持按照name进行相对定位，这应该是设计上的一种倒退。没有相对定位，在我们对多个页面进行组合的时候，很容易出现冲突的情况。如果使用完全无意义的uuid，则会难以支持手工编写，从DSL退化为可视化编辑器的附属物。</p>
+<h2 id="五-Action-动作触发与编配"><a href="#五-Action-动作触发与编配" class="headerlink" title="五. Action: 动作触发与编配"></a>五. Action: 动作触发与编配</h2><p><a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/components/action">Action行为按钮</a>是触发页面行为的最常见的方式。AMIS中的Action组件和外部的容器组件相互配合，内置了大量前端页面模型相关的知识，有效减少了一般应用场景中的配置工作量。<br>首先，Action组件内置了常见的处理工作流：</p>
+<ol>
+<li>首先弹出confirmText提示，询问是否需要执行</li>
+<li>如果是在表单中，会检查required配置指定的字段是否通过校验</li>
+<li>检查requiredSelected批量操作条件是否满足</li>
+<li>执行操作，启动countDown禁止倒计时，</li>
+<li>如果配置了messages，则成功或者失败时会使用toast方式显示对应提示信息</li>
+<li>操作成功后如果配置了feedback窗口，则弹出反馈窗口，对返回结果进行展示</li>
+<li>操作成功后如果配置了redirect，则跳转到指定页面</li>
+<li>操作执行成功后根据reload配置刷新指定控件</li>
+<li>如果配置了close，且按钮在对话框中，则尝试关闭对话框。</li>
+</ol>
+<p>Action触发采用的是类似事件冒泡的处理方式：<strong>当本组件的handleAction函数不处理的时候，会调用父组件传入的onAction函数进行处理</strong>。AMIS的表单控件和对话框控件都识别一些标准动作，例如reset&#x2F;reload&#x2F;submit&#x2F;clear&#x2F;confirm&#x2F;cancel&#x2F;close等，因此当事件传播到这些容器组件的时候会自动执行缺省行为。在下面的例子中，点击按钮A的时候会自动关闭当前页面所在的对话框，点击按钮B的时候会重置当前页面中按照缺省定位规则可以找到的表单</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>    <span class="hljs-string">&quot;type&quot;</span>:<span class="hljs-string">&quot;action&quot;</span>,<br>    <span class="hljs-string">&quot;label&quot;</span>:<span class="hljs-string">&quot;Button A&quot;</span>,<br>    <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;close&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;type&quot;</span>:<span class="hljs-string">&quot;action&quot;</span>,<br>    <span class="hljs-string">&quot;label&quot;</span>:<span class="hljs-string">&quot;Button B&quot;</span>,<br>    <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;reset&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Action也可以用于触发对话框的弹出，基本调用结构为</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>    <span class="hljs-string">&quot;type&quot;</span>:<span class="hljs-string">&quot;action&quot;</span>,<br>    <span class="hljs-string">&quot;actionType&quot;</span>:<span class="hljs-string">&quot;dialog&quot;</span>,<br>    <span class="hljs-string">&quot;dialog&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;data&quot;</span>: &#123;<br>          <span class="hljs-comment">// 通过data段向表单传递初始化数据，缺省情况下对话框继承了原页面的数据链，</span><br>          <span class="hljs-comment">// 可以直接访问到原页面中的数据</span><br>        &#125;,<br>        <span class="hljs-string">&quot;body&quot;</span>:&#123;<br>          <span class="hljs-comment">// 对话框中的具体内容。在对话框中仍可以通过组件id等访问到原页面中的组件</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;page&quot;</span>,<br>  <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;form&quot;</span>,<br>    <span class="hljs-string">&quot;body&quot;</span>: [<br>      &#123;<br>        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>        <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;data&quot;</span>,<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;myData&quot;</span>,<br>        <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;myData&quot;</span>,<br>        <span class="hljs-string">&quot;addOn&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;action&quot;</span>,<br>          <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;设置&quot;</span>,<br>          <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;dialog&quot;</span>,<br>          <span class="hljs-string">&quot;dialog&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;actions&quot;</span>: [],<br>            <span class="hljs-string">&quot;data&quot;</span>: &#123;<br>              <span class="hljs-string">&quot;myValue&quot;</span>: <span class="hljs-string">&quot;$&#123;myData&#125;&quot;</span><br>            &#125;,<br>            <span class="hljs-string">&quot;body&quot;</span>: &#123;<br>              <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;form&quot;</span>,<br>              <span class="hljs-string">&quot;body&quot;</span>: [<br>                &#123;<br>                  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;input-text&quot;</span>,<br>                  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;myValue&quot;</span>,<br>                  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;myValue&quot;</span><br>                &#125;,<br>                &#123;<br>                  <span class="hljs-string">&quot;label&quot;</span>: <span class="hljs-string">&quot;修改&quot;</span>,<br>                  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;action&quot;</span>,<br>                  <span class="hljs-string">&quot;close&quot;</span>: <span class="hljs-literal">true</span>,<br>                  <span class="hljs-string">&quot;onEvent&quot;</span>: &#123;<br>                    <span class="hljs-string">&quot;click&quot;</span>: &#123;<br>                      <span class="hljs-string">&quot;actions&quot;</span>: [<br>                        &#123;<br>                          <span class="hljs-string">&quot;componentId&quot;</span>: <span class="hljs-string">&quot;myData&quot;</span>,<br>                          <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;setValue&quot;</span>,<br>                          <span class="hljs-string">&quot;args&quot;</span>: &#123;<br>                            <span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-string">&quot;$&#123;myValue&#125;&quot;</span><br>                          &#125;<br>                        &#125;<br>                      ]<br>                    &#125;<br>                  &#125;<br>                &#125;<br>              ]<br>            &#125;<br>          &#125;<br>        &#125;<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的例子中演示了在一个输入框旁增加一个附加按钮[设置]，点击后弹出一个表单，在表单中录入信息后，点击表单中的按钮将把信息复制到下面的输入框中，并自动关闭对话框。</p>
+<p>无论在框架中内置多么复杂的动作处理流，对于变换莫测的业务需求而言都是不充分的。AMIS在1.7.0版本之后增加了<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/event-action">事件动作</a>机制，允许在一次事件响应的过程中执行多个自定义的动作，而且<strong>这些动作可以并行、串行、异步执行，可以执行循环和分支选择，具有前后依赖关系，相当于是实现了一个小型的逻辑流编配系统</strong>。</p>
+<p>事件动作的基本调用结构为：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-string">&quot;onEvent&quot;</span>: &#123;<br>   <span class="hljs-string">&quot;click&quot;</span>: &#123; <span class="hljs-comment">// 监听事件</span><br>     <span class="hljs-string">&quot;actions&quot;</span>: [ <span class="hljs-comment">// 执行的动作列表</span><br>       &#123;<br>         <span class="hljs-string">&quot;actionType&quot;</span>: <span class="hljs-string">&quot;toast&quot;</span>, <span class="hljs-comment">// 执行toast提示动作</span><br>         <span class="hljs-string">&quot;args&quot;</span>: &#123; <span class="hljs-comment">// 动作参数</span><br>           <span class="hljs-string">&quot;msgType&quot;</span>: <span class="hljs-string">&quot;info&quot;</span>,<br>           <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;$&#123;__rendererData|json&#125;&quot;</span><br>         &#125;,<br>          <span class="hljs-string">&quot;expression&quot;</span>: <span class="hljs-string">&quot;expression === \&quot;okk\&quot;&quot;</span> <span class="hljs-comment">// 满足条件才会执行,</span><br>          <span class="hljs-string">&quot;stopPropagation&quot;</span>:<span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否阻止执行下一个action</span><br>          <span class="hljs-string">&quot;preventDefault&quot;</span>:<span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否阻止执行控件缺省的事件响应函数</span><br>          <span class="hljs-string">&quot;outputVar&quot;</span>: <span class="hljs-string">&quot;&quot;</span> <span class="hljs-comment">// 如果动作有返回结果，这里可以指定输出变量名</span><br>       &#125;,<br>       <span class="hljs-comment">// 后续动作</span><br>     ]<br>   &#125;,<br></code></pre></td></tr></table></figure>
+
+<p>执行动作时，可以通过<code>$&#123;event.data&#125;</code>获取事件对象的数据、通过<code>$&#123;__rendererData&#125;</code>获取组件当前数据域。</p>
+<p>AMIS提供了actionType&#x3D;loop&#x2F;break&#x2F;continue&#x2F;switch&#x2F;parallel等多种流程控制指令。后续动作会自动等待前一个动作执行完毕后再执行。http 请求动作执行结束后，后面的动作可以通过 <code>$&#123;responseResult&#125;</code>或<code>$&#123;&#123;outputVar&#125;&#125;</code>来获取请求响应结果。</p>
+<h2 id="六-Nop平台中的扩展"><a href="#六-Nop平台中的扩展" class="headerlink" title="六. Nop平台中的扩展"></a>六. Nop平台中的扩展</h2><p>Nop平台是基于可逆计算原理从零开始构建的、面向DSL开发的新一代低代码开发平台。它的前端可以使用任何基于JSON格式或者XML格式的渲染层。此前我考察过国外的<a target="_blank" rel="noopener" href="https://www.appsmith.com/">Appsmith</a>，阿里的<a target="_blank" rel="noopener" href="https://lowcode-engine.cn/index">LowCodeEngine</a>等技术，但是最后还是选择AMIS作为示例，因为集成其他的技术都需要更多的工作，也受到更多的限制。</p>
+<h2 id="6-1-XML与JSON的自动转化"><a href="#6-1-XML与JSON的自动转化" class="headerlink" title="6.1 XML与JSON的自动转化"></a>6.1 XML与JSON的自动转化</h2><p>在手工编写和阅读的时候，XML格式相对于JSON格式是有一定优势的，特别是集成外部模板引擎用于动态生成的时候。Nop平台为AMIS增加了XML格式的语法表达形式，可以按照简单的几条规则实现XML和JSON之间的双向转换。具体规则如下:</p>
+<ol>
+<li><p>type属性对应于标签名</p>
+</li>
+<li><p>简单类型的属性对应于XML的属性名</p>
+</li>
+<li><p>复杂类型的属性对应于XML的子节点</p>
+</li>
+<li><p>如果是列表类型，则在节点上标注<code>j:list=true</code></p>
+</li>
+<li><p>body属性会被特殊识别，不用明确标注j:list</p>
+</li>
+</ol>
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;operation&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;操作&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;buttons&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>          <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;详情&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;button&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;link&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;actionType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dialog&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dialog&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;查看详情&quot;</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;form&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                  <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;input-text&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;browser&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Browser&quot;</span><br>                  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                  <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;control&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;grade&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tag&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;grade&#125;&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;displayMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;normal&quot;</span><span class="hljs-punctuation">,</span><br>                      <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span><br>                    <span class="hljs-punctuation">&#125;</span><br>                  <span class="hljs-punctuation">&#125;</span><br>                <span class="hljs-punctuation">]</span><br>              <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>          <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>对应于XML格式</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">operation</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;操作&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">buttons</span> <span class="hljs-attr">j:list</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;详情&quot;</span> <span class="hljs-attr">level</span>=<span class="hljs-string">&quot;link&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;dialog&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">titl</span>=<span class="hljs-string">&quot;查看详情&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">input-text</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;browser&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;Browser&quot;</span> /&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">control</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;grade&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">tag</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;$&#123;grade&#125;&quot;</span> <span class="hljs-attr">displayMode</span>=<span class="hljs-string">&quot;normal&quot;</span> <span class="hljs-attr">color</span>=<span class="hljs-string">&quot;active&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br>              <span class="hljs-tag">&lt;/<span class="hljs-name">control</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">buttons</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">operation</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop平台中的XPL模板语言为动态生成XML提供了诸多简化帮助，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">xpl:if</span>=<span class="hljs-string">&quot;xxx&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;$&#123;&#x27;$&#x27;&#125;&#123;grade&#125;&quot;</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;$&#123;icon&#125;&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>作为模板运行时xpl:if表示条件表达式，只有表达式返回true时整个节点才会被生成。所有XML属性生成的时候，如果属性值为null，则它将被自动忽略，不会输出到最终的结果中。借助于这一null属性过滤机制，我们可以很简单的控制哪些属性会被生成。</p>
+<p>AMIS的语法设计相对比较规整，转成XML之后很接近于普通的HTML或者Vue模板。相比之下，LowCodeEngine的DSL设计更像是针对领域对象的一种序列化协议，而不是一种便于手工编写和阅读的DSL语言。</p>
+<blockquote>
+<p>AMIS早期版本的DSL设计中也存在着大量不一致的地方，比如容器控件的内容部分，有时叫做children，有时叫做controls，有时叫做content，最近重构后才普遍改成了body。</p>
+</blockquote>
+<h2 id="6-2-可逆计算分解"><a href="#6-2-可逆计算分解" class="headerlink" title="6.2 可逆计算分解"></a>6.2 可逆计算分解</h2><p>Nop平台基于可逆计算理论针对JSON和XML实现了通用的分解合并机制，可以按照通用的规则将很大的JSON文件分解为多个小型文件，相当于是为AMIS补充了某种模块组织语法。最常用的是两个语法，x:extends用于表示继承外部的某个文件，x:gen-extends表示动态生成可以被继承的JSON对象。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br><span class="hljs-string">  &lt;web:GenPage view=&quot;NopAuthDept.view.xml&quot; page=&quot;main&quot; xpl:lib=&quot;/nop/web/xlib/web.xlib&quot; /&gt;</span><br><span class="hljs-string"></span><br><span class="hljs-attr">body:</span><br>   <span class="hljs-attr">name:</span> <span class="hljs-string">crud-grid</span><br>   <span class="hljs-attr">bulk-actions:</span><br>       <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">action</span><br>         <span class="hljs-attr">id:</span> <span class="hljs-string">test-button</span><br>         <span class="hljs-attr">label:</span> <span class="hljs-string">&#x27;Test&#x27;</span><br>         <span class="hljs-attr">actionType:</span> <span class="hljs-string">dialog</span><br>         <span class="hljs-attr">dialog:</span><br>            <span class="hljs-attr">&quot;x:extends&quot;:</span> <span class="hljs-string">test.page.yaml</span><br>            <span class="hljs-attr">&quot;title&quot;:</span> <span class="hljs-string">&quot;Test Dialog&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上示例表示，首先根据NopAuthDept.view.xml的配置动态生成一个CRUD页面，然后再在批量操作按钮区增加一个Test按钮，点击这个按钮的时候会弹出一个对话框，对话框的实现代码是复用已有的test.page.yaml文件。title属性会覆盖<code>x:extends</code>继承的内容，将对话框的标题设置为<code>Test Dialog</code>。</p>
+<p><code>x:extends</code>相当于是某种在Tree结构上执行的，类似面向对象的继承操作的通用操作符。</p>
+<p>对于任意的JSON格式的外部文件，我们只需要将普通的JSON文件的加载函数修改为Nop平台所提供的ResourceLoader调用即可自动获得可逆计算所定义的分解、合并操作，并支持编译期元编程，允许在编译期进行一系列复杂的结构变换。</p>
+<p>具体介绍参见</p>
+<p>    <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/531474176">从张量积看低代码平台的设计</a></p>
+<h2 id="6-4-Action模块化"><a href="#6-4-Action模块化" class="headerlink" title="6.4 Action模块化"></a>6.4 Action模块化</h2><p>AMIS的DSL本身只支持编写嵌入在页面中的JS片段代码，并不直接支持引入外部编写的JS函数。Nop平台为AMIS引入了一个<code>xui:import</code>属性，允许引入外部的JS库，把其中的函数作为事件响应函数来使用。</p>
+<blockquote>
+<p>这一机制是通用的，可以用于集成其他的低代码引擎</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type: page<br>xui:import: /nop/auth/pages/DemoPage/demo.lib.js<br>body:<br>  type: form<br>  api:<br>    url: &quot;@action:demo.testAction&quot;<br>    data:<br>      a: 1<br></code></pre></td></tr></table></figure>
+
+<p>以上示例表示，我们导入一个demo.lib.js库，然后通过demo.testAction引用其中的函数。</p>
+<p><code>url: &quot;@action:demo.testAction&quot;</code>这一语法是我们在AMIS的环境抽象基础上所提供的一个action触发机制。它通过拦截AMIS的fetcher调用，识别<code>@action:</code>前缀，然后映射到已加载的JS函数上，调用时传入data指定的参数。</p>
+<p>脚本库的代码存放在demo.lib.xjs中（注意后缀名是xjs而不是js，我们会通过graalvm-js脚本引擎调用rollup打包工具将xjs转换为js文件，并打包成SystemJs模块结构）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/* @x:gen-extends:</span><br><span class="hljs-comment">  &lt;!--这里可以用XPL模板语言来生成js代码 --&gt;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">import</span> &#123; ajaxFetch&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nop/utils&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;myAction&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./sub.lib.js&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;myAction2&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./parts/sub2.lib.js&#x27;</span><br><br><span class="hljs-keyword">import</span> &#123;ajaxRequest&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nop/utils&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">testAction</span>(<span class="hljs-params">options, page</span>)&#123;<br>    page.<span class="hljs-property">env</span>.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;xx&quot;</span>);<br>    <span class="hljs-title function_">ajaxFetch</span>(options)<br>    <span class="hljs-title function_">ajaxRequest</span>(options)<br>    <span class="hljs-title function_">myAction</span>(options,page)<br>    <span class="hljs-title function_">myAction2</span>(options,page)<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(&#123;<br>        <span class="hljs-attr">status</span>: <span class="hljs-number">200</span> ,<br>        <span class="hljs-attr">data</span>: &#123;<br>            <span class="hljs-attr">status</span>: <span class="hljs-number">0</span><br>        &#125;<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>xjs文件可以按照普通的ESM模块文件的格式进行编写。我们通过在注释区增加<code>@x:gen-extends</code>为它增加了编译期动态生成的能力（这一能力在工作流编辑器的动态生成中会使用）。</p>
+<p>export的函数是暴露给外部调用的接口函数。import调用会被转化为SystemJs的dependency。这里有一个特殊处理，对于&#x2F;parts&#x2F;目录下的文件，我们会调用rollup把它的代码和主文件的代码打包在一起，即parts下的文件认为是内部实现文件，不会暴露为外部可访问的js库。<br>打包后生成的结果参见文件 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-auth/nop-auth-app/_dump/nop-app/nop/auth/pages/DemoPage/demo.lib.js">demo.lib.js</a></p>
+<p>除了action调用之外，外部库函数可以用在一切允许嵌入js脚本的地方，为此我们提供了另一个前缀<code>@fn:</code>，使用它的时候需要明确传递函数参数（action的函数参数已经约定为options,page）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-string">&quot;onClick&quot;</span>:<span class="hljs-string">&quot;@fn:demo.myListener(event,props)&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>重新思考一下onClick的调用过程，我们会发现根据函数名查找到函数实现体的过程很类似于DOM组件的事件冒泡处理过程。事件冒泡时传递的是事件名，逐层向上查找，找到响应函数后处理。AMIS的action响应处理过程是由每个组件检查自己的handleAction是否可以处理对应的actionType，如果不能处理，则调用父组件传入的onAction来进行处理。</p>
+<p><strong>如果我们直接约定向上传递的事件名就是函数名，则事件冒泡处理的过程可以被看作是一个在词法作用域中解析函数名的过程</strong>。在不同层级引入的xui:import相当于是创建了不同的词法作用域，我们总是在最近的词法作用域中查找对应的函数，如果未找到，则继续向上在父作用域中查找。</p>
+<p>面向对象技术在GUI开发领域一直占据主导地位，它的核心精华思想其实就是 ComponentTree + StateTree + ActionTree这三者之间的组织关系。组件构成组件树，一般情况下这是和源码可以一一对应的静态结构，一旦构造成功，可以在内存中稳定存在，多次复用，而事件和数据在这颗组件树上穿行不息。业务状态信息也构成一颗状态树，然后组件可以从状态树中拉取数据。组件树与状态树之间不一定是逐层对应的，但上下级关系保持稳定。当事件发生的时候，事件会沿着ActionTree向上冒泡，由某一层的处理器负责处理。理论上说，ActionTree的Tree结构不一定与ComponentTree相一致，但是考虑到我们思考上的稳定性和便利性，我们一般会希望使用编译期就能够确定的词法作用域，而不是某种受运行时状态影响的动态作用域，这样Action就会和某一级的Component联系起来, 而且上下级顺序与组件树保持一致（并不一定逐层对应）。</p>
+<h2 id="6-5-GraphQL简化"><a href="#6-5-GraphQL简化" class="headerlink" title="6.5 GraphQL简化"></a>6.5 GraphQL简化</h2><p>GraphQL总是需要指定返回字段列表，但是对于一个低代码平台来说，表单中具有哪些字段是一件可以根据模型分析得到的事情，所以我们可以根据表单模型自动推定它需要哪些字段而不需要手工指定。</p>
+<p>Nop平台为AMIS增加了一个扩展，使得我们可以通过如下语法构造GraphQL请求</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-attr">url</span>: <span class="hljs-string">&quot;@graphql:NopAuthUser__get/&#123;@formSelection&#125;?id=$id&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>具体介绍可以参见我此前的文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/589565334">低代码平台中的GraphQL引擎</a></p>
+<h2 id="6-6-多语言国际化"><a href="#6-6-多语言国际化" class="headerlink" title="6.6 多语言国际化"></a>6.6 多语言国际化</h2><p>AMIS的JSON格式，可以很容易的被读取和处理。因此很多结构变换工作完全可以脱离AMIS框架，由后端进行统一的处理。<br>Nop平台中对JSON提供了统一的i18n字符串替换机制，它规定了如下两种方式：</p>
+<ol>
+<li><p>使用前缀引导语法识别并替换所有具有<code>@i18n:</code>的值</p>
+</li>
+<li><p>为每个需要被国际化的key，增加对应的<code>@i18n:key</code>属性<br>例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br><span class="hljs-attr">label</span>: <span class="hljs-string">&quot;@i18n:common.batchDelete|批量删除&quot;</span><br>&#125;<br>或者<br>&#123;<br><span class="hljs-attr">label</span>: <span class="hljs-string">&quot;批量删除&quot;</span><br><span class="hljs-string">&quot;@i18n:label&quot;</span> : <span class="hljs-string">&quot;common.batchDelete&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="6-7-权限控制"><a href="#6-7-权限控制" class="headerlink" title="6.7 权限控制"></a>6.7 权限控制</h2><p>Nop平台规定了<code>xui:roles</code>和<code>xui:permissions</code>等权限相关的属性，在接收到JSON格式的页面数据之后，会自动验证权限属性是否满足，并删除所有不满足权限要求的节点。这一处理过程在JSON结构上进行，不涉及到任何前端框架特有的知识。</p>
+<h2 id="6-7-Vue组件集成"><a href="#6-7-Vue组件集成" class="headerlink" title="6.7 Vue组件集成"></a>6.7 Vue组件集成</h2><p>AMIS底层是基于React技术开发，而Nop平台的前端主要基于Vue3.0技术开发，为了便于集成第三方的vue组件, Nop平台提供了一个通用的包装组件。在AMIS的配置文件中我们可以这样使用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;vue-form-item&quot;</span>,<br>  <span class="hljs-string">&quot;vueComponent&quot;</span>: <span class="hljs-string">&quot;Vue组件名&quot;</span>,<br>  <span class="hljs-string">&quot;props&quot;</span>: &#123;<br>    传给vue组件的属性<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>百度AMIS框架是一个设计精巧，集成难度很低的低代码前端框架。Nop平台在AMIS框架的基础上做了一定的改进和扩展，为一些常见问题提供了相应的解决方案。 Nop平台对于AMIS的封装代码已经上传到gitee<br><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-chaos.git">nop-chaos</a><br>对AMIS集成感兴趣的同学可以参考。</p>
+<p>Nop平台的开源地址：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">canonical-entropy&#x2F;nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">entropy-cloud&#x2F;nop-entropy</a></li>
+<li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">docs&#x2F;tutorial&#x2F;tutorial.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1u84y1w7kX/">可逆计算原理和Nop平台介绍及答疑_哔哩哔哩_bilibili</a></li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/amis/why-amis-is-good.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

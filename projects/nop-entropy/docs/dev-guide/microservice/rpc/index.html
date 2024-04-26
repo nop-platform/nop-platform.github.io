@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>一. 服务端配置 - Nop</title>
+
+
+  <meta property="og:title" content="一. 服务端配置">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">一. 服务端配置</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>Nop平台通过基于HttpClient实现了简单的分布式RPC机制。具体设计原理参见<a href="../rpc-design/">rpc-design.md</a></p>
+<p>示例工程参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-demo/nop-rpc-client-demo">nop-rpc-client-demo</a><br>,它同时作为RPC的客户端和服务端。<br>采用SpringMVC实现的服务端参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-demo/nop-rpc-server-demo">nop-rpc-server-demo</a></p>
+<h2 id="1-1-启用Nacos服务发现"><a href="#1-1-启用Nacos服务发现" class="headerlink" title="1.1 启用Nacos服务发现"></a>1.1 启用Nacos服务发现</h2><p>服务端和客户端都需要引入nop-cluster-nacos和nop-rpc-cluster模块，使用nacos作为服务注册中心。配置参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nop.cluster.discovery.nacos.enabled</td>
+<td>true</td>
+<td>是否启用Nacos服务发现机制</td>
+</tr>
+<tr>
+<td>nop.cluster.discovery.nacos.server-addr</td>
+<td></td>
+<td>nacos服务地址列表，使用逗号分隔，例如: localhost:8848</td>
+</tr>
+<tr>
+<td>nop.cluster.discovery.nacos.username</td>
+<td></td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>nop.cluster.discovery.nacos.password</td>
+<td></td>
+<td>密码</td>
+</tr>
+<tr>
+<td>nop.cluster.discovery.nacos.group</td>
+<td>DEFAULT_GROUP</td>
+<td>分组</td>
+</tr>
+<tr>
+<td>nop.cluster.discovery.nacos.namespace</td>
+<td></td>
+<td>名字空间</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-启用自动注册"><a href="#1-2-启用自动注册" class="headerlink" title="1.2 启用自动注册"></a>1.2 启用自动注册</h2><p>如果开启自动注册，则平台启动的时候将当前应用注册到服务注册中心。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nop.application.name</td>
+<td></td>
+<td>服务名，必须在bootstrap.yaml中配置</td>
+</tr>
+<tr>
+<td>nop.cluster.registration.enabled</td>
+<td>false</td>
+<td>是否自动注册到注册中心</td>
+</tr>
+<tr>
+<td>nop.server.addr</td>
+<td></td>
+<td>注册到注册中心的服务地址</td>
+</tr>
+<tr>
+<td>nop.server.port</td>
+<td></td>
+<td>注册到注册中心的服务端口</td>
+</tr>
+<tr>
+<td>nop.cluster.registration.tags</td>
+<td></td>
+<td>附加的服务标签</td>
+</tr>
+<tr>
+<td>nop.application.version</td>
+<td>1.0.0</td>
+<td>注册到注册中心的服务版本号,采用语义版本号格式，必须是major.minor.patch三个部分</td>
+</tr>
+</tbody></table>
+<p>在标准的sentinel.properties文件中增加sentinel内置变量配置，例如csp.sentinel.dashboard.server&#x3D;localhost:<br>8080表示将sentinel监控信息<br>报送到sentinel可视化管理端。</p>
+<ul>
+<li>如果要使用sentinel限流，需要引入nop-cluster-sentinel模块。</li>
+<li>Nop平台的REST服务实现依赖于spring或者quarkus框架，所以实际起作用的服务端口配置是quarkus.http.port，但是Nop平台中内部使用的是nop.server.port，<br>所以需要通过参数别名机制关联一下。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">quarkus:</span><br>  <span class="hljs-attr">http:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-string">$&#123;nop.server.port&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="1-3-实现服务"><a href="#1-3-实现服务" class="headerlink" title="1.3 实现服务"></a>1.3 实现服务</h2><p>实现Nop平台中的BizModel，它会同时提供GraphQL和REST两种外部接口。也可以采用SpringMVC等普通的REST服务框架来实现。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><br><span class="hljs-meta">@BizModel(&quot;TestRpc&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestRpcBizModel</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 调用Spring实现的REST服务</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@BizQuery</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">test</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;myArg&quot;)</span> String myArg)</span> &#123;<br>        <span class="hljs-keyword">return</span> echoService.echo(myArg, <span class="hljs-string">&quot;aa&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@BizMutation</span><br>    <span class="hljs-keyword">public</span> MyResponse <span class="hljs-title function_">myMethod</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequest req, FieldSelectionBean selection)</span> &#123;<br>        <span class="hljs-type">MyResponse</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyResponse</span>();<br>        <span class="hljs-keyword">if</span> (selection.hasField(<span class="hljs-string">&quot;value1&quot;</span>)) &#123;<br>            res.setValue1(value1);<br>        &#125;<br>        <span class="hljs-comment">//res.setValue2(value2);</span><br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;    <br></code></pre></td></tr></table></figure>
+
+<p>我们可以通过两种形式来调用以上服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">// GraphQL请求：<br>query&#123;<br>   TestRpc__test(myArg: &quot;333&quot;)<br>&#125;<br><br>mutation&#123;<br>  TestRpc__myMethod(name: &quot;xxx&quot;,type:&quot;bbb&quot;)&#123;<br>     value1, value2<br>  &#125;<br>&#125;<br><br>//或者 REST请求<br><br>GET /r/TestRpc__test?myArg=333<br><br>POST /r/TestRpc__myMethod?@selection=value1,value2<br>&#123;<br>   &quot;name&quot; : &quot;xxx&quot;,<br>   &quot;type&quot; : &quot;bbb&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>详细介绍参见<a href="../../graphql/graphql-java/">graphql-java.md</a></p>
+<h2 id="1-4-启用熔断限流"><a href="#1-4-启用熔断限流" class="headerlink" title="1.4 启用熔断限流"></a>1.4 启用熔断限流</h2><p>引入nop-cluster-sentinel来实现熔断限流。配置参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nop.cluster.sentinel.enabled</td>
+<td>true</td>
+<td>是否启用sentinel限流机制</td>
+</tr>
+<tr>
+<td>nop.cluster.sentinel.flow-rules</td>
+<td></td>
+<td>限流规则，通过配置中心可以动态更新</td>
+</tr>
+<tr>
+<td>nop.cluster.sentinel.degrade-rules</td>
+<td></td>
+<td>降级规则，可以动态更新</td>
+</tr>
+<tr>
+<td>nop.cluster.sentinel.sys-rules</td>
+<td></td>
+<td>系统限流规则, 可以动态更新</td>
+</tr>
+<tr>
+<td>nop.cluster.sentinel.auth-rules</td>
+<td></td>
+<td>权限规则，可以动态更新</td>
+</tr>
+</tbody></table>
+<h2 id="二-客户端配置"><a href="#二-客户端配置" class="headerlink" title="二. 客户端配置"></a>二. 客户端配置</h2><h2 id="2-1-启用Nacos服务发现"><a href="#2-1-启用Nacos服务发现" class="headerlink" title="2.1 启用Nacos服务发现"></a>2.1 启用Nacos服务发现</h2><p>具体设置与服务端类似，只是不需要启用自动注册</p>
+<h2 id="2-2-引入服务接口"><a href="#2-2-引入服务接口" class="headerlink" title="2.2 引入服务接口"></a>2.2 引入服务接口</h2><h3 id="Nop平台发布的服务接口"><a href="#Nop平台发布的服务接口" class="headerlink" title="Nop平台发布的服务接口"></a>Nop平台发布的服务接口</h3><p>如果服务端是Nop平台，可以定义如下接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><br><span class="hljs-meta">@BizModel(&quot;TestRpc&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">TestRpc</span> &#123;<br>    <span class="hljs-meta">@BizMutation</span><br>    ApiResponse&lt;MyResponse&gt; <span class="hljs-title function_">myMethod</span><span class="hljs-params">(ApiRequest&lt;MyRequest&gt; req)</span>;<br><br>    <span class="hljs-meta">@BizMutation</span><br>    CompletionStage&lt;ApiResponse&lt;MyResponse&gt;&gt; <span class="hljs-title function_">myMethodAsync</span><span class="hljs-params">(ApiRequest&lt;MyRequest&gt; req)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Nop服务总是使用POST方法，REST路径为<code>/r/&#123;bizObjName&#125;__&#123;bizMethod&#125;</code>，例如<code>/r/TestRpc__myMethod</code>，请求参数总是通过Request<br>Body传递，返回类型总是ApiResponse。</p>
+<p>如果是异步调用，则约定方法名增加Async后缀，且返回类型为CompletionStage。</p>
+<p>需要注意的是，与一般的RPC框架不同，客户端和服务端并不需要共享同一个API接口。如果不需要通过远程RPC方式访问后端服务，我们可以不提供客户端API接口定义。<br>这种做法与SpringCloud中的Feign框架的做法类似：采用任何http客户端都可以调用远程服务，客户端接口函数的定义并不需要和服务端实现函数的定义一致。<br>例如，通过以下的客户端接口函数都可以调用到服务端的同一个函数</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;TestRpc&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">TestRpc</span> &#123;<br>    <span class="hljs-meta">@BizMutation</span><br>    ApiResponse&lt;MyResponse&gt; <span class="hljs-title function_">myMethod</span><span class="hljs-params">(ApiRequest&lt;MyRequest&gt; req)</span>;<br><br>    <span class="hljs-meta">@BizMutation</span> <br>    MyResponse <span class="hljs-title function_">myMethod</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequest req)</span>;<br><br>    <span class="hljs-meta">@BizMutation</span><br>    CompletionStage&lt;ApiResponse&lt;MyResponse&gt;&gt; <span class="hljs-title function_">myMethodAsync</span><span class="hljs-params">(ApiRequest&lt;MyRequest&gt; req)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="BizSelection支持"><a href="#BizSelection支持" class="headerlink" title="BizSelection支持"></a>BizSelection支持</h3><p>在客户端接口上可以增加<code>@BizSelection</code>注解，它会自动设置ApiRequest的selection段。如果指定了字段列表，以指定的列表为准，否则以函数返回类型的所有非lazy字段为准。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@BizModel(&quot;TestRpc&quot;)<br>public interface TestRpc&#123;<br>    @BizMutation <br>    MyResponse myMethod(@RequestBean MyRequest req);<br>    <br>    @BizMutation(&quot;myMethod&quot;)<br>    @BizSelection<br>    SubResponse myMethodForSelected(@RequestBean MyRequest req);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上两个方法都会调用到后台的TestRpcBizModel对象上的myMethod方法，只是第二个方法会传入selection，对应于SubResponse，只要求返回SubResponse范围内的字段。</p>
+<h3 id="服务端实现"><a href="#服务端实现" class="headerlink" title="服务端实现"></a>服务端实现</h3><p>服务端的实现函数也可以根据需要采用以下几种不同的参数形式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><br>@<span class="hljs-title class_">BizMutation</span><br>public <span class="hljs-title class_">CompletionStage</span>&lt;<span class="hljs-title class_">MyResponse</span>&gt; <span class="hljs-title function_">myMethodAsync</span>(<span class="hljs-params">@RequestBean MyRequest req, FieldSelectionBean selection, IServiceContext context</span>) &#123;<br>    ...<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br>或者<br><br>@<span class="hljs-title class_">BizMutation</span><br>public <span class="hljs-title class_">MyResponse</span> <span class="hljs-title function_">myMethod</span>(<span class="hljs-params">@RequestBean MyRequest req, FieldSelectionBean selection</span>) &#123;<br>    ...<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在服务端, FieldSelection和IServiceContext都是可选参数，如果函数声明中没有对应参数，则表示忽略此参数。同时如果是异步执行，则一般约定方法名加上Async后缀，<br>同时返回值类型为CompletionStage。</p>
+<h3 id="一般REST服务接口"><a href="#一般REST服务接口" class="headerlink" title="一般REST服务接口"></a>一般REST服务接口</h3><p>如果服务端是普通的REST服务，则可以采用JAXRS接口定义。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">EchoService</span> &#123;<br>    <span class="hljs-meta">@Path(&quot;/echo/&#123;id&#125;&quot;)</span><br>    String <span class="hljs-title function_">echo</span><span class="hljs-params">(<span class="hljs-meta">@QueryParam(&quot;msg&quot;)</span> String msg, <span class="hljs-meta">@PathParam(&quot;id&quot;)</span> String id)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过Path注解声明调用路径，支持QueryParam和PathParam注解引入参数</p>
+<h2 id="2-3-创建服务代理"><a href="#2-3-创建服务代理" class="headerlink" title="2.3 创建服务代理"></a>2.3 创建服务代理</h2><p>在客户端需要引入 nop-cluster-rpc模块，为每个服务接口增加代理类配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;testGraphQLRpc&quot;</span> <span class="hljs-attr">parent</span>=<span class="hljs-string">&quot;AbstractRpcProxyFactoryBean&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">ioc:type</span>=<span class="hljs-string">&quot;io.nop.rpc.client.TestRpc&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;serviceName&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;rpc-demo-consumer&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>从AbstractRpcProxyFactoryBean继承interceptors、serverChooser等配置。</li>
+<li>ioc:type对应于需要创建的服务接口类</li>
+<li>serviceName对应于注册中心中注册的服务名</li>
+</ul>
+<h2 id="2-4-使用服务接口"><a href="#2-4-使用服务接口" class="headerlink" title="2.4 使用服务接口"></a>2.4 使用服务接口</h2><p>在程序中可以通过依赖注入来使用代理接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@Inject<br>TestRpc rpc;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-5-服务接口说明"><a href="#2-5-服务接口说明" class="headerlink" title="2.5 服务接口说明"></a>2.5 服务接口说明</h2><p>NopGraphQL体系下，类似于Feign服务的实现，在客户端调用时使用的接口，与服务端实现时使用的接口并不需要保持完全一样。一般情况下服务端的接口函数允许额外传入<br>selection和context参数。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;MyService&quot;)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyServiceBizModel</span>&#123;<br>    <span class="hljs-meta">@BizMutation</span><br>    <span class="hljs-keyword">public</span> MyResponse <span class="hljs-title function_">myMethod</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequest request, FieldSelectionBean selection, IServiceContext context)</span>&#123;<br>        <span class="hljs-comment">//...</span><br>    &#125;<br>    <br>    <span class="hljs-meta">@BizMutation</span><br>    MyResponse <span class="hljs-title function_">myMethod2</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;name&quot;)</span> String name, <span class="hljs-meta">@Name(&quot;value&quot;)</span>String value)</span>&#123;<br>        <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>如果参数个数较多，或者考虑到未来的可扩展性，我们会定义一个Request对象，然后增加<code>@RequestBean</code>注解，表示它对应所有前台发送的参数</li>
+<li>如果参数个数只有一两个，也可以使用<code>@Name</code>注解来逐个标记传入的参数</li>
+<li>selection对应于GraphQL调用中的字段选择或者REST调用中的<code>@selection</code>参数，用于告诉服务端只要求返回哪些结果字段</li>
+<li>context对应于服务端执行上下文，它的作用类似于一个Map，当GraphQL一次性调用多个后台服务函数时，可以利用这个上下文来缓存一些共享数据。<br>此外前台可以主动取消执行到一般的服务函数，前台取消调用时会触发服务端<code>IServiceContext.cancel</code>函数。服务端可以通过<code>context.isCancelled()</code>来判断客户端是否已经主动取消。</li>
+<li>selection和context都是可选参数，并不要求一定存在</li>
+<li>服务端函数的返回类型应该就是普通的JavaBean，不需要用ApiResponse。服务端函数抛出异常时，框架会自动捕获异常，最终返回给前端ApiResponse或者GraphQLResponseBean对象。</li>
+</ul>
+<h2 id="2-6-客户端接口说明"><a href="#2-6-客户端接口说明" class="headerlink" title="2.6 客户端接口说明"></a>2.6 客户端接口说明</h2><p>客户端调用接口一般格式如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;MyService&quot;)</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">MyService</span>&#123;<br>   <span class="hljs-meta">@BizMutation(&quot;myMethod&quot;)</span><br>   ApiResponse&lt;MyResponse&gt; <span class="hljs-title function_">api_myMethod</span><span class="hljs-params">(ApiRequest&lt;MyRequest&gt; request, ICancelToken cancelToken)</span>;<br>   <br>   <span class="hljs-meta">@BizMutation(&quot;myMethod&quot;)</span><br>   ApiResponse&lt;MyResponse&gt; <span class="hljs-title function_">myMethod</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> MyRequest request, <span class="hljs-meta">@QueryParam(&quot;@selection&quot;)</span> String selection)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>服务参数可以是ApiRequest类型，通过request的header可以传递额外信息，另外也可以通过request的selection传递字段选择信息</li>
+<li>此外也可以拆分开，使用<code>@RequestBean</code>来传递请求body，而通过<code>@selection</code>参数来传递字段选择信息。</li>
+<li>返回类型固定为ApiResponse。如果使用的是NopRPC客户端调用框架，则也可以直接返回MyResponse。这时如果返回的ApiResponse的status不是0，就会自动将ApiResponse中的错误信息作为NopRebuildException抛出。</li>
+</ul>
+<p>如果是通过Feign接口调用，则一般配置格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@FeignClient<br>interface MyService&#123;<br>  @PostMapping(&quot;/r/MyService__myMethod&quot;)<br>  ApiResponse&lt;MyResponse&gt; myMethod(@RequestBody MyRequest request, @QueryParam(&quot;%40selection&quot;) String selection);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>因为Feign框架实现层面的问题，url参数中的特殊字符，如<code>@</code>等需要编码，因此QueryParam的参数名只能是<code>%40selection</code>，如果使用<code>@selection</code>，则无法正常传递参数。</li>
+<li>Feign接口的返回类型必须是<code>ApiResponse&lt;T&gt;</code>。调用端得到response之后，可以调用response.get()来获得实际的结果对象。此时如果ApiResponse的status不是0，则会抛出NopRebuildException异常。</li>
+</ul>
+<h2 id="三-使用服务网格"><a href="#三-使用服务网格" class="headerlink" title="三. 使用服务网格"></a>三. 使用服务网格</h2><p>如果使用k8s的服务网格，则不需要启用nacos注册中心，在客户端仍然按照上面的方式配置接口代理，同时增加如下配置</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nop.rpc.service-mesh.enabled</td>
+<td>false</td>
+<td>是否使用service mesh</td>
+</tr>
+<tr>
+<td>nop.rpc.service-mesh.base-url</td>
+<td></td>
+<td>service mesh总是访问某个固定的服务地址和端口</td>
+</tr>
+</tbody></table>
+<p>nop.rpc.service-mesh.enabled设置为true之后，AbstractRpcProxyFactoryBean的实现会被自动替换为AbstractHttpRpcProxyFactoryBean</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/microservice/rpc.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

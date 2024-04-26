@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>自动测试 - Nop</title>
+
+
+  <meta property="og:title" content="自动测试">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a class="is-selected" href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">自动测试</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="一-数据驱动测试"><a href="#一-数据驱动测试" class="headerlink" title="一. 数据驱动测试"></a>一. 数据驱动测试</h2><p>NopAutoTest测试框架是一个数据驱动的测试框架，这意味着一般情况下我们不需要编写任何准备输入数据和校验输出结果的代码，只需要编写一个骨架函数，并提供一批测试数据文件即可。具体来看一个示例</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-auth/nop-auth-service/src/test/java/io/nop/auth/service/TestLoginApi.java">nop-auth&#x2F;nop-auth-service&#x2F;src&#x2F;test&#x2F;io&#x2F;nop&#x2F;auth&#x2F;service&#x2F;TestLoginApi.java</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-auth/nop-auth-service/cases/io/nop/auth/service/TestLoginApi">nop-auth&#x2F;nop-auth-service&#x2F;cases&#x2F;io&#x2F;nop&#x2F;auth&#x2F;service&#x2F;TestLoginApi</a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TestLoginApi</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">JunitAutoTestCase</span> &#123;<br>    <span class="hljs-comment">// @EnableSnapshot</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testLogin</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">LoginApi</span> <span class="hljs-variable">loginApi</span> <span class="hljs-operator">=</span> buildLoginApi();<br><br>        <span class="hljs-comment">//ApiRequest&lt;LoginRequest&gt; request = request(&quot;request.json5&quot;, LoginRequest.class);</span><br>        ApiRequest&lt;LoginRequest&gt; request = input(<span class="hljs-string">&quot;request.json5&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeReference</span>&lt;ApiRequest&lt;LoginRequest&gt;&gt;() &#123;<br>        &#125;.getType());<br><br>        ApiResponse&lt;LoginResult&gt; result = loginApi.login(request);<br><br>        output(<span class="hljs-string">&quot;response.json5&quot;</span>, result);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>测试用例从JunitAutoTestCase类继承，然后使用<code>input(fileName, javaType)</code><br>来读取外部的数据文件，并将数据转型为javaType指定的类型。具体数据格式根据文件名的后缀来确定，可以是json&#x2F;json5&#x2F;yaml等。</p>
+<p>调用被测函数之后，通过output(fileName, result)将结果数据保存到外部数据文件中，而不是编写结果校验代码。</p>
+<h3 id="1-1-录制模式"><a href="#1-1-录制模式" class="headerlink" title="1.1 录制模式"></a>1.1 录制模式</h3><p>testLogin在录制模式下执行时会生成如下数据文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">TestLoginApi<br>    /input<br>       /tables<br>          nop_auth_user.csv<br>          nop_auth_user_role.csv<br>       request.json5<br>    /output<br>       /tables<br>          nop_auth_session.csv<br>      response.json5<br></code></pre></td></tr></table></figure>
+
+<p>&#x2F;input&#x2F;tables目录下会记录读取过的所有数据库记录，每张表对应一个csv文件。</p>
+<blockquote>
+<p>即使是没有读取到任何数据，也会生成对应的空文件。因为在验证模式下需要根据这里录制的表名来确定需要在测试数据库中创建哪些表。</p>
+</blockquote>
+<p>如果打开response.json5文件，我们可以看到如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&#123;<br>  &quot;data&quot;: &#123;<br>    &quot;accessToken&quot;: &quot;@var:accessToken&quot;,<br>    &quot;attrs&quot;: null,<br>    &quot;expiresIn&quot;: 600,<br>    &quot;refreshExpiresIn&quot;: 0,<br>    &quot;refreshToken&quot;: &quot;@var:refreshToken&quot;,<br>    &quot;scope&quot;: null,<br>    &quot;tokenType&quot;: &quot;bearer&quot;,<br>    &quot;userInfo&quot;: &#123;<br>      &quot;attrs&quot;: null,<br>      &quot;locale&quot;: &quot;zh-CN&quot;,<br>      &quot;roles&quot;: [],<br>      &quot;tenantId&quot;: null,<br>      &quot;timeZone&quot;: null,<br>      &quot;userName&quot;: &quot;auto_test1&quot;,<br>      &quot;userNick&quot;: &quot;autoTestNick&quot;<br>    &#125;<br>  &#125;,<br>  &quot;httpStatus&quot;: 0,<br>  &quot;status&quot;: 0<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以注意到，accessToken和refreshToken已经被自动替换为了变量匹配表达式。这一过程完全不需要程序员手工介入。</p>
+<p>至于录制得到的nop_auth_session.csv，它的内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs csv">_chgType,SID,USER_ID,LOGIN_ADDR,LOGIN_DEVICE,LOGIN_APP,LOGIN_OS,LOGIN_TIME,LOGIN_TYPE,LOGOUT_TIME,LOGOUT_TYPE,LOGIN_STATUS,LAST_ACCESS_TIME,VERSION,CREATED_BY,CREATE_TIME,UPDATED_BY,UPDATE_TIME,REMARK<br>A,@var:NopAuthSession@sid,067e0f1a03cf4ae28f71b606de700716,,,,,@var:NopAuthSession@loginTime,1,,,,,0,autotest-ref,*,autotest-ref,*,<br></code></pre></td></tr></table></figure>
+
+<p>第一列_chgType表示数据变更类型，A-新增，U-修改,D-删除。随机生成的主键已经被替换为变量匹配表达式<code>@var:NopAuthSession@sid</code><br>。同时，根据ORM模型所提供的信息，createTime字段和updateTime字段为簿记字段，它们不参与数据匹配校验，因此被替换为了*，表示匹配任意值。</p>
+<h3 id="1-2-验证模式"><a href="#1-2-验证模式" class="headerlink" title="1.2 验证模式"></a>1.2 验证模式</h3><p>当testLogin函数成功执行之后，我们就可以打开<code>@EnableSnapshot</code>注解，将测试用例从录制模式转换为验证模式。<br>在验证模式下，测试用例在setUp阶段会执行如下操作:</p>
+<ol>
+<li>调整jdbcUrl等配置，强制使用本地内存数据库（H2）</li>
+<li>装载input&#x2F;init_vars.json5文件，初始化变量环境（可选）</li>
+<li>收集input&#x2F;tables和output&#x2F;tables目录下对应的表名，根据ORM模型生成对应建表语句并执行</li>
+<li>执行input目录下的所有xxx.sql脚本文件，对新建的数据库进行自定义的初始化（可选）。</li>
+<li>将input&#x2F;tables目录下的数据插入到数据库中</li>
+</ol>
+<p>测试用例执行过程中如果调用了output函数，则会基于MatchPattern机制来比较输出的json对象和录制的数据模式文件。具体比较规则参见下一节的介绍。<br>如果期待测试函数抛出异常，则可以使用error(fileName, runnable)函数来描述</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testXXXThrowException</span><span class="hljs-params">()</span>&#123;<br>        error(<span class="hljs-string">&quot;response-error.json5&quot;</span>,()-&gt;xxx());<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>在teardown阶段，测试用例会自动执行如下操作：</p>
+<ol>
+<li>比较output&#x2F;tables中定义的数据变化与当前数据库中的状态，确定它们是否吻合。</li>
+<li>执行sql_check.yaml文件中定义的校验SQL，并和期待的结果进行比较（可选）。</li>
+</ol>
+<h3 id="1-3-测试更新"><a href="#1-3-测试更新" class="headerlink" title="1.3 测试更新"></a>1.3 测试更新</h3><p>如果后期修改了代码，测试用例的返回结果发生了变化，则我们可以临时设置saveOutput属性为true，更新output目录下的录制结果。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableSnapshot(saveOutput = true)</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testLogin</span><span class="hljs-params">()</span>&#123;<br>        ....<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="二-基于前缀引导语法的对象模式匹配"><a href="#二-基于前缀引导语法的对象模式匹配" class="headerlink" title="二. 基于前缀引导语法的对象模式匹配"></a>二. 基于前缀引导语法的对象模式匹配</h2><p>在上一节中，用于匹配的数据模板文件中匹配条件只包含固定值和变量表达式<code>@var:xx</code><br>两种，其中变量表达式采用了所谓的前缀引导语法（详细介绍可以参加我的文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/548314138">DSL分层语法设计及前缀引导语法</a><br>），这是一种可扩展的领域特定语法（DSL）设计。首先，我们注意到<code>@var:</code>前缀可以被扩展为更多情况，例如 <code>@ge:3</code><br>表示大于等于3。第二，这是一种开放式的设计。**<br>我们随时可以增加更多的语法支持，而且可以确保它们之间不会出现语法冲突**。第三，这是一种局域化的嵌入式语法设计，<code>String-&gt;DSL</code><br>这一转换可以将任意字符串增强为可执行的表达式，例如在csv文件中表示字段匹配条件。我们来看一个更加复杂的匹配配置</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;a&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@ge:3&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;b&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;@prefix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;and&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;patterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;@startsWith:a&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;@endsWith:d&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;c&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;@prefix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;or&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;patterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;a&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-punctuation">[</span><br>        <span class="hljs-string">&quot;@var:x&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;s&quot;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;d&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@between:1,5&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个示例中通过<code>@prefix</code>引入了具有复杂结构的and&#x2F;or匹配条件。类似的，我们可以引入<code>if</code>,<code>switch</code>等条件分支。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;@prefix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;if&quot;</span><br>  <span class="hljs-attr">&quot;testExpr&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;matchState.value.type == &#x27;a&#x27;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;true&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    ...<br>  <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-attr">&quot;false&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    ...<br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#123;</span><br>  ”@prefix<span class="hljs-string">&quot;:&quot;</span>switch<span class="hljs-string">&quot;,</span><br><span class="hljs-string">&quot;</span>chooseExpr<span class="hljs-string">&quot;: &quot;</span>matchState.value.type<span class="hljs-string">&quot;,</span><br><span class="hljs-string">&quot;</span>cases<span class="hljs-string">&quot;: &#123;</span><br><span class="hljs-string">&quot;</span>a<span class="hljs-string">&quot;: &#123;...&#125;,</span><br><span class="hljs-string">&quot;</span>b<span class="hljs-string">&quot;: &#123;</span><br><span class="hljs-string">...</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">&#125;,</span><br><span class="hljs-string">&quot;</span>default<span class="hljs-string">&quot;: &#123;</span><br><span class="hljs-string">...</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>testExpr为XLang表达式，其中matchState对应于当前匹配上下文对象，可以通过value获取到当前正在匹配的数据节点。根据返回值的不同，会选择匹配true或者false分支。</p>
+<p>这里”@prefix“对应于前缀引导语法的explode模式，它将DSL展开为Json格式的抽象语法树。如果因为数据结构限制，不允许直接嵌入json，例如在csv文件中使用时，我们仍然可以使用前缀引导语法的标准形式。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@if:&#123;testExpr:&#x27;xx&#x27;,true:&#123;...&#125;,false:&#123;...&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>只要把if对应的参数通过JSON编码转化为字符串，再拼接上<code>@if:</code>前缀就可以了。</p>
+<p>前缀引导语法的语法设计方式非常灵活，并不要求不同前缀的语法格式完全统一。例如<code>@between:1,5</code><br>表示大于等于1并且小于等于5。前缀后面的数据格式只有前缀对一个的解析器负责识别，我们可以根据情况设计对应的简化语法。</p>
+<p>如果只需要验证对象中的部分字段满足匹配条件，可以使用符号<code>*</code>来表示忽略其他字段</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;a&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;*&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;*&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="三-多步骤相关测试"><a href="#三-多步骤相关测试" class="headerlink" title="三. 多步骤相关测试"></a>三. 多步骤相关测试</h2><p>如果要测试多个相关联的业务函数，我们需要在多个业务函数之间传递关联信息。例如登录系统之后得到accessToken，然后再用accessToken获取到用户详细信息，完成其他业务操作之后再传递accessToken作为参数，调用logout退出。</p>
+<p>因为存在共享的AutoTestVars上下文环境，业务函数之间可以通过AutoTestVariable自动传递关联信息。例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">    <span class="hljs-meta">@EnableSnapshot</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testLoginLogout</span><span class="hljs-params">()</span>&#123;<br>        LoginApi loginApi=buildLoginApi();<br><br>        ApiRequest&lt;LoginRequest&gt; request=request(<span class="hljs-string">&quot;1_request.json5&quot;</span>,LoginRequest.class);<br><br>        ApiResponse&lt;LoginResult&gt; result=loginApi.login(request);<br><br>        output(<span class="hljs-string">&quot;1_response.json5&quot;</span>,result);<br><br>        ApiRequest&lt;AccessTokenRequest&gt; userRequest=request(<span class="hljs-string">&quot;2_userRequest.json5&quot;</span>,AccessTokenRequest.class);<br><br>        ApiResponse&lt;LoginUserInfo&gt; userResponse=loginApi.getLoginUserInfo(userRequest);<br>        output(<span class="hljs-string">&quot;2_userResponse.json5&quot;</span>,userResponse);<br><br>        ApiRequest&lt;RefreshTokenRequest&gt; refreshTokenRequest=request(<span class="hljs-string">&quot;3_refreshTokenRequest.json5&quot;</span>,RefreshTokenRequest.class);<br>        ApiResponse&lt;LoginResult&gt; refreshTokenResponse=loginApi.refreshToken(refreshTokenRequest);<br>        output(<span class="hljs-string">&quot;3_refreshTokenResponse.json5&quot;</span>,refreshTokenResponse);<br><br>        ApiRequest&lt;LogoutRequest&gt; logoutRequest=request(<span class="hljs-string">&quot;4_logoutRequest.json5&quot;</span>,LogoutRequest.class);<br>        ApiResponse&lt;Void&gt; logoutResponse=loginApi.logout(logoutRequest);<br>        output(<span class="hljs-string">&quot;4_logoutResponse.json5&quot;</span>,logoutResponse);<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中2_userRequest.json5中的内容为</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  data<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    accessToken<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@var:accessToken&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>我们可以用<code>@var:accessToken</code>来引用前一个步骤返回的accessToken变量。</p>
+<h3 id="集成测试支持"><a href="#集成测试支持" class="headerlink" title="集成测试支持"></a>集成测试支持</h3><p>如果是在集成测试场景下，我们无法通过底层引擎自动识别并注册AutoTestVariable，则可以在测试用例中手工注册</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testXXX</span><span class="hljs-params">()</span>&#123;<br>        ....<br>        response=myMethod(request);<br>        setVar(<span class="hljs-string">&quot;v_myValue&quot;</span>,response.myValue);<br>        <span class="hljs-comment">// 后续的input文件中就可以通过@var:v_myValue来引用这里定义的变量</span><br>        request2=input(<span class="hljs-string">&quot;request2.json&quot;</span>,Request2.class);<br>        ...<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>在集成测试场景下，我们需要访问外部独立部署的测试数据库，而不再能够使用本地内存数据库。此时，我们可以配置localDb&#x3D;false来禁用本地数据库</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-meta">@EnableSnapshot(localDb = false)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">integrationTest</span><span class="hljs-params">()</span>&#123;<br>        ...<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>EnableSnapshot具有多种开关控制，可以灵活选择启用哪些自动化测试支持</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> EnableSnapshot &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 如果启用了快照机制，则缺省会强制使用本地数据库，并且会使用录制的数据来初始化数据库。</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">localDb</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否自动执行input目录下的sql文件</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">sqlInit</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否自动将input/tables目录下的数据插入到数据库中</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">tableInit</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否将收集到的输出数据保存到结果目录下。当saveOutput=true时，checkOutput的设置将会被忽略</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">saveOutput</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">false</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否校验录制的输出数据与数据库中的当前数据相匹配</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkOutput</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="四-数据变体"><a href="#四-数据变体" class="headerlink" title="四. 数据变体"></a>四. 数据变体</h2><p>数据驱动测试的一个非常大优势在于，它很容易实现对边缘场景的细化测试。</p>
+<p>假设我们需要要测试一个用户账户欠费之后的系统行为。我们知道，根据用户欠费额的大小，欠费时间的长短，系统行为在某些阈值附近可能存在着很大的变化。而构造一个完整的用户消费和结算历史是非常复杂的一项工作，我们很难在数据库中构造出大量具有微妙差异的用户数据用于边缘场景测试。如果使用的是数据驱动的自动化测试框架，则我们可以将已有的测试数据复制一份，然后在上面直接做精细化调整就可以了。</p>
+<p>NopAutoTest框架通过数据变体(Variant)的概念来支持这种细化测试。例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">    <span class="hljs-meta">@ParameterizedTest</span><br><span class="hljs-meta">@EnableVariants</span><br><span class="hljs-meta">@EnableSnapshot</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testVariants</span><span class="hljs-params">(String variant)</span>&#123;<br>        input(<span class="hljs-string">&quot;request.json&quot;</span>,...);<br>        output(<span class="hljs-string">&quot;displayName.json5&quot;</span>,testInfo.getDisplayName());<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>在增加了<code>@EnableVariants</code>和<code>@ParameterizedTest</code><br>注解之后，当我们调用input函数的时候，它读取的数据是&#x2F;variants&#x2F;{variant}&#x2F;input目录下的数据与&#x2F;input目录下的数据合并的结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/input<br>   /tables<br>      my_table.csv<br>   request.json<br>/output<br>   response.json<br>/variants<br>   /x<br>      /input<br>         /tables<br>            my_table.csv<br>         request.json<br>      /output<br>         response.json<br>   /y<br>      /input<br>     ....<br></code></pre></td></tr></table></figure>
+
+<p>首先，测试用户会在忽略variants配置的情况下执行，此时会录制数据到input&#x2F;tables目录下。然后，在开启variant机制之后，按照每个variant会再次执行测试用例。</p>
+<p>以testVariants的配置为例，它实际上会被执行3遍，第一遍<code>variant=_default</code><br>，表示以原始的input&#x2F;output目录数据来执行。第二遍执行variants&#x2F;x目录下的数据，第三遍执行variants&#x2F;y目录下的数据。</p>
+<p>因为不同变体之间的数据往往相似度很高，我们没有必要完整复制原有的数据。NopAutoTest测试框架在这里采用了可逆计算理论的统一设计，可以利用Nop平台内置的delta差量合并机制来实现配置简化。例如在&#x2F;variants&#x2F;x&#x2F;input&#x2F;request.json文件中</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;x:extends&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;../../input/request.json&quot;</span><br>  <span class="hljs-attr">&quot;amount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">300</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>x:extends</code>是可逆计算理论引入的标准差量扩展语法，它表示从原始的request.json继承，只是将其中的amount属性修改为300。</p>
+<p>类似的，对于<code>/input/tables/my_table.csv</code>中的数据，我们可以只在其中增加主键列和需要被定制的列，然后其中的内容会和原始目录下的对应文件自动合并。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs csv">SID, AMOUNT<br>1001, 300<br></code></pre></td></tr></table></figure>
+
+<p>整个Nop平台都是基于可逆计算原理而从头开始设计并实现的，关于它的具体内容可以参见文末的参考文档。</p>
+<p>数据驱动测试在某种程度上也体现了可逆计算的所谓可逆性要求，即我们已经通过DSL（json数据以及匹配模板）表达的信息，可以被反向析取出来，然后通过再加工转换为其他信息。例如，当数据结构或者接口发生变化的情况下，我们可以通过编写统一的数据迁移代码，将测试用例数据迁移到新的结构下，而无需重新录制测试用例。</p>
+<h2 id="五-作为DSL载体的Markdown"><a href="#五-作为DSL载体的Markdown" class="headerlink" title="五. 作为DSL载体的Markdown"></a>五. 作为DSL载体的Markdown</h2><p>可逆计算理论强调通过描述式的DSL来取代一般的命令式程序编码，从而在各个领域、各个层面降低业务逻辑所对应的代码量，通过体系化的方案落地低代码。</p>
+<p>在测试数据表达和验证方面，除了使用json&#x2F;yaml等形式之外，也可以考虑采用更加接近文档形式的Markdown格式。</p>
+<p>在XLang语言的测试中，我们规定了一个标准化的markdown结构用于表达测试用例</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown"><br><br>具体说明文字，可以采用一般的markdown语法，测试用例解析时会自动忽略这些说明<br>‘’‘测试代码块的语言<br>测试代码<br>’‘’<br><br><span class="hljs-bullet">*</span> 配置名: 配置值<br><span class="hljs-bullet">*</span> 配置名: 配置<br></code></pre></td></tr></table></figure>
+
+<p>具体实例可以参见TestXpl的测试用例 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-xlang/src/test/resources/io/nop/xlang/xpl/xpls">TestXpl</a></p>
+<h2 id="其他注解"><a href="#其他注解" class="headerlink" title="其他注解"></a>其他注解</h2><h3 id="NopTestConfig"><a href="#NopTestConfig" class="headerlink" title="@NopTestConfig"></a>@NopTestConfig</h3><p>在测试类上可以通过@NopTestConfig注解控制测试用例中的初始化过程。使用@NopTestConfig注解需要从JunitAutoTestCase或者JunitBaseTestCase类继承。<br>这两个基类的区别在于JunitBaseTestCase不是使用录制回放机制，仅仅是启动NopIoC容器。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> NopTestConfig &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否强制设置nop.datasource.jdbc-url为h2内存数据库</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">localDb</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">false</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 使用随机生成的服务端口</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">randomPort</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">false</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 缺省使用lazy模式来执行单元测试</span><br><span class="hljs-comment">     */</span><br>    BeanContainerStartMode <span class="hljs-title function_">beanContainerStartMode</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> BeanContainerStartMode.ALL_LAZY;<br><br>    String <span class="hljs-title function_">enableActionAuth</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    String <span class="hljs-title function_">enableDataAuth</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否自动加载/nop/auto-config/目录下的xxx.beans配置</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">enableAutoConfig</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">enableMergedBeansFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    String <span class="hljs-title function_">autoConfigPattern</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    String <span class="hljs-title function_">autoConfigSkipPattern</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否自动加载模块下的app.beans.xml配置</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">enableAppBeansFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br><br>    String <span class="hljs-title function_">appBeansFilePattern</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    String <span class="hljs-title function_">appBeansFileSkipPattern</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 为单元测试指定的beans配置文件</span><br><span class="hljs-comment">     */</span><br>    String <span class="hljs-title function_">testBeansFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 为单元测试指定的config配置文件</span><br><span class="hljs-comment">     */</span><br>    String <span class="hljs-title function_">testConfigFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">initDatabaseSchema</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="NopTestProperty"><a href="#NopTestProperty" class="headerlink" title="@NopTestProperty"></a>@NopTestProperty</h3><p>在测试类上可以通过@NopTestProperty注解直接指定专门针对本测试类的配置项，这样可以不用修改application.yaml文件，例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@NopTestProperty(name=&quot;my.xxx&quot;,value=&quot;true&quot;)</span><br><span class="hljs-meta">@NopTestProperty(name=&quot;my.yyy&quot;,value=&quot;123&quot;)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyTestCase</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">JunitBaseTestCase</span>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/autotest.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

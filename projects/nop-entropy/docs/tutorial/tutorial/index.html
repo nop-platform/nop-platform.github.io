@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>开发示例 - Nop</title>
+
+
+  <meta property="og:title" content="开发示例">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a class="is-selected" href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">开发示例</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>操作演示视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1384y1g78L/">使用Nop平台开发商品列表页面的完整示例</a></p>
+<p>Nop平台是可逆计算理论的一个具体落地实现方案。为了演示可逆计算理论的相关概念，它内置了针对后台管理系统的一套低代码开发流程，可以采用低代码的方式来快速开发后台管理系统，并且无需特殊设计，利用平台内置机制即可自动提供产品化定制能力。以下以<code>nop-app-mall</code>项目的开发为例，介绍Nop平台内置的低代码开发流程。</p>
+<blockquote>
+<p><code>nop-app-mall</code>是一个简单电子商城的示例应用，项目工程为 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-app-mall">nop-app-mall</a></p>
+</blockquote>
+<blockquote>
+<p>Nop平台开源网址：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">https://gitee.com/canonical-entropy/nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">https://github.com/entropy-cloud/nop-entropy</a></li>
+</ul>
+</blockquote>
+<h2 id="一-设计Excel数据模型"><a href="#一-设计Excel数据模型" class="headerlink" title="一. 设计Excel数据模型"></a>一. 设计Excel数据模型</h2><p>首先需要设计一个Excel格式的数据模型，在其中定义数据库表、字段以及表关联信息。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/excel-model.png"></p>
+<p>在Excel模型中我们可以指定如下信息：</p>
+<ol>
+<li><p>标签：用于对表、字段等进行额外标记，例如<code>seq</code>表示字段值使用<code>SequenceGenerator</code>自动生成，<code>var</code>表示字段值会初始化为随机值，在自动化单元测试中需要被标记为动态变量。</p>
+</li>
+<li><p>显示：控制字段是否显示，是否允许更新等。前端自动生成列表和表单页面时会参考这里提供的信息。</p>
+</li>
+<li><p>数据域：对于具有特殊业务语义的字段类型，可以为它指定一个特定的数据域，系统识别该数据域之后可以统一进行处理。例如<code>domain=createTime</code>表示该字段为创建时间字段，新建实体的时候会自动初始化为当前时间。</p>
+</li>
+<li><p>字典：通过数据字典来限制字典的值只能在限定选项范围之内。字典可以是Java中的<code>enum</code>类，例如<code>io.nop.xlang.xdef.XDefOverride</code>。也可以在yaml文件中定义，例如<code>mall/aftersale-status</code>对应于<code>/nop/dict/mall/aftersale-status.dict.yaml</code>文件。</p>
+</li>
+<li><p>表关联：通过【关联列表】可以配置表之间的关联关系。【属性名】是子表实体中对应父实体的属性名，而【关联属性名】是父实体中对应子表实体集合的属性名。例如部门表中<code>parentId</code>这个关联字段对应的【属性名】为<code>parent</code>，【关联属性名】为<code>children</code>。如果不需要通过ORM引擎来访问实体集合，则不需要配置关联属性名。</p>
+</li>
+</ol>
+<p>字典表可以在Excel模型中直接定义，代码生成的时候会自动根据模型生成<code>dict.yaml</code>定义字典文件。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/dict-model.png"></p>
+<p>更详细的配置说明可以参见文档 <a href="../../dev-guide/model/excel-model/">excel-model.md</a></p>
+<h3 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h3><p>操作视频: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Rc411u79d">如何通过逆向工程生成Excel格式的数据模型</a></p>
+<p>除了手工编写数据库模型之外，我们也可以连接已有的数据库，使用<code>nop-cli</code>命令行工具逆向分析数据库结构，生成Excel模型。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">java -Dfile.encoding=UTF8 \<br>    -jar nop-cli.jar \<br>    reverse-db litemall \<br>    -c=com.mysql.cj.jdbc.Driver \<br>    --username=litemall \<br>    --password=litemall123456 \<br>    --jdbcUrl=&quot;jdbc:mysql://127.0.0.1:3306/litemall?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;serverTimezone=UTC&quot;<br></code></pre></td></tr></table></figure>
+
+<p><code>nop-cli</code>的<code>reverse-db</code>命令需要传入参数【数据库模式名】，例如<code>litemall</code>，然后通过<code>jdbcUrl</code>等选项传入JDBC连接字符串等信息。</p>
+<p>逆向工程得到<code>orm.xlsx</code>模型文件后，需要调整【配置】表单页中的maven模块名、包名等信息。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/config-sheet.png"></p>
+<h3 id="导入PowerDesigner模型或者PDManer模型"><a href="#导入PowerDesigner模型或者PDManer模型" class="headerlink" title="导入PowerDesigner模型或者PDManer模型"></a>导入PowerDesigner模型或者PDManer模型</h3><p>通过<code>nop-cli</code>工具的<code>gen-orm-excel</code>命令可以根据PowerDesigner设计工具的pdm物理模型来生成Excel数据模型。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">java -Dfile.encoding=UTF8 -jar nop-cli.jar gen-orm-excel model/test.pdm<br></code></pre></td></tr></table></figure>
+
+<p>PowerDesigner是收费软件，它的一个开源替代品是<a target="_blank" rel="noopener" href="https://gitee.com/robergroup/pdmaner">PDManer元数据建模工具</a>。</p>
+<p>通过<code>nop-cli</code>工具也可以根据PDManer的模型文件来生成Excel数据模型</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">java -Dfile.encoding=UTF8 -jar nop-cli.jar gen-orm-excel model/test.pdma.json<br></code></pre></td></tr></table></figure>
+
+<p>按照可逆计算理论，Pdm模型、PDManer模型与Excel模型一样都只是ORM领域模型的一种可视化表象，<strong>这些表象包含同样的信息，原则上可以互相转换</strong>。利用Nop平台中的元编程能力，我们可以在编译期根据Pdm模型自动生成orm模型文件，这样就可以直接使用PowerDesigner或者PDManer作为Nop平台中ORM模型的可视化设计工具。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- app.orm.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/orm/orm.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;base.orm.xml&quot;</span> <span class="hljs-attr">x:dump</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">xmlns:xpl</span>=<span class="hljs-string">&quot;/nop/schema/xpl.xdef&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">pdman:GenOrm</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;test.pdma.json&quot;</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/orm/xlib/pdman.xlib&quot;</span></span><br><span class="hljs-tag">                      <span class="hljs-attr">versionCol</span>=<span class="hljs-string">&quot;REVISION&quot;</span></span><br><span class="hljs-tag">                      <span class="hljs-attr">createrCol</span>=<span class="hljs-string">&quot;CREATED_BY&quot;</span> <span class="hljs-attr">createTimeCol</span>=<span class="hljs-string">&quot;CREATED_TIME&quot;</span></span><br><span class="hljs-tag">                      <span class="hljs-attr">updaterCol</span>=<span class="hljs-string">&quot;UPDATED_BY&quot;</span> <span class="hljs-attr">updateTimeCol</span>=<span class="hljs-string">&quot;UPDATED_TIME&quot;</span></span><br><span class="hljs-tag">                      <span class="hljs-attr">tenantCol</span>=<span class="hljs-string">&quot;TENANT_ID&quot;</span></span><br><span class="hljs-tag">        /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>x:gen-extends</code>是编译期运行机制，在装载<code>app.orm.xml</code>这个模型文件的过程中，会根据<code>x:gen-extends</code>中定义的Xpl模板来动态生成可继承的基础模型，然后再使用<code>x-extends</code>合并算法对继承的内容执行差量修正。</p>
+<blockquote>
+<p><code>x:gen-extends</code>机制是XLang语言的内置语法，它的详细介绍参见 <a href="../../dev-guide/xlang/xdsl/">xdsl.md</a></p>
+</blockquote>
+<h2 id="二-生成初始工程代码"><a href="#二-生成初始工程代码" class="headerlink" title="二. 生成初始工程代码"></a>二. 生成初始工程代码</h2><p>如果已经获得Excel数据模型，则可以使用<code>nop-cli</code>命令行工具的<code>gen</code>命令来生成初始工程代码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">java -jar nop-cli.jar gen model/app-mall.orm.xlsx -t=/nop/templates/orm<br></code></pre></td></tr></table></figure>
+
+<p>具体生成的内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">├─app-mall-api       对外暴露的接口定义和消息定义<br>├─app-mall-codegen   代码生成辅助工程，根据ORM模型更新当前工程代码<br>├─app-mall-dao       数据库实体定义和ORM模型<br>├─app-mall-service   GraphQL服务实现<br>├─app-mall-web       AMIS页面文件以及View模型定义<br>├─app-mall-app       测试使用的打包工程<br>├─deploy             根据Excel模型生成的数据库建表语句<br></code></pre></td></tr></table></figure>
+
+<p>Nop平台提供了与Maven相集成的代码生成能力，只需要在pom文件中增加如下配置：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">pom</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nop-entropy<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.entropy-cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>exec-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pom</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果不从<code>io.github.entropy-cloud:nop-entropy</code>模块的pom文件继承，则需要为<code>exec-maven-plugin</code>插件增加更多详细配置</p>
+</blockquote>
+<p>在使用maven打包功能时，会自动执行工程的<code>precompile</code>和<code>postcompile</code>目录下的<code>xgen</code>代码，其中<code>precompile</code>在compile阶段之前执行，执行环境可以访问所有依赖库，但是不能访问当前工程的类目录，而<code>postcompile</code>在compile阶段之后执行，可以访问已编译的类和资源文件。例如<code>app-mall-codegen</code>模块的<code>precompile/gen-orm.xgen</code>文件内容如下</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>// 根据ORM模型生成dao/entity/xbiz<br>codeGenerator.withTargetDir(&quot;../&quot;).renderModel(&#x27;../../model/app-mall.orm.xlsx&#x27;,&#x27;/nop/templates/orm&#x27;, &#x27;/&#x27;,$scope);<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>以上指令相当于手工执行<code>nop-cli gen</code>命令，因此<strong>一旦生成初始工程，此后即可通过maven打包来根据Excel数据模型更新当前工程的代码，而不再需要使用nop-cli工具</strong>。Nop平台采用了增量式的代码生成设计，重新生成并不会破坏手工调整的业务代码。具体原理参见文章</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/540022264">数据驱动的代码生成器</a></p>
+<p>为了方便调试，初始生成的代码中包含<code>AppMallCodeGen.java</code>和<code>AppMallWebCodeGen.java</code>两个测试类，可以在IDEA中直接启动来执行代码生成。</p>
+<p>根据ORM模型生成的代码包含从前端到后端的全套代码，可以使用<code>mvn install</code>指令来直接编译运行。无需额外配置，通过如下指令即可启动测试应用：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">mvn clean install -DskipTests -Dquarkus.package.type=uber-jar<br><br>java -Dfile.encoding=UTF8 \<br>    -Dquarkus.profile=dev \<br>    -jar app-mall-app/target/app-mall-app-1.0-SNAPSHOT-runner.jar<br></code></pre></td></tr></table></figure>
+
+<p><code>app-mall-app</code>使用内置的H2内存数据库启动，并且启动的时候会自动根据ORM模型创建数据库表，缺省用户<code>nop</code>，密码<code>123</code>。</p>
+<h2 id="三-配置菜单和访问权限"><a href="#三-配置菜单和访问权限" class="headerlink" title="三. 配置菜单和访问权限"></a>三. 配置菜单和访问权限</h2><p>自动生成的代码中包含权限定义文件：<code>app-mall-web/src/resources/_vfs/app/mall/auth/_app-mall.action-auth.xml</code>，其中为每个后台实体定义了缺省的菜单项，对应于标准增删改查页面。</p>
+<p>在<code>app-mall.action-auth.xml</code>文件中可以手动添加新的菜单项，也可以标记删除自动生成的菜单项。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;goods-manage&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;商品管理&quot;</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;ion:grid-outline&quot;</span> <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;TOPM&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">routePath</span>=<span class="hljs-string">&quot;/goods-manage&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&quot;layouts/default/index&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">children</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mall-goods-list&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;商品列表&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;ant-design:appstore-twotone&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&quot;AMIS&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;SUBM&quot;</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;/app/mall/pages/LitemallGoods/main.page.yaml&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mall-goods-create&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;商品上架&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;ant-design:appstore-twotone&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&quot;AMIS&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;SUBM&quot;</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;/app/mall/pages/LitemallGoods/add.page.yaml&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mall-goods-comment&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;商品评论&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;ant-design:appstore-twotone&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&quot;AMIS&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;SUBM&quot;</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;/app/mall/pages/LitemallComment/main.page.yaml&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">children</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>菜单结构采用<code>jeecgboot</code>项目的设计，顶层菜单配置<code>resourceType=TOPM</code>，<code>component=layouts/default/index</code>，而具体页面配置<code>resourceType=SUBM</code>，<code>component=AMIS</code>，<code>url</code>配置为页面文件的虚拟路径。</p>
+<h2 id="四-完善后端服务"><a href="#四-完善后端服务" class="headerlink" title="四. 完善后端服务"></a>四. 完善后端服务</h2><p>Nop平台会自动根据Excel数据模型生成Meta元数据描述文件和相应的GraphQL服务对象，<strong>通过简单配置即可实现功能完备的GraphQL后台服务</strong>。对比<code>app-mall</code>项目中的<code>LitemallGoodsBizModel.java</code>和原始<code>litemall</code>项目中的<code>AdminGoodsService.java</code>实现类，可以很明显的发现Nop平台可以避免大量重复性代码，一般只需要表达偏离标准增删改查逻辑的差量逻辑即可。</p>
+<h3 id="4-1-增加实体函数"><a href="#4-1-增加实体函数" class="headerlink" title="4.1 增加实体函数"></a>4.1 增加实体函数</h3><p>仅依赖于实体字段的固定逻辑可以直接实现为实体对象的方法。例如，商品表上<code>retailPrice</code>字段对应于相关产品的最低价。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LitemallGoods</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">_LitemallGoods</span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * retailPrice记录当前商品的最低价</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">syncRetailPrice</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">LitemallGoodsProduct</span> <span class="hljs-variable">minProduct</span> <span class="hljs-operator">=</span> Underscore.min(getProducts(), LitemallGoodsProduct::getPrice);<br>        <span class="hljs-type">BigDecimal</span> <span class="hljs-variable">retailPrice</span> <span class="hljs-operator">=</span> minProduct == <span class="hljs-literal">null</span> ? minProduct.getPrice() : <span class="hljs-keyword">new</span> <span class="hljs-title class_">BigDecimal</span>(Integer.MAX_VALUE);<br>        setRetailPrice(retailPrice);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>借助于NopOrm数据访问引擎，可以很方便的直接访问到关联对象集合。</p>
+<blockquote>
+<p>所有关联对象和关联对象集合都是延迟加载的。可以利用<code>BatchLoadQueue</code>机制提前预加载，从而避免Hibernate中常见的N+1问题。具体参见 <a href="../../dev-guide/orm/orm/">orm.md</a></p>
+</blockquote>
+<h3 id="4-2-增加增删改查补充逻辑"><a href="#4-2-增加增删改查补充逻辑" class="headerlink" title="4.2 增加增删改查补充逻辑"></a>4.2 增加增删改查补充逻辑</h3><p>Nop平台利用XMeta文件中定义的描述信息已经可以自动实现增删改查的全部逻辑，例如:</p>
+<ol>
+<li><p>根据元数据配置自动验证参数的合法性（是否非空、是否在字典表范围内、是否满足格式要求等）</p>
+</li>
+<li><p>实现复杂查询条件以及分页、排序</p>
+</li>
+<li><p>一次性提交主子表信息，自动识别对子表数据的变更</p>
+</li>
+<li><p>启用逻辑删除时自动增加<code>deleted=false</code>查询条件</p>
+</li>
+<li><p>验证唯一键约束没有被破坏，例如商品名称不允许重复</p>
+</li>
+<li><p>自动记录创建人、创建时间、修改人、修改时间等</p>
+</li>
+<li><p>删除当前实体时，自动删除所有标记为<code>cascade-delete</code>的关联对象</p>
+</li>
+</ol>
+<p>当我们需要对标准的增删改查逻辑进行增强时，可以在<code>CrudBizModel</code>的派生类中覆写<code>defaultPrepareSave</code>等函数。例如在保存商品信息的时候，自动同步商品上的冗余字段<code>retailPrice</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LitemallGoods&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LitemallGoodsBizModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CrudBizModel</span>&lt;LitemallGoods&gt; &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LitemallGoodsBizModel</span><span class="hljs-params">()</span> &#123;<br>        setEntityName(LitemallGoods.class.getName());<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">defaultPrepareSave</span><span class="hljs-params">(EntityData&lt;LitemallGoods&gt; entityData, IServiceContext context)</span> &#123;<br>        entityData.getEntity().syncRetailPrice();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">defaultPrepareQuery</span><span class="hljs-params">(QueryBean query, IServiceContext context)</span> &#123;<br>        <span class="hljs-type">TreeBean</span> <span class="hljs-variable">filter</span> <span class="hljs-operator">=</span> query.getFilter();<br>        <span class="hljs-keyword">if</span> (filter != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-type">TreeBean</span> <span class="hljs-variable">keywordsFilter</span> <span class="hljs-operator">=</span> filter.childWithAttr(<span class="hljs-string">&quot;name&quot;</span>, LitemallGoods.PROP_NAME_keywords);<br>            <span class="hljs-keyword">if</span> (keywordsFilter != <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-type">Object</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> keywordsFilter.getAttr(<span class="hljs-string">&quot;value&quot;</span>);<br>                <span class="hljs-type">TreeBean</span> <span class="hljs-variable">orCond</span> <span class="hljs-operator">=</span> or(contains(LitemallGoods.PROP_NAME_name, value), contains(LitemallGoods.PROP_NAME_keywords, value));<br>                filter.replaceChild(keywordsFilter, orCond);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的示例代码中还覆写了<code>defaultPrepareQuery</code>函数，在这个函数中我们对前台提交的复杂查询条件进行变换，例如前台提交<code>keywords</code>查询字段，可以被变换为同时对数据库表中的<code>keywords</code>和<code>name</code>字段进行模糊查询。</p>
+<h3 id="4-3-增加数据库访问"><a href="#4-3-增加数据库访问" class="headerlink" title="4.3 增加数据库访问"></a>4.3 增加数据库访问</h3><p>如果在Excel模型中为数据库表增加了<code>mapper</code>标签，则会自动生成一个<code>sql-lib.xml</code>文件以及一个<code>Mapper</code>接口，我们可以使用比MyBatis更方便、更强大的<code>SqlLibManager</code>机制来实现数据库访问。<code>sql-lib</code>文件支持使用EQL对象查询语法或者原生的SQL语法。EQL对象查询语法通过Dialect模型可以适配到大多数关系型数据库，因此一般推荐尽量使用EQL语法。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- LitemallGoods.sql-lib.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">sql-lib</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/orm/sql-lib.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;syncCartProduct&quot;</span> <span class="hljs-attr">sqlMethod</span>=<span class="hljs-string">&quot;execute&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;product&quot;</span>/&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>                update LitemallCart o<br>                set o.price = $&#123;product.price&#125;,<br>                  o.goodsName = $&#123;product.goods.name&#125;,<br>                  o.picUrl = $&#123;product.url&#125;,<br>                  o.goodsSn = $&#123;product.goods.goodsSn&#125;<br>                where o.productId = $&#123;product.id&#125;<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">sqls</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql-lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>与MyBatis类似，在<code>sql-lib</code>的<code>source</code>段中EL表达式会被自动替换为sql参数，并且因为EQL语法可以根据ORM模型推导字段类型，所以并不需要像MyBatis那样为每个表达式指定JDBC参数类型。详细文档参见<a href="../../dev-guide/orm/sql-lib/">sql-lib.md</a></p>
+<p>在Mapper接口中增加对应java方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SqlLibMapper(&quot;/app/mall/sql/LitemallGoods.sql-lib.xml&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">LitemallGoodsMapper</span> &#123;<br><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">syncCartProduct</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;product&quot;)</span> LitemallGoodsProduct product)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Nop平台中的<code>IEntityDao</code>接口类似于Spring中的<code>JpaRespository</code>，但是它提供了更多的功能。详细文档参见<a href="../../dev-guide/orm/dao/">dao.md</a></p>
+<h3 id="4-4-增加GraphQL的Query-Mutation-Loader"><a href="#4-4-增加GraphQL的Query-Mutation-Loader" class="headerlink" title="4.4 增加GraphQL的Query&#x2F;Mutation&#x2F;Loader"></a>4.4 增加GraphQL的Query&#x2F;Mutation&#x2F;Loader</h3><p>通过为普通Java方法增加<code>@BizQuery/@BizMutation/@BizLoader</code>注解即可将其转化为GraphQL的服务方法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;NopAuthRole&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthRoleBizModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CrudBizModel</span>&lt;NopAuthRole&gt; &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">NopAuthRoleBizModel</span><span class="hljs-params">()</span> &#123;<br>        setEntityName(NopAuthRole.class.getName());<br>    &#125;<br><br>    <span class="hljs-meta">@BizLoader</span><br>    <span class="hljs-meta">@GraphQLReturn(bizObjName = &quot;NopAuthUser&quot;)</span><br>    <span class="hljs-keyword">public</span> List&lt;NopAuthUser&gt; <span class="hljs-title function_">roleUsers</span><span class="hljs-params">(<span class="hljs-meta">@ContextSource</span> NopAuthRole role)</span> &#123;<br>        <span class="hljs-keyword">return</span> role.getUserMappings().stream().map(NopAuthUserRole::getUser)<br>                .sorted(comparing(NopAuthUser::getUserName)).collect(Collectors.toList());<br>    &#125;<br><br>    <span class="hljs-meta">@BizMutation</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">removeRoleUsers</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;roleId&quot;)</span> String roleId,</span><br><span class="hljs-params">                                <span class="hljs-meta">@Name(&quot;userIds&quot;)</span> Collection&lt;String&gt; userIds)</span> &#123;<br>        removeRelations(NopAuthUserRole.class,<br>                <span class="hljs-string">&quot;roleId&quot;</span>, <span class="hljs-string">&quot;userId&quot;</span>,<br>                roleId, userIds);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@BizLoader</code>表示为指定对象增加扩展属性。例如<code>NopAuthRole</code>对象上并没有<code>roleUsers</code>属性，但只要在<code>xmeta</code>文件中增加该属性定义，然后定义一个<code>BizLoader</code>，所有返回<code>Role</code>对象的请求就都可以访问到该属性。例如</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><code class="hljs groovy">query&#123;<br>    NopAuthRole__get(<span class="hljs-attr">id:</span> <span class="hljs-string">&#x27;admin&#x27;</span>)&#123;<br>       name<br>       roleUsers<br>    &#125;<br><br>    NopAuthRole__findPage(<span class="hljs-attr">query:</span>$query)&#123;<br>       name<br>       roleUsers<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>graphql的详细文档参加<a href="../../dev-guide/graphql/graphql-java/">graphql-java.md</a></p>
+<h3 id="4-5-定义xbiz模型"><a href="#4-5-定义xbiz模型" class="headerlink" title="4.5 定义xbiz模型"></a>4.5 定义xbiz模型</h3><p>Nop平台为 <strong>无代码开发模式（NoCode）</strong> 提供了内置支持。通过<code>xbiz</code>模型，我们可以在不修改Java源代码的情况下，在线增加、修改后台GraphQL模型中的<code>Query/Mutation/DataLoader</code>。</p>
+<p><code>xbiz</code>模型内置了有限自动机模型，一些简单的状态迁移逻辑无需在Java中编程，通过配置即可完成。例如简单的审批状态迁移等。</p>
+<p>通过XDSL内置的<code>x:gen-extends</code>机制，我们可以通过一句话为<code>xbiz</code>模型引入工作流支持。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">biz</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- 可以动态为业务对象生成工作流相关的后台服务函数--&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">biz-gen:GenWorkflowSupport</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">biz</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>目前工作流引擎的集成工作尚在初始阶段</p>
+</blockquote>
+<h2 id="五-完善前端页面"><a href="#五-完善前端页面" class="headerlink" title="五. 完善前端页面"></a>五. 完善前端页面</h2><h3 id="5-1-细化表单和表格"><a href="#5-1-细化表单和表格" class="headerlink" title="5.1 细化表单和表格"></a>5.1 细化表单和表格</h3><p>视图大纲模型(<code>view.xml</code>)是与具体实现框架无关的、完全面向业务领域的一种前端DSL，它抽象出了<code>grid</code>、<code>form</code>、<code>layout</code>、<code>page</code>、<code>dialog</code>、<code>action</code>等关键要素，通过简单配置即可描述常见的增删改查逻辑，相比于面向通用页面的描述模型要紧凑得多。例如，调整商品对象的新增和修改页面时，我们只需要编写如下布局描述</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;edit&quot;</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;lg&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>                ========== intro[商品介绍] ================<br>                goodsSn[商品编号] name[商品名称]<br>                counterPrice[市场价格]<br>                isNew[是否新品首发] isHot[是否人气推荐]<br>                isOnSale[是否上架]<br>                picUrl[商品页面商品图片]<br>                gallery[商品宣传图片列表，采用JSON数组格式]<br>                unit[商品单位，例如件、盒]<br>                keywords[商品关键字，采用逗号间隔]<br>                categoryId[商品所属类目ID] brandId[Brandid]<br>                brief[商品简介]<br>                detail[商品详细介绍，是富文本格式]<br><br>                =========specs[商品规格]=======<br>                !specifications<br><br>                =========goodsProducts[商品库存]=======<br>                !products<br><br>                =========attrs[商品参数]========<br>                !attributes<br><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;unit&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">placeholder</span>&gt;</span>件/个/盒<span class="hljs-tag">&lt;/<span class="hljs-name">placeholder</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;specifications&quot;</span>&gt;</span><br>                    <span class="hljs-comment">&lt;!-- 可以通过gen-control直接指定字段所用控件 --&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">input-table</span> <span class="hljs-attr">addable</span>=<span class="hljs-string">&quot;@:true&quot;</span> <span class="hljs-attr">editable</span>=<span class="hljs-string">&quot;@:true&quot;</span></span><br><span class="hljs-tag">                                     <span class="hljs-attr">removable</span>=<span class="hljs-string">&quot;@:true&quot;</span> &gt;</span><br>                            ...<br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">input-table</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">selection</span>&gt;</span>id,specification,value,picUrl<span class="hljs-tag">&lt;/<span class="hljs-name">selection</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;products&quot;</span>&gt;</span><br>                    <span class="hljs-comment">&lt;!-- 可以引用外部view模型中的grid来显示子表 --&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/app/mall/pages/LitemallGoodsProduct/LitemallGoodsProduct.view.xml&quot;</span></span><br><span class="hljs-tag">                          <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;ref-edit&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>layout</code>是一种专用的布局领域语言，它将布局信息和具体字段的展示控件信息分离开来。具体字段所使用的控件一般由数据类型或者数据域（<code>domain</code>）设置来推定，我们只需要补充布局信息即可实现页面展示。<code>layout</code>布局语言的详细介绍参见<a href="../../dev-guide/xui/layout/">layout.md</a></p>
+<p><strong>根据表单和表格模型，Nop平台会自动分析得到它们所需要访问的后台字段列表，从而自动生成graphql请求的<code>selection</code>部分，避免手工编写导致界面展示和后台请求数据不一致</strong>。</p>
+<h3 id="5-2-调整字段联动逻辑"><a href="#5-2-调整字段联动逻辑" class="headerlink" title="5.2 调整字段联动逻辑"></a>5.2 调整字段联动逻辑</h3><p>通过数据绑定属性表达式可以表达字段联动逻辑，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;pid&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">requiredOn</span>&gt;</span>$&#123;level == &#x27;L2&#x27;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">requiredOn</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">visibleOn</span>&gt;</span>$&#123;level == &#x27;L2&#x27;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">visibleOn</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-调整界面按钮和跳转逻辑"><a href="#5-3-调整界面按钮和跳转逻辑" class="headerlink" title="5. 3 调整界面按钮和跳转逻辑"></a>5. 3 调整界面按钮和跳转逻辑</h3><p>对于常见的crud页面、单个表单页面(<code>simple</code>)、多标签页面(<code>tab</code>)等都可以在视图大纲模型中进行定义和调整，在页面模型中可以直接引用已经定义的表单和表格模型。</p>
+<blockquote>
+<p>可以通过定制<code>xview.xdef</code>元模型文件来支持更多的页面模型</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;main&quot;</span> <span class="hljs-attr">grid</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">listActions</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">        修改新增按钮的功能为跳转到新增页面</span><br><span class="hljs-comment">        --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add-button&quot;</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;merge-replace&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;link&quot;</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;/mall-goods-create&quot;</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">action</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">listActions</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- bounded-merge表示合并结果在当前模型范围内。基础模型中有，当前模型中没有的子节点，会被自动删除。</span><br><span class="hljs-comment">         缺省生成的代码中已经定义了row-update-button和row-delete-button，只是配置了x:abstract=true，</span><br><span class="hljs-comment">         因此这里只要声明id，表示启用继承的按钮即可，可以避免编写重复的代码。</span><br><span class="hljs-comment">     --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rowActions</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;bounded-merge&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">            使用drawer而不是对话框来显示编辑表单</span><br><span class="hljs-comment">        --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;row-update-button&quot;</span> <span class="hljs-attr">actionType</span>=<span class="hljs-string">&quot;drawer&quot;</span>/&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;row-delete-button&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">rowActions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>生成代码的时候会为每个业务对象自动生成增删改查对应的页面和操作按钮，它们存放在以<strong>下划线</strong>为前缀的<code>view</code>文件中，例如<code>_LitemallGoods.view.xml</code>。因此，在<code>LitemallGoods.view.xml</code>中调整按钮配置的时候，可以只表达变动的信息，而无需编写完整的按钮。</p>
+<h3 id="5-4-可视化设计器"><a href="#5-4-可视化设计器" class="headerlink" title="5.4 可视化设计器"></a>5.4 可视化设计器</h3><p>目前Nop平台实际使用的前端框架是<a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index">百度AMIS框架</a>，它使用JSON格式的页面文件。在浏览器地址栏中我们直接输入后台的<code>page.yaml</code>文件来查看页面文件的内容(<strong>无需在前端路由中注册</strong>)，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">http://localhost:8080/index.html?#/amis/app/mall/pages/LitemallGoods/main.page.yaml<br></code></pre></td></tr></table></figure>
+
+<p>它实际对应的页面是 <code>src/main/resources/_vfs/app/mall/pages/LitemallGoods/main.page.yaml</code>，其中的内容为</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br><span class="hljs-string">    &lt;web:GenPage view=&quot;LitemallGoods.view.xml&quot; page=&quot;main&quot;</span><br><span class="hljs-string">         xpl:lib=&quot;/nop/web/xlib/web.xlib&quot; /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个文件表示根据<code>LitemallGoods.view.xml</code>视图大纲模型中定义的<code>page</code>页面模型来生成AMIS描述。</p>
+<ol>
+<li><p>如果我们需要实现的页面比较特殊，无法使用视图大纲模型来有效描述，则可以直接编写<code>page.yaml</code>文件，而跳过视图大纲模型的配置。也就是说，<strong>前端页面具有AMIS框架的全部能力，并不受视图大纲模型的限制</strong>。</p>
+</li>
+<li><p>即使是手工编写<code>page.yaml</code>文件，我们仍然可以通过<code>x:gen-extends</code>来引入局部的<code>form</code>或者<code>grid</code>定义，简化页面编写。（嵌套的json节点也可以使用<code>x:gen-extends</code>或者<code>x:extends</code>来表示动态生成）</p>
+</li>
+<li><p>视图模型定义的是与具体实现技术无关的页面展示逻辑，原则上它可以适配任何前端框架技术。Nop平台后续会考虑接入阿里的<code>LowCodeEngine</code>。</p>
+</li>
+<li><p>在自动生成的JSON页面的基础上，在<code>page.yaml</code>文件中我们手工对生成的代码进行差量修正（利用XDSL内置的Delta合并技术）。</p>
+</li>
+</ol>
+<p>在调试模式下，所有前端AMIS页面的右上角都有两个设计按钮。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/amis-editor.png" alt="amis-editor"></p>
+<ol>
+<li><p>如果在后端手工修改了<code>page.yaml</code>或者<code>view.xml</code>模型文件，可以点击刷新页面来更新前端</p>
+</li>
+<li><p>点击JSON设计按钮弹出YAML编辑器，允许在前端直接修改JSON描述然后立刻看到展现效果。</p>
+</li>
+<li><p>点击可视化设计按钮会弹出amis-editor可视化设计器，允许开发人员通过可视化设计器来调整页面内容。<strong>点击保存后会反向计算出完整页面与生成View的差量，然后将差量部分保存到<code>page.yaml</code>文件中</strong>。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/amis-editor-view.png"></p>
+</li>
+</ol>
+<p>例如，在可视化设计器中修改【商品上架】页面的标题为【新增-商品】并保存之后，<code>add.page.yaml</code>文件中的内容为</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">x:gen-extends:</span> <span class="hljs-string">|</span><br><span class="hljs-string">  &lt;web:GenPage view=&quot;LitemallGoods.view.xml&quot; page=&quot;add&quot; xpl:lib=&quot;/nop/web/xlib/web.xlib&quot; /&gt;</span><br><span class="hljs-string"></span><span class="hljs-attr">title:</span> <span class="hljs-string">&#x27;@i18n:LitemallGoods.forms.add.$title|新增-商品&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>保存的内容已经被转换为差量形式。</p>
+<h3 id="5-5-引入自定义模块"><a href="#5-5-引入自定义模块" class="headerlink" title="5.5 引入自定义模块"></a>5.5 引入自定义模块</h3><p>Nop平台前端框架的源码在工程<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-chaos">nop-chaos</a>中，一般情况下我们都是使用框架内置的组件来开发应用，此时我们只需要在java端引入预编译好的<code>nop-web-site</code>模块即可，无需重新编译前端的<code>nop-chaos</code>工程。</p>
+<p>前端框架主要采用vue3.0、ant-design-vue和百度AMIS框架研发，我们在AMIS框架的基础上做了一些扩展，详细介绍参见文档<a href="../../dev-guide/xui/amis/">amis.md</a>。<code>nop-chaos</code>内置了SystemJs模块加载能力，可以动态加载前端模块。例如:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;xui:import&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;demo.lib.js&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-comment">// 同级及下级节点中可以通过demo.xxx来访问demo模块中定义的内容。</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="六-开发调试"><a href="#六-开发调试" class="headerlink" title="六. 开发调试"></a>六. 开发调试</h2><p>Nop平台系统化的使用元编程和DSL领域语言来开发，为此它也提供了一系列辅助开发调试工具。</p>
+<ol>
+<li><p>所有编译期合成的模型都会输出到<code>_dump</code>目录下，其中会打印每个节点和属性的来源源码位置</p>
+</li>
+<li><p><code>nop-idea-plugin</code>模块提供了IDEA开发插件，可以根据<code>xdef</code>元模型定义实现代码自动完成，格式校验等功能，并且对于XScript脚本语言和Xpl模板语言提供了断点调试功能。</p>
+</li>
+<li><p>Quarkus框架内置了<code>graphql-ui</code>开发工具，可以在线查看后台所有GraphQL类型定义，并提供代码提示、自动补全等功能。</p>
+</li>
+</ol>
+<p>详细介绍参见文档<a href="../../dev-guide/debug/">debug.md</a></p>
+<p><img src="/knosys/project-nop-entropy/tutorial/xlang-debugger.png"></p>
+<p><img src="/knosys/project-nop-entropy/tutorial/graphql-ui.png"></p>
+<h2 id="七-自动化测试"><a href="#七-自动化测试" class="headerlink" title="七. 自动化测试"></a>七. 自动化测试</h2><p>Nop平台内置了模型驱动的自动化测试框架，无需特殊编程即可实现全自动的测试数据准备和验证。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestLitemallGoodsBizModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">JunitAutoTestCase</span> &#123;<br><br>    <span class="hljs-meta">@Inject</span><br>    IGraphQLEngine graphQLEngine;<br><br>    <span class="hljs-meta">@EnableSnapshot</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testSave</span><span class="hljs-params">()</span> &#123;<br>        ContextProvider.getOrCreateContext().setUserId(<span class="hljs-string">&quot;0&quot;</span>);<br>        ContextProvider.getOrCreateContext().setUserName(<span class="hljs-string">&quot;test&quot;</span>);<br><br>        ApiRequest&lt;?&gt; request = input(<span class="hljs-string">&quot;request.json5&quot;</span>, ApiRequest.class);<br>        <span class="hljs-type">IGraphQLExecutionContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> graphQLEngine.newRpcContext(GraphQLOperationType.mutation,<br>                <span class="hljs-string">&quot;LitemallGoods__save&quot;</span>, request);<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> FutureHelper.syncGet(graphQLEngine.executeRpcAsync(context));<br>        output(<span class="hljs-string">&quot;response.json5&quot;</span>, result);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>NopAutoTest</code>采用录制回放的机制来构造测试用例</p>
+<ol>
+<li>从<code>JunitAutoTestCase</code>类继承</li>
+<li>编写测试方法，使用<code>input</code>函数读取输入数据，使用<code>output</code>函数输出结果数据。初次执行的时候会录制输入数据和输出数据到<code>cases</code>目录下。</li>
+<li>成功执行后在测试方法上标注<code>@EnableSnapshot</code>，从而启用录制产生的快照数据。</li>
+<li>启用快照后再次运行，会使用录制数据初始化一个内存数据库来使用，并自动验证返回的结果数据以及对数据库的修改结果与录制的数据相匹配。</li>
+</ol>
+<p>更详细的介绍参见<a href="../../dev-guide/autotest/">autotest.md</a></p>
+<h2 id="八-Delta定制"><a href="#八-Delta定制" class="headerlink" title="八. Delta定制"></a>八. Delta定制</h2><p>所有的XDSL模型文件都存放在<code>src/resources/_vfs</code>目录下，它们组成一个虚拟文件系统。这个虚拟文件系统支持Delta分层叠加的概念（类似于Docker技术中的<code>overlay-fs</code>分层文件系统），缺省具有分层<code>/_delta/default</code>(可以通过配置增加更多的分层)。也就是说，如果同时存在文件<code>/_vfs/_delta/default/nop/app.orm.xml</code>和<code>/nop/app.orm.xml</code>文件，则实际使用的是<code>_delta</code>目录下的版本。在delta定制文件中，可以通过<code>x:extends=&quot;raw:/nop/app.orm.xml&quot;</code> 来继承指定的基础模型，或者通过<code>x:extends=&quot;super&quot;</code>来表示继承上一层的基础模型。</p>
+<p>与传统的编程语言所提供的定制机制相比，<strong>Delta定制的规则非常通用直观，与具体的应用实现无关</strong>。以ORM引擎所用到的数据库Dialect定制为例，如果要扩展Hibernate框架内置的<code>MySQLDialect</code>，我们必须要具有一定的Hibernate框架的知识，如果用到了Spring集成，则我们还需要了解Spring对Hibernate的封装方式，具体从哪里找到Dialect并配置到当前<code>SessionFactory</code>中。而在Nop平台中，我们只需要增加文件<code>/_vfs/default/nop/dao/dialect/mysql.dialect.xml</code>，就可以确保所有用到MySQL方言的地方都会更新为使用新的Dialect模型。</p>
+<p>Delta定制代码存放在单独的目录中，可以与程序主应用的代码相分离。例如将delta定制文件打包为<code>nop-platform-delta</code>模块中，需要使用此定制的时候只要引入对应模块即可。我们也可以同时引入多个delta目录，然后通过<code>nop.core.vfs.delta-layer-ids</code>参数来控制delta层的顺序。例如配置 <code>nop.core.vfs.delta-layer-ids=base,hunan</code> 表示启用两个delta层，一个是基础产品层，在其上是某个具体部署版本所使用的delta层。通过这种方式，我们可以以极低的成本实现软件的产品化：<strong>一个功能基本完善的基础产品在各个客户处实施的时候可以完全不修改基础产品的代码，而是只增加Delta定制代码</strong>。</p>
+<p>在开发具体应用时，我们可以使用delta定制机制来修正平台bug，或者增强平台功能。例如<code>app-mall</code>项目通过定制<code>/_delta/default/nop/web/xlib/control.xlib</code>标签库来增加更多的字段控件支持。例如增加了<code>&lt;edit-string-array&gt;</code>控件，则在Excel数据模型中只要设置字段的数据域为<code>string-array</code>，则前端界面就会自动使用AMIS的<code>input-array</code>控件来编辑该字段。</p>
+<p>更详细的介绍参见<a href="../../dev-guide/xlang/xdsl/">xdsl.md</a></p>
+<h2 id="九-GraalVM原生编译"><a href="#九-GraalVM原生编译" class="headerlink" title="九. GraalVM原生编译"></a>九. GraalVM原生编译</h2><p><a target="_blank" rel="noopener" href="https://www.graalvm.org/">GraalVM</a>是Oracle公司开发的下一代Java虚拟机，支持Python、JavaScript、R等多语言运行，并可以将Java字节码编译为二进制的机器码，直接作为exe运行，摆脱对JDK的依赖。原生程序启动更快（可能快数十倍），使用的 CPU 和内存更少并且占用的磁盘空间也更小。</p>
+<p>Nop平台在Quarkus框架的基础上进一步简化了GraalVM支持，可以很容易的将应用模块编译为原生可执行程序。</p>
+<ol>
+<li><p>Quarkus框架自身对很多第三方库进行了GraalVM适配</p>
+</li>
+<li><p>Nop平台会分析IoC容器配置，获知所有需要被动态创建的bean，并生成GraalVM配置</p>
+</li>
+<li><p>Nop平台中所有的反射操作都通过<code>ReflectionManager</code>帮助类进行，它会记录所有反射操作。应用程序在调试模式下运行时，会根据收集的反射信息，自动生成GraalVM配置到<code>src/resources/META-INF/native-image</code>目录下</p>
+</li>
+</ol>
+<p>以<code>app-mall</code>项目为例，编译原生运行程序只需如下步骤: (<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangpaiblog/article/details/122850438">需要事先安装GraalVM环境</a>)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">cd app-mall-app<br>mvn package -Pnative<br></code></pre></td></tr></table></figure>
+
+<p>编译结果为<code>target/app-mall-app-1.0-SNAPSHOT-runner.exe</code>。目前exe体积有些大（146M），主要是因为<code>graalvm.js</code>引擎会占用接近60M，如果不需要动态执行js打包工作，则可以去除对<code>nop-js</code>模块的依赖。</p>
+<blockquote>
+<p>可以只在调试阶段使用<code>nop-js</code>模块执行动态代码，系统运行时原则上只需要生成好的静态js文件即可。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Nop平台内置的差量化软件生产线如下图所示：</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/delta-pipeline.png"></p>
+<p>它可以用如下公式表达</p>
+<p>$$\begin{aligned} XORM   &amp;&#x3D; Generator\langle XExcel \rangle + \Delta XORM \\ XMeta &amp;&#x3D; Generator\langle XORM \rangle + \Delta XMeta \\ GraphQL &amp;&#x3D; Builder\langle XMeta\rangle + BizModel \\ XView &amp;&#x3D; Generator\langle XMeta\rangle  + \Delta XView \\ XPage &amp;&#x3D;  Generator\langle XView\rangle  + \Delta XPage \end{aligned}$$</p>
+<p>整个推理关系的各个步骤都是可选环节：<strong>我们可以从任意步骤直接开始，也可以完全舍弃此前步骤所推理得到的所有信息</strong>。例如我们可以手动增加<code>xview</code>模型，并不需要它一定具有特定的<code>xmeta</code>支持，也可以直接新建<code>page.yaml</code>文件，按照AMIS组件规范编写JSON代码，AMIS框架的能力完全不会受到推理管线的限制。</p>
+<p>在日常开发中，我们经常可以发现一些逻辑结构之间存在相似性和某种<strong>不精确的衍生关系</strong>，例如后端数据模型与前端页面之间密切的关联，对于最简单的情况，我们可以根据数据模型直接推导得到它对应的增删改查页面，或者反向根据表单字段信息推导得到数据库存储结构。但是，这种不精确的衍生关系很难被现有的技术手段所捕获和利用，如果强行约定一些关联规则，则只能应用于非常受限的特定场景，而且还会导致与其他技术手段的不兼容性，难以复用已有的工具技术，也难以适应需求从简单到复杂的动态演化。</p>
+<p>Nop平台基于可逆计算理论为实现这种面向动态相似性的复用提供了标准的技术路线：</p>
+<ol>
+<li><p>借助于嵌入式元编程和代码生成，<strong>任意结构A和C之间都可以建立一条推理管线</strong></p>
+</li>
+<li><p><strong>将推理管线分解为多个步骤 :  A &#x3D;&gt; B &#x3D;&gt; C</strong></p>
+</li>
+<li><p><strong>进一步将推理管线差量化</strong>：A &#x3D;&gt; <code>_B</code>  &#x3D;&gt; B &#x3D;&gt; <code>_C</code> &#x3D;&gt; C</p>
+</li>
+<li><p><strong>每一个环节都允许暂存和透传本步骤不需要使用的扩展信息</strong></p>
+</li>
+</ol>
+<p>具体来说，从后端到前端的逻辑推理链条可以分解为四个主要模型：</p>
+<ol>
+<li><p>XORM：面向存储层的领域模型</p>
+</li>
+<li><p>XMeta：针对GraphQL接口层的领域模型，可以直接生成GraphQL的类型定义</p>
+</li>
+<li><p>XView：在业务层面理解的前端逻辑，采用表单、表格、按钮等少量UI元素，与前端框架无关</p>
+</li>
+<li><p>XPage：具体使用某种前端框架的页面模型</p>
+</li>
+</ol>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/tutorial/tutorial.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

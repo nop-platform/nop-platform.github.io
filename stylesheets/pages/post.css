@@ -1,0 +1,121 @@
+.Article-header p {
+  float: left;
+  margin-top: .75em;
+  margin-right: 1.2em;
+  font-size: 14px;
+  color: #999; }
+
+.Article-commentCount a,
+.Article-tags a {
+  margin-left: .5em; }
+
+.Article-category .Widget-body > p {
+  margin-bottom: 10px;
+  color: #888; }
+
+.Article-category .Widget-body h3 {
+  margin: 0;
+  font-size: 16px; }
+
+.Article-category .Widget-body > div p {
+  margin-top: 10px; }
+
+.Article-category .Widget-body .fa-pencil {
+  margin-right: .5em;
+  color: #333; }
+
+.Article-license a {
+  margin-right: .5em; }
+
+.Article-license .fa {
+  margin-right: .15em;
+  margin-left: .5em; }
+
+.Article-series {
+  padding-top: 20px;
+  border-top: 1px solid #eee; }
+  .Article-series p:first-child {
+    font-size: 12px;
+    font-weight: normal; }
+    .Article-series p:first-child strong {
+      font-size: 16px; }
+  .Article-series p + p {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+    margin-bottom: 10px; }
+  .Article-series ul {
+    list-style-position: inside;
+    margin-bottom: 0;
+    padding-left: 5px; }
+  .Article-series li span {
+    font-weight: normal; }
+
+.Widget--album .Widget-body p {
+  margin-bottom: 5px;
+  font-weight: 400; }
+
+.Widget--album .Widget-body a {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  border-radius: 6px; }
+  .Widget--album .Widget-body a:after {
+    content: " ";
+    display: block;
+    position: relative;
+    z-index: -999999999;
+    padding-top: 50%; }
+  .Widget--album .Widget-body a > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+  .Widget--album .Widget-body a span {
+    font-size: 16px;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 1px 1px #333; }
+    .Widget--album .Widget-body a span.Album-name--tl, .Widget--album .Widget-body a span.Album-name--tr {
+      top: 10px;
+      bottom: auto; }
+    .Widget--album .Widget-body a span.Album-name--bl, .Widget--album .Widget-body a span.Album-name--br {
+      top: auto;
+      bottom: 10px; }
+    .Widget--album .Widget-body a span.Album-name--tl, .Widget--album .Widget-body a span.Album-name--bl {
+      right: auto;
+      left: 10px; }
+    .Widget--album .Widget-body a span.Album-name--tr, .Widget--album .Widget-body a span.Album-name--br {
+      right: 10px;
+      left: auto; }
+
+.Widget--recommended .Widget-body ul {
+  list-style: none outside none;
+  margin-top: 15px;
+  margin-bottom: 0;
+  padding-left: 0; }
+
+.Widget--recommended .Widget-body li {
+  overflow: hidden; }
+  .Widget--recommended .Widget-body li + li {
+    margin-top: 12px; }
+  .Widget--recommended .Widget-body li img {
+    float: left;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px; }
+  .Widget--recommended .Widget-body li h3,
+  .Widget--recommended .Widget-body li p {
+    overflow: hidden;
+    line-height: 1.2; }
+  .Widget--recommended .Widget-body li h3 {
+    margin: 0 0 2px;
+    font-size: 14px; }
+  .Widget--recommended .Widget-body li p {
+    font-size: 12px; }
+    .Widget--recommended .Widget-body li p a {
+      color: #666; }

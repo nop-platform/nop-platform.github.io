@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>布局语言 - Nop</title>
+
+
+  <meta property="og:title" content="布局语言">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">布局语言</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>在Nop平台中，我们通过NopLayout这一专用于表单布局的领域特定语言来实现表单布局信息和（字段级）内容信息之间的分离。例如对于如下表单布局</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;新增-用户&quot;</span> <span class="hljs-attr">i18n-en:title</span>=<span class="hljs-string">&quot;Add User&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>    ============&gt;baseInfo[基本信息]======<br>    userName[用户名] status[用户状态]<br>    nickName[昵称]<br>    deptId[部门]<br><br>    ===========^extInfo[扩展信息]=========<br>    idType[证件类型] idNbr[证件号]<br>    birthday[生日] workNo[工号]<br>    positionId[职务]<br>    remark[备注]<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>对应显示</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/xui/layout/group-layout.png"></p>
+<h2 id="一-布局语法"><a href="#一-布局语法" class="headerlink" title="一. 布局语法"></a>一. 布局语法</h2><p>NopLayout规定了如下规则：</p>
+<ol>
+<li><p>指定每行显示的字段，例如 <code>a b</code> 表示本行显示<code>a</code>和<code>b</code>字段</p>
+</li>
+<li><p>通过<code>fieldName[displayName]</code>指定字段名以及对应的显示名</p>
+</li>
+<li><p>通过<code>===分组名[分组Label]===</code>标记分组</p>
+</li>
+<li><p>如果为分组指定Label，则使用<code>FieldSet</code>控件来显示分组，并通过符号<code>^</code>表示分组收缩，符号<code>&gt;</code>表示分组展开</p>
+</li>
+<li><p>在字段名前标记符号<code>@</code>, 表示该字段是只读字段，前台使用view模式的控件去显示</p>
+</li>
+<li><p>在字段名前标记符号<code>!</code>，表示不显示Label。</p>
+</li>
+</ol>
+<p>例如在用户列表的左侧增加按照部门进行过滤，本质上是在左侧引入一个过滤表单</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;asideFilter&quot;</span> <span class="hljs-attr">submitOnChange</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;query&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>    ==dept[部门]==<br>    !deptId<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;deptId&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">input-tree</span></span><br><span class="hljs-tag">           <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;@query:NopAuthDept__findList/value:id,label:deptName,</span></span><br><span class="hljs-string"><span class="hljs-tag">              children @TreeChildren(max:5)?filter_parentId=__null&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>deptId</code>字段前标记符号<code>!</code>，表示不显示Label，最后得到</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/xui/layout/aside-filter.png"></p>
+<h2 id="二-字段控件推定"><a href="#二-字段控件推定" class="headerlink" title="二. 字段控件推定"></a>二. 字段控件推定</h2><p>字段级别的显示控件一般情况下可以根据数据模型中定义的字段类型和数据域来推定。</p>
+<p>例如对于字段<code>gender</code>，我们指定了它使用<code>auth/gender</code>这个字典，取值范围只能是字典范围内的值。对于字段<code>email</code>,它的数据域(domain)设置为<code>email</code>，要求录入格式必须是满足email格式规范。</p>
+<p>具体推导需要使用的控件时，首先会确定字段的编辑模式（一般与表单的<code>editMode</code>设置相同，但可以单个字段指定），然后在<code>control.xlib</code>控件标签库中按照如下顺序依次查找，以第一个匹配的控件为准：</p>
+<ol>
+<li><p>查找名称为<code>&#123;editMode&#125;-&#123;control&#125;</code>的控件, <code>control</code>为在<code>cell</code>配置中明确指定的<code>control</code>属性。</p>
+</li>
+<li><p>查找名称为<code>&#123;editMode&#125;-&#123;domain&#125;</code>的控件，例如<code>&lt;edit-email/&gt;</code></p>
+</li>
+<li><p>如果配置了字典项，则查找名称为<code>&#123;editMode&#125;-enum</code>的控件</p>
+</li>
+<li><p>查找名称为<code>&#123;editMode&#125;-&#123;stdDomain&#125;</code>的控件，<code>stdDomain</code>是系统全局注册的标准数据域，相当于是对普通数据类型的一种细化，例如<code>stdDomain=xml</code>表示文本字段，但存储的内容是xml格式等。</p>
+</li>
+<li><p>如果是外键关联，则查找名称为<code>&#123;editMode&#125;-to-one</code>的控件，尝试使用关联对象选择控件。</p>
+</li>
+<li><p>查找名称为<code>&#123;editMode&#125;-&#123;dataType&#125;</code>的控件，例如<code>&lt;edit-string/&gt;</code>和<code>&lt;edit-double/&gt;</code></p>
+</li>
+<li><p>如果<code>editMode</code>不是<code>edit</code>,也不是<code>view</code>, 则按照<code>edit</code>模式，从第一步开始重新查找一遍</p>
+</li>
+<li><p>如果是<code>view</code>模式，则使用<code>&lt;view-any/&gt;</code>控件，否则使用<code>&lt;edit-any/&gt;</code>控件。</p>
+</li>
+</ol>
+<p><code>editMode</code>分为<code>add/view/update/edit/query</code>等多种模式，主要用于区分字段的不同使用场景。在不同的使用场景下我们可能会使用不同的控件。例如在编辑模式下我们可以会使用单选控件，但是在查询模式下我们可能会选择使用多选查询控件，但是在表单布局中我们可以使用同样的字段名来表示该字段。</p>
+<p><strong>字段控件推定是一个可扩展的机制</strong>。当我们在业务上不断发现字段级别的重复语义时，我们可以在数据模型中为它们单独指定一个独特的domain，这样在前端我们就会自动对所有标记为这一domain的所有字段使用统一的控件来展示。我们所需要做的工作为两步:</p>
+<ol>
+<li><p>在数据模型中定义<code>domain</code>, 并为字段指定<code>domain</code></p>
+</li>
+<li><p>在<code>control.xlib</code>中增加不同编辑模式下的控件实现（例如对于<code>domain=roleId</code>，可以增加<code>&lt;edit-roleId/&gt;</code>、<code>&lt;view-roleId/&gt;</code>、<code>&lt;query-roleId/&gt;</code>）。或者不直接修改<code>control.xlib</code>，利用Delta差量定制机制，对系统内置的<code>control.xlib</code>进行扩展即可。</p>
+</li>
+</ol>
+<p>用户自定义<code>domain</code>的处理过程与系统内置的<code>domain</code>的处理过程是完全一致的。</p>
+<p>如果控件比较特殊，而且没有抽象为统一<code>domain</code>的价值，则我们也可以选择直接指定表单中使用的显示控件，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;edit&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>      ...<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;fldA&quot;</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">gen-control</span>&gt;</span><br>            这里输出具体使用的控件描述<br>         <span class="hljs-tag">&lt;/<span class="hljs-name">gen-control</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>gen-control</code>是执行XPL模板语言来生成json控件描述。</p>
+<h2 id="三-字段联动"><a href="#三-字段联动" class="headerlink" title="三. 字段联动"></a>三. 字段联动</h2><p>在布局信息之外，我们可以通过补充的<code>cell</code>配置来指定字段间的联动信息。例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;default&quot;</span> &gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>    sid[资源ID] siteId[站点ID]<br>    displayName[显示名称] orderNo[排序]<br>    resourceType[资源类型] parentId[父资源ID]<br>    =====menuProps=============<br>    icon[图标] routePath[前端路由]<br>    url[链接] component[组件名]<br>    target[链接目标] hidden[是否隐藏]<br>    keepAlive[隐藏时保持状态] noAuth[不检查权限]<br>    depends[依赖资源]<br>    =====authProps============<br>    permissions[权限标识]<br>    =====otherProps===========<br>    status[状态] remark[备注]<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;parentId&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">requiredOn</span>&gt;</span>$&#123;resourceType != &#x27;TOPM&#x27;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">requiredOn</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;menuProps&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">visibleOn</span>&gt;</span>$&#123;resourceType != &#x27;FNPT&#x27;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">visibleOn</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">     字段分组如果没有Label，则仅起分组作用，不会显示为FieldSet</span><br><span class="hljs-comment">    --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;authProps&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">visibleOn</span>&gt;</span>$&#123;resourceType == &#x27;FNPT&#x27;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">visibleOn</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>cell</code>不仅仅可以用于指定单个字段，它还可以对应于字段分组，从而为一组字段指定显示&#x2F;隐藏条件。例如上例中<code>menuProps</code>对应于一组字段，仅当<code>resourceType != &#39;FNPT&#39;</code>时才会显示。</p>
+<h2 id="四-原型继承"><a href="#四-原型继承" class="headerlink" title="四. 原型继承"></a>四. 原型继承</h2><p>信息化系统中，一个经常出现的情况是新增、修改、查看表单的布局基本一致、甚至完全相同，但是修改和查看的时候使用的控件不同。对于这种部分层面相似或者相同的场景，一般的技术很难实现复用，而在Nop平台中借助于可逆计算原理，我们提供了一个标准化的解决方案：</p>
+<ol>
+<li><p><strong>将公共的、可能得到复用的信息抽象为某个DSL语法节点</strong></p>
+</li>
+<li><p><strong>利用X语言中内置的<code>x:prototype</code>机制，可以将某个兄弟节点作为模板来构造自身</strong></p>
+</li>
+<li><p><strong>通过<code>x:prototype-override</code>来对模板进行差量定制</strong></p>
+</li>
+</ol>
+<p>具体到前台表单方面的应用，具体做法为:</p>
+<ol>
+<li><p>将表单布局抽象为<code>&lt;form/&gt;</code>节点</p>
+</li>
+<li><p>定义<code>&lt;form id=&quot;default&quot; x:abstract=&quot;true&quot;/&gt;</code>作为模板，view&#x2F;edit表单的<code>x:prototype</code>设置为<code>default</code></p>
+</li>
+<li><p>可以通过<code>&lt;cell/&gt;</code>节点调整具体字段的显示</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;default&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>      ....<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">cells</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">cell</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;xx&quot;</span> &gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">visibleOn</span>&gt;</span>yyy<span class="hljs-tag">&lt;/<span class="hljs-name">visibleOn</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">cell</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">cells</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;view&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;default&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;view&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;edit&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;default&quot;</span> <span class="hljs-attr">editMode</span>=<span class="hljs-string">&quot;edit&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>x:abstract</code>是XLang语法中规定的一个特殊属性，如果它设置为<code>true</code>，则表示本节点仅作为模板来使用，在最终合并生成的结果中会被自动删除，类似于Spring的XML配置中的<code>abstract</code>属性的作用。</p>
+<h2 id="五-扩展布局"><a href="#五-扩展布局" class="headerlink" title="五. 扩展布局"></a>五. 扩展布局</h2><p>NopLayout布局语言还可以支持更复杂一些的布局结构。比如说它支持多级嵌套布局</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>      ====#sub1===<br>      ====##sub1_1===<br>       a b<br>      ====##sub1_2===<br>       c d<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>在分组标记中，可以通过符号<code>#</code>来表示嵌套层级，类似于Markdown语法，可以通过多个<code>#</code>来表示层级数。<code>##</code>表示是<code>#</code>的子节点。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/xui/layout.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

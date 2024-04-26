@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>开发调试 - Nop</title>
+
+
+  <meta property="og:title" content="开发调试">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">开发调试</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="debug模式"><a href="#debug模式" class="headerlink" title="debug模式"></a>debug模式</h2><p>设置nop.debug&#x3D;true会开启debug模式，此时才会注册DevDoc等用于调试的后台服务。</p>
+<h2 id="错误定位"><a href="#错误定位" class="headerlink" title="错误定位"></a>错误定位</h2><p>后台抛出异常时一般会统一使用NopException异常类，它具有SourceLocation属性，会提示错误发生时对应的XLang程序源码位置。NopException类上还报错了XLang执行堆栈，打印异常消息时会输出Xpl堆栈信息。例如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">io.nop.api.core.exceptions.NopException: NopException[seq=<span class="hljs-number">4</span>,status=-<span class="hljs-number">1</span>,errorCode=nop.err.xui.ref-view-not-exists,params=&#123;viewPath=/app/mall/LitemallGoods/attributes.page.yaml&#125;,desc=view配置不存在：/app/mall/LitemallGoods/attributes.page.yaml]<span class="hljs-meta">@_loc</span>=[<span class="hljs-number">114</span>:<span class="hljs-number">22</span>:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>]/app/mall/pages/LitemallGoods/LitemallGoods.view.xml<br>  @<span class="hljs-meta">@getFormSelection(formModel,objMeta)</span>@[<span class="hljs-number">7</span>:<span class="hljs-number">30</span>:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>]/nop/web/xlib/web/page_simple.xpl<br>  @@&lt;/_delta/<span class="hljs-keyword">default</span>/nop/web/xlib/web.xlib#GenPage&gt;(<span class="hljs-string">&quot;/app/mall/pages/LitemallGoods/LitemallGoods.view.xml&quot;</span>,<span class="hljs-string">&quot;add&quot;</span>,<span class="hljs-literal">null</span>)@[<span class="hljs-number">1</span>:<span class="hljs-number">17</span>:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>]/app/mall/pages/LitemallGoods/add.page.yaml<br>  @<span class="hljs-meta">@__fn_1()</span>@[<span class="hljs-number">1</span>:<span class="hljs-number">17</span>:<span class="hljs-number">0</span>:<span class="hljs-number">0</span>]/app/mall/pages/LitemallGoods/add.page.yaml<br></code></pre></td></tr></table></figure>
+
+<p>以上异常表示</p>
+<ol>
+<li>add.page.yaml调用了web.xlib中的GenPage标签</li>
+<li>GenPage标签调用了page_simple.xpl</li>
+<li>page_simple.xpl在第7行调用了getFormSelection函数</li>
+<li>在函数内部访问到LitemallGoods.view.xml模型文件，发现它的第114行的配置不正确。</li>
+</ol>
+<h2 id="日志信息"><a href="#日志信息" class="headerlink" title="日志信息"></a>日志信息</h2><ol>
+<li>配置项信息<br>如果设置了nop.debug&#x3D;true，则系统启动的时候会打印所有配置参数的值以及所在的配置文件（因为可能存在多个配置文件，而且高优先级的文件会覆盖低优先级的文件）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>quarkus.log.level=INFO<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>模型文件解析<br>所有模型文件解析时都会打印日志，并且会打印解析花费时间</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2023-07-11 21:13:16,152 INFO  [io.nop.cor.res.com.par.AbstractResourceParser] (Quarkus Main Thread) nop.core.component.finish-parse-resource:usedTime=10,path=/nop/schema/beans.xdef,parser=class io.nop.core.lang.xml.parse.XNodeParser<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>动态装配的bean<br>将io.nop.ioc的调试级别设置为debug，则系统启动的时候会打印出条件bean的执行情况。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">quarkus:<br>  log:<br>    category:<br>      &quot;io.nop&quot;:<br>        level: DEBUG<br></code></pre></td></tr></table></figure>
+
+<p>NopIoC容器会先分析所有bean的存在条件，然后再创建bean。分析结果会打印到日志文件中。对于disabled的bean会打印出禁用的原因</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">disabled-bean:id=nopLoginService<br>    loc=[15:6:0:0]/nop/auth/beans/sso-defaults.beans.xml,trace=null<br>    check-if-property-fail:nop.auth.sso.enabled=null<br></code></pre></td></tr></table></figure>
+
+<p>在_dump目录下，&#x2F;nop&#x2F;main&#x2F;beans&#x2F;merged-app.beans.xml中输出了所有最终被激活的bean以及它们所对应的配置文件源码位置。</p>
+<ol start="4">
+<li>数据库访问<br>所有的数据库访问SQL都会记录在日志中，并且显示SQL执行时间</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2023-07-11 21:14:39,637 INFO  [io.nop.dao.jdb.imp.JdbcTemplateImpl] (Quarkus Main Thread) nop.jdbc.run:usedTime=1,querySpace=default,range=0,1,name=jdbc:null,sql=select o.SEQ_NAME as c1 <br>from nop_sys_sequence as o <br> where o.DEL_FLAG =  0 <br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>成功初始化<br>Nop平台成功初始化之后会打印出初始化总共执行的时间，并且会打印banner</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2023-07-11 21:14:40,562 INFO  [io.nop.cor.ini.CoreInitialization] (Quarkus Main Thread) nop.core.end-initialize:usedTime=87286<br></code></pre></td></tr></table></figure>
+
+<h2 id="日志打印"><a href="#日志打印" class="headerlink" title="日志打印"></a>日志打印</h2><ol>
+<li>XScript脚本中内置了logInfo&#x2F;logDebug等函数</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">logInfo(<span class="hljs-string">&quot;nop.err.invalid-name:name=&#123;&#125;&quot;</span>,name);<br></code></pre></td></tr></table></figure>
+
+<p>第一个参数必须是静态字符串，不允许”sss”+yyy这种形式，从而也避免了log注入攻击。</p>
+<ol start="2">
+<li>任意对象调用$函数都会导致打印调试语句</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">b = a.f().$(<span class="hljs-string">&quot;test&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>以上调用等价于 <code>b = DebugHelper.v(location(), &quot;test&quot;,a.f());</code>，其中test参数为自定义的提示信息。<br>所以，当我们想查看任意表达式的值的时候，可以在其后增加$调用。打印出的调试信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">21:00:01.686 [main] INFO io.nop.xlang.utils.DebugHelper - test:a.f()=&gt;1,loc=[6:8:0:0]file:/C:/can/nop/nop-entropy-bak/nop-xlang/target/test-classes/io/nop/xlang/expr/exprs/debug.test.md<br></code></pre></td></tr></table></figure>
+
+<p>test为自定义前缀信息。 a.f()为待查看的表达式源码, <code>=&gt; 1</code>表示表达式的返回值为1。 loc对应于调试语句所对应的源码位置。</p>
+<blockquote>
+<p>可以在DebugHelper中加条件断点来调试Java源码</p>
+</blockquote>
+<ol start="3">
+<li>在xpl模板语言中</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;c:log info=&quot;$&#123;data&#125;&quot; /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="模型dump"><a href="#模型dump" class="headerlink" title="模型dump"></a>模型dump</h2><p>Nop平台大量使用了元编程来动态生成代码，为了有效跟踪代码生成的细节过程，让最终运行代码片段的实际来源一目了然，Nop平台在调试模式下会自动输出合并后的结果模型文件到项目根目录下的_dump目录中。当我们启动应用程序后，可以看到<code>_dump</code>目录下存在大量输出文件<br><img src="/knosys/project-nop-entropy/dev-guide/model-dump.png"></p>
+<p>如果结果文件是由多个delta文件合并得来，则在结果文件中我们会看到每个来源节点&#x2F;属性的源码位置信息。</p>
+<p>在XDSL模型的根节点上，我们也可以增加x:dump&#x3D;”true”属性，它会把更细节的合并算法执行过程打印到日志中。</p>
+<h2 id="XLang调试器"><a href="#XLang调试器" class="headerlink" title="XLang调试器"></a>XLang调试器</h2><p>Nop平台的nop-idea-plugin模块提供了IDEA开发插件，其中包含了针对XScript脚本语言的调试器，可以为所有XDSL领域语言增加断点调试功能。具体参见文档 <a href="../../user-guide/idea/idea-plugin/">idea-plugin.md</a></p>
+<h2 id="GraphQL调试工具"><a href="#GraphQL调试工具" class="headerlink" title="GraphQL调试工具"></a>GraphQL调试工具</h2><p>Quarkus框架内置了graphql-ui调试工具。以调试模式启动应用之后，通过链接&#x2F;q&#x2F;graphql-ui可以访问到调试页面。<br>在此页面上可以查看所有后台GraphQL端点和类型的定义，并且输入代码时会自动提示候选文本。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/graphql-ui.png"></p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="1-字段对应的前端控件显示为空，无法录入"><a href="#1-字段对应的前端控件显示为空，无法录入" class="headerlink" title="1. 字段对应的前端控件显示为空，无法录入"></a>1. 字段对应的前端控件显示为空，无法录入</h3><p>可能是control.xlib中没有针对该字段定义对应的编辑器。在debug日志级别下，XuiHelper.getControlTag函数会打印控件映射结果。例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">nop.xui.resolve-control-tag:controlTag=edit-int,prop=id,domain=null,stdDomain=null,stdDataType=int,mode=add<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-上传文件时提示-415-Unsupported-Media-Type"><a href="#2-上传文件时提示-415-Unsupported-Media-Type" class="headerlink" title="2. 上传文件时提示 415 Unsupported Media Type"></a>2. 上传文件时提示 415 Unsupported Media Type</h3><p>这是Quarkus框架报错，可以将quarkus.log.level设置为DEBUG。<br>后端服务需要引入</p>
+<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="1-后端的bean未按预期注入"><a href="#1-后端的bean未按预期注入" class="headerlink" title="1. 后端的bean未按预期注入"></a>1. 后端的bean未按预期注入</h3><p>首先查看启动工程的<code>_dump</code>目录下<code>/&#123;appName&#125;/nop/mai/beans/merged-app.beans.xml</code>中的结果是否满足预期。<br>这个文件是IoC容器执行完所有动态判断逻辑之后输出的最终结果，其中还打印了属性和对象的来源文件。例如:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--LOC:[18:6:0:0]/nop/auth/beans/auth-service.beans.xml--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.auth.service.login.DaoLoginSessionStore&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;$DEFAULT$nopLoginSessionStore&quot;</span> <span class="hljs-attr">ioc:aop</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;nopLoginSessionStore&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;daoProvider&quot;</span> <span class="hljs-attr">ext:autowired</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ref</span> <span class="hljs-attr">bean</span>=<span class="hljs-string">&quot;$DEFAULT$nopDaoProvider&quot;</span> <span class="hljs-attr">ext:resolved-loc</span>=<span class="hljs-string">&quot;[51:6:0:0]/nop/orm/beans/orm-defaults.beans.xml&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sessionIdGenerator&quot;</span> <span class="hljs-attr">ext:autowired</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ref</span> <span class="hljs-attr">bean</span>=<span class="hljs-string">&quot;$DEFAULT$nopSessionIdGenerator&quot;</span></span><br><span class="hljs-tag">                 <span class="hljs-attr">ext:resolved-loc</span>=<span class="hljs-string">&quot;[34:6:0:0]/nop/auth/beans/auth-core-defaults.beans.xml&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>如果节点路径和前一个兄弟节点的路径不同，则会打印LOC信息。</li>
+<li>ext:autowired&#x3D;”true”表示这个属性是通过<code>@Inject</code>注解自动注入的。</li>
+<li>ext:resolved-loc属性表示了这个对象具体所在的配置文件路径。</li>
+</ol>
+<h3 id="2-如何查看当前应用所加载的bean"><a href="#2-如何查看当前应用所加载的bean" class="headerlink" title="2. 如何查看当前应用所加载的bean"></a>2. 如何查看当前应用所加载的bean</h3><p>在debug模式下，可以通过<code>/p/DevDoc__beans</code>链接查看实际装载的bean</p>
+<h3 id="3-如何查看系统中定义的全局函数和全局对象"><a href="#3-如何查看系统中定义的全局函数和全局对象" class="headerlink" title="3. 如何查看系统中定义的全局函数和全局对象"></a>3. 如何查看系统中定义的全局函数和全局对象</h3><p>在debug模式下，可以访问如下链接</p>
+<ol>
+<li><code>/r/DevDoc__globalFunctions</code></li>
+<li><code>/r/DevDoc__globalVars</code></li>
+</ol>
+<p>在返回的结果中我们可以看到这些函数和变量的实际对应的Java类和方法。</p>
+<h3 id="4-如何查看当前启用的配置变量集合"><a href="#4-如何查看当前启用的配置变量集合" class="headerlink" title="4. 如何查看当前启用的配置变量集合"></a>4. 如何查看当前启用的配置变量集合</h3><p>nop-config模块负责从多个配置来源收集配置信息，并按照优先级决定它们之间的覆盖关系，最终启用的配置变量可以通过如下链接查看：<br><code>/r/DevDoc__configVars</code></p>
+<p>在返回的结果中包含每个配置变量的来源资源文件路径。</p>
+<h3 id="5-如何查看后台所有的GraphQL服务以及类型定义"><a href="#5-如何查看后台所有的GraphQL服务以及类型定义" class="headerlink" title="5. 如何查看后台所有的GraphQL服务以及类型定义"></a>5. 如何查看后台所有的GraphQL服务以及类型定义</h3><p><code>/p/DevDoc__graphql</code><br>返回graphql定义</p>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><ol>
+<li>自动录制的response中变量名可能不正确<br>因为有可能多个随机变量具有同样的值，因此当保存response数据的时候，有可能根据变量的值反向查找变量名的时候出现错误，导致录制出的变量名不正确。<br>例如updateTime录制为addTime等。</li>
+</ol>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/debug.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>可逆计算理论中的Delta合并算法 - Nop</title>
+
+
+  <meta property="og:title" content="可逆计算理论中的Delta合并算法">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">可逆计算理论中的Delta合并算法</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>可逆计算理论明确指出全量是差量的特例，我们可以基于差量的概念重构整个软件生成过程。为了最大化Delta差量概念的价值，差量之间的运算应该是可以由软件自动完成，<br>而无需人工介入。在Nop平台中，我们定义了一个可以保持节点顺序的自动化差量合并算法，所有的树状结构的对象都采用这个算法实现差量合并。</p>
+<h2 id="合并算子x-override"><a href="#合并算子x-override" class="headerlink" title="合并算子x:override"></a>合并算子<code>x:override</code></h2><p>节点合并时缺省采用<code>merge</code>模式：</p>
+<ol>
+<li>节点属性按名称进行覆盖</li>
+<li>如果是不允许重复的子节点，则按照名称进行覆盖</li>
+<li>如果是允许重复的子节点，则按照唯一键属性进行覆盖</li>
+</ol>
+<p>例如:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;test.MyEntity&quot;</span> <span class="hljs-attr">tableName</span>=<span class="hljs-string">&quot;MY_ENTITY&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">comment</span>&gt;</span>注释内容<span class="hljs-tag">&lt;/<span class="hljs-name">comment</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;phone3&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;xx&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>entity</code>节点下只允许一个<code>comment</code>子节点，以及一个<code>columns</code>子节点，所以合并的时候，这两个子节点都是按照名称进行合并。然后递归处理这两个子节点的合并情况时，<br>按照XDef元模型中的定义，<code>columns</code>的子节点是允许重复的，所以它将按照<code>name</code>这一唯一标识属性进行合并。在上面的例子中，<code>phone3</code>字段的<code>label</code>属性会被定制配置自动覆盖。</p>
+<p><code>x:override</code>的所有值都在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xlang/src/main/java/io/nop/xlang/xdef/XDefOverride.java">XDefOverride</a>类中定义。</p>
+<p>我们常用的合并模式有如下几种：</p>
+<ul>
+<li><code>remove</code>: 删除节点</li>
+<li><code>merge</code>: 合并属性和子节点</li>
+<li><code>replace</code>: 整体替换</li>
+<li><code>merge-replace</code>: 合并属性，替换子节点或者content</li>
+<li><code>append</code>: 合并属性，追加子节点或者content</li>
+<li><code>prepend</code>: 合并属性，前插子节点或者content</li>
+<li><code>bounded-merge</code>: 基本与<code>merge</code>类似，但是它额外限定了合并结果的范围，只保留基础模型和派生模型中都存在的子节点。</li>
+</ul>
+<p>例如:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">grid</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">cols</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;bounded-merge&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;30&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;20&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;c&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;50&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">cols</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">grid</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果<code>cols</code>的合并模式设置为<code>bounded-merge</code>，则合并后只会具有三个节点，所有仅在基础模型中存在，但是在派生模型中不存在的列都会被删除。<br>如果不配置<code>x:override</code>属性或者配置<code>x:override=merge</code>，则表示新增或者覆盖子节点，最终<code>cols</code>的子节点个数可能不是3，而是大于3。</p>
+<h2 id="保序算法"><a href="#保序算法" class="headerlink" title="保序算法"></a>保序算法</h2><p>合并列表类型的子节点时会尽量保持节点在派生模型以及基础模型中定义的顺序。比如如果我们想在节点<code>a</code>的后面追加一个节点<code>b</code>，则可以使用如下配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cols</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">col</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;30&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;test&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">cols</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>合并算法规定，如果节点<code>a</code>在基础模型中存在，且节点<code>b</code>是一个新节点，则它会紧贴着节点<code>a</code>插入到结果集中。合并算法会严格保持派生模型中指定的节点顺序，同时尽量保持<br>在基础模型中的节点顺序。具体来说，合并列表时会先将两个列表顺序拼接在一起，然后再根据节点重叠情况将列表分成几个连续的区块，然后再重排区块。</p>
+<p>具体示例如下：</p>
+<ol>
+<li><p><code>a=[a1,a2,a3,a4,a5]</code>与<code>b=[b1, a2, b3]</code> 合并， 先得到 <code>all = [a1,a2,a3,a4,a5, b1,a2,b3]</code>, 然后发现<code>a2</code>重复，需要以<code>a2</code>元素为基准移动<code>a</code>中的元素<br>得到<code>[a1,b1,a2,b3,a3,a4,a5]</code>，<code>b3</code>在<code>b</code>中紧接着<code>a2</code>，所以在移动后的序列中也紧接着<code>a2</code>。</p>
+</li>
+<li><p>如果<code>a</code>与<code>b=[a1, b1, a3, b3]</code>合并，则先得到<code>[a1,a2,a3,a4,a5, a1,b1,a3,b3]</code>, 发现<code>a1</code>,<code>a3</code>重复，移动后得到[a1,b1,a2,a3,b3,a4,a5]。</p>
+</li>
+<li><p>基准元素用于定位时可以理解为代表它以及它的后续元素（直到遇到另外一个基准元素为止）。如果<code>a</code>与<code>b=[a3,b1,a1]</code>合并，则先得到<code>[a1,a2,a3,a4,a5, a3,b1,a1]</code>,<br>现在<code>b</code>中<code>a3</code>和<code>a1</code>颠倒了顺序，先移动<code>a1</code>得到<code>[a3,a4,a5, a3,b1,a1,a2]</code>，再移动<code>a3</code>得到<code>[a3,b1,a4,a5,a1,a2]</code></p>
+</li>
+</ol>
+<p>测试用例参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-core/src/test/java/io/nop/core/lang/json/TestMerge.java">TestMerge.java</a></p>
+<h2 id="兄弟节点之间的原型继承"><a href="#兄弟节点之间的原型继承" class="headerlink" title="兄弟节点之间的原型继承"></a>兄弟节点之间的原型继承</h2><p><code>x:override</code>配置派生模型与<code>x:extends</code>引入的基础模型之间的合并算子。但是除了与外部的基础模型继承内容之外，很多情况下一个列表的子节点之间可能也存在着相似性。<br>例如编辑表单的布局可能与新增表单以及差量表单完全一致，但是也有可能随着需求变化逐渐变得不一致。有些字段可能不允许新建或者修改，但是在查看页面上可以查看。<br>使用<code>x:prototype</code>和<code>x:prototype-override</code>我们可以指定从哪个兄弟节点继承，以及继承时所使用的合并算子。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- base.forms.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">forms</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>            c d<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">forms</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- ext.forms.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">forms</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;base.forms.xml&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;view&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">layout</span>&gt;</span><br>            a b<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 与id=view的兄弟节点合并 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;view&quot;</span> &gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;remove&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">forms</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>原型合并在普通的Delta合并之后进行。在上面的例子中，<code>ext.forms.xml</code>从基础模型中继承了<code>add</code>表单的<code>layout</code>配置。我们首先通过<code>x:override=&quot;remove&quot;</code>删除了<br>继承来的<code>layout</code>配置，然后再通过<code>x:prototype=&quot;view&quot;</code>表示与兄弟节点<code>view</code>表单合并，最终<code>add</code>表单中的<code>layout</code>是从<code>view</code>表单继承得到的<code>layout</code>。</p>
+<h2 id="子节点上的x-extends"><a href="#子节点上的x-extends" class="headerlink" title="子节点上的x:extends"></a>子节点上的<code>x:extends</code></h2><p>除了在DSL文件的根节点上可以写<code>x:extends</code>表示可以从指定的基础模型继承之外，在子节点上也可以使用<code>x:extends</code>。</p>
+<blockquote>
+<p>需要在子节点的XDef元模型上配置 <code>xdef:support-extends=true</code>才允许该子节点使用<code>x:extends</code>机制。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">forms</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;base.forms.xml&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;default.form.xml&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">forms</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>从根节点的<code>base.forms.xml</code>基础模型中我们有可能继承得到一个<code>add</code>表单，同时我们又通过<code>x:extends</code>指定了<code>add</code>表单从<code>default.form.xml</code>继承。而在<br><code>default.form.xml</code>中，它可能继续使用<code>x:extends</code>机制从其他文件继承。如果完整的考虑所有继承节点的情况，则合并算法的实现会变得相当复杂，<br>所以在Nop平台的Delta合并算法中我们做了一点简化，规定如果节点上明确设置了<code>x:extends</code>，则会自动忽略从根节点上继承得到的节点内容。例如上面的例子中，<br>从<code>base.forms.xml</code>中继承得到的<code>add</code> form会被自动忽略。</p>
+<h2 id="合并结果后处理"><a href="#合并结果后处理" class="headerlink" title="合并结果后处理"></a>合并结果后处理</h2><p>Java语言中我们可以通过<code>final</code>关键字指定方法不允许被继承，通过<code>abstract</code>关键字指定方法是虚拟占位用的方法，如果派生类中没有重载该函数，则不允许被调用。<br>类似的，在Delta合并中我们也定义了一些关键字用于更细致的控制合并结果。</p>
+<ul>
+<li><code>x:final</code> : 增加了<code>x:final</code>属性的节点不允许被Delta定制，只能保持原样</li>
+<li><code>x:abstract</code>: 标记了<code>x:abstract</code>属性的节点如果没有被定制，则会在最终的输出结果中被删除，相当于它不存在。通过这一机制我们可以为一个复杂的DSL节点提供缺省值。<br>例如，我们可以将一个节点作为模板节点，然后标记它为<code>abstract</code>，所有其他兄弟节点就可以使用<code>x:prototype</code>从这个模板节点继承配置</li>
+<li><code>x:virtual</code>: 标记了<code>x:virtual</code>属性的节点必须覆盖基础模型中的某个节点，如果没有覆盖，则这个节点的配置可能是不完整的（例如缺少必填属性等），在最终的输出结果中会自动被删除。<br>利用这一机制，我们可以实现自动生成与可视化设计器同时修改同一个DSL模型。如果可视化设计器是在自动生成代码的基础上进行修改的，而自动化生成器调整后不再生成某个节点，则可视化设计器在此节点上进行的微调内容也会被丢弃。</li>
+</ul>
+<p>另外还需要注意，所有标记了<code>x:override=&quot;remove&quot;</code>的节点最终都会从输出结果中被删除。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/xlang/x-override.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

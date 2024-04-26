@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>权限 - Nop</title>
+
+
+  <meta property="og:title" content="权限">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+      
+  
+    
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    
+  
+
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+  
+    <li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">Gitee 组织</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li><a href="https://nop-platform.github.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">English</a>
+</li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">权限</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="启用权限"><a href="#启用权限" class="headerlink" title="启用权限"></a>启用权限</h2><ul>
+<li>配置<code>nop.auth.enable-action-auth=true</code>后启用操作权限。字段级别权限也利用这一开关</li>
+<li>配置<code>nop.auth.enable-data-auth=true</code>后启用数据权限。</li>
+<li>配置<code>nop.auth.use-data-auth-table=true</code>启用数据权限配置表<code>NopAuthRoleDataAuth</code>，数据库中配置的数据权限规则可以和配置文件中的权限规则合并</li>
+<li>缺省会加载&#x2F;nop&#x2F;main&#x2F;auth&#x2F;main.action-auth.xml 静态权限配置文件，可以通过nop.auth.site-map.static-config-path定制为不同的值</li>
+<li>在main.action-auth.xml可以通过<code>x:extends</code>来引入已有的权限配置文件。</li>
+<li>如果配置<code>nop.auth.skip-check-for-admin=true</code>,则对于具有admin角色的用户会跳过操作权限检查，缺省为true。</li>
+<li>配置<code>nop.auth.service-public=true</code>可以开放后台服务，无需登录即可访问后台服务函数</li>
+<li>配置<code>nop.auth.quarkus-dev-public=true</code>会开放quarkus调试页面，无需登录即可访问&#x2F;q&#x2F;graphql-ui等调试页面</li>
+</ul>
+<blockquote>
+<p>平台在调试模式下启动时会打印出所有已知配置变量以及它对应的配置位置</p>
+</blockquote>
+<h2 id="核心接口"><a href="#核心接口" class="headerlink" title="核心接口"></a>核心接口</h2><ol>
+<li><code>IUserContext</code>: 保存<code>userId</code>, <code>roles</code>等用户身份和权限相关信息。通过<code>IUserContext.set()/get()</code>函数存取。</li>
+<li><code>IActionAuthChecker</code>: 检查操作权限和字段权限。在<code>GraphQLExecutor</code>中针对每个GraphQL field调用。</li>
+<li><code>IDataAuthChecker</code>: 检查数据权限。在<code>CrudBizModel</code>中为<code>Query</code>对象自动追加权限过滤条件，在获取到每个实体后执行<code>check</code>动作。</li>
+<li>登录验证在<code>AuthHttpServerFilter</code>类中通过<code>ILoginService</code>接口调用实现。</li>
+<li><code>ILoginService</code>接口负责登入登出和<code>token</code>校验相关的所有逻辑。平台内置了<code>LoginServiceImpl</code>和<code>OAuthLoginServiceImpl</code>两个实现。</li>
+</ol>
+<h2 id="操作权限"><a href="#操作权限" class="headerlink" title="操作权限"></a>操作权限</h2><h3 id="操作权限配置"><a href="#操作权限配置" class="headerlink" title="操作权限配置"></a>操作权限配置</h3><p>通过<code>action-auth.xml</code>和<code>NopAuthResource</code>后台对象可以配置操作权限。<code>resource</code>的类型分为<code>TOPM</code>、<code>SUBM</code>和<code>FNPT</code>，分为对应于顶级菜单、子菜单和功能点。在功能点上可以标记对应的<code>permissions</code>。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;NopAuthDept-main&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;部门&quot;</span> <span class="hljs-attr">orderNo</span>=<span class="hljs-string">&quot;10001&quot;</span> <span class="hljs-attr">i18n-en:displayName</span>=<span class="hljs-string">&quot;Department&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;ant-design:appstore-twotone&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&quot;AMIS&quot;</span> <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;SUBM&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;/nop/auth/pages/NopAuthDept/main.page.yaml&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">children</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;FNPT:NopAuthDept:query&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;查询部门&quot;</span> <span class="hljs-attr">orderNo</span>=<span class="hljs-string">&quot;10002&quot;</span> <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;FNPT&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">permissions</span>&gt;</span>NopAuthDept:query<span class="hljs-tag">&lt;/<span class="hljs-name">permissions</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;FNPT:NopAuthDept:update&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;修改部门&quot;</span> <span class="hljs-attr">orderNo</span>=<span class="hljs-string">&quot;10003&quot;</span> <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;FNPT&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">permissions</span>&gt;</span>NopAuthDept:update<span class="hljs-tag">&lt;/<span class="hljs-name">permissions</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">resource</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;FNPT:NopAuthDept:delete&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;删除部门&quot;</span> <span class="hljs-attr">orderNo</span>=<span class="hljs-string">&quot;10004&quot;</span> <span class="hljs-attr">resourceType</span>=<span class="hljs-string">&quot;FNPT&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">permissions</span>&gt;</span>NopAuthDept:delete<span class="hljs-tag">&lt;/<span class="hljs-name">permissions</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">children</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resource</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后系统后台可以配置用户角色和<code>NopAuthResource</code>的对应关系，用于控制用户能访问哪些菜单，再由此推断出用户具有哪些<code>permission</code>。</p>
+<ol>
+<li>菜单项对应的<code>resourceType=SUBM</code>， 页面中对应的具体的功能点（例如修改按钮）对应<code>resourceType=FNPT</code></li>
+<li>如果使用amis页面，需要配置<code>component=AMIS</code>，<code>url=页面的虚拟文件路径</code></li>
+</ol>
+<h3 id="通过界面配置权限"><a href="#通过界面配置权限" class="headerlink" title="通过界面配置权限"></a>通过界面配置权限</h3><p>先不要开启操作权限，通过界面增加admin角色，然后给指定用户分配admin角色，此后再开启操作权限。通过具有admin角色的用户给其他用户分配角色，<br>并为角色指定它所能访问的NopAuthResource。</p>
+<p>NopAuthResource按照siteId进行组织，缺省使用siteId&#x3D;MAIN作为主站点的网站菜单。nop-auth支持同时管理多个前端应用所对应的菜单链接。<br>比如siteId&#x3D;mobile可以用于移动端菜单，而siteId&#x3D;MAIN用于Web端等。</p>
+<h3 id="后台Action"><a href="#后台Action" class="headerlink" title="后台Action"></a>后台Action</h3><p>在action函数上通过<code>@Auth</code>注解来指定需要对应的<code>permissions</code>或者允许访问的<code>roles</code>。如果不指定，则按照是否是<code>@BizQuery</code><br>或者<code>@BizMutation</code>自动设置<code>permissions</code>为<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:query</code>，以及<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:mutation</code></p>
+<p>在权限分配的时候，如果允许所有读取操作，则可以配置<code>&#123;BizObjName&#125;:query</code>，这样就不需要挨个指定<code>&#123;actionName&#125;</code></p>
+<p>例如</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">@<span class="hljs-title class_">Auth</span>(permissions=<span class="hljs-string">&quot;delete&quot;</span>)<br>@<span class="hljs-title class_">BizMutation</span><br>public boolean <span class="hljs-title function_">delete</span>(<span class="hljs-params">@Name(<span class="hljs-string">&quot;id&quot;</span>) @Description(<span class="hljs-string">&quot;@i18n:biz.id|对象的主键标识&quot;</span>) <span class="hljs-built_in">String</span> id, IServiceContext context</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">delete</span>(id, context);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>permission</code>的完整格式为<code>bizObjName:action</code>，如果只写action部分，则会自动补充<code>bizObjName</code>前缀。例如上面配置的<code>permissions=&quot;delete&quot;</code>最终转换得到的<br>可能是<code>NopAuthUser:delete</code>。</p>
+<p>如果在action上不标注<code>@Auth</code>注解，则缺省对应的<code>permission</code>为<code>&#123;bizObjName&#125;:mutation</code>或者<code>&#123;bizObjName&#125;:query</code>。</p>
+<p>在xbiz文件中可以为对应action设置<code>auth</code>配置，它会覆盖同名的Java方法上通过<code>@Auth</code>注解引入的权限设置。例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">mutation</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;delete&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">permissions</span>=<span class="hljs-string">&quot;delete&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mutation</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="结果对象上的属性"><a href="#结果对象上的属性" class="headerlink" title="结果对象上的属性"></a>结果对象上的属性</h3><p>在xmeta文件中，可以为<code>prop</code>指定<code>auth</code>设置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xx&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">permissions</span>=<span class="hljs-string">&quot;NopAuthUser:query&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;read&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">permissions</span>=<span class="hljs-string">&quot;NopAuthUser:mutation&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;hr&quot;</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;write&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>通过这里的配置可以实现字段级别的读写权限控制. <code>for=&quot;read&quot;</code>表示控制字段读权限，<code>for=&quot;write&quot;</code>控制字段写权限，而<code>for=&quot;all&quot;</code>同时允许读和写</p>
+<h3 id="公开访问"><a href="#公开访问" class="headerlink" title="公开访问"></a>公开访问</h3><p>如果<code>@Auth</code>注解或者xbiz中的auth配置指定了publicAccess&#x3D;true，则该方法为公开可访问方法，会自动跳过操作权限检查。但是数据权限仍然会应用。</p>
+<p>所有的用户都自动具有角色user，所以如果配置<code>@Auth(roles=&quot;user&quot;)</code>则表示允许所有登录用户访问。这种方式与publicAccess的区别在于，如果标记为<br>publicAccess的方法不会检查当前访问用户是否已经登录。</p>
+<h2 id="操作权限检查接口"><a href="#操作权限检查接口" class="headerlink" title="操作权限检查接口"></a>操作权限检查接口</h2><p>系统通过<code>IActionAuthChecker</code>接口来检查操作权限。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IActionAuthChecker</span> &#123;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPermitted</span><span class="hljs-params">(String permission, ISecurityContext context)</span>;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isAllPermitted</span><span class="hljs-params">(Set&lt;String&gt; permissions, ISecurityContext context)</span> &#123;<br>        <span class="hljs-keyword">if</span> (permissions == <span class="hljs-literal">null</span> || permissions.isEmpty())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">for</span> (String permission : permissions) &#123;<br>            <span class="hljs-keyword">if</span> (!isPermitted(permission, context))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPermissionSetSatisfied</span><span class="hljs-params">(MultiCsvSet permissionSet, ISecurityContext context)</span> &#123;<br>        <span class="hljs-keyword">if</span> (permissionSet == <span class="hljs-literal">null</span> || permissionSet.isEmpty())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">for</span> (Set&lt;String&gt; permissions : permissionSet) &#123;<br>            <span class="hljs-keyword">if</span> (isAllPermitted(permissions, context))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>根据<code>auth</code>配置进行权限校验的实现如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">IUserContext</span> <span class="hljs-variable">userContext</span> <span class="hljs-operator">=</span> context.getUserContext();<br><span class="hljs-keyword">if</span> (userContext == <span class="hljs-literal">null</span>)<br>   <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;nop.err.auth.no-user-context&quot;</span>);<br><span class="hljs-keyword">if</span> (auth.getRoles() != <span class="hljs-literal">null</span> &amp;&amp; !auth.getRoles().isEmpty()) &#123;<br>   <span class="hljs-keyword">if</span> (userContext.isUserInAnyRole(auth.getRoles()))<br>       <span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (auth.getPermissions() != <span class="hljs-literal">null</span> &amp;&amp; !auth.getPermissions().isEmpty()) &#123;<br>   <span class="hljs-keyword">if</span> (checker.isPermissionSetSatisfied(auth.getPermissions(), context))<br>       <span class="hljs-keyword">return</span>;<br>&#125;<br><br> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NopException</span>(AuthApiErrors.ERR_AUTH_NO_PERMISSION)<br>           .param(AuthApiErrors.ARG_ACTION_NAME, fieldName)<br>           .param(ARG_PERMISSION, auth.getPermissions())<br>           .param(ARG_ROLES, auth.getRoles())<br>           .param(ARG_OBJ_TYPE_NAME, objTypeName);<br><br></code></pre></td></tr></table></figure>
+
+<p>判断规则：</p>
+<ol>
+<li>如果设置了<code>roles</code>，则满足角色条件则返回<code>true</code>。<code>roles</code>的配置一般是逗号分隔的字符串，具有任意一个<code>role</code>就具有对应权限</li>
+<li>如果设置了<code>permissions</code>，则不满足<code>permission</code>条件则返回<code>false</code>。<code>permissions</code>配置的类型一般为<code>multi-csv-set,</code>格式为<code>a,b|c,d</code>，表示<code>(a并且b)或者(c并且d)</code></li>
+</ol>
+<p>也就是说可以只配置<code>roles</code>，或者只配置<code>permissions</code>。如果只配置了<code>permissions</code>，则系统内部实现是根据<code>role</code>和<code>resource</code>之间的映射关系，<br>找到满足<code>permission</code>条件的所有<code>role</code>，然后再按照<code>roles</code>条件去进行权限检查。</p>
+<blockquote>
+<p>根据<code>permission</code>查找到所有的<code>role</code>这一步不依赖于具体用户，可以统一完成计算然后缓存映射结果。</p>
+</blockquote>
+<h2 id="数据权限"><a href="#数据权限" class="headerlink" title="数据权限"></a>数据权限</h2><p>后台内置的<code>findPage</code>、<code>findList</code>和<code>findFirst</code>动作都会应用数据权限检查接口<code>IDataAuthChecker</code>。<br>通过<code>nop.auth.enable-data-auth</code>来启用数据权限，缺省为<code>true</code></p>
+<h3 id="数据权限定义文件"><a href="#数据权限定义文件" class="headerlink" title="数据权限定义文件"></a>数据权限定义文件</h3><p>在<code>/nop/main/auth/app.data-auth.xml</code>文件中配置数据权限。<code>filter</code>段为xpl格式，输出<code>filter</code>定义节点。xpl执行时上下文具有<code>entity</code>、<code>userContext</code>等变量</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">data-auth</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">objs</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">obj</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NopSysUserVariable&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">role-auths</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">role-auth</span> <span class="hljs-attr">roleId</span>=<span class="hljs-string">&quot;manager&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">role-auth</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">role-auth</span> <span class="hljs-attr">roleId</span>=<span class="hljs-string">&quot;user&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userId&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@biz:userId&quot;</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">role-auth</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">role-auths</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">obj</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">objs</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">data-auth</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>针对不同的角色可以设置不同的数据权限规则。一个用户只会匹配优先级最高的一条规则（如果规则优先级相同，则按照顺序检查用户是否具有指定角色）</li>
+</ul>
+<p>在<code>filter</code>段中可以编写权限过滤条件，其中<code>value</code>部分可以使用<code>@biz:</code>为前缀的表达式变量，例如<code>@biz:userId</code>、<code>@biz:deptId</code>等。<br>全部可用的变量在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xlang/src/main/resources/_vfs/dict/core/biz-var.dict.yaml">biz-var.dict.yaml</a><br>中定义。</p>
+<h3 id="通过NopAuthRoleDataAuth表来定义数据权限"><a href="#通过NopAuthRoleDataAuth表来定义数据权限" class="headerlink" title="通过NopAuthRoleDataAuth表来定义数据权限"></a>通过NopAuthRoleDataAuth表来定义数据权限</h3><p>数据库中定义的数据权限会和<code>data-auth.xml</code>配置文件中定义的权限合并。</p>
+<h3 id="业务场景拆分"><a href="#业务场景拆分" class="headerlink" title="业务场景拆分"></a>业务场景拆分</h3><p>经常出现一种情况是同样的业务对象在不同的业务场景中过滤条件不同，比如说每个人都可以查询自己的数据，而admin可以查询所有人的数据，但是他仍然需要一个查询自己数据的页面。<br>这本质上是同一个业务对象分裂为两个业务场景，一个是查询owner的数据，一个是查询全部数据。对于这种应用可以有三种解决方案：</p>
+<ol>
+<li>对象拆分<br>直接新建一个新的业务对象，比如MyObject_self，然后它会自动使用缺省的xmeta模型和xbiz配置。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;bean id=&quot;MyObject_self&quot; class=&quot;xxx.MyObjectBizModel&quot; /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果增加MyObject_self.xmeta，则MyObject_self会使用这个meta配置，否则会使用缺省的MyObject.xmeta。对于xbiz配置，同样是这样处理。</p>
+<blockquote>
+<p>这种缺省模型的识别逻辑在BizObjectBuilder.java类中实现。</p>
+</blockquote>
+<p>对象拆分后，数据权限那里就可以配置使用不同的权限过滤条件。同时通过meta上的filter也可以直接限定过滤条件。</p>
+<ol start="2">
+<li>如果不拆分对象，也可以在查询方法中增加过滤条件</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">query</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;active_findPage&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;findPage&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">c:import</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.auth.api.AuthApiConstants&quot;</span> /&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">bo:DoFindPage</span> <span class="hljs-attr">query</span>=<span class="hljs-string">&quot;$&#123;query&#125;&quot;</span> <span class="hljs-attr">selection</span>=<span class="hljs-string">&quot;$&#123;selection&#125;&quot;</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/biz/xlib/bo.xlib&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;AuthApiConstants.USER_STATUS_ACTIVE&#125;&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">bo:DoFindPage</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>或者在java中实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">public PageBean&lt;MyObject&gt; findPage_self(@Name(&quot;query&quot;)QueryBean query, FieldSelectonBean selection, IServiceContext context)&#123;<br>  return doFindPage(query, (q,ctx)-&gt;&#123;<br>     q.addFilter(FilterBeans.eq(&quot;ownerId&quot;, ctx.getUserId());<br>  &#125;, selection, context);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过authObjName实现数据权限配置切换<br>上面的第二种方法会导致data-auth.xml的配置总是应用到当前对象上。如果是不同的业务场景需要启用不同的权限配置，可以使用authObjName参数来区分。</li>
+</ol>
+<p>CrudBizModel的doFindPage0&#x2F;doFindList0&#x2F;doFindFirst0等方法可以通过authObjName参数指定不同于当前对象名的权限对象名，从而启用不同的数据权限配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@BizQuery<br>@BizArgsNormalizer(BizConstants.BEAN_nopQueryBeanArgsNormalizer)<br>@GraphQLReturn(bizObjName = BIZ_OBJ_NAME_THIS_OBJ)<br>public List&lt;T&gt; findList(@Optional @Name(&quot;query&quot;) QueryBean query, FieldSelectionBean selection, IServiceContext context) &#123;<br>    if (query != null)<br>        query.setDisableLogicalDelete(false);<br>    return doFindList(query, this::defaultPrepareQuery, selection, context);<br>&#125;<br><br>@BizAction<br>public List&lt;T&gt; doFindList(@Name(&quot;query&quot;) QueryBean query,<br>                          @Name(&quot;prepareQuery&quot;) BiConsumer&lt;QueryBean, IServiceContext&gt; prepareQuery,<br>                          FieldSelectionBean selection,<br>                          IServiceContext context) &#123;<br>    return doFindList0(query, getBizObjName(), prepareQuery, selection, context);<br>&#125;<br><br>@BizAction<br>public List&lt;T&gt; doFindList0(@Name(&quot;query&quot;) QueryBean query,<br>                           @Name(&quot;authObjName&quot;) String authObjName,<br>                           @Name(&quot;prepareQuery&quot;) BiConsumer&lt;QueryBean, IServiceContext&gt; prepareQuery,<br>                           FieldSelectionBean selection,<br>                           IServiceContext context)&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>内置的findList使用doFindList函数实现，而doFindList实际是使用doFindList0，然后传入authObjName为当前业务对象名。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/auth/auth.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
