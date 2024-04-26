@@ -37,10 +37,10 @@
 
 
 
-  <title>事务装饰器 - Nop</title>
+  <title>步骤装饰器 - Nop</title>
 
 
-  <meta property="og:title" content="事务装饰器">
+  <meta property="og:title" content="步骤装饰器">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -78,23 +78,6 @@
 <link rel="stylesheet" href="/stylesheets/pages/post.css">
 
 <link rel="stylesheet" href="/stylesheets/pages/doc.css">
-
-    
-      
-  
-    
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement('script');
-  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-    
-  
-
 
     
     
@@ -1242,13 +1225,18 @@ var _hmt = _hmt || [];
       <header class="Article-header">
         
   
-    <h1 class="Article-title">事务装饰器</h1>
+    <h1 class="Article-title">步骤装饰器</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><blockquote>
+      <div class="Article-content col-md-9"><p>可以通过decorator引入装饰器，对任务步骤进行增强，实现类似AOP的效果。<br>新增装饰器实现时，可以实现ITaskStepDecorator接口，然后在NopIoC中注册名为<code>nopTaskStepDecorator_&#123;decoratorName&#125;</code>的bean。</p>
+<p>例如<code>nop-task-ext</code>包中定义了如下decorator</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;nopTaskStepDecorator_transaction&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.task.ext.dao.TransactionTaskStepDecorator&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">ioc:condition</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">on-class</span>&gt;</span>io.nop.dao.txn.ITransactionTemplate<span class="hljs-tag">&lt;/<span class="hljs-name">on-class</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">ioc:condition</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这样我们就可以通过<code>&lt;decorator name=&quot;transaction&quot;/&gt;</code>来使用这个装饰器。</p>
+<h2 id="事务装饰器"><a href="#事务装饰器" class="headerlink" title="事务装饰器"></a>事务装饰器</h2><blockquote>
 <p>需要引入nop-task-ext模块</p>
 </blockquote>
 <p>可以通过transaction装饰器来控制步骤事务范围。</p>

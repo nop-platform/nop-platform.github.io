@@ -80,23 +80,6 @@
 <link rel="stylesheet" href="/stylesheets/pages/doc.css">
 
     
-      
-  
-    
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement('script');
-  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-    
-  
-
-
-    
     
 <script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
 
@@ -1295,7 +1278,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h2 id="三-分布式RPC框架"><a href="#三-分布式RPC框架" class="headerlink" title="三. 分布式RPC框架"></a>三. 分布式RPC框架</h2><p><img src="/knosys/project-nop-entropy/arch/images/rpc-modules.png"></p>
-<p>Nop平台在GraphQL引擎的基础上建立了分布式RPC机制，参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/dev-guide/microservice/rpc-design.md">rpc-design.md</a></p>
+<p>Nop平台在GraphQL引擎的基础上建立了分布式RPC机制，参见<a href="../../dev-guide/microservice/rpc-design/">rpc-design.md</a></p>
 <ul>
 <li><p>nop-cluster-core提供了负载均衡、服务发现、Leader选举等集群相关的支持机制</p>
 </li>
@@ -1341,7 +1324,7 @@ var _hmt = _hmt || [];
 <p>Nop平台整体设计采用了可分可合的灵活组织形式。初始代码生成时对于每一个Excel数据模型，我们会生成一个app模块，它引用了本模型对应的service和web子模块，例如nop-auth-app引用了nop-auth-web和nop-auth-service。在开发调试的过程中，我们可以使用nop-auth-app模块作为微服务单独启动，通过内置的sso机制即可将多个微服务集成为一个整体应用系统。</p>
 <p>除此之外，<strong>我们也可以在一个应用中引用所有模块的web和service子模块，从而构成一个单体应用</strong>，例如nop-quarkus-demo模块中的做法。</p>
 <h2 id="六-报表引擎"><a href="#六-报表引擎" class="headerlink" title="六. 报表引擎"></a>六. 报表引擎</h2><p><img src="/knosys/project-nop-entropy/arch/images/report-modules.png"></p>
-<p>NopReport是一个采用Excel作为可视化设计器的支持中国式报表的报表引擎，使用方法参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/user-guide/report.md">report.md</a>。</p>
+<p>NopReport是一个采用Excel作为可视化设计器的支持中国式报表的报表引擎，使用方法参见<a href="../../user-guide/report/">report.md</a>。</p>
 <ul>
 <li><p>nop-report-core实现了报表展开算法、报表表达式、报表函数等核心机制</p>
 </li>
@@ -1349,7 +1332,7 @@ var _hmt = _hmt || [];
 </li>
 <li><p>nop-excel提供了ExcelWorkbook模型对象，利用workbook.xdef元模型，可以自动实现XML格式的DSL与ExcelWorkbook对象之间的双向转换。因此ExcelWorkbook作为领域模型是脱离Excel软件独立存在的。</p>
 </li>
-<li><p>nop-ooxml-docx提供了可以进行可视化编辑的Word模板机制，具体使用参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/dev-guide/report/word-template.md">word-temlate.md</a></p>
+<li><p>nop-ooxml-docx提供了可以进行可视化编辑的Word模板机制，具体使用参见<a href="../../dev-guide/report/word-template/">word-temlate.md</a></p>
 </li>
 </ul>
 <h2 id="七-自动化测试框架"><a href="#七-自动化测试框架" class="headerlink" title="七. 自动化测试框架"></a>七. 自动化测试框架</h2><p><img src="/knosys/project-nop-entropy/arch/images/autotest-modules.png"></p>
@@ -1372,7 +1355,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h2 id="九-命令行工具"><a href="#九-命令行工具" class="headerlink" title="九. 命令行工具"></a>九. 命令行工具</h2><p><img src="/knosys/project-nop-entropy/arch/images/cli-modules.png"></p>
-<p>nop-cli命令行工具聚合了一批可以独立使用的功能，具体参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/dev-guide/cli.md">cli.md</a></p>
+<p>nop-cli命令行工具聚合了一批可以独立使用的功能，具体参见<a href="../../dev-guide/cli/">cli.md</a></p>
 <ul>
 <li><p>gen指令需要用到nop-codegen模块来执行代码生成</p>
 </li>

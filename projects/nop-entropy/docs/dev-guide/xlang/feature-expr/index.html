@@ -80,23 +80,6 @@
 <link rel="stylesheet" href="/stylesheets/pages/doc.css">
 
     
-      
-  
-    
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement('script');
-  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-    
-  
-
-
-    
     
 <script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
 
@@ -1262,10 +1245,16 @@ var _hmt = _hmt || [];
 <li>支持括号</li>
 </ol>
 <h2 id="虚拟节点"><a href="#虚拟节点" class="headerlink" title="虚拟节点"></a>虚拟节点</h2><p>有时为了方便控制，我们可以加入一个虚拟节点。当特性开关不满足时，虚拟节点下的所有内容都会自动被删除。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">domain</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">options</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">x:div</span> <span class="hljs-attr">feature:on</span>=<span class="hljs-string">&quot;my.a1&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">x:div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">options</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">domain</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">domain</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">options</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">x:div</span> <span class="hljs-attr">feature:on</span>=<span class="hljs-string">&quot;my.a1&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">x:div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">options</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">domain</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>当application.yaml中配置<code>my.a1=true</code>时，加载得到的XNode节点为</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">domain</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">options</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">options</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">domain</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">domain</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">options</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">options</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">domain</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Meta配置变量"><a href="#Meta配置变量" class="headerlink" title="Meta配置变量"></a>Meta配置变量</h2><p>在根节点上配置 <code>feature:enable-meta-cfg</code>为true之后，会识别<code>@meta-cfg:</code>前缀，自动调换配置变量。例如:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">task</span> <span class="hljs-attr">feature:enable-meta-cfg</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">fetchSize</span>=<span class="hljs-string">&quot;@meta-cfg:my.fetch-size|10&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">task</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果application.yaml中配置了<code>my.fetch-size</code>，则以配置的变量为准，否则fetchSize将被设置为缺省值10.</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
