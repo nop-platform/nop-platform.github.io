@@ -80,23 +80,6 @@
 <link rel="stylesheet" href="/stylesheets/pages/doc.css">
 
     
-      
-  
-    
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement('script');
-  hm.src = '//hm.baidu.com/hm.js?f8ce4b3ea0ca58886cf92248c093c7d9';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-    
-  
-
-
-    
     
 <script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
 
@@ -1246,7 +1229,7 @@ var _hmt = _hmt || [];
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;$&#123;cond&#125;&quot;</span>&gt;</span><br>  当条件为真时执行。<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:if</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><code>&lt;c:for&gt;</code><br>循环语句。<br><code>index</code>对应循环下标</li>
+<li><code>&lt;c:for&gt;</code><br>循环语句。<br><code>index</code>对应循环下标, <code>var</code>对应于循环过程中的变量名。</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:for</span> <span class="hljs-attr">items</span>=<span class="hljs-string">&quot;$&#123;list&#125;&quot;</span> <span class="hljs-attr">var</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:for</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">c:for</span> <span class="hljs-attr">begin</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attr">end</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">var</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:for</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
