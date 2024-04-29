@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>如何将Nop平台与Solon框架集成 - Nop</title>
+
+
+  <meta property="og:title" content="如何将Nop平台与Solon框架集成">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">如何将Nop平台与Solon框架集成</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>Solon是一个基于Java的国产轻量级微服务框架，详细介绍参见官网<a target="_blank" rel="noopener" href="https://solon.noear.org/">https://solon.noear.org/</a> 。Solon的启动速度很快，占用内存很小，可以作为SpringBoot的一个替代品。Nop平台是基于可逆计算原理从零开始研发的下一代低代码平台，它的核心是采用面向语言编程范式，为领域特定语言(DSL)的设计和应用提供基础架构支撑。Nop平台是一个上层技术架构平台，它可以运行在多种底层技术框架之上，此前已经适配了Quarkus和Spring框架，在本文中我将以Solon框架为例，介绍Nop平台与第三方框架集成的具体方法。</p>
+<ul>
+<li>具体实现代码在nop-solon工程中 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-extensions/tree/master/nop-solon">nop-extensions&#x2F;nop-solon</a></li>
+</ul>
+<h2 id="一-框架初始化"><a href="#一-框架初始化" class="headerlink" title="一. 框架初始化"></a>一. 框架初始化</h2><p>Solon框架内置了一个轻量级的IoC容器，可以利用它的生命周期管理来触发Nop平台的初始化动作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component(index = -1)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SolonInitializer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LifecycleBean</span> &#123;<br>    <span class="hljs-meta">@Inject</span><br>    AppContext appContext;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        io.nop.api.core.ioc.BeanContainer.registerInstance(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SolonBeanContainer</span>(appContext));<br>        CoreInitialization.initialize();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">stop</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        CoreInitialization.destroy();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以通过SolonBeanContainer将Solon的Bean容器适配为Nop平台所需要的IBeanContainer接口。这样在Nop的Bean创建过程中就可以直接使用Solon管理的bean。</p>
+<blockquote>
+<p>Nop提供了一个兼容Spring 1.0配置语法的IoC容器NopIoc，并增加了类似SpringBoot的动态条件匹配机制。为了兼容底层框架的IoC容器，它实际是将底层框架提供的IoC作为自己的parent使用，即在NopIoC中查找不到的bean会在父容器中查找。</p>
+</blockquote>
+<p>关于NopIoc的详细介绍，可以参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/579847124">如果重写SpringBoot，我们会做哪些不同的选择？</a></p>
+<h3 id="CoreInitialization分阶段初始化"><a href="#CoreInitialization分阶段初始化" class="headerlink" title="CoreInitialization分阶段初始化"></a>CoreInitialization分阶段初始化</h3><p>Nop平台使用<code>CoreInitalization.initialize()</code>调用实现平台初始化，它的实现是使用Java的ServiceLoader机制来加载<code>ICoreInitializer</code>接口。<br>内置的常用初始化器按照如下顺序执行:</p>
+<ol>
+<li>ReflectionHelperMethodInitializer: 向反射系统注册扩展函数</li>
+<li>XLangCoreInitializer: 注册XLang表达式中使用的全局函数和全局对象</li>
+<li>XLangDebuggerInitializer: 启动XLang调试器</li>
+<li>ConfigInitializer: 读取application.yaml等配置文件，并从远程配置服务加载</li>
+<li>VirtualFileSystemInitializer: 初始化虚拟文件系统</li>
+<li>RegisterModelCoreInitializer: 加载<code>register-model.xml</code>模型注册文件，注册DSL模型</li>
+<li>DaoDialectInitializer： 扫描读取dialect模型文件</li>
+<li>IocCoreInitializer: 初始化NopIoc容器</li>
+</ol>
+<p><code>ICoreInitializer</code>提供了分阶段加载的能力，每个Initializer都具有对应的初始化级别设置，可以明确指定执行到某个初始化级别。例如，在代码生成器中，<br>我们可以明确指定执行级别为<code>INITIALIZER_PRIORITY_PRECOMPILE</code>，它不会触发NopIoc的初始化。</p>
+<h2 id="二-适配Web服务"><a href="#二-适配Web服务" class="headerlink" title="二. 适配Web服务"></a>二. 适配Web服务</h2><p>Nop平台使用NopGraphQL引擎实现对外暴露的Web服务和RPC服务。<strong>与一般的graphql引擎不同，NopGraphQL不仅仅实现了GraphQL调用协议，它还提供了一种通用的服务分解、组合机制，只需要编写一次函数代码，即可将其自动暴露为REST服务、GraphQL服务和gRPC服务等多种服务形式</strong>。NopGraphQL采用了最小信息表达的设计，使用它来编写代码实际上比其他服务框架都要更加简单。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;Demo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DemoBizModel</span> &#123;<br>    <span class="hljs-meta">@BizQuery</span><br>    <span class="hljs-keyword">public</span> DemoResponse <span class="hljs-title function_">testOk</span><span class="hljs-params">(<span class="hljs-meta">@RequestBean</span> DemoRequest request)</span> &#123;<br>        <span class="hljs-type">DemoResponse</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DemoResponse</span>();<br>        ret.setName(request.getName());<br>        ret.setResult(<span class="hljs-string">&quot;ok&quot;</span>);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上述服务函数可以通过GraphQL协议来调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query&#123;<br>   Demo__testOk(name:&quot;sss&quot;)&#123;<br>      name,<br>      result<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也可以通过REST请求方式来调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Demo__testOk?name=sss<br></code></pre></td></tr></table></figure>
+
+<p>同时还可以通过gPRC接口来调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs proto3">service Demo&#123;<br>   rpc testOk(DemoRequest)returns (DemoResponse)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>关于NopGraphQL的详细介绍，可以参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678597287">为什么在数学的意义上GraphQL严格的优于REST？</a></p>
+<p>NopGraphQL只需要底层Web框架提供<code>/graphql</code>和<code>/r/&#123;operationName&#125;</code>等少数链接的路由映射即可。适配Solon框架时我们只需要实现SolonGraphQLWebService类。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SolonGraphQLWebService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">GraphQLWebService</span> &#123;<br>    <span class="hljs-meta">@Mapping(path = &quot;/graphql&quot;, method = MethodType.POST, produces = &quot;application/json&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">graphqlSolon</span><span class="hljs-params">(Context context)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">body</span> <span class="hljs-operator">=</span> context.body();<br>        <span class="hljs-keyword">return</span> FutureHelper.syncGet(runGraphQL(body, <span class="hljs-built_in">this</span>::transformGraphQLResponse));<br>    &#125;<br><br>    <span class="hljs-keyword">protected</span> String <span class="hljs-title function_">transformGraphQLResponse</span><span class="hljs-params">(GraphQLResponseBean response, IGraphQLExecutionContext gqlContext)</span> &#123;<br>        SolonWebHelper.setResponseHeader(Context.current(), gqlContext.getResponseHeaders());<br>        <span class="hljs-keyword">return</span> JsonTool.serialize(response, <span class="hljs-literal">false</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Mapping(path = &quot;/r/&#123;@operationName&#125;&quot;, method = &#123;MethodType.GET, MethodType.POST&#125;, produces = &quot;application/json&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">restSolon</span><span class="hljs-params">(Context context, <span class="hljs-meta">@Path(&quot;@operationName&quot;)</span> String operationName)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">selection</span> <span class="hljs-operator">=</span> getSelectionParam(context);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">body</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;GET&quot;</span>.equalsIgnoreCase(context.method()) ? <span class="hljs-literal">null</span> : context.body();<br>        <span class="hljs-keyword">return</span> FutureHelper.syncGet(runRest(<span class="hljs-literal">null</span>, operationName, () -&gt; &#123;<br>            <span class="hljs-keyword">return</span> buildRequest(body, selection, <span class="hljs-literal">true</span>);<br>        &#125;, <span class="hljs-built_in">this</span>::transformRestResponse));<br>    &#125;<br><br>    <span class="hljs-keyword">protected</span> String <span class="hljs-title function_">transformRestResponse</span><span class="hljs-params">(ApiResponse&lt;?&gt; response, IGraphQLExecutionContext gqlContext)</span> &#123;<br>        SolonWebHelper.setResponseHeader(Context.current(), response.getHeaders());<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> JSON.stringify(response.cloneInstance(<span class="hljs-literal">false</span>));<br>        <span class="hljs-type">int</span> <span class="hljs-variable">status</span> <span class="hljs-operator">=</span> response.getHttpStatus();<br>        <span class="hljs-keyword">if</span> (status == <span class="hljs-number">0</span>)<br>            status = <span class="hljs-number">200</span>;<br><br>        Context.current().status(status);<br>        <span class="hljs-keyword">return</span> str;<br>    &#125;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Solon框架将REST Path路径中定义的变量也统一放置到了param集合中，为了避免和其他参数混淆，SolonGraphQLWebService选择使用前缀<code>@</code>用于区分，所以REST路径映射为 <code>/r/&#123;@operationName&#125;</code>。</li>
+<li>内置的GraphQLWebService提供了基于JAXRS标准对外暴露GraphQL服务的基本框架，我们只需要对它进行一些定制调整即可。</li>
+<li>NopGraphQL内部实现时只使用通用的<code>getRequestHeader()/setResponseHeader()</code>等函数，不依赖于特定的Web框架对象类，其他的输入输出参数也是纯粹的POJO对象，因此只要通过JSON转换自动进行适配即可。</li>
+</ul>
+<p>如果使用Nop平台的安全认证等机制，我们还需要适配<code>HttpServerFilter</code>。因为Nop平台并没有直接使用HttpServletRequest等运行时框架特有的对象类，而是使用自己定义的<code>IHttpServerContext</code>接口，所以我们只需要增加SolonServerContext适配这个接口即可。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SolonHttpServerFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Filter</span> &#123;<br>    ...<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Context context, FilterChain chain)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        List&lt;IHttpServerFilter&gt; serverFilters = getFilters(<span class="hljs-literal">false</span>);<br><br>        <span class="hljs-keyword">if</span> (serverFilters.isEmpty()) &#123;<br>            chain.doFilter(context);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-type">IHttpServerContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SolonServerContext</span>(context);<br>            HttpServerHelper.runWithFilters(serverFilters, ctx, () -&gt; &#123;<br>                <span class="hljs-keyword">return</span> FutureHelper.futureCall(() -&gt; &#123;<br>                    <span class="hljs-keyword">try</span> &#123;<br>                        chain.doFilter(context);<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                    &#125; <span class="hljs-keyword">catch</span> (Error e) &#123;<br>                        <span class="hljs-keyword">throw</span> e;<br>                    &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;<br>                        <span class="hljs-keyword">throw</span> NopException.adapt(e);<br>                    &#125;<br>                &#125;);<br>            &#125;);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在Nop平台中，IHttpServerFilter的一个实现类AuthHttpServerFilter负责实现用户访问令牌检查。</li>
+<li>与SpringSecurity的实现类似，Nop平台将自身所有的Filter都包装到一起，在一个Solon Filter中执行。</li>
+</ul>
+<h2 id="三-定制静态资源加载器"><a href="#三-定制静态资源加载器" class="headerlink" title="三. 定制静态资源加载器"></a>三. 定制静态资源加载器</h2><p>Solon框架管理js等静态资源时可以开启gzip压缩支持，它的做法是检查是否存在与js文件同目录的<code>js.gz</code>文件，如果存在且浏览器accept支持gzip格式，则返回<code>js.gz</code>文件中的内容。也就是说前台请求<code>app.js</code>，如果存在<code>app.js.gz</code>，则实际返回的是<code>app.js.gz</code>这个压缩后的文件中的内容。</p>
+<p>对于Nop平台来说，Solon的这个判断逻辑要求服务端同时提供<code>js</code>和<code>js.gz</code>两个文件，会显著增大服务端的包大小。Nop平台的前端使用AMIS低代码框架，功能庞大，前端所有js代码压缩后仍然有10M左右的大小（设计器有4M多，前端采用按需加载机制，一般分包为1M左右），而作为内网应用实际上所有的浏览器都具备gzip解码能力，没有必要同时保留两种格式，因此我们一般的做法是只保留<code>js.gz</code>文件。</p>
+<p>Solon允许定制静态资源文件和Web请求路径的映射关系，我们可以利用这一点绕过它原有的判断逻辑。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SolonStaticResourceRegistrar</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LifecycleBean</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">start</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        <span class="hljs-type">NopResourceRepository</span> <span class="hljs-variable">repository</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NopResourceRepository</span>();<br>        <span class="hljs-comment">//StaticMappings.add(&quot;/js/&quot;, repository);</span><br>        StaticMappings.add(<span class="hljs-string">&quot;/&quot;</span>, repository);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们首先注册一个全局映射关系，要求所有前端路径都经过NopResourceRepository处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NopResourceRepository</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">StaticRepository</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> URL <span class="hljs-title function_">find</span><span class="hljs-params">(String relativePath)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-keyword">if</span> (relativePath.endsWith(<span class="hljs-string">&quot;.js&quot;</span>) || relativePath.endsWith(<span class="hljs-string">&quot;.css&quot;</span>)) &#123;<br>            <span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> loadResource(relativePath + <span class="hljs-string">&quot;.gz&quot;</span>);<br>            <span class="hljs-keyword">if</span> (url != <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(StringHelper.removeTail(url.toString(), <span class="hljs-string">&quot;.gz&quot;</span>));<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> loadResource(relativePath);<br>    &#125;<br><br>    URL <span class="hljs-title function_">loadResource</span><span class="hljs-params">(String path)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">fullPath</span> <span class="hljs-operator">=</span> StringHelper.appendPath(<span class="hljs-string">&quot;META-INF/resources/&quot;</span>, path);<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.getClass().getClassLoader().getResource(fullPath);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在NopResourceRespository中，我们判断如果存在对应的<code>js.gz</code>或者<code>css.gz</code>文件，则直接返回对应的URL，从而跳过对原文件的检查。</p>
+<h2 id="四-封装为Starter模块"><a href="#四-封装为Starter模块" class="headerlink" title="四. 封装为Starter模块"></a>四. 封装为Starter模块</h2><p>Nop平台集成Solon框架的代码被统一封装到<code>nop-solon-starter</code>模块中，在Solon项目中只要引入如下代码即可使用:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.entropy-cloud.extensions<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nop-solon-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>目前<code>nop-solon-starter</code>并没有上传到maven中心仓库，需要自行下载项目编译</p>
+</li>
+<li><p>编译时依赖的Nop平台的包目前从网友提供的一个私有Maven仓库（<a target="_blank" rel="noopener" href="https://nop.repo.crazydan.io/%EF%BC%89%E4%B8%8B%E8%BD%BD%EF%BC%8C%E8%AF%A5%E4%BB%93%E5%BA%93%E6%AF%8F%E5%A4%A9%E5%87%8C%E6%99%A82%E7%82%B9%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83%E4%B8%80%E6%AC%A1%E3%80%82">https://nop.repo.crazydan.io/）下载，该仓库每天凌晨2点编译发布一次。</a></p>
+</li>
+</ul>
+<h2 id="五-集成效果"><a href="#五-集成效果" class="headerlink" title="五. 集成效果"></a>五. 集成效果</h2><p>Solon框架的启动速度显著快于SpringBoot，打包后的大小也要小得多（大概减少10几M）。如果不使用AMIS前端，<code>nop-solon-service-demo</code>打包后大概21M，其中包含了XLang语言、GraphQL引擎、ORM引擎、报表引擎、工作流引擎、逻辑编排引擎、规则引擎、分布式RPC调用、代码生成器、后台权限管理、动态模型管理等完整的低代码后端服务。</p>
+<p>基于可逆计算理论设计的低代码平台NopPlatform已开源：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">canonical-entropy&#x2F;nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">entropy-cloud&#x2F;nop-entropy</a></li>
+<li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">docs&#x2F;tutorial&#x2F;tutorial.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14u411T715/">可逆计算原理和Nop平台介绍及答疑_哔哩哔哩_bilibili</a></li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/integration/nop-on-solon.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

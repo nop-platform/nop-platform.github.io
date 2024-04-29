@@ -12,11 +12,8 @@
 
 
   
-    
-    
-
-    
-      
+  
+  
     
   
 
@@ -40,10 +37,10 @@
 
 
 
-  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+  <title>初始化 - Nop</title>
 
 
-  <meta property="og:title" content="Nop">
+  <meta property="og:title" content="初始化">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1218,14 +1215,25 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title"></h1>
+    <h1 class="Article-title">初始化</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p><a target="_blank" rel="noopener" href="https://github.com/Codium-ai/AlphaCodium">https://github.com/Codium-ai/AlphaCodium</a> 中所使用的prompt，原版权协议为AGPL</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@misc&#123;ridnik2024code,<br>      title=&#123;Code Generation with AlphaCodium: From Prompt Engineering to Flow Engineering&#125;, <br>      author=&#123;Tal Ridnik and Dedy Kredo and Itamar Friedman&#125;,<br>      year=&#123;2024&#125;,<br>      eprint=&#123;2401.08500&#125;,<br>      archivePrefix=&#123;arXiv&#125;,<br>      primaryClass=&#123;cs.LG&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+      <div class="Article-content col-md-9"><p>Nop平台使用<code>CoreInitalization.initialize()</code>调用实现平台初始化，它的实现是使用Java的ServiceLoader机制来加载<code>ICoreInitializer</code>接口。<br>内置的常用初始化器按照如下顺序执行:</p>
+<ol>
+<li>ReflectionHelperMethodInitializer: 向反射系统注册扩展函数</li>
+<li>XLangCoreInitializer: 注册XLang表达式中使用的全局函数和全局对象</li>
+<li>XLangDebuggerInitializer: 启动XLang调试器</li>
+<li>ConfigInitializer: 读取application.yaml等配置文件，并从远程配置服务加载</li>
+<li>VirtualFileSystemInitializer: 初始化虚拟文件系统</li>
+<li>RegisterModelCoreInitializer: 加载<code>register-model.xml</code>模型注册文件，注册DSL模型</li>
+<li>DaoDialectInitializer： 扫描读取dialect模型文件</li>
+<li>IocCoreInitializer: 初始化NopIoc容器</li>
+</ol>
+<p><code>ICoreInitializer</code>提供了分阶段加载的能力，每个Initializer都具有对应的初始化级别设置，可以明确指定执行到某个初始化级别。例如，在代码生成器中，<br>我们明确可以指定执行到<code>INITIALIZER_PRIORITY_PRECOMPILE</code>，它不会触发NopIoc的初始化。</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
@@ -1237,7 +1245,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/gpt/alpha-codium/READM.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/boot/initialize.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         

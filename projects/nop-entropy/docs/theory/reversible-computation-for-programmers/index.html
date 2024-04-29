@@ -1245,14 +1245,14 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;bank.BankAccount&quot;</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;mybank.BankAccountEx&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>以上配置表示保持原有的实体名不变，将实体所对应的Java实体类改成BankAccountExt。这样的话，如果我们此前编程中创建实体对象的时候都是使用如下方法</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">BankAccount</span> account = dao.<span class="hljs-title function_">newEntity</span>(); <br>或者<br><span class="hljs-title class_">BankAccount</span> acount = ormTemplate.<span class="hljs-title function_">newEntity</span>(<span class="hljs-title class_">BankAccount</span>.<span class="hljs-property">class</span>.<span class="hljs-title function_">getName</span>());<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">BankAccount</span> account = dao.<span class="hljs-title function_">newEntity</span>();<br>或者<br><span class="hljs-title class_">BankAccount</span> acount = ormTemplate.<span class="hljs-title function_">newEntity</span>(<span class="hljs-title class_">BankAccount</span>.<span class="hljs-property">class</span>.<span class="hljs-title function_">getName</span>());<br></code></pre></td></tr></table></figure>
 
 <p>则我们实际创建的实体对象是扩展类对象。而且因为ORM引擎内部知道每个实体类名所对应的具体的实现类，所以通过关联对象语法加载的所有Account对象也是扩展类型。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">BankAccount</span> parentAccount = account.<span class="hljs-title function_">getParent</span>(); <span class="hljs-comment">// parent返回的是BankAccountEx类型</span><br></code></pre></td></tr></table></figure>
 
 <p>原有的代码使用BankAccount类型不需要发生改变，而新写的代码如果用到扩展字段，则可以将account强制转型为BankAccountEx来使用。</p>
 <p>关于删除字段的需求，Java并不支持删除基类中的字段，我们该怎么做呢？实际上我们可以通过定制ORM模型来实现某种删除字段的效果。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;bank.BankAccount&quot;</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;mybank.BankAccountEx&quot;</span>  &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;refAccountId&quot;</span> <span class="hljs-attr">code</span>=<span class="hljs-string">&quot;REF_ACCOUNT_ID&quot;</span> <span class="hljs-attr">sqlType</span>=<span class="hljs-string">&quot;VARCHAR&quot;</span> <span class="hljs-attr">length</span>=<span class="hljs-string">&quot;20&quot;</span> /&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;phone3&quot;</span> <span class="hljs-attr">code</span>=<span class="hljs-string">&quot;PHONE3&quot;</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;remove&quot;</span> /&gt;</span>        <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;bank.BankAccount&quot;</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;mybank.BankAccountEx&quot;</span>  &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;refAccountId&quot;</span> <span class="hljs-attr">code</span>=<span class="hljs-string">&quot;REF_ACCOUNT_ID&quot;</span> <span class="hljs-attr">sqlType</span>=<span class="hljs-string">&quot;VARCHAR&quot;</span> <span class="hljs-attr">length</span>=<span class="hljs-string">&quot;20&quot;</span> /&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;phone3&quot;</span> <span class="hljs-attr">code</span>=<span class="hljs-string">&quot;PHONE3&quot;</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;remove&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>根节点上的<code>x:extends=&quot;super&quot;</code>表示继承基础产品中的ORM模型文件（如果不写，则表示新建一个模型，完全放弃此前的配置）。字段phone3上标记了<code>x:override=&quot;remove&quot;</code>，它表示从基础模型中删除这个字段。</p>
 <p>如果在ORM模型中删除了字段，则ORM引擎就会忽略Java实体类上的对应字段，不会为它生成建表语句、Insert语句、Update语句等。这样的话，从实际的效果上说，就达到了删除字段的效果。</p>
@@ -1278,7 +1278,7 @@
 <h2 id="Delta合并与继承的区别"><a href="#Delta合并与继承的区别" class="headerlink" title="Delta合并与继承的区别"></a>Delta合并与继承的区别</h2><p>可逆计算理论中提出的Delta合并算子类似于继承概念，但是又有着一些本质性的区别。</p>
 <p>传统的编程理论非常强调封装性，但是可逆计算是面向演化的，而<strong>演化必然是破坏封装性的</strong>。在可逆计算理论中，封装性并没有那么重要，所以Delta合并可以具有删除语义，并且是把基础模型作为白盒结构来看待，而不是不可被分析的黑盒对象。Delta合并对封装性的最终破坏程度由XDef元模型约束来限制，避免它突破最终的形式约束。</p>
 <p>继承会产生新的类名，而原有类型指向的对象结构并不会发生变化。但是根据可逆计算理论设计的Delta定制机制相当于是直接修改模型路径所对应的模型结构，并不会产生新的模型路径。例如对于模型文件&#x2F;bank&#x2F;orm&#x2F;app.orm.xml，我们可以在delta目录下增加一个相同子路径的文件来覆盖它，然后在这个文件中再通过<code>x:extends=&quot;super&quot;</code>来继承原有的模型。所有使用&#x2F;bank&#x2F;orm&#x2F;app.orm.xml的地方实际装载的将是定制后的模型。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- /_delta/default/bank/orm/app.orm.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- /_delta/default/bank/orm/app.orm.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>因为Delta定制并不会改变模型路径，所以所有根据模型路径和对象名建立的概念网络都不会因为定制而产生扭曲和移动，它保证了<strong>定制是一种完全局域化的操作</strong>。可以想见，如果是一般的面向对象继承，在不修改源码的情况下我们不可能在局部把硬编码的基类名替换成派生类的类名，这样就只能扩大重载范围，比如重载整个函数，替换整个页面等。很多情况下，我们都无法有效控制局部需求变化的影响范围，我们还为这种现象起了一个名字：抽象泄露。一旦抽象泄露，就可能出现影响范围不断扩大，最终甚至导致架构崩溃。</p>
 <p>Delta定制与继承的第三个区别在于<strong>继承定义在短程关联之上</strong>。面向对象的继承在结构层面可以被看作是Map之间的覆盖：每个类相当于是一个Map，它的key是属性名和方法名。Map是一种典型的短程关联，它只有容器-元素这样一级结构关系。而<strong>Delta定制是定义在树形结构这一典型的长程关联之上</strong>：父节点控制着所有递归包含的子节点，如果删除了父节点，所有递归包含的子节点都会被删除。Delta定制在结构层面可以被看作是树形结构之间的覆盖：Tree &#x3D; Tree x-extends Tree。在后面的章节中，我会在理论层面解释树形结构相比于Map结构的优势之处。</p>
@@ -1349,7 +1349,7 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;MyEntity&quot;</span> <span class="hljs-attr">table</span>=<span class="hljs-string">&quot;MY_ENTITY&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">sqlType</span>=<span class="hljs-string">&quot;VARCHAR&quot;</span> <span class="hljs-attr">lenght</span>=<span class="hljs-string">&quot;10&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>对应于</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&#123;<br>  &quot;/@name&quot;： &quot;MyEntity&quot;,<br>  &quot;/@table&quot;: &quot;MY_ENTITY&quot;,<br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@name&quot;: &quot;status&quot;,<br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@sqlType&quot;: &quot;VARCHAR&quot; <br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@length&quot;: 10 <br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&#123;<br>  &quot;/@name&quot;： &quot;MyEntity&quot;,<br>  &quot;/@table&quot;: &quot;MY_ENTITY&quot;,<br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@name&quot;: &quot;status&quot;,<br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@sqlType&quot;: &quot;VARCHAR&quot;<br>  &quot;/columns/column[@name=&#x27;status&#x27;]/@length&quot;: 10<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>每一个属性值都有一个唯一的对应的XPath可以直接定位到它。通过调用get(rootNode, xpath)我们可以读取到对应属性的值。<br>在MangoDB这种支持JSON格式字段的数据库中，JSON对象实际上就是被展平成类似的Map结构来存储，从而可以为JSON对象中的值建立索引。只不过JSON对象的索引中使用的是JSON Path而不是XPath。这里的XPath就是我们所谓的领域坐标。</p>
 <blockquote>
@@ -1374,7 +1374,7 @@
 <p>关于Monad的知识，可以参考我的文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65449477">写给小白的Monad指北</a>。曾有网友反映这是全网最通俗易懂的关于State Monad的介绍。</p>
 </blockquote>
 <p>首先，我们可以证明:如果一个向量的每个维度都满足结合律，则整个向量之间的运算也满足结合律。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">([A1, A2] ⊕ [B1,B2]) ⊕ [C1,C2] = [A1 ⊕  B1, A2 ⊕ B2] ⊕ [C1,C2] <br>                                = [(A1 ⊕ B1) ⊕ C1, (A2 ⊕ B2) ⊕ C2] <br>                                = [A1 ⊕ (B1 ⊕ C1), A2 ⊕ (B2 ⊕ C2)]<br>                                = [A1, A2] ⊕ ([B1, B2] ⊕ [C1,C2])  <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">([A1, A2] ⊕ [B1,B2]) ⊕ [C1,C2] = [A1 ⊕  B1, A2 ⊕ B2] ⊕ [C1,C2]<br>                                = [(A1 ⊕ B1) ⊕ C1, (A2 ⊕ B2) ⊕ C2]<br>                                = [A1 ⊕ (B1 ⊕ C1), A2 ⊕ (B2 ⊕ C2)]<br>                                = [A1, A2] ⊕ ([B1, B2] ⊕ [C1,C2])<br></code></pre></td></tr></table></figure>
 
 <p>考虑到上一节中我们对于领域坐标系的定义，为了证明Delta合并满足结合律，<strong>我们只需要证明在单个坐标处的合并运算满足结合律即可</strong>。</p>
 <p>最简单的情况是我们常见的覆盖更新：每次运算都是用后面的值覆盖前面的值。我们可以选择用一个特殊的值来表示删除，这样的话就可以将删除也纳入到覆盖更新的情况中来。如果后面的值表示删除，则无论前面的值是什么，最终的结果都是删除。数据库领域的BinLog机制其实就是采用的这种做法：每次对数据库行的修改都会产生一条变更记录，变更记录中记录了行的最新的值，只要接收到变更记录，我们就可以放弃此前的值。在数学上它对应于 A ⊕ B &#x3D; B ，显然</p>
@@ -1382,7 +1382,7 @@
 
 <p>覆盖操作是满足结合律的。</p>
 <p>另外一个稍微复杂一些的结合运算是类似AOP的运算，我们可以在基础结构的前面和后面追加一些内容。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">B = a super b,  C = c super d  <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">B = a super b,  C = c super d<br></code></pre></td></tr></table></figure>
 
 <p>B通过super引用基础结构，然后在基础结构的前面增加a, 而在后面增加b</p>
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">(A ⊕ B) ⊕ C = (a A b) ⊕ C = c a A b d = A ⊕ ( c a super b d) = A ⊕ (B ⊕ C)<br></code></pre></td></tr></table></figure>
@@ -1395,7 +1395,7 @@
 
 <p>即使表A上没有字段B和字段C也不会影响这个定义的合法性。如果接受了这一点，我们就可以证明在表A上应用任何差量运算得到的结果都是这个空间中的合法存在的一个元素（这在数学上称为是封闭律）。</p>
 <p>在完全不考虑表A中具有什么字段的前提下，我们在逻辑空间中可以合并多个对表A进行操作的Delta，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">表A(增加字段A,修改字段B的类型为VARCHAR，删除字段C) + 表A(_,修改字段B的类型为INTEGER，_) = <br>    表A(增加字段A,修改字段B的类型为INTEGER，删除字段C)  <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">表A(增加字段A,修改字段B的类型为VARCHAR，删除字段C) + 表A(_,修改字段B的类型为INTEGER，_) =<br>    表A(增加字段A,修改字段B的类型为INTEGER，删除字段C)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>这种做法有些类似于函数式语言中的延迟处理。函数式语言中  range(0, Infinity).take(5).take(2)的第一步就无法执行，但实际上take(5)和take(2)可以无视这一点，先行复合在一起，然后再作用到range(0,Infinity)上得到有限的结果。</p>
@@ -1419,7 +1419,7 @@
 <li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">canonical-entropy&#x2F;nop-entropy</a></li>
 <li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">entropy-cloud&#x2F;nop-entropy</a></li>
 <li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">docs&#x2F;tutorial&#x2F;tutorial.md</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1u84y1w7kX/">可逆计算原理和Nop平台介绍及答疑_哔哩哔哩_bilibili</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14u411T715/">可逆计算原理和Nop平台介绍及答疑_哔哩哔哩_bilibili</a></li>
 </ul>
 
 </div>
