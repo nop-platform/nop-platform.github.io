@@ -1259,6 +1259,7 @@
 <h2 id="贫血还是充血"><a href="#贫血还是充血" class="headerlink" title="贫血还是充血"></a>贫血还是充血</h2><ul>
 <li>均衡分工</li>
 <li>不同的稳定性和信息范围</li>
+<li>通用的CRUD问题 + 特定的业务问题。不同的问题子空间可以应用不同的解法，并不需要用一个统一的处理。BizService不包含CRUD。</li>
 </ul>
 <h2 id="CQRS"><a href="#CQRS" class="headerlink" title="CQRS"></a>CQRS</h2><ul>
 <li>是否要封装为明确的Command形式？ ApiRequest + 领域特定结构，通用结构的唯一目的是以标准方式引入扩展数据。但在实现层没有必要显式表达</li>
