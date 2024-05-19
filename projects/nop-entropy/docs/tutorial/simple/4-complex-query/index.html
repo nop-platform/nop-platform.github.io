@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop入门：如何实现复杂查询 - Nop</title>
+
+
+  <meta property="og:title" content="Nop入门：如何实现复杂查询">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">极简数据访问层开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Nop入门：如何实现复杂查询</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c1421i72k/">https://www.bilibili.com/video/BV1c1421i72k/</a></p>
+<p>Nop平台中查询服务的执行过程包含三个主要部分：</p>
+<ol>
+<li>定位到服务对象</li>
+<li>调用服务对象上的服务函数</li>
+<li>对返回结果进行再加工</li>
+</ol>
+<p>在这三个部分中，我们都可以插入过滤条件和排序条件</p>
+<p>例如  <code>/r/NopAuthSite__findList?@selection=id,resources&#123;resoureName&#125;</code>调用链接可以映射到业务对象NopAuthSite对象的findList方法，然后选择性的返回指定的结果字段</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/simple/images/complex-query.png"></p>
+<h2 id="一-对象层面的过滤条件和排序条件"><a href="#一-对象层面的过滤条件和排序条件" class="headerlink" title="一. 对象层面的过滤条件和排序条件"></a>一. 对象层面的过滤条件和排序条件</h2><p>在XMeta元数据模型文件中可以增加filter和orderBy段，所有涉及到这个服务对象的操作都会自动追加对应条件。特别是当新增和修改的时候，也会自动设置实体属性满足filter配置要求</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;siteId&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;main&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个机制可以用于在一个数据库存储表中保存多个业务上有区别的业务实体。例如仓储管理中，物资实体的具体属性根据类型不同可能有着较大的差异，<br>为每个物资类型单独增加一个XMeta文件可以为不同的物资类型定制不同的扩展字段和显示界面。</p>
+<p>此外，不同的对象名可以映射到不同的数据权限配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">data-auth</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/data-auth.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">objs</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">obj</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NopAuthUser&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">role-auths</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">role-auth</span> <span class="hljs-attr">roleId</span>=<span class="hljs-string">&quot;nop-admin&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">role-auth</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">role-auth</span> <span class="hljs-attr">roleId</span>=<span class="hljs-string">&quot;user&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;tenantId&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;$context.tenantId&#125;&quot;</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">role-auth</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">role-auths</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">obj</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">objs</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">data-auth</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>我们可以选择从某个已有的XMeta模型继承，产生新的业务对象。只需要在<code>app.beans.xml</code>中配置对应的BizModel，就可以自动按照服务对象名关联到对应的XMeta元模型。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;NopAuthResourceBizModel_main&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.auth.service.entity.NopAuthResourceBizModel&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;bizObjName&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;NopAuthResource_main&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>/nop/auth/model/NopAuthResource/NopAuthResource_main.xmeta</code>文件可以选择从已存在的NopAuthResource.xmeta文件继承</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;NopAuthResource.xmeta&quot;</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="二-在XBiz模型文件中通过Xpl标签增加过滤和排序条件"><a href="#二-在XBiz模型文件中通过Xpl标签增加过滤和排序条件" class="headerlink" title="二. 在XBiz模型文件中通过Xpl标签增加过滤和排序条件"></a>二. 在XBiz模型文件中通过Xpl标签增加过滤和排序条件</h2><p>在XMeta中增加filter会影响到save和update函数。如果只是想为某个特定业务查询请求增加过滤条件，比如查询当前被激活的记录，则我们可以在XBiz模型中进行配置。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">biz</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/biz/xbiz.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;_NopAuthUser.xbiz&quot;</span> <span class="hljs-attr">xmlns:bo</span>=<span class="hljs-string">&quot;bo&quot;</span> <span class="hljs-attr">xmlns:c</span>=<span class="hljs-string">&quot;c&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">actions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">query</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;active_findPage&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;findPage&quot;</span>&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">c:import</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.auth.api.AuthApiConstants&quot;</span> /&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">bo:DoFindPage</span> <span class="hljs-attr">query</span>=<span class="hljs-string">&quot;$&#123;query&#125;&quot;</span> <span class="hljs-attr">selection</span>=<span class="hljs-string">&quot;$&#123;selection&#125;&quot;</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/biz/xlib/bo.xlib&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;AuthApiConstants.USER_STATUS_ACTIVE&#125;&quot;</span> /&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">bo:DoFindPage</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">actions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">biz</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>x:prototype</code>表示从已有的findPage函数继承输入参数和返回值类型定义</li>
+<li><code>bo.xlib</code>提供了对<code>doFindPage/doUpdate</code>等帮助函数的封装，可以在调用这些函数的时候传入附加处理逻辑。<code>&lt;bo:DoFindPage&gt;</code>利用xpl模板语言的封装能力，提供了非常直观的filter配置方式</li>
+<li>xbiz模型文件可以看作是一种XML格式的配置文件，完全可以通过可视化设计器在线设计函数实现逻辑，并利用Nop平台中的模型动态加载能力实现在线更新。</li>
+</ul>
+<p>更进一步的介绍可以参见<a href="../../../dev-guide/recipe/filter-list/">filter.md</a></p>
+<h2 id="三-在XMeta中为prop增加关联查询配置"><a href="#三-在XMeta中为prop增加关联查询配置" class="headerlink" title="三. 在XMeta中为prop增加关联查询配置"></a>三. 在XMeta中为prop增加关联查询配置</h2><p>Nop平台中服务函数的返回值并不会被直接序列化为JSON返回到前台，而是会经过NopGraphQL引擎的结果映射处理，在这个过程中可以执行非常复杂的DataFetcher数据加载逻辑。</p>
+<p>当我们需要对查询到的子表记录增加过滤和排序条件时，可以在XMeta中的prop节点上配置<code>graphql:queryMethod</code>属性，从而利用<code>OrmEntityConnectionFetcher</code>来实现子表过滤和排序。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/xmeta.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;_NopAuthSite.xmeta&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">xmlns:graphql</span>=<span class="hljs-string">&quot;graphql&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;resourcesList&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;资源列表&quot;</span> </span><br><span class="hljs-tag">            <span class="hljs-attr">graphql:queryMethod</span>=<span class="hljs-string">&quot;findList&quot;</span> <span class="hljs-attr">lazy</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">bizObjName</span>=<span class="hljs-string">&quot;NopAuthResource&quot;</span>/&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">graphql:filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;siteId&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@prop-ref:siteId&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:filter</span>&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">graphql:orderBy</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;orderNo&quot;</span> <span class="hljs-attr">desc</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:orderBy</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>graphql:queryMethod</code>支持findCount&#x2F;findFirst&#x2F;findList&#x2F;findPage&#x2F;findConnection等多种枚举值，每个枚举值对应不同的返回结果类型。但是所有情况下输入参数类型都是GraphQLConnectionInput。</li>
+<li>通过bizObjName属性指定关联的子表实体对象。</li>
+<li>并不需要当前实体和关联实体在ORM层面存在关联关系。通过<code>&lt;graphql:filter&gt;</code>可以增加关联查询条件。<code>@prop-ref:</code>前缀表示从当前实体上获取属性值用于关联查询。</li>
+</ul>
+<p>如果存在ORM层面的关联属性，则上面的配置可以简化</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/xmeta.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;_NopAuthSite.xmeta&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">xmlns:graphql</span>=<span class="hljs-string">&quot;graphql&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;resourcesList&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;资源列表&quot;</span> </span><br><span class="hljs-tag">           <span class="hljs-attr">graphql:queryMethod</span>=<span class="hljs-string">&quot;findList&quot;</span> <span class="hljs-attr">lazy</span>=<span class="hljs-string">&quot;true&quot;</span> </span><br><span class="hljs-tag">           <span class="hljs-attr">graphql:connectionProp</span>=<span class="hljs-string">&quot;resources&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">bizObjName</span>=<span class="hljs-string">&quot;NopAuthResource&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">graphql:orderBy</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;orderNo&quot;</span> <span class="hljs-attr">desc</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:orderBy</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过<code>graphql:connectionProp</code>可以指定ORM层面的关联属性，通过它可以自动推理得到<code>graphql:filter</code>配置。此时如果再配置<code>graphql:filter</code>就表示在关联查询条件的基础上再补充额外的过滤条件</li>
+<li>findConnection对应于返回结果为GraphQLConnection类型。关于它的具体介绍，参见<a href="../../../dev-guide/graphql/connection/">connection.md</a></li>
+</ul>
+<p>在REST调用模式下，我们可以通过<code>_subArgs.&#123;propName&#125;.filter_xx=yy</code>这种形式来传递子表过滤条件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">http://localhost:8080/r/NopAuthSite__get?id=main&amp;%40selection=id,displayName,resourcesList%7Bid%7D&amp;_subArgs.resourcesList.filter_status=1<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过<code>@selection</code>可以传递类似GraphQL的字段映射配置，此时<strong>特殊字符<code>@</code>和大括号等需要进行编码处理</strong>，否则后台解析URL的时候报错，会返回400错误码。</li>
+</ul>
+<p>通过GraphQL协议调用的时候可以传递更加复杂的and&#x2F;or条件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query($filter:Map)&#123;<br>    NopAuthSite_get(id:&quot;main&quot;)&#123;<br>        id,<br>        displayName,<br>        resourcesList(filter:$filter,limit:10,offset:0)&#123;<br>           id, displayName<br>        &#125;<br>    &#125;<br>&#125;<br><br>variables:<br>  filter: &#123;<br>     &quot;$type&quot;: &quot;or&quot;,<br>     &quot;$body&quot;: [<br>        &#123; &quot;$type&quot;: &quot;eq&quot;, &quot;status&quot;, 1&#125;,<br>        &#123; &quot;$type&quot;: &quot;eq&quot;, &quot;status&quot;, 2&#125;<br>     ]  <br>  &#125;   <br></code></pre></td></tr></table></figure>
+
+<p>通过GraphQL提供的别名机制，我们可以利用同一个子表属性来返回不同的查询结果</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query($filter1:Map, $filter2: Map)&#123;<br>    NopAuthSite_get(id:&quot;main&quot;)&#123;<br>        id,<br>        displayName,<br>        activeResources: resourcesList(filter:$filter1,limit:10,offset:0)&#123;<br>           id, displayName<br>        &#125;<br>        inactiveResources: resourcesList(filter:$filter2,limit:10,offset:0)&#123;<br>           id, displayName<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/tutorial/simple/4-complex-query.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
