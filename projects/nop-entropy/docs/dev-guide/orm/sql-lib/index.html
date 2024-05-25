@@ -37,10 +37,10 @@
 
 
 
-  <title>1  统一管理SQL&amp;#x2F;EQL&amp;#x2F;DQL - Nop</title>
+  <title>统一的SQL管理 - Nop</title>
 
 
-  <meta property="og:title" content="1  统一管理SQL&amp;#x2F;EQL&amp;#x2F;DQL">
+  <meta property="og:title" content="统一的SQL管理">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1215,7 +1215,7 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">1  统一管理SQL/EQL/DQL</h1>
+    <h1 class="Article-title">统一的SQL管理</h1>
   
   
 
@@ -1230,14 +1230,14 @@
 <p><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-orm/src/test/resources/_vfs/nop/test/sql/test.sql-lib.xml">test.sql-lib.xml</a></p>
 <p>视频： <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xX4y1e7Tv/">如何用500行代码实现类似MyBatis的功能</a></p>
 <p>sql-lib提供了如下特性</p>
-<p>在sql-lib文件中存在三种节点，sql&#x2F;eql&#x2F;query分别对应于SQL语句，EQL语句和上一节介绍的润乾DQL查询模型，对它们可以采取统一的方式进行管理。</p>
+<h2 id="1-统一管理SQL-EQL-DQL"><a href="#1-统一管理SQL-EQL-DQL" class="headerlink" title="1  统一管理SQL&#x2F;EQL&#x2F;DQL"></a>1  统一管理SQL&#x2F;EQL&#x2F;DQL</h2><p>在sql-lib文件中存在三种节点，sql&#x2F;eql&#x2F;query分别对应于SQL语句，EQL语句和上一节介绍的润乾DQL查询模型，对它们可以采取统一的方式进行管理。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">sql-lib</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xxx&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;yyy&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">query</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;zz&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">sqls</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql-lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>模型化的第一个好处就是Nop平台内置的Delta定制机制。假设我们已经开发了一个Base产品，在客户处部署的时候需要针对客户的数据情况进行SQL优化，则我们<br><strong>无需修改任何Base产品的代码</strong>，只需要添加一个sql-lib的差量化模型文件，就可以实现对任意SQL语句的定制。例如</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">sql-lib</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;raw:/original.sql-lib.xml&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 同名的sql语句会覆盖基类文件中的定义 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;yyy&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">sqls</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql-lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>关于Delta定制，另一个常见用法是结合元编程机制。假设我们的系统是一个领域模型很规整的系统，存在大量类似的SQL语句，则我们可以通过元编程机制先在编译期自动生成这些SQL语句，然后再通过Delta定制来对它们进行改进就可以了。例如</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">sql-lib</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">app:GenDefaultSqls</span></span><br><span class="hljs-tag">        <span class="hljs-attr">...</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 在这里可以对自动生成SQL进行定制 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">”yyy“</span>&gt;</span>...<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">sql-lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">sql-lib</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">app:GenDefaultSql</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sqls</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 在这里可以对自动生成SQL进行定制 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;yyy&quot;</span>&gt;</span>...<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">sqls</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql-lib</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="2-XPL模板的组件抽象能力"><a href="#2-XPL模板的组件抽象能力" class="headerlink" title="2. XPL模板的组件抽象能力"></a>2. XPL模板的组件抽象能力</h2><p>MyBatis只提供了foreach&#x2F;if&#x2F;include等少数几个固定标签，真正编写起高度复杂的动态SQL语句时可以说是有心无力。很多人觉得在xml中拼接sql比较麻烦，归根结底是因为MyBatis提供的是一个不完善的解决方案，它<br><strong>缺少二次抽象的机制</strong>。 而在java程序中我们总可以通过函数封装来实现对某一段SQL拼接逻辑的复用，对比MyBatis却只有内置的三板斧，基本没有提供任何辅助复用的能力。</p>
 <p>NopOrm直接采用XLang语言中的XPL模板语言来作为底层的生成引擎，因此它自动继承了XPL模板语言的标签抽象能力。</p>
@@ -1250,7 +1250,7 @@
 <p>有些模板语言要求所有能在模板中使用的函数需要提前注册，而Xpl模板语言可以直接调用Java。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>            import test.MyService;<br><br>            let service = new MyService();<br>            let bean = inject(&quot;MyBean&quot;); // 直接获取IoC容器中注册的bean<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="3-宏-Macro-标签的元编程能力"><a href="#3-宏-Macro-标签的元编程能力" class="headerlink" title="3. 宏(Macro)标签的元编程能力"></a>3. 宏(Macro)标签的元编程能力</h3><p>MyBatis拼接动态SQL的方式很笨拙，因此一些类MyBatis的框架会在SQL模板层面提供一些特殊设计的简化语法。例如有些框架引入了隐式条件判断机制</p>
+<h2 id="3-宏-Macro-标签的元编程能力"><a href="#3-宏-Macro-标签的元编程能力" class="headerlink" title="3. 宏(Macro)标签的元编程能力"></a>3. 宏(Macro)标签的元编程能力</h2><p>MyBatis拼接动态SQL的方式很笨拙，因此一些类MyBatis的框架会在SQL模板层面提供一些特殊设计的简化语法。例如有些框架引入了隐式条件判断机制</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> xxx<br><span class="hljs-keyword">from</span> my_entity<br><span class="hljs-keyword">where</span> id <span class="hljs-operator">=</span> :id<br>[<span class="hljs-keyword">and</span> name<span class="hljs-operator">=</span>:name]<br></code></pre></td></tr></table></figure>
 
 <p>通过自动分析括号内的变量定义情况，自动增加一个隐式的条件判断，仅当name属性值不为空的时候才输出对应的SQL片段。</p>
@@ -1264,13 +1264,13 @@
 <p><a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-orm/src/main/resources/_vfs/nop/orm/xlib/sql.xlib">sql.xlib</a></p>
 <p>本质上这个概念等价于Lisp语言中的宏，特别是它与Lisp宏一样，可以用于程序代码中的任意部分（即AST的任意节点都可以被替换为宏节点）。只不过，它采用XML的表现形式，相比于Lisp惜字如金的数学符号风格而言，显得更加人性化一些。</p>
 <p>微软C#语言的LINQ（语言集成查询）语法，其实现原理是在编译期获取到表达式的抽象语法树对象，然后交由应用代码执行结构变换，本质上也是一种编译期的宏变换技术。在XLang语言中，除了Xpl模板所提供的宏标签之外，还可以使用XScript的宏函数来实现SQL语法和对象语法之间的转换。例如</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>    function f(x,y)&#123;<br>    return x + y;<br>    &#125;<br>    let obj = ...<br>    let &#123;a,b&#125; = linq `<br>    select sum(x + y) as a , sum(x * y) as b<br>    from obj<br>    where f(x,y) &gt; 2 and sin(x) &gt; cos(y)<br>    `<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span>&lt;![CDATA[<br>    function f(x,y)&#123;<br>    return x + y;<br>    &#125;<br>    let obj = ...<br>    let &#123;a,b&#125; = linq `<br>    select sum(x + y) as a , sum(x * y) as b<br>    from obj<br>    where f(x,y) &gt; 2 and sin(x) &gt; cos(y)<br>    `<br>]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>XScript的模板表达式会自动识别宏函数，并在编译期自动执行。因此我们可以定义一个宏函数linq，它将模板字符串在编译期解析为SQL语法树，然后再变换为普通的JavaScript<br>AST，从而相当于是在面向对象的XScript语法（类似TypeScript的脚本语言）中嵌入类SQL语法的DSL，可以完成类似LinQ的功能，但是实现方式要简单得多，形式上也更接近SQL的原始形式。</p>
 <blockquote>
 <p>以上仅为概念示例，目前Nop平台仅提供了xpath&#x2F;jpath&#x2F;xpl等宏函数，并没有提供内置的linq宏函数。</p>
 </blockquote>
-<h3 id="4-模板语言的SQL输出模式"><a href="#4-模板语言的SQL输出模式" class="headerlink" title="4. 模板语言的SQL输出模式"></a>4. 模板语言的SQL输出模式</h3><p>模板语言相对于普通程序语言而言，它的设计偏置是将输出（Output）这一副作用作为第一类（first<br>class）的概念。当我们没有做任何特殊修饰的时候，就表示对外输出，而如果我们要表示执行其他逻辑，则需要用表达式、标签等形式明确的隔离出来。Xpl模板语言作为一种Generic的模板语言，它对输出这一概念进行了强化，增加了多模式输出的设计。</p>
+<h2 id="4-模板语言的SQL输出模式"><a href="#4-模板语言的SQL输出模式" class="headerlink" title="4. 模板语言的SQL输出模式"></a>4. 模板语言的SQL输出模式</h2><p>模板语言相对于普通程序语言而言，它的设计偏置是将输出（Output）这一副作用作为第一类（first<br>class）的概念。当我们没有做任何特殊修饰的时候，就表示对外输出，而如果我们要表示执行其他逻辑，则需要用表达式、标签等形式明确的隔离出来。Xpl模板语言作为一种Generic的模板语言，它对输出这一概念进行了强化，增加了多模式输出的设计。</p>
 <p>Xpl模板语言支持多种输出模式（Output Mode）</p>
 <ul>
 <li><p>text: 普通文本的输出，不需要进行额外转义</p>
@@ -1296,8 +1296,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">SQL = Text + Params<br></code></pre></td></tr></table></figure>
 
 <p>通过sql &#x3D; SQL.begin().sql(“o.id &#x3D; ? “, name).end() 这种形式可以构造带参数的SQL语句对象。Xpl模板的sql输出模式会自动识别SQL对象，并自动对文本和参数集合分别进行处理。</p>
-<h3 id="5-自动验证"><a href="#5-自动验证" class="headerlink" title="5. 自动验证"></a>5. 自动验证</h3><p>外部文件中管理SQL模板存在一个缺点：它无法依赖类型系统进行校验，只能期待运行时测试来检查SQL语法是否正确。如果数据模型发生变化，则可能无法立刻发现哪些SQL语句受到影响。<br>对于这个问题，其实存在一些比较简单的解决方案。毕竟，SQL语句既然已经作为结构化的模型被管理起来了，我们能够对它们进行操作的手段就变得异常丰富起来。<br>NopOrm内置了一个类似Contract Based<br>Programming的机制：每个EQL语句的模型都支持一个validate-input配置，我们可以在其中准备一些测试数据，然后ORM引擎在加载sql-lib的时候会自动运行validate-input得到测试数据，并以测试数据为基础执行SQL模板来生成EQL语句，然后交由EQL解析器来分析它的合法性，从而实现以一种准静态分析的方式检查ORM模型与EQL语句的一致性。</p>
-<h3 id="6-调试支持"><a href="#6-调试支持" class="headerlink" title="6. 调试支持"></a>6. 调试支持</h3><p>与MyBatis内置的自制简易模板语言不同，NopOrm使用Xpl模板语言来生成SQL语句，因此可以很自然的可以利用XLang语言调试器来调试。Nop平台提供了IDEA开发插件，支持DSL语法提示和断点调试功能。它会自动读取sql-lib.xdef元模型定义文件，根据元模型自动校验sql-lib文件的语法正确性，并提供语法提示功能，支持在source段增加断点，进行单步调试等。</p>
+<h2 id="5-自动验证"><a href="#5-自动验证" class="headerlink" title="5. 自动验证"></a>5. 自动验证</h2><p>外部文件中管理SQL模板存在一个缺点：它无法依赖类型系统进行校验，只能期待运行时测试来检查SQL语法是否正确。如果数据模型发生变化，则可能无法立刻发现哪些SQL语句受到影响。<br>对于这个问题，其实存在一些比较简单的解决方案。毕竟，SQL语句既然已经作为结构化的模型被管理起来了，我们能够对它们进行操作的手段就变得异常丰富起来。<br>NopOrm内置了一个类似Contract Based<br>Programming的机制：每个EQL语句的模型都支持一个validate-input配置，我们可以在其中准备一些测试数据，然后ORM引擎在加载sql-lib的时候会自动运行validate-input得到测试数据，并以测试数据为基础执行SQL模板来生成EQL语句，然后交由EQL解析器来分析它的合法性，从而实现以一种准静态分析的方式检查ORM模型与EQL语句的一致性。</p>
+<h2 id="6-调试支持"><a href="#6-调试支持" class="headerlink" title="6. 调试支持"></a>6. 调试支持</h2><p>与MyBatis内置的自制简易模板语言不同，NopOrm使用Xpl模板语言来生成SQL语句，因此可以很自然的可以利用XLang语言调试器来调试。Nop平台提供了IDEA开发插件，支持DSL语法提示和断点调试功能。它会自动读取sql-lib.xdef元模型定义文件，根据元模型自动校验sql-lib文件的语法正确性，并提供语法提示功能，支持在source段增加断点，进行单步调试等。</p>
 <p>Nop平台中所有的DSL都是基于可逆计算原理构建的，它们都使用统一的元模型定义语言XDefinition来描述，所以并不需要针对每一种DSL来单独开发IDE插件和断点调试器。为了给自定义的sql-lib模型增加IDE支持，唯一需要的就是在模型根节点上增加属性x:<br>schema&#x3D;”&#x2F;nop&#x2F;schema&#x2F;orm&#x2F;sql-lib.xdef”，引入xdef元模型。</p>
 <p>XLang语言还内置了一些调试特性，方便在元编程阶段对问题进行诊断。</p>
 <ol>
@@ -1310,13 +1310,22 @@
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">x = a.f().$(prefix) 实际对应于<br>x = DebugHelper.v(location,prefix, &quot;a.f()&quot;,a.f())<br></code></pre></td></tr></table></figure>
 
-<h3 id="7-根据Dialect生成对应的SQL语句"><a href="#7-根据Dialect生成对应的SQL语句" class="headerlink" title="7. 根据Dialect生成对应的SQL语句"></a>7. 根据Dialect生成对应的SQL语句</h3><p>利用标签库可以引入各种自定义的扩展逻辑。比如根据不同的数据库方言生成不同的SQL语句。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">select<br><span class="hljs-tag">&lt;<span class="hljs-name">sql:when-dialect</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;h2&quot;</span>&gt;</span><br>    ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">sql:when-dialect</span>&gt;</span><br>        from my_entity<br></code></pre></td></tr></table></figure>
+<h2 id="7-根据Dialect生成对应的SQL语句"><a href="#7-根据Dialect生成对应的SQL语句" class="headerlink" title="7. 根据Dialect生成对应的SQL语句"></a>7. 根据Dialect生成对应的SQL语句</h2><p>利用标签库可以引入各种自定义的扩展逻辑。比如根据不同的数据库方言生成不同的SQL语句。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">select<br>&lt;sql:when-dialect name=&quot;h2&quot;&gt;<br>    ...<br>&lt;/sql:when-dialect&gt;<br>        from my_entity<br></code></pre></td></tr></table></figure>
 
-<h3 id="8-Mapper接口"><a href="#8-Mapper接口" class="headerlink" title="8. Mapper接口"></a>8. Mapper接口</h3><p>只要在Excel数据模型中为实体增加mapper标签，代码生成的时候就会自动生成类似MyBatis的强类型的Mapper接口，通过它可以调用SqlLibManager所管理的SQL模型文件。例如<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-app-mall/blob/master/app-mall-dao/src/main/java/app/mall/dao/mapper/LitemallGoodsMapper.java">LitemallGoodsMapper.java</a>。</p>
+<h2 id="8-Mapper接口"><a href="#8-Mapper接口" class="headerlink" title="8. Mapper接口"></a>8. Mapper接口</h2><p>只要在Excel数据模型中为实体增加mapper标签，代码生成的时候就会自动生成类似MyBatis的强类型的Mapper接口，通过它可以调用SqlLibManager所管理的SQL模型文件。例如<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-app-mall/blob/master/app-mall-dao/src/main/java/app/mall/dao/mapper/LitemallGoodsMapper.java">LitemallGoodsMapper.java</a>。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><br><span class="hljs-meta">@SqlLibMapper(&quot;/app/mall/sql/LitemallGoods.sql-lib.xml&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">LitemallGoodsMapper</span> &#123;<br><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">syncCartProduct</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;product&quot;)</span> LitemallGoodsProduct product)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>通过SqlLibMapper注解可以指定当前接口所关联的SQL模型文件。</p>
+<h2 id="9-使用native-sql加载实体对象"><a href="#9-使用native-sql加载实体对象" class="headerlink" title="9. 使用native sql加载实体对象"></a>9. 使用native sql加载实体对象</h2><p>一般情况下我们使用<code>&lt;eql&gt;</code>节点来加载实体数据。但是如果设置rowType为实体类型，则也可以使用<code>&lt;sql&gt;</code>节点来加载实体数据</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;testOrmEntityRowMapper&quot;</span> <span class="hljs-attr">rowType</span>=<span class="hljs-string">&quot;io.nop.app.SimsClass&quot;</span> <span class="hljs-attr">sqlMethod</span>=<span class="hljs-string">&quot;findFirst&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">colNameCamelCase</span>=<span class="hljs-string">&quot;true&quot;</span> &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>        select o.class_id, o.class_name, o.college_id<br>        from sims_class o<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置了colNameCamelCase会自动将<code>class_id</code>这样的返回字段名转换为<code>classId</code>这样的实体属性名</li>
+<li>如果SQL语句返回的结果中没有包含主键字段，则会新建实体对象，否则会根据id加载当前OrmSession中的实体，并更新实体上的属性。</li>
+<li>如果执行SQL之前对应的实体数据已经加载到内存中，且已经被修改，则执行SQL会抛出异常<code>nop.err.orm.entity-prop-is-dirty</code>。如果没有被修改，则会更新实体属性。</li>
+<li>可以通过ormEntityRefreshBehavior来改变上面的行为。errorWhenDirty是缺省行为。useFirst将保留第一次加载的实体数据，忽略当前SQL查询得到的数据。useLast则使用最后一次查询得到的数据。</li>
+</ul>
 <h2 id="与MyBatis的对比"><a href="#与MyBatis的对比" class="headerlink" title="与MyBatis的对比"></a>与MyBatis的对比</h2><table>
 <thead>
 <tr>
