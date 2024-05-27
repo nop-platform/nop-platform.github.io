@@ -1260,7 +1260,7 @@
 
 
       </header>
-      <div class="Article-content col-md-9"><p>润乾公司开源了一个<a target="_blank" rel="noopener" href="http://www.raqsoft.com.cn/r/os-bi">前端BI系统</a>，它在技术层面提出了一个别致的DQL(Dimentinal Query Language)语言。具体介绍可以参考乾学院的文章</p>
+      <div class="Article-content col-md-9"><p>润乾公司开源了一个<a target="_blank" rel="noopener" href="http://www.raqsoft.com.cn/r/os-bi">前端BI系统</a>，它在技术层面提出了一个别致的DQL(Dimentional Query Language)语言。具体介绍可以参考乾学院的文章</p>
 <p><a target="_blank" rel="noopener" href="http://c.raqsoft.com.cn/article/1653901344139?p=1&m=0">告别宽表，用 DQL 成就新一代 BI - 乾学院</a></p>
 <p>润乾的观点是终端用户难以理解复杂的SQL JOIN，为了便于多维分析，只能使用大宽表，这为数据准备带来一系列困难。而DQL则是简化了对终端用户而言JOIN操作的心智模型，并且在性能上相比于SQL更有优势。</p>
 <p>以如何查找<strong>中国经理的美国员工</strong>为例</p>
@@ -1268,13 +1268,13 @@
 
 <p>这里的关键点被称为：外键属性化，也就是说外键指向表的字段可直接用子属性的方式引用，也允许多层和递归引用。</p>
 <p>另一个类似的例子是根据订单表 (orders)，区域表(area)，查询订单的发货城市名称、以及所在的省份名称、地区名称。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- DQL</span><br><span class="hljs-keyword">SELECT</span><br>    send_city.name city,<br>    send_city.pid.name province,<br>    send_city.pid.pid.name region<br><span class="hljs-keyword">FROM</span> <br>    orders<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- DQL</span><br><span class="hljs-keyword">SELECT</span><br>    send_city.name city,<br>    send_city.pid.name province,<br>    send_city.pid.pid.name region<br><span class="hljs-keyword">FROM</span><br>    orders<br></code></pre></td></tr></table></figure>
 
 <p>DQL的第二个关键思想是：<strong>同维表等同化</strong>，也就是一对一关联的表，不用明确写关联查询条件，可以认为它们的字段是共享的。例如，员工表和经理表是一对一的，我们需要查询<strong>所有员工的收入</strong></p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- SQL</span><br><span class="hljs-keyword">SELECT</span> 员工表.姓名, 员工表.工资 <span class="hljs-operator">+</span> 经理表.津贴<br><span class="hljs-keyword">FROM</span> 员工表<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> 经理表 <span class="hljs-keyword">ON</span> 员工表.编码 <span class="hljs-operator">=</span> 经理表.编号<br><br><span class="hljs-comment">-- DQL</span><br><span class="hljs-keyword">SELECT</span> 姓名,工资<span class="hljs-operator">+</span>津贴<br><span class="hljs-keyword">FROM</span> 员工表<br></code></pre></td></tr></table></figure>
 
 <p>DQL的第三个关键思想是：<strong>子表集合化</strong>，例如订单明细表可以看作是订单表的一个集合字段。如果要计算每张订单的汇总金额，</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- SQL</span><br><span class="hljs-keyword">SELECT</span> T1.订单编号,T1.客户,<span class="hljs-built_in">SUM</span>(T2.价格)  <br><span class="hljs-keyword">FROM</span> 订单表T1  <br><span class="hljs-keyword">JOIN</span> 订单明细表T2 <span class="hljs-keyword">ON</span> T1.订单编号<span class="hljs-operator">=</span>T2.订单编号  <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> T1.订单编号,T1.客户<br><br><span class="hljs-comment">-- DQL</span><br><span class="hljs-keyword">SELECT</span> 订单编号,客户,订单明细表.<span class="hljs-built_in">SUM</span>(价格)  <br><span class="hljs-keyword">FROM</span> 订单表<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- SQL</span><br><span class="hljs-keyword">SELECT</span> T1.订单编号,T1.客户,<span class="hljs-built_in">SUM</span>(T2.价格)<br><span class="hljs-keyword">FROM</span> 订单表T1<br><span class="hljs-keyword">JOIN</span> 订单明细表T2 <span class="hljs-keyword">ON</span> T1.订单编号<span class="hljs-operator">=</span>T2.订单编号<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> T1.订单编号,T1.客户<br><br><span class="hljs-comment">-- DQL</span><br><span class="hljs-keyword">SELECT</span> 订单编号,客户,订单明细表.<span class="hljs-built_in">SUM</span>(价格)<br><span class="hljs-keyword">FROM</span> 订单表<br></code></pre></td></tr></table></figure>
 
 <p>“如果有多个子表时，SQL 需要分别先做 GROUP, 然后在一起和主表 JOIN 才行，会写成子查询的形式，但是 DQL 则仍然很简单，SELECT 后直接再加字段就可以了”。</p>
 <p>DQL的第四个关键思想是：<strong>数据按维度自然对齐</strong>。我们不用特意指定关联条件，最终数据之所以能够放在同一张表里展示，原因不是因为它们之间存在什么先验的关联关系，仅仅是因为它们共享了最左侧的维度坐标而已。例如：我们希望<strong>按日期统计合同额、回款额和库存金额</strong>。我们需要从三个表分别取数据，然后按照日期对齐，汇总到结果数据集中。</p>
