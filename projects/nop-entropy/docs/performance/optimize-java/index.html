@@ -37,10 +37,10 @@
 
 
 
-  <title>Nop入门：扩展已有服务 - Nop</title>
+  <title>Java配置优化 - Nop</title>
 
 
-  <meta property="og:title" content="Nop入门：扩展已有服务">
+  <meta property="og:title" content="Java配置优化">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,57 +1251,13 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">Nop入门：扩展已有服务</h1>
+    <h1 class="Article-title">Java配置优化</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>在开发一个产品化的业务系统时，经常会出现需要扩展基础产品中的已有服务的情况。比如说，扩展系统内置的Login服务，为LoginRequest增加更多的请求参数，或者扩展返回的LoginResult对象，增加更多的返回信息。作为一个产品化的系统，我们肯定不希望修改已有的代码，但是目前流行的开源框架如Spring、Quarkus等并没有内置的扩展机制可以在不修改原有服务函数代码的情况下改变已有服务的接口，因此在支持复杂业务产品的二次开发时困难重重。</p>
-<p>Nop平台基于可逆计算理论实现了所谓的Delta定制机制，在数据模型、业务逻辑、服务接口等多种层面都可以进行深度定制，并且定制代码可以独立管理和存放。本文以扩展Login服务为例简要说明Nop平台服务层的具体扩展方案，更详细的介绍参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/628770810">如何在不修改基础产品源码的情况下实现定制化开发</a>。示例代码参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/tree/master/nop-demo/nop-delta-demo">nop-delta-demo</a></p>
-<p>讲解视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Gz421a7eU/">https://www.bilibili.com/video/BV1Gz421a7eU/</a></p>
-<h2 id="一-扩展返回结果对象"><a href="#一-扩展返回结果对象" class="headerlink" title="一. 扩展返回结果对象"></a>一. 扩展返回结果对象</h2><p>在Nop平台中，LoginApi服务对象提供了login&#x2F;logout等登录相关函数。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LoginApi&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginApiBizModel</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ILoginSpi</span> &#123;<br><br>    <span class="hljs-meta">@Inject</span><br>    ILoginService loginService;<br><br>    <span class="hljs-meta">@BizMutation(&quot;login&quot;)</span><br>    <span class="hljs-meta">@Auth(publicAccess = true)</span><br>    <span class="hljs-keyword">public</span> CompletionStage&lt;LoginResult&gt; <span class="hljs-title function_">loginAsync</span><span class="hljs-params">(</span><br><span class="hljs-params">           <span class="hljs-meta">@RequestBean</span> LoginRequest request, IServiceContext context)</span> &#123;<br>        <span class="hljs-keyword">return</span> loginService.loginAsync(request, context.getRequestHeaders())<br>             .thenApply(<span class="hljs-built_in">this</span>::buildLoginResult);<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;    <br></code></pre></td></tr></table></figure>
-
-<p>一个常见的扩展需求是login成功后返回业务相关的一些扩展信息。传统的Web框架如果要修改服务函数的返回结果类型一定要修改服务函数本身的代码。但是Nop平台的Web层使用NopGraphQL引擎，它可以利用NopGraphQL内置的属性加载器机制来实现结果扩展，而无需修改login函数。具体做法如下</p>
-<h3 id="通过-BizLoader引入扩展字段"><a href="#通过-BizLoader引入扩展字段" class="headerlink" title="通过@BizLoader引入扩展字段"></a>通过<code>@BizLoader</code>引入扩展字段</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LoginApi&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginApiBizModelDelta</span> &#123;<br>    <span class="hljs-meta">@BizLoader(autoCreateField = true, forType = LoginResult.class)</span><br>    <span class="hljs-meta">@LazyLoad</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">location</span><span class="hljs-params">(<span class="hljs-meta">@ContextSource</span> LoginResult result,</span><br><span class="hljs-params">                           IServiceContext context)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;loc:&quot;</span> + result.getUserInfo().getUserId();<br>    &#125;<br>&#125;    <br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>我们可以新增一个LoginApiBizModelDelta类，它无需从原有的LoginApiBizModel类继承。</li>
-<li>通过<code>@BizLoader</code>注解来表示这是在GraphQL服务层面增加的一个扩展字段，这个字段本身并不需要在LoginResult类上存在。<code>autoCreateField=true</code>表示根据Loader定义自动为对外暴露的LoginResult类型增加location这个字段。</li>
-<li>通过<code>@LazyLoad</code>注解来表示本字段为延迟加载字段，除非前台明确请求返回该字段，否则REST请求时会忽略此字段。这样可以确保接口调用在缺省情况下兼容平台内置版本。</li>
-</ul>
-<p><strong>注意，这里的特殊之处在于我们完全没有修改LoginApiBizModel类，也没有重载login函数本身，仅仅通过增加一个Loader函数，即可在服务层扩展返回结果的结构。</strong></p>
-<h3 id="注册服务扩展"><a href="#注册服务扩展" class="headerlink" title="注册服务扩展"></a>注册服务扩展</h3><p>Nop平台并不使用类扫描机制，因此所有的对象都需要在<code>beans.xml</code>文件中注册了之后才会起作用。如果LoginApiBizModelDelta没有从已有的LoginApiBizModel继承，则原则上任意找一个<code>app-*.beans.xml</code>文件，在其中注册bean即可。如果我们需要替换系统中已有的bean定义，则需要在delta目录下增加对应的<code>beans.xml</code>注册文件，通过<code>x:extends=&quot;super&quot;</code>继承已有配置，然后保持bean的id，覆盖bean的class属性。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- /_delta/default/nop/auth/service/beans/auth-service.beans.xml --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/beans.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:ioc</span>=<span class="hljs-string">&quot;ioc&quot;</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;io.nop.auth.service.biz.LoginApiBizModel&quot;</span> </span><br><span class="hljs-tag">         <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.auth.service.biz.LoginApiBizModelEx&quot;</span> /&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;io.nop.demo.biz.LoginApiBizModelDelta&quot;</span> <span class="hljs-attr">ioc:type</span>=<span class="hljs-string">&quot;@bean:id&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="二-扩展输入请求对象"><a href="#二-扩展输入请求对象" class="headerlink" title="二. 扩展输入请求对象"></a>二. 扩展输入请求对象</h2><p>如果我们要改变服务函数的输入参数，则必须要重新编写一个新的服务函数并且禁用旧的服务函数。在Nop平台中，对外暴露的服务函数名不允许重名。如果多个函数具有同样的名称，则会根据 <code>@Priority</code>注解选择优先级更高的实现（值越小优先级越高）。如果多个同名函数优先级一样，则会抛出异常。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LoginApi&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginApiBizModelDelta</span> &#123;<br>    <span class="hljs-meta">@Inject</span><br>    LoginApiBizModel loginApiBizModel;<br><br>    <span class="hljs-meta">@BizMutation(&quot;login&quot;)</span><br>    <span class="hljs-meta">@Auth(publicAccess = true)</span><br>    <span class="hljs-meta">@Priority(NORMAL_PRIORITY - 100)</span><br>    <span class="hljs-keyword">public</span> CompletionStage&lt;LoginResult&gt; <span class="hljs-title function_">loginAsync</span><span class="hljs-params">(</span><br><span class="hljs-params">        <span class="hljs-meta">@RequestBean</span> LoginRequestEx request, IServiceContext context)</span> &#123;<br>        request.setAttr(<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;123&quot;</span>);<br>        <span class="hljs-keyword">return</span> loginApiBizModel.loginAsync(request, context);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><p>可以通过<code>@Inject</code>来引入原有的服务实现，在其基础上进行增强。Nop平台内置的CrudBizModel等基类提供了很多辅助函数，一般可以通过组合的方式进行复用，不需要从原有类继承。参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/696846283">从可逆计算看后端服务函数的可扩展设计</a></p>
-</li>
-<li><p>在Nop平台中，多个具有同样bizObjName的BizModel对象会被堆叠在一起，按照优先级合并它们的所有函数，对外暴露为一个完整的业务对象。这个过程也可以看作是DDD中聚合根对象的一种构造过程。</p>
-</li>
-</ul>
-<h2 id="三-通过XBiz模型实现扩展"><a href="#三-通过XBiz模型实现扩展" class="headerlink" title="三. 通过XBiz模型实现扩展"></a>三. 通过XBiz模型实现扩展</h2><p>Nop平台支持从高代码（ProCode）到低代码(LowCode)再到无代码(NoCode)开发模式的平滑过渡，因此除了在Java中实现BizModel对象之外，Nop平台还提供了通过配置实现服务函数的能力。在XBiz模型文件中，我们可以增加action定义，它的优先级最高，会覆盖Java中的同名的服务函数。XBiz模型文件整体是XML格式，并且满足<code>xbiz.xdef</code>这个元模型的规范要求，如果给XBiz模型文件配备一个可视化设计器，就可以实现无代码开发。</p>
-<p>Nop平台中每一个业务对象都对应有一个xbiz模型文件。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- /_delta/default/nop/auth/model/LoginApi/LoginApi.xbiz --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">biz</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/biz/xbiz.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;super&quot;</span> <span class="hljs-attr">xmlns:bo</span>=<span class="hljs-string">&quot;bo&quot;</span> <span class="hljs-attr">xmlns:c</span>=<span class="hljs-string">&quot;c&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">actions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">query</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;myMethod&quot;</span> &gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;msg&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span> <span class="hljs-attr">optional</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">return</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span> /&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>                return &quot;hello:&quot; + msg;<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">actions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">biz</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>xbiz文件的路径为<code>/&#123;moduleId&#125;/model/&#123;bizObjName&#125;/&#123;bizObjName&#125;.xbiz</code></li>
-<li>通过<code>/r/LoginApi__myMethod?msg=aaa</code>来调用LoginApi的myMethod函数</li>
-</ul>
-<h2 id="四-Header作为扩展信道"><a href="#四-Header作为扩展信道" class="headerlink" title="四. Header作为扩展信道"></a>四. Header作为扩展信道</h2><p>Nop在所有细节处都采用<code>data + ext_data</code>配对设计，确保在任何局部都可以加入扩展信息。在服务层面，所有的请求消息和响应消息都包含额外的headers集合。在服务函数中，可以通过IServiceContext读写header数据。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LoginApi&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginApiBizModel</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ILoginSpi</span> &#123;<br><br>    <span class="hljs-meta">@BizMutation(&quot;login&quot;)</span><br>    <span class="hljs-meta">@Auth(publicAccess = true)</span><br>    <span class="hljs-keyword">public</span> CompletionStage&lt;LoginResult&gt; <span class="hljs-title function_">loginAsync</span><span class="hljs-params">(</span><br><span class="hljs-params">           <span class="hljs-meta">@RequestBean</span> LoginRequest request, IServiceContext context)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">header</span> <span class="hljs-operator">=</span> (String)context.getRequestHeader(<span class="hljs-string">&quot;nop-tenant&quot;</span>);<br>        context.setResponseHeader(<span class="hljs-string">&quot;x-xxx&quot;</span>,value);<br>        ...<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;    <br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><p>headers可以看作是一种跨系统、跨服务函数的一个扩展信道。一些横跨多个服务函数的通用扩展数据可以通过header传递。</p>
-</li>
-<li><p>NopGraphQL采用最小化信息表达设计，它的headers设计可以在不同的运行时环境中映射到不同的具体底层实现机制。比如当NopGraphQL运行在gRPC服务器之上时，headers映射为gRPC消息的headers。当NopGraphQL运行在REST服务器之上时，headers映射为HTTP协议的headers。当NopGraphQL运行在Kafka这种消息系统之上时，headers映射为Kafka消息的headers。详细介绍参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/682910525">业务开发自由之路：如何打破框架束缚，实现真正的框架中立性</a></p>
-</li>
-</ul>
-
+      <div class="Article-content col-md-9"><h2 id="ZGC"><a href="#ZGC" class="headerlink" title="ZGC"></a>ZGC</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">--add-opens=java.base/java.lang=ALL-UNNAMED -Xms3500m -Xmx3500m -XX:ReservedCodeCacheSize=256m -XX:InitialCodeCacheSize=256m -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:ConcGCThreads=1 -XX:ParallelGCThreads=3 -XX:ZCollectionInterval=60 -XX:ZAllocationSpikeTolerance=4 -XX:+UnlockDiagnosticVMOptions -XX:-ZProactive  -Xlog:safepoint,classhisto*=trace,age*,gc*=info:file=/opt/gc-%t.log:time,tid,tags:filecount=5,filesize=50m<br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
@@ -1313,7 +1269,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/tutorial/simple/6-service-delta.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/performance/optimize-java.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
