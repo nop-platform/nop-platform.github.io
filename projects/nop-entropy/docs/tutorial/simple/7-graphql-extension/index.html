@@ -37,10 +37,10 @@
 
 
 
-  <title>GraphQL引擎 - Nop</title>
+  <title>Nop入门： 如何创造性的扩展GraphQL - Nop</title>
 
 
-  <meta property="og:title" content="GraphQL引擎">
+  <meta property="og:title" content="Nop入门： 如何创造性的扩展GraphQL">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -854,7 +854,7 @@
           
           
         
-        <a class="is-selected" href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
       
       
     </li>
@@ -1251,19 +1251,74 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">GraphQL引擎</h1>
+    <h1 class="Article-title">Nop入门： 如何创造性的扩展GraphQL</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>参见<a href="./graphql-java/">graphql-java.md</a></p>
-<h2 id="内置的Crud服务"><a href="#内置的Crud服务" class="headerlink" title="内置的Crud服务"></a>内置的Crud服务</h2><p>参见<a href="./crud/">crud.md</a></p>
-<h2 id="左连接"><a href="#左连接" class="headerlink" title="左连接"></a>左连接</h2><p>参见<a href="./left-join/">left-join.md</a></p>
-<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>参见<a href="./upload/">upload.md</a></p>
-<h2 id="在XBiz文件中定义服务函数"><a href="#在XBiz文件中定义服务函数" class="headerlink" title="在XBiz文件中定义服务函数"></a>在XBiz文件中定义服务函数</h2><p>参见<a href="./xbiz/">xbiz.md</a></p>
-<h2 id="对子表进行分页"><a href="#对子表进行分页" class="headerlink" title="对子表进行分页"></a>对子表进行分页</h2><p>实现类似Relay框架的Connection机制，参见<a href="./connection/">connection.md</a></p>
-<h2 id="使用Fragment简化查询"><a href="#使用Fragment简化查询" class="headerlink" title="使用Fragment简化查询"></a>使用Fragment简化查询</h2><p>参见<a href="./fragments/">fragments.md</a></p>
+      <div class="Article-content col-md-9"><p>Nop平台没有使用<code>graphql-java</code>等常用的GraphQL开源库，而是选择从零开始实现NopGraphQL引擎。NopGraphQL引擎创造了很多崭新的实现方案，拓宽了GraphQL的应用范围，提高了GraphQL的实用性。</p>
+<p>详细文档参见 <a href="../../../dev-guide/graphql/">graphql&#x2F;index.md</a></p>
+<h2 id="一-利用Fragment定义简化GraphQL查询"><a href="#一-利用Fragment定义简化GraphQL查询" class="headerlink" title="一. 利用Fragment定义简化GraphQL查询"></a>一. 利用Fragment定义简化GraphQL查询</h2><p>GraphQL要求在前端调用时指定返回的字段，对于字段比较多的情况会显得比较繁琐。此时我们可以利用GraphQL语言的Fragment功能来定义一些常用的字段集合，然后在查询时引用这些Fragment，从而简化查询。</p>
+<h3 id="1-1-在XMeta中增加selection定义，并以F-为前缀"><a href="#1-1-在XMeta中增加selection定义，并以F-为前缀" class="headerlink" title="1.1 在XMeta中增加selection定义，并以F_为前缀"></a>1.1 在XMeta中增加selection定义，并以<code>F_</code>为前缀</h3><p>Nop平台中每一个后台服务对象都有一个相关联的XMeta元数据模型文件，在其中可以通过为GraphQL类型补充元数据信息。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">selections</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">selection</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;F_defaults&quot;</span>&gt;</span><br>      userId, userName, status, relatedRoleList&#123; roleName&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">selection</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">selections</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>这里约定了必须用<code>F_</code>为前缀才是前台可以访问的Fragment定义。selection还有其他的用处。</li>
+<li>如果不配置<code>F_defaults</code>，它会根据GraphQL类型的所有非lazy字段自动推定。如果明确指定了，则以指定的内容为准</li>
+</ul>
+<h3 id="1-2-在前台查询时引用Fragment"><a href="#1-2-在前台查询时引用Fragment" class="headerlink" title="1.2 在前台查询时引用Fragment"></a>1.2 在前台查询时引用Fragment</h3><p>使用GraphQL方式调用后台服务时可以使用Fragment</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query&#123;<br>   NopAuthUser__findList&#123;<br>     ...F_defaults, groupMappings&#123;...F_defaults&#125;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>或者使用REST方式来调用后台服务，通过<code>@selection</code>参数使用Fragment</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/NopAuthUser__findList?@selection=...F_defaults,groupMappings<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>REST方式调用时，如果不传<code>@selection</code>参数，则等价于返回<code>F_defaults</code></li>
+</ul>
+<p><strong>REST方式下的selection如果只表达到对象层级，则会自动向下展开。</strong></p>
+<h2 id="二-通过-TreeChildren指令简化树形结构查询"><a href="#二-通过-TreeChildren指令简化树形结构查询" class="headerlink" title="二. 通过@TreeChildren指令简化树形结构查询"></a>二. 通过<code>@TreeChildren</code>指令简化树形结构查询</h2><p>对于单位树、菜单树这样的树形结构的获取，NopGraphQL通过Directive机制提供了一个扩展语法，可以直接表达递归拉取数据，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">NopAuthDept_findList&#123;<br>    value: id,<br>    label: displayName<br>    children @TreeChildren(max=5)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>@TreeChildren(max=5)</code>表示按照本层的结构最多嵌套5层。</li>
+</ul>
+<h2 id="三-Map类型"><a href="#三-Map类型" class="headerlink" title="三. Map类型"></a>三. Map类型</h2><p>GraphQL是一种强类型的框架，它要求所有数据都有明确的类型定义，这在某些动态场景中使用时并不方便。例如有的时候我们可能需要把一个扩展集合返回到前端。</p>
+<p>NopGraphQL引入了一个特殊的Scalar类型: Map，可以利用它来描述那些动态数据结构。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">type QueryBean&#123;<br>    filter: Map<br>    orderBy: [OrderFieldBean]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="四-XMeta元数据模型"><a href="#四-XMeta元数据模型" class="headerlink" title="四. XMeta元数据模型"></a>四. XMeta元数据模型</h2><p>利用XMeta元数据模型可以通过配置实现很多功能。</p>
+<h3 id="4-1-通过mapToProp映射到已有属性"><a href="#4-1-通过mapToProp映射到已有属性" class="headerlink" title="4.1 通过mapToProp映射到已有属性"></a>4.1 通过mapToProp映射到已有属性</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">mapToProp</span>=<span class="hljs-string">&quot;b.a&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过mapToProp属性可以为已有属性指定一个别名。当前台访问属性a时，实际获取的是关联对象b上的属性a</li>
+</ul>
+<h3 id="4-2-通过getter直接指定计算表达式"><a href="#4-2-通过getter直接指定计算表达式" class="headerlink" title="4.2 通过getter直接指定计算表达式"></a>4.2 通过getter直接指定计算表达式</h3><p>在NopGraphQL中可以在BizModel服务类中通过<code>@BizLoader</code>注解来引入动态计算的字段。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;LoginApi&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginApiBizModelDelta</span> &#123;<br>    <span class="hljs-meta">@BizLoader(autoCreateField = true, forType = LoginResult.class)</span><br>    <span class="hljs-meta">@LazyLoad</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">location</span><span class="hljs-params">(<span class="hljs-meta">@ContextSource</span> LoginResult result,</span><br><span class="hljs-params">                           IServiceContext context)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;loc:&quot;</span> + result.getUserInfo().getUserId();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于一些轻量级的计算表达式，这种定义服务函数的方式显得有些过于复杂，此时我们可以直接在XMeta中通过getter表达式来定义</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;myValue&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">getter</span>&gt;</span><br>    return entity.name + &#x27;Ext&#x27;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">getter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-字段级别的权限控制"><a href="#4-3-字段级别的权限控制" class="headerlink" title="4.3 字段级别的权限控制"></a>4.3 字段级别的权限控制</h3><p>在xmeta文件中，可以为<code>prop</code>指定<code>auth</code>设置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xx&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">permissions</span>=<span class="hljs-string">&quot;NopAuthUser:query&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;read&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">permissions</span>=<span class="hljs-string">&quot;NopAuthUser:mutation&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;hr&quot;</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;write&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过这里的配置可以实现字段级别的读写权限控制. <code>for=&quot;read&quot;</code>表示控制字段读权限，<code>for=&quot;write&quot;</code>控制字段写权限，而<code>for=&quot;all&quot;</code>同时允许读和写</li>
+<li>NopGraphQL引擎在执行实际动作之前会检查SelectionSet中每个字段的访问权限，因此不会出现执行完业务操作后才发现无权访问某个结果字段的情况。</li>
+<li>关于数据权限和关联子表的过滤条件配置，参见<a href="../4-complex-query/">4-complex-query.md</a></li>
+</ul>
+<h3 id="4-4-自动生成数据字典文本字段"><a href="#4-4-自动生成数据字典文本字段" class="headerlink" title="4.4 自动生成数据字典文本字段"></a>4.4 自动生成数据字典文本字段</h3><p>业务开发中一个非常常见的需求是将后台业务字段的值根据某个数据字典配置翻译为显示文本。在Nop平台中，XMeta模型文件在加载阶段会利用元编程机制动态判断是否配置了数据字典。<br>如果是，则会自动生成一个字典翻译字段。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;Integer&quot;</span> <span class="hljs-attr">dict</span>=<span class="hljs-string">&quot;auth/user-status&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>经过元编程转换后实际生成如下字段定义</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">graphql:labelProp</span>=<span class="hljs-string">&quot;status_label&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;Integer&quot;</span> <span class="hljs-attr">dict</span>=<span class="hljs-string">&quot;auth/user-status&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status_label&quot;</span> <span class="hljs-attr">internal</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">graphql:dictName</span>=<span class="hljs-string">&quot;auth/user-status&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">graphql:dictValueProp</span>=<span class="hljs-string">&quot;status&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;String&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-5-掩码显示"><a href="#4-5-掩码显示" class="headerlink" title="4.5 掩码显示"></a>4.5 掩码显示</h3><p>处于安全性考虑，一些敏感的用户信息不允许打印到日志文件中，返回给前台演示的时候也需要进行掩码处理，不能显示全部内容，只能显示前几位、后几位等，<br>例如信用卡卡号，用户的电话号码等。</p>
+<p>通过<code>ui:maskPattern</code>可以指定掩码显示模式，当GraphQL返回字段值时会自动按照此模式进行处理。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">ui:maskPattern</span>=<span class="hljs-string">&quot;3*4&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ui:maskPattern=&quot;3*4&quot;</code> 表示保留前3位以及后4位字符，其他用*来替换。</li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1276,7 +1331,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/graphql/index.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/tutorial/simple/7-graphql-extension.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
