@@ -1259,14 +1259,14 @@
       </header>
       <div class="Article-content col-md-9"><h2 id="配置规范"><a href="#配置规范" class="headerlink" title="配置规范"></a>配置规范</h2><ul>
 <li>配置变量为全小写字母，以<code>.</code>和<code>-</code>为分隔符，与Spring的约定不同，NopConfig实际上不支持大小写混排的命名方式</li>
-<li>如果通过环境变量来传递配置变量，则<code>.</code>被替换为<code>_</code>，而<code>-</code>被替换为<code>__</code>，而<code>_</code>被替换为<code>___</code><br>。例如nop.auth.sso.server-url变成NOP_AUTH_SSO_SERVER__URL。（这种约定与Spring并不一致，但它保证了环境变量和配置变量的双向无歧义映射）</li>
+<li>如果通过环境变量来传递配置变量，则<code>.</code>被替换为<code>_</code>，而<code>-</code>被替换为<code>__</code>，而<code>_</code>被替换为<code>___</code><br>。例如nop.auth.sso.server-url变成<code>NOP_AUTH_SSO_SERVER__URL</code>。（这种约定与Spring并不一致，但它保证了环境变量和配置变量的双向无歧义映射）</li>
 <li>一般在模块的XXXConfigs常量类中定义本模块中明确使用到的配置变量。</li>
 </ul>
 <h2 id="配置加载顺序"><a href="#配置加载顺序" class="headerlink" title="配置加载顺序"></a>配置加载顺序</h2><p>先加载的配置优先级更高，会被优先使用。</p>
 <ol>
 <li>classpath:bootstrap.yaml 应用的启动配置，其中的所有变量都是固定值，不会被动态覆盖</li>
-<li>配置中心的{nop.application.name}-{nop.config.profile}.yaml</li>
-<li>配置中心的{nop.application.name}.yaml</li>
+<li>配置中心的<code>&#123;nop.application.name&#125;-&#123;nop.profile&#125;.yaml</code></li>
+<li>配置中心的<code>&#123;nop.application.name&#125;.yaml</code></li>
 <li>nop.config.key-config-source.paths参数指定k8s SecretMap映射文件，定时扫描检测是否已更新</li>
 <li>nop.config.props-config-source.paths参数指定k8s ConfigMap映射文件，定时扫描检测是否已更新</li>
 <li>如果配置了nop.config.jdbc.jdbc-url等参数，则会从数据库配置表中加载配置，定时扫描检测是否已更新</li>
@@ -1280,7 +1280,7 @@
 </blockquote>
 <p>具体配置加载逻辑全部集中在<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-config/src/main/java/io/nop/config/starter/ConfigStarter.java">ConfigStarter.java</a><br>类中</p>
 <ul>
-<li><strong>在bootstrap.yaml中可以配置nop.profile&#x3D;dev来启用application-dev.yaml配置，类似于spring中的profile概念。</strong><br>也可以通过java property或者env机制类配置profile，例如-Dnop.profile&#x3D;dev或者 NOP_PROFILE&#x3D;dev</li>
+<li><strong>在bootstrap.yaml中可以配置nop.profile&#x3D;dev来启用application-dev.yaml配置，类似于spring中的profile概念。</strong><br>也可以通过java property或者env机制类配置profile，例如-Dnop.profile&#x3D;dev或者配置环境变量<code>NOP_PROFILE=dev</code></li>
 <li>优先加载yaml后缀的配置文件，如果找不到，会尝试加载后缀名为yml的同名文件。也就是说，如果同时存在<code>application.yaml</code>和<code>application.yml</code>，则会优先使用前者</li>
 </ul>
 <h2 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h2><p>配置中心下发配置之后，应用程序中的配置项会自动更新。更新过程通过单线程执行，确保按顺序执行更新。</p>
