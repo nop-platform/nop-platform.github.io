@@ -1377,6 +1377,7 @@
 <p>有些人可能习惯于列名本身就对应Java属性名，例如列名 <code>UserName</code>，但是因为按照数据库规范标准，列名一般会被规范化为全大写或者全小写字符，导致在不同数据库迁移时无法识别大小写混排的情况。<br>所以Nop平台假定所有列名都要被自动转换为大写，通过下划线分隔，然后在转成Java属性时按照驼峰规则命名。</p>
 </blockquote>
 <p>需要注意的是，按照驼峰规则转换成Java属性名时，一般情况下首字母是小写字母，但是考虑到Java Bean规范，存在特殊情况。<br>假设数据库列名为 <code>S_USER_NAME</code>，它对应的Java Get方法为 <code>String#getSUserName()</code>，按照JavaBean规范，除去<code>get</code>前缀后，如果连续两个字母都是大写字母，则对应Java属性名也保持首字母大写，<br>因此Java属性名为<code>SUserName</code>，而不是<code>sUserName</code>。</p>
+<h3 id="关联集合的排序条件"><a href="#关联集合的排序条件" class="headerlink" title="关联集合的排序条件"></a>关联集合的排序条件</h3><p>通过【排序条件】配置可以指定关联集合的排序条件，它对应于<code>refSet.sort</code>配置。例如配置nop-rule.orm.xlsx中NopAuth【排序条件】为 orderNo asc</p>
 <h2 id="外部表"><a href="#外部表" class="headerlink" title="外部表"></a>外部表</h2><p>有时需要引入其他模块中的实体，这时要写实体的全名，同时插入一个占位用的Sheet，在其中只定义主键即可，同时在表上增加<code>not-gen</code>标签。</p>
 <p>比如以下<code>course_evaluation</code>表引用<code>nop_auth_user</code>表。</p>
 <p><img src="/knosys/project-nop-entropy/dev-guide/model/ref-external-table.png"></p>
