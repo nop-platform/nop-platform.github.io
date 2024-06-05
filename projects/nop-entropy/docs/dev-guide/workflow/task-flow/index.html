@@ -1298,6 +1298,10 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">RESULT = function()&#123;<br>  return 1<br>&#125;();<br><br>RESULT = function(RESULT)&#123;<br>  return RESULT + 2<br>&#125;(RESULT)<br></code></pre></td></tr></table></figure>
 
 <h2 id="步骤装饰器"><a href="#步骤装饰器" class="headerlink" title="步骤装饰器"></a>步骤装饰器</h2><p>通过步骤装饰器可以引入transaction、ormSession等依赖更多的类AOP支持，参见<a href="../task-step-decorator/">task-step-decorator.md</a></p>
+<h2 id="output变量重命名"><a href="#output变量重命名" class="headerlink" title="output变量重命名"></a>output变量重命名</h2><p>通过以下方式可以改变输出变量的名称</p>
+<h3 id="1-使用exportAs变量会改变返回到父scope中的变量名"><a href="#1-使用exportAs变量会改变返回到父scope中的变量名" class="headerlink" title="1. 使用exportAs变量会改变返回到父scope中的变量名"></a>1. 使用exportAs变量会改变返回到父scope中的变量名</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">output</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RESULT&quot;</span> <span class="hljs-attr">exportAs</span>=<span class="hljs-string">&quot;value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-执行表达式生成新的返回变量"><a href="#2-执行表达式生成新的返回变量" class="headerlink" title="2. 执行表达式生成新的返回变量"></a>2. 执行表达式生成新的返回变量</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">output</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>RESULT<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">output</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>根据当前环境中的值执行某个source表达式动态计算得到一个返回值</p>
 
 </div>
       <footer class="Article-footer col-md-3">
