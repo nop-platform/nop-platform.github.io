@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop平台与APIJSON的功能对比 - Nop</title>
+
+
+  <meta property="og:title" content="Nop平台与APIJSON的功能对比">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Nop平台与APIJSON的功能对比</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p><a target="_blank" rel="noopener" href="http://apijson.cn/">APIJSON</a>是由腾讯的工程师研发的一款流传甚广的零代码接口与文档ORM库，github的star数高达16.8K。这个库实现了一种基于JSON的轻量级数据交换格式，提供万能通用接口，无需编码即可实现增删改查、跨库连表、嵌套子查询等。APIJSON的生态相当完整，支持各种后端数据库，有各种语言的客户端，支持自动生成文档，自动进行API测试等一系列外围功能。</p>
+<p>Nop平台内置了基于可逆计算原理从零开始设计的下一代GraphQL引擎NopGraphQL和下一代ORM引擎NopORM，它们结合在一起可以很容易的实现类似APIJSON的功能，并且提供更好的可扩展性。在本文中，我就以APIJSON的文档大纲为基础，逐条比较一下Nop平台在作为低代码数据服务引擎使用时与APIJSON的功能差异。</p>
+<blockquote>
+<p>Nop平台作为一个通用的下一代低代码平台，它的发展目标远比APIJSON要宏大得多。Nop平台推行的是所谓面向语言编程范式，即先支持用户快速开发属于自己的DSL领域特定语言，然后再用这个DSL去开发具体业务。APIJSON提供的功能可以看作是一种面向数据访问的DSL，而Nop平台提供了开发类似DSL的底层支撑工具，并内置了NopGraphQL和NopORM等一系列成熟的DSL，便于用户在此基础上组合使用。</p>
+</blockquote>
+<h2 id="一-示例"><a href="#一-示例" class="headerlink" title="一.示例"></a>一.示例</h2><p>在Nop平台中，REST请求由NopGraphQL引擎来负责执行。NopGraphQL同时支持GraphQL协议、gRPC协议、REST协议等多种访问协议，可以使用多种方式来调用同一个后台服务函数。<br>对于REST请求方式，NopGraphQL支持两种访问连接模式： <code>/r/&#123;bizObjName&#125;__&#123;bizAction&#125;</code>和<code>/p/&#123;bizObjName&#125;__&#123;bizAction&#125;</code>。</p>
+<p>其中<code>/r/</code>请求会发现<code>ApiResponse&lt;T&gt;</code>结构，它包含headers, data, stats, code, msg等属性。 如果status为0，则表示成功。如果失败，则通过code来返回错误码，通过msg来返回异常消息。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiResponse</span>&lt;T&gt;&#123;<br>  Map&lt;String,Object&gt; headers;<br>  T data;<br>  <span class="hljs-type">int</span> status;<br>  String code;<br>  String message;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>/p/</code>请求会直接返回<code>T</code>结构，而不会使用<code>ApiResponse&lt;T&gt;</code>来包装。此外<code>/p/</code>请求会设置contentType，因此下载二进制文件、返回XML格式等功能也需要使用<code>/p/</code>请求。<br>例如Nop平台内置的<code>/p/DevDoc__beans</code>会以XML格式返回NopIoC中所有启用的bean的配置。</p>
+<p>在使用REST请求模式的情况下，HTTP GET可以调用GraphQL的query方法，而HTTP POST可以调用GraphQL的query或者mutation方法。</p>
+<h3 id="获取用户"><a href="#获取用户" class="headerlink" title="获取用户"></a>获取用户</h3><p>APIJSON请求：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">query&#123;<br>  User__get(id: &quot;38710&quot;)&#123;<br>     id,sex, name, tag, head, data, pictureList<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;User__get&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;sex&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;TommyLemon&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Android&amp;Java&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948110000</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-string">&quot;http://common.cnblogs.com/images/icon_weibo_24.png&quot;</span><br>        <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>或者使用<code>/r/</code>请求模式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__get?id=38710<br></code></pre></td></tr></table></figure>
+
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;sex&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;TommyLemon&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Android&amp;Java&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948110000</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;http://common.cnblogs.com/images/icon_weibo_24.png&quot;</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>第三种方式是使用<code>/p/</code>调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/p/User__get?id=38710<br></code></pre></td></tr></table></figure>
+
+<p>返回:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;sex&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;TommyLemon&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Android&amp;Java&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948110000</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>      <span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-string">&quot;http://common.cnblogs.com/images/icon_weibo_24.png&quot;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="获取用户列表"><a href="#获取用户列表" class="headerlink" title="获取用户列表"></a>获取用户列表</h3><p>APIJSON请求：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;[]&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;count&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">3</span><span class="hljs-punctuation">,</span>             <span class="hljs-comment">//只要3个</span><br>    <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;@column&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;id,name&quot;</span>  <span class="hljs-comment">//只要id,name这两个字段</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findList?limit=3&amp;@selection=id,name<br></code></pre></td></tr></table></figure>
+
+<p>返回</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;TommyLemon&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Strong&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">82001</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Android&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>CrudBizModel提供了findList函数，它可以执行复杂分页查询，然后返回列表数据</li>
+<li>findPage函数可以执行复杂分页查询，然后返回<code>PageBean&lt;T&gt;</code>对象。PageBean包含总页数，当前页数，当前页数据等多个部分。</li>
+<li>NopGraphQL提供了满足GraphQL规范的字段选择能力，可以实现复杂嵌套结构的选择，支持字段重命名和附加参数等特性。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findList?@selection=id,name,status:userStatus,<br>     roles:rolesList(limit:5)&#123;roleId, roleName&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>roles:rolesList(limit:5)</code>表示调用后台User对象的rolesList加载方法，限制返回条目数最大为5条，然后将返回的列表数据对应的属性名重命名为roles</li>
+</ul>
+<h3 id="获取动态及发布者用户"><a href="#获取动态及发布者用户" class="headerlink" title="获取动态及发布者用户"></a>获取动态及发布者用户</h3><p>APIJSON请求：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;Moment&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id@&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Moment/userId&quot;</span>  <span class="hljs-comment">//User.id = Moment.userId</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Moment__findFirst?@selection=...F_defaults,user<br></code></pre></td></tr></table></figure>
+
+<p>Nop返回:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">12</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2017-02-08 16:06:11.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;1111534034&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;user&quot;</span>： <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;sex&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Strong&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;djdj&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;contactIdList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82002</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;2017-02-01 19:21:50.0&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>出于安全性考虑，NopGraphQL并不支持在前台直接传递表关联条件</strong>，因为这样很难控制数据的可访问范围，也很难控制中间数据集的大小。</li>
+<li>在后端ORM模型中可以配置moment与用户关联，在Moment对象上增加user关联对象属性。缺省情况下关联对象标记了延迟加载，所以如果前端没有明确获取该属性，则不会返回到前端。</li>
+<li>在前端selection定义中<code>...F_defaults</code>是使用GraphQL的fragment语法来引用所有非lazy的字段集合，在此基础上我们可以要求返回user关联对象</li>
+<li>findFirst会根据复杂查询条件返回第一条满足条件的记录。如果没有指定排序条件，则按照主键排序</li>
+<li><strong>如果没有在ORM层面建立关联，在XMeta元数据文件中仍然可以定义关联条件</strong></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;user&quot;</span> <span class="hljs-attr">graphql:queryMethod</span>=<span class="hljs-string">&quot;findFirst&quot;</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">graphql:filter</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@prop-ref:userId&quot;</span> /&gt;</span><br>       <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:filter</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>更详细的介绍，参见<a href="">Nop入门: 如何实现复杂查询</a></p>
+<h3 id="获取类似微信朋友圈的动态列表"><a href="#获取类似微信朋友圈的动态列表" class="headerlink" title="获取类似微信朋友圈的动态列表"></a>获取类似微信朋友圈的动态列表</h3><p>APIJSON请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs json5">&#123;<br>  &quot;[]&quot;:&#123;                             //请求一个数组<br>    &quot;page&quot;:0,                        //数组条件<br>    &quot;count&quot;:2,<br>    &quot;Moment&quot;:&#123;                       //请求一个名为Moment的对象<br>      &quot;content$&quot;:&quot;%a%&quot;               //对象条件，搜索content中包含a的动态<br>    &#125;,<br>    &quot;User&quot;:&#123;<br>      &quot;id@&quot;:&quot;/Moment/userId&quot;,        //User.id = Moment.userId  缺省引用赋值路径，从所处容器的父容器路径开始<br>      &quot;@column&quot;:&quot;id,name,head&quot;       //指定返回字段<br>    &#125;,<br>    &quot;Comment[]&quot;:&#123;                    //请求一个名为Comment的数组，并去除Comment包装<br>      &quot;count&quot;:2,<br>      &quot;Comment&quot;:&#123;<br>        &quot;momentId@&quot;:&quot;[]/Moment/id&quot;   //Comment.momentId = Moment.id  完整引用赋值路径<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>APIJSON返回数据：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;[]&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;Moment&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1486541171000</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;APIJSON is a JSON Transmission Structure Protocol…&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;praiseUserIdList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-number">82055</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82002</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82001</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-string">&quot;http://common.cnblogs.com/images/icon_weibo_24.png&quot;</span><br>        <span class="hljs-punctuation">]</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Strong&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;Comment[]&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">176</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">166</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490444883000</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;thank you&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490863469638</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">82002</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490863469000</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Just do it&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;Moment&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">90814</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485947671000</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-435&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;praiseUserIdList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82003</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82005</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">93793</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82006</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82044</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82001</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-string">&quot;http://static.oschina.net/uploads/img/201604/22172507_aMmH.jpg&quot;</span><br>        <span class="hljs-punctuation">]</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;User&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">90814</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">7</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/51/102723_50.jpg?t=1449212504000&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;Comment[]&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">13</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">82005</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948050000</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-13&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">77</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">13</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">93793</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948050000</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-77&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;msg&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;success&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop请求:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Moment__findList?offset=0&amp;limit=2&amp;filter_content__contains=a<br>&amp;@selection=...F_defaults,user&#123;id,name,head&#125;,comments(limit:2)<br></code></pre></td></tr></table></figure>
+
+<p>Nop返回结果：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1486541171000</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;APIJSON is a JSON Transmission Structure Protocol…&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;praiseUserIdList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-number">82055</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82002</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82001</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-string">&quot;http://static.oschina.net/uploads/user/1218/2437072_100.jpg?t=1461076033000&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-string">&quot;http://common.cnblogs.com/images/icon_weibo_24.png&quot;</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">70793</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Strong&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/585/1170143_50.jpg?t=1390226446000&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;comments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>            <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">176</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">166</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490444883000</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;thank you&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490863469638</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">82002</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1490863469000</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Just do it&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">90814</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485947671000</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-435&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;praiseUserIdList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-number">38710</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82003</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82005</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">93793</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82006</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82044</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-number">82001</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;pictureList&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>          <span class="hljs-string">&quot;http://static.oschina.net/uploads/img/201604/22172507_aMmH.jpg&quot;</span><br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">90814</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">7</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;head&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;http://static.oschina.net/uploads/user/51/102723_50.jpg?t=1449212504000&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;comments&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>            <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">13</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">82005</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948050000</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-13&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-punctuation">&#123;</span><br>              <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">77</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;toId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">13</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">93793</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">58</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">1485948050000</span><span class="hljs-punctuation">,</span><br>              <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;This is a Content...-77&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>与APIJSON相比，NopGraphQL返回的数据是标准的JSON对象结构，属性名也是很自然的嵌套属性名，而APIJSON的对象结构层次是平展模式，还使用了特殊的<code>Comment[]</code>这种特殊的格式约定，在前台可能还需要经过额外的结构转换才能传递给组件使用。</li>
+<li>NopGraphQL支持种多表关联查询：一对一、一对多、多对一、各种条件，只不过出于安全性考虑，关联条件需要在后台的XMeta或者ORM模型中配置。</li>
+<li>NopORM支持各种JOIN： LEFT JOIN,  INNER JOIN，FULL JOIN 等. 还通过Dialect支持各类SQL函数，可以跨数据库迁移</li>
+</ul>
+<h2 id="二-对比传统RESTful方式"><a href="#二-对比传统RESTful方式" class="headerlink" title="二. 对比传统RESTful方式"></a>二. 对比传统RESTful方式</h2><h3 id="2-1-开发流程"><a href="#2-1-开发流程" class="headerlink" title="2.1 开发流程"></a>2.1 开发流程</h3><table>
+<thead>
+<tr>
+<th>开发流程</th>
+<th>传统方式</th>
+<th>APIJSON</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接口传输</td>
+<td>等后端编辑接口，然后更新文档，前端再按照文档编辑请求和解析代码</td>
+<td>前端按照自己的需求编辑请求和解析代码。<br />没有接口，更不需要文档！前端再也不用和后端沟通接口或文档问题了！</td>
+</tr>
+<tr>
+<td>兼容旧版</td>
+<td>后端增加新接口，用v2表示第2版接口，然后更新文档</td>
+<td>什么都不用做！</td>
+</tr>
+</tbody></table>
+<p><strong>Nop开发流程:</strong></p>
+<ul>
+<li>APIJSON所宣称的优点，NopGraphQL + NopORM引擎结合后都可以内置提供。</li>
+<li>利用GraphQL协议可以对返回数据进行再组织，通过字段选择能力自动兼容旧版调用，无需为接口增加版本号。通过定制xmeta和orm模型可以自行扩展返回字段，而不需要编写服务端代码。</li>
+<li>Nop平台独有的Delta定制能力，可以使得同一个服务在不同的部署环境下提供不同的缺省返回字段，并扩展与不同数据实体的关联关系，而无需修改服务端已经打包好的代码。</li>
+</ul>
+<h3 id="2-2-前端请求"><a href="#2-2-前端请求" class="headerlink" title="2.2 前端请求"></a>2.2 前端请求</h3><table>
+<thead>
+<tr>
+<th>前端请求</th>
+<th>传统方式</th>
+<th>APIJSON</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>要求</td>
+<td>前端按照文档在对应URL后面拼接键值对</td>
+<td>前端按照自己的需求在固定URL后拼接JSON</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>不同的请求对应不同的URL，基本上有多少个不同的请求就得有多少个接口URL</td>
+<td>相同的操作方法(增删改查)都用同一个URL，<br />大部分请求都用7个通用接口URL的其中一个</td>
+</tr>
+<tr>
+<td>键值对</td>
+<td>key&#x3D;value</td>
+<td>key:value</td>
+</tr>
+<tr>
+<td>结构</td>
+<td>同一个URL内table_name只能有一个 <br /><br /> base_url&#x2F;get&#x2F;table_name?<br />key0&#x3D;value0&amp;key1&#x3D;value1…</td>
+<td>同一个URL后TableName可传任意数量个 <br /><br /> base_url&#x2F;get&#x2F;<br />{<br > &nbsp;&nbsp; TableName0:{<br > &nbsp;&nbsp;&nbsp;&nbsp; key0:value0,<br > &nbsp;&nbsp;&nbsp;&nbsp; key1:value1,<br > &nbsp;&nbsp;&nbsp;&nbsp; …<br > &nbsp;&nbsp; },<br > &nbsp;&nbsp; TableName1:{<br > &nbsp;&nbsp;&nbsp;&nbsp; …<br > &nbsp;&nbsp; }<br > &nbsp;&nbsp; …<br > }</td>
+</tr>
+</tbody></table>
+<p><strong>Nop前端请求:</strong></p>
+<ul>
+<li><p>借助于GraphQL协议中的selection机制，Nop平台可以实现与APIJSON等价的效果，同时它返回的嵌套数据结构更加自然直观。而且可以使用标准的GraphQL第三方工具进行调试，例如quarkus框架内置集成的graphql-ui工具。</p>
+</li>
+<li><p>内置的CrudBizModel提供了一系列增删改查相关的服务函数，可以实现复杂主子表结构的增删改查。一般数据维护任务不需要编写代码或者只需要编写少量偏离增删改查逻辑的差异化逻辑。</p>
+</li>
+<li><p>除了CRUD操作之外，NopGraphQL还支持没有任何数据库表支持的业务实体对象及其方法。</p>
+</li>
+<li><p>GraphQL协议内置支持一次性调用多个后台服务函数。比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query&#123;<br>    Entity1__findPage&#123;<br>       items: &#123; fld1, fld2&#125;<br>    &#125;,<br>    Entity2__get(id:&quot;333&quot;) &#123; name, status&#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-3-后端操作"><a href="#2-3-后端操作" class="headerlink" title="2.3 后端操作"></a>2.3 后端操作</h3><table>
+<thead>
+<tr>
+<th>后端操作</th>
+<th>传统方式</th>
+<th>APIJSON</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>解析和返回</td>
+<td>取出键值对，把键值对作为条件用预设的的方式去查询数据库，最后封装JSON并返回给前端</td>
+<td>把Parser#parse方法的返回值返回给前端就行</td>
+</tr>
+<tr>
+<td>返回JSON结构的设定方式</td>
+<td>由后端设定，前端不能修改</td>
+<td>由前端设定，后端不能修改</td>
+</tr>
+</tbody></table>
+<p><strong>Nop平台后端操作:</strong></p>
+<ul>
+<li>Nop平台的后端的底层采用NopORM实现，它包含完整的EQL对象查询语言，内置支持多租户、扩展字段、逻辑删除等常见业务扩展需求，整体设计比JPA+MyBatis更加完整、强大，可扩展性更好。</li>
+</ul>
+<p>具体介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/biBdNaQV98uaxdpVKndwwg">低代码平台需要什么样的ORM引擎?(1) </a>, <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Nv9Z23rv0ijwJ34PPH-uyw">低代码平台需要什么样的ORM引擎?(2) </a></p>
+<h3 id="2-4-前端解析"><a href="#2-4-前端解析" class="headerlink" title="2.4 前端解析"></a>2.4 前端解析</h3><table>
+<thead>
+<tr>
+<th>前端解析</th>
+<th>传统方式</th>
+<th>APIJSON</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查看方式</td>
+<td>查文档或问后端，或等请求成功后看日志</td>
+<td>看请求就行，所求即所得，不用查、不用问、不用等。也可以等请求成功后看日志</td>
+</tr>
+<tr>
+<td>解析方法</td>
+<td>用JSON解析器来解析JSONObject</td>
+<td>可以用JSONResponse解析JSONObject，或使用传统方式</td>
+</tr>
+</tbody></table>
+<p><strong>Nop平台前端解析:</strong></p>
+<ul>
+<li>Quarkus框架提供了相当完善的开发调试工具，比如graphql-ui，在线日志查看等。</li>
+<li>Nop平台在所有关键处都有日志，比如输入输出的JSON数据，每条SQL语句实际执行的语句、参数以及执行时间等。</li>
+<li>在调试模式下，通过<code>/p/DevDoc__graphql</code>可以查看后台所有服务函数和数据对象的GraphQL定义。</li>
+<li>Nop平台输出日志的时候考虑到了字段的mask设置，对于用户密码、卡号等敏感数据自动执行掩码处理后再打印到日志中</li>
+<li>一般返回结果都是JSON结构，可以使用JSON解析器解析。<code>/p/</code>请求可以返回其他格式的结果，实现二进制文件下载等功能。</li>
+</ul>
+<h3 id="2-5-前端对应不同需求的请求"><a href="#2-5-前端对应不同需求的请求" class="headerlink" title="2.5 前端对应不同需求的请求"></a>2.5 前端对应不同需求的请求</h3><p>Nop平台可以自由选择使用标准的GraphQL协议或者gRPC协议或者REST协议来访问后台服务对象。整体使用方式比APIJSON要更加直观、简单，并且包含APIJSON的全部能力。<br>除此之外，Nop平台还提供了独一无二的Delta定制能力和元编程能力。</p>
+<h4 id="1-获取单个用户数据"><a href="#1-获取单个用户数据" class="headerlink" title="1. 获取单个用户数据"></a>1. 获取单个用户数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__get?id=38710<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-Moment和对应的User"><a href="#2-Moment和对应的User" class="headerlink" title="2. Moment和对应的User"></a>2. Moment和对应的User</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Moment__findFirst?filter_userId=38710&amp;@selection=...F_defaults,user<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-User列表"><a href="#3-User列表" class="headerlink" title="3. User列表"></a>3. User列表</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findList?offset=0&amp;limit=3&amp;filter_sex=0<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-MomentL列表，每个Moment包括1-发布者User-2-前3条Comment"><a href="#4-MomentL列表，每个Moment包括1-发布者User-2-前3条Comment" class="headerlink" title="4. MomentL列表，每个Moment包括1.发布者User 2.前3条Comment"></a>4. MomentL列表，每个Moment包括1.发布者User 2.前3条Comment</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Moment__findList?@selection=...F_defaults,user,comments(limit:3)<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-User发布的Moment列表，-每个Moment包括-1-发布者User-2-前3条Comment"><a href="#5-User发布的Moment列表，-每个Moment包括-1-发布者User-2-前3条Comment" class="headerlink" title="5. User发布的Moment列表， 每个Moment包括 1.发布者User 2.前3条Comment"></a>5. User发布的Moment列表， 每个Moment包括 1.发布者User 2.前3条Comment</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/Moment__findList?filter_userId=38710&amp;@selection=...F_defaults,user,comments(limit:3)a<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-6-后端对应不同请求的返回结果"><a href="#2-6-后端对应不同请求的返回结果" class="headerlink" title="2.6 后端对应不同请求的返回结果"></a>2.6 后端对应不同请求的返回结果</h3><p>Nop平台支持多种方式来调用同一个后端服务函数，从而返回不同的结果格式。无论是使用标准的GraphQL协议，还是REST协议，都可以调用到同样的服务函数，从而便于和各类前端对接。</p>
+<ol>
+<li>以<code>/r/</code>为前缀的请求返回<code>ApiResponse&lt;T&gt;</code>结构</li>
+<li>以<code>/p/</code>为前缀的请求则只返回data部分，不会将它包装为ApiResponse</li>
+<li>通过<code>@selection</code>参数可以指定返回的数据字段。没有被选择的字段后台会跳过处理，可以减少后台加载的数据量和执行的运算量。</li>
+<li>对于查询操作，内置的CrudBizModel提供了<code>findList/findPage/findFirst</code>等多种查询方法，分别返回列表数据、包含条目数的分页列表数据和第一条数据等。</li>
+</ol>
+<p>关于NopGraphQL的进一步介绍，可以参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7Ou1h7NwyI4eAX4m_Zbftw">为什么在数学的意义上GraphQL严格的优于REST？</a></p>
+<h2 id="三-设计规范"><a href="#三-设计规范" class="headerlink" title="三. 设计规范"></a>三. 设计规范</h2><h3 id="3-1-操作方法"><a href="#3-1-操作方法" class="headerlink" title="3.1 操作方法"></a>3.1 操作方法</h3><ol>
+<li>与GraphQL规范相同，Nop平台的服务端只使用GET和POST方法，不使用PUT、DELETE、PATCH等Http方法，从而简化前后端处理。</li>
+<li>GET方法只能调用幂等的graphql query操作，而POST可以调用graphql query或者mutation操作。</li>
+<li>mutation操作会自动打开数据库事务（内部实现进行了优化，如果没有实际访问数据库，则并不会真的占用数据库连接）。</li>
+<li>CrudBizModel提供了<code>findList/findPage/findFirst/get/delete/update/save/batchDelete/batchModify</code>等多种增删改查操作，而且支持批量处理、支持主子表数据一次性提交。</li>
+<li>所有的findXX方法都接收filter查询条件和orderBy排序条件，支持包含<code>and/or</code>的复杂组合查询条件</li>
+<li>查询时可以直接使用<code>moment.user.dept</code>这种复合属性，在ORM层面它会被自动识别，并展开成多表关联查询。这是利用了NopORM底层的对象查询语言EQL的关联查询能力。<br>7， 可以通过http header来传递一些全局参数信息，比如tenantId, authToken，traceId等。</li>
+<li>每个数据库实体缺省都具有对应的服务对象，可以通过<code>/r/&#123;bizObjName&#125;__&#123;bizAction&#125;</code>这种方式来调用服务对象上的服务方法。对于一些不需要直接暴露的子表结构，可以在数据模型上标记为no-web，则不会单独为它生成服务端点。</li>
+</ol>
+<h3 id="3-2-功能符"><a href="#3-2-功能符" class="headerlink" title="3.2 功能符"></a>3.2 功能符</h3><p>Nop平台的复杂查询条件使用了QueryBean模型来表达。这是一个通用的Predicate定义模型，被自动转换为SQL查询语句或者在内存中执行的Predicate接口，并可以在XML和JSON等多种格式之间自由转换。例如表达<code>status=1 and type in(1,2)</code> 这个条件，QueryBean的XML格式表达如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">and</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">in</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;type&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@:[1,2]&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">and</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>@:</code>是Nop平台为XML格式增加的一个扩展，它表示后面的值按照JSON格式编码。</p>
+</li>
+<li><p>也可以直接使用<code>&lt;in name=&quot;type&quot; value=&quot;1,2&quot; /&gt;</code>，逗号分隔的字符串可以被自动切分得到字符串列表。</p>
+</li>
+<li><p><code>value=&quot;1&quot;</code>在后台解析得到的值是字符串1。Nop平台在查询时会自动根据ORM中定义的字段类型进行转型，因此status会被自动转换为整数类型。如果一定要表示传入的条件值是整数，则可以使用<code>@:</code>前缀，<code>value=&quot;@:1&quot;</code>。</p>
+</li>
+<li><p>and&#x2F;or可以嵌套使用，并可以用not取反。</p>
+</li>
+<li><p>Nop平台内置了大量查询算符，如gt表示大于，ge表示大于等于。具体内置的op定义参见FilterOp.java中的定义。</p>
+</li>
+</ul>
+<p>如果使用JSON格式来表达，则对应如下内容：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;and&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;$body&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">[</span><br>       <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eq&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>       <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>       <span class="hljs-punctuation">&#123;</span><br>           <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;in&quot;</span><span class="hljs-punctuation">,</span><br>           <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><br>       <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Nop平台在<code>/r/User__get?id=123</code>这种读取单条实体的调用函数中会应用数据权限规则。此时，会自动将filter翻译为在内存中执行的Predicate接口来运行，相当于翻译为如下代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataAuthFilter</span> implement Predicate&lt;IEvalScope&gt;&#123;<br>   <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">accept</span><span class="hljs-params">(IEvalScope scope)</span>&#123;<br>      <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User)scope.getLocalValue(<span class="hljs-string">&quot;entity&quot;</span>);<br>      <span class="hljs-keyword">if</span>(user.getStatus() != <span class="hljs-number">1</span>)<br>         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>      <span class="hljs-keyword">if</span>(!Arrays.asList(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>).contains(user.getType())<br>         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>与APIJSON对比，NopGraphQL的功能符能力要更加强大，使用更加直观、简单。</p>
+<h4 id="1-查询选项范围"><a href="#1-查询选项范围" class="headerlink" title="1. 查询选项范围"></a>1. 查询选项范围</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/User__findList<br><br>&#123;<br>  &quot;filter&quot;: &#123;<br>    &quot;$type&quot;: &quot;in&quot;,<br>    &quot;name&quot;: &quot;id&quot;,<br>    &quot;value&quot;: [38710,82001,70793]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>查询id符合38710,82001,70793中任意一个的一个User数组。</p>
+<p>对于批量按照id获取，Nop平台还提供了一个简化的调用方法batchGet</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__batchGet?ids=38710,82001,70793<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-匹配条件范围"><a href="#2-匹配条件范围" class="headerlink" title="2. 匹配条件范围"></a>2. 匹配条件范围</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/User__findList<br><br>&#123;<br>  &quot;filter&quot;: &#123;<br>    &quot;$type&quot;: &quot;or&quot;,<br>    &quot;$body&quot;: [<br>      &#123;<br>        &quot;$type&quot;: &quot;le&quot;,<br>        &quot;name&quot;: &quot;id&quot;,<br>        &quot;value&quot;: 80000<br>      &#125;,<br>      &#123;<br>        &quot;$type&quot;: &quot;gt&quot;,<br>        &quot;name&quot;: &quot;id&quot;,<br>        &quot;value&quot;： 90000<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>查询id符合<code>id&lt;=80000 || id&gt;90000</code>的一个User数组。</p>
+<h4 id="3-包含选项范围"><a href="#3-包含选项范围" class="headerlink" title="3. 包含选项范围"></a>3. 包含选项范围</h4><p>APIJSON中 <code>[&quot;contactIdList&lt;&gt;&quot;:38710]</code>等价于执行SQL过滤条件<code>json_contains(contactIdList,38710)</code>。查询contactIdList包含38710的一个User数组。</p>
+<p>但是出于安全性方面的考虑，Nop平台不支持直接执行前端传过来的SQL片段，也不支持执行前端传过来的SQL函数调用，所有的函数调用必须在后台封装为操作符或者数据字段，不直接暴露给前端。</p>
+<p>对于上面的需求，我们引入在后台的XMeta元数据模型中引入一个转换配置。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;contactIdList&quot;</span> <span class="hljs-attr">queryable</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">allowFilterOp</span>=<span class="hljs-string">&quot;contains,eq&quot;</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">graphql:transFilter</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">filter:sql</span>&gt;</span><br>             json_contains(o.contactIdList,$&#123;value&#125;)<br>          <span class="hljs-tag">&lt;/<span class="hljs-name">filter:sql</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:transFilter</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>出于安全性方面的考虑，缺省只允许通过in或者eq运算符来查询。如果要使用其他查询运算符，必须通过allowFilterOp属性进行配置。</li>
+<li>可以配置<code>&lt;graphql:transFilter&gt;</code>来执行转换逻辑。例子中时使用<code>filter.xlib</code>标签库中的<code>&lt;filter:sql&gt;</code>标签函数来动态生成SQL片段。</li>
+<li>如果感觉上面的配置有些繁琐，可以利用Nop平台内置的元编程机制在编译期为JSON类型的字段统一生成相应的transFilter配置。这样看起来就像是原生支持json_contains运算符。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;prop name=&quot;contactIdList&quot; allowFilterOp=&quot;json_contains&quot;/&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在编译期识别到json_contains运算符后可以自动生成<code>&lt;graphql:transFilter&gt;</code>配置。</li>
+</ul>
+<p>关于复杂查询条件的配置，可以参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5PVIrgqjlPQ549V9RZbDdg">Nop入门：如何实现复杂查询</a></p>
+<h4 id="4-判断是否存在"><a href="#4-判断是否存在" class="headerlink" title="4. 判断是否存在"></a>4. 判断是否存在</h4><p>APIJSON中，如下调用</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><span class="hljs-attr">&quot;id&#125;&#123;@&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;from&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;Comment&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;Comment&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>   <span class="hljs-attr">&quot;momentId&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">15</span><br> <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>可以表示子查询过滤</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span>(<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> Comment <span class="hljs-keyword">WHERE</span> momentId<span class="hljs-operator">=</span><span class="hljs-number">15</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在Nop平台中我们同样可以采用transFilter配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;existsComment&quot;</span> <span class="hljs-attr">allowFilterOp</span>=<span class="hljs-string">&quot;exists&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">graphql:transFilter</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">filter:sql</span>&gt;</span><br>          EXISTS(SELECT * FROM Comment o2 WHERE o2.momentId=$&#123;filter.getAttr(&#x27;momentId&#x27;)&#125;)<br>      <span class="hljs-tag">&lt;/<span class="hljs-name">filter:sql</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:transFilter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-远程调用函数"><a href="#5-远程调用函数" class="headerlink" title="5. 远程调用函数"></a>5. 远程调用函数</h4><p>在APIJSON中可以通过函数表达式来调用远程函数。例如</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;isPraised()&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;isContain(praiseUserIdList,userId)&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>可以表示调用远程函数<code>boolean isContain(JSONObject request, String array, String value)</code>。</p>
+<p>在Nop平台中通过GraphQL协议本身就支持属性函数的调用。同样的，基于安全性的考虑，某个属性具体调用哪个函数必须事先在XMeta元模型或者XBiz业务模型中声明，不能直接通过前端传递。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 在User.xmeta中增加isPraised计算属性 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;isPraised&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;praiseUserIdList&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;List&lt;String&gt;&quot;</span> /&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">getter</span>&gt;</span><br>    const api = inject(&quot;service_isContains&quot;);<br>    return api.invoke(&#123;praiseUserIdList,userId:entity.id&#125;);<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">getter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在getter配置中可以使用entity来访问当前实体。</li>
+<li>可以使用inject函数从IoC容器中获取bean，或者使用import语法导入Java类。</li>
+<li>可以利用XPL模板语言的标签抽象机制类简化调用。例如</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;prop name=&quot;isPraised&quot;&gt;<br>   &lt;getter&gt;<br>      &lt;api:invoke name=&quot;isContains&quot; args=&quot;$&#123;&#123;praiseUserIdList, userId:entityId&#125;&#125;&quot; /&gt;<br>   &lt;/getter&gt;<br>&lt;/prop&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-存储过程"><a href="#6-存储过程" class="headerlink" title="6. 存储过程"></a>6. 存储过程</h4><p>可以仿照上一节的做法，在getter中通过Xpl模板语言来调用存储过程。NopDao模块中的IJdbcTemplate接口具有callProc函数，可以用它来调用存储过程。</p>
+<h4 id="7-引用赋值"><a href="#7-引用赋值" class="headerlink" title="7. 引用赋值"></a>7. 引用赋值</h4><p>利用NopORM引擎的关联查询能力，我们可以使用<code>user.dept.manager</code>这种复合属性表达式来访问对象树中的关联属性。在Java代码以及EQL对象查询语法中，我们都可以使用同样的复合属性表达式。</p>
+<p>例如在getter配置中，我们可以使用复合属性表达式从当前实体上获取关联属性值</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;managerName&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">getter</span>&gt;</span><br>    return entity.dept.manager.name<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">getter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="8-子查询"><a href="#8-子查询" class="headerlink" title="8. 子查询"></a>8. 子查询</h4><p>使用<code>graphql:transFilter</code>配置可以实现对子查询条件的封装.</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;minUser&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">graphql:transFilter</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">filter:sql</span>&gt;</span><br>       o.id in (select min(o2.userId)) from Comment o2<br>     <span class="hljs-tag">&lt;/<span class="hljs-name">filter:sql</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">graphql:transFilter</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>前台提交查询条件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findFirst?filter_minUser=1<br></code></pre></td></tr></table></figure>
+
+<h4 id="9-模糊搜索"><a href="#9-模糊搜索" class="headerlink" title="9. 模糊搜索"></a>9. 模糊搜索</h4><p>Nop平台内置的QueryBean模型支持contains, startsWith, endsWith, like等字符串部分匹配运算符，可以直接在url中使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findList?filter_userName__startsWith=a<br></code></pre></td></tr></table></figure>
+
+<h4 id="10-正则匹配"><a href="#10-正则匹配" class="headerlink" title="10. 正则匹配"></a>10. 正则匹配</h4><p>通过regex运算符可以表达正则匹配</p>
+<h4 id="11-连续范围"><a href="#11-连续范围" class="headerlink" title="11. 连续范围"></a>11. 连续范围</h4><p>通过between, dateBetween等运算符可以实现SQL的between语义。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;between&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;date&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;min&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2017-10-01&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;max&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2018-10-01&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果使用简化的filter查询参数，则对应于</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/r/User__findList?filter_date__between=2017-10-01,2018-10-01<br></code></pre></td></tr></table></figure>
+
+<h4 id="12-新建别名"><a href="#12-新建别名" class="headerlink" title="12. 新建别名"></a>12. 新建别名</h4><p>GraphQL规范中内置了别名机制，可以在返回数据的时候为每个属性指定一个别名。而在ORM层面，本身底层的NopORM在映射时就可以为数据库字段选择映射到的实体属性名，而且在ORM层面也具有alias配置，利用它我们可以将关联实体表上的字段映射到当前实体上。在修改以及查询的时候，aliasu对应的字段与实体原生字段完全一样使用。</p>
+<p>利用ORM层面的alias机制，我们可以将使用纵表保存的扩展字段映射到当前实体上成为与普通字段完全相同的属性形式，从而简化扩展字段的使用。</p>
+<p>对于扩展字段配置，可以参见<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wL411D7g7/">B站视频：如何在不改库的情况下为实体增加扩展属性</a></p>
+<h4 id="13-增加或扩展"><a href="#13-增加或扩展" class="headerlink" title="13. 增加或扩展"></a>13. 增加或扩展</h4><p>在APIJSON中，可以通过<code>&quot;key+&quot;</code>语法表示在原有基础上增加，例如<code>&quot;praiseUserIdList+&quot;:[82001]</code>，对应SQL是<code>json_insert(praiseUserIdList,82001)</code>，添加一个点赞用户id，即这个用户点了赞</p>
+<p>Nop平台采用标准的ORM设计，一般要求先获取数据到Java内存中，然后修改相应字段，发现存在差异后再生成update语句更新数据库。因此Nop平台中的做法并不会使用<code>json_insert</code>这种调用，而是直接映射到Java中的列表数据，然后调用java的add方法即可。</p>
+<p>对于子表结构，可以提交子表的差量更新数据到后台，通过<code>_chgType=A</code>，<code>_chgType=D</code>，<code>_chgType=U</code>等来区分新增、修改、删除等不同的情况。</p>
+<p>目前Nop平台没有提供类似于APIJSON的列表差量更新机制，一般类似的需求可以通过配置xbiz模型实现。如果一定要增加类似的做法，Nop平台也不会选择在key的结构上增加特殊约定，而是会采用前缀引导语法，在value的结构上动手脚。<br>例如，我们可以约定<code>@delta：+82001，-32001</code>表示向集合中增加82001元素，删除32001元素。与APIJSON的<code>key+</code>语法相比，这种在值的前面增加前缀的方式更加灵活，不影响对象整体结构（对象的key没有变），完全是一种局部增强。<br>而且，APIJSON的语法也无法表达同时增加几个元素，又减少另外几个元素这种混合型变更。</p>
+<blockquote>
+<p>在value的层面增加前缀，影响的只是单个key对应的值。而如果在key的层面约定复杂结构，则影响的不是当前key，而是更上一层的父对象。在具体处理的时候也无法利用映射机制快速判断某个key是否存在，是否唯一等。归根节点是因为key的变化破坏了原有的结构。</p>
+</blockquote>
+<p>关于前缀引导语法的详细介绍，可以参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/548314138">DSL分层语法设计及前缀引导语法</a></p>
+<h4 id="14-减少或去除"><a href="#14-减少或去除" class="headerlink" title="14. 减少或去除"></a>14. 减少或去除</h4><p>在APIJSON中，可以使用<code>key-:</code>语法表示在原有基础上减少，例如 <code>&quot;balance-&quot;:100.00</code>，对应SQL是<code>balance = balance - 100.00</code>，余额减少100.00，即花费了100元</p>
+<p>类似于上一节的情况，Nop平台采用标准的ORM视角，基本都要求先获取数据到内存中，因此直接在实体上调用<code>setBalance(entity.getBalance()-100)</code>即可。实体上一般具有乐观锁机制，可以保证更新时不会破坏数据一致性。</p>
+<p>对于少数需要直接在数据库中执行递增或者递减语法的情况，可以在XBiz模型中直接执行SQL语句来进行处理。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;action name=&quot;changeAmount&quot;&gt;<br>  &lt;arg name=&quot;accountId&quot; type=&quot;String&quot; /&gt;<br>  &lt;arg name=&quot;delta&quot; type=&quot;Double&quot; /&gt;<br><br>  &lt;source&gt;<br>    &lt;dao:ExecuteUpdate&gt;<br>      update Account o set o.balance = o.balance - $&#123;delta&#125; where accountId = $&#123;accountId&#125;<br>    &lt;/dao:ExecuteUpdate&gt;<br>  &lt;/source&gt;<br>&lt;/action&gt;<br></code></pre></td></tr></table></figure>
+
+<p>与上一节的处理类似，如果一定要引入类似于APIJSON的差量更新机制，可以使用<code>@delta:</code>前缀引导语法。</p>
+<h4 id="15-比较运算"><a href="#15-比较运算" class="headerlink" title="15. 比较运算"></a>15. 比较运算</h4><p>Nop平台内置了gt, ge,eq, lt, le等比较运算符。如果要表示不等于，可以使用ne运算符。此外还提供了isEmpty, notEmpty, isNull, notNull, isBlank, notBlank等方便的空值判断。</p>
+<h4 id="16-逻辑运算"><a href="#16-逻辑运算" class="headerlink" title="16. 逻辑运算"></a>16. 逻辑运算</h4><p>Nop平台内置了and、or、not等逻辑运算符，并可以自由的嵌套组合。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;or&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;$body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;notIn&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;id&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gt&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;status&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的查询条件表示 <code>(id not in [1,2] or status &gt; 1)</code></p>
+<h4 id="17-数组关键词-可自定义"><a href="#17-数组关键词-可自定义" class="headerlink" title="17. 数组关键词, 可自定义"></a>17. 数组关键词, 可自定义</h4><p>Nop平台内置的CrudBizModel提供了findPage和findList等多种集合查询函数。其中findPage返回PageBean对象，它提供了total, page, cursor等多种返回结果值。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PageBean</span>&lt;T&gt;&#123;<br><br>    List&lt;T&gt; items;<br><br>    <span class="hljs-type">long</span> total;<br>    <span class="hljs-type">long</span> offset;<br>    <span class="hljs-type">int</span> limit;<br>    Boolean hasPrev;<br>    Boolean hasNext;<br>    String prevCursor;<br>    String nextCursor;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它支持<code>offset/limit</code>这种按位置下标分页，也支持<code>id&gt; :cursor limit 100</code>这种按值排序分页。</p>
+<p>对于子表集合，支持类似React Relay框架的Connection分页机制，也支持QueryBean这种分页机制。另外，与APIJSON不同，Nop平台出于安全性的考虑，不允许在前台指定表关联关系，而必须在后台的xmeta或者orm模型中指定。<br>在后台指定还有一个好处是自动复用，就不需要在多个前端请求中重复表达数据关联关系。例如在ORM层面指定了表A和表B的关联，以及表B与表C的关联之后，<code>a.b.c</code>这种复合属性表达式可以自动推导出A到B再到C的关联关系，从而极大的减少信息重复表达。</p>
+<p>Nop平台还支持润乾软件公司提出的一种所谓DQL(Dimentional Query Language)查询机制，可以极大的降低主子表数据的统计查询复杂度。</p>
+<p>借助于GraphQL的DataLoader机制，我们在完全不修改PageBean类定义的情况下，可以通过增加DataLoader的方式，为后台的findPage服务调用增加额外的返回属性，具体介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/H3SxiFAsqVJz0PR15tWkww">Nop入门：如何扩展已有服务</a></p>
+<h4 id="18-对象关键词，可自定义"><a href="#18-对象关键词，可自定义" class="headerlink" title="18. 对象关键词，可自定义"></a>18. 对象关键词，可自定义</h4><p>Nop平台并不需要像APIJSON这样，在底层语法层面引入大量特殊约定的关键词，而是使用传统的方法参数即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/User__findList?@selection=id,sex,name<br><br>&#123;<br>  &quot;filter&quot;: &#123;<br>    &quot;$type&quot;: &quot;and&quot;,<br>    &quot;$body&quot;:[<br>      &#123;<br>        &quot;$type&quot;: &quot;contains&quot;,<br>        &quot;name&quot;: &quot;name&quot;,<br>        &quot;value&quot;: &quot;a&quot;<br>      &#125;,<br>      &#123;<br>        &quot;$type&quot;: &quot;contains&quot;,<br>        &quot;name&quot;: &quot;tag&quot;,<br>        &quot;value&quot;: &quot;a&quot;<br>      &#125;<br>    ]<br>  &#125;,<br>  &quot;orderBy&quot;: [<br>    &#123;<br>      &quot;field&quot;: &quot;name&quot;,<br>      &quot;desc&quot;: true,<br>    &#125;,<br>    &#123;<br>      &quot;field&quot;: &quot;id&quot;,<br>      &quot;desc&quot;: false<br>    &#125;<br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的查询条件等价于</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> id,sex,name<br><span class="hljs-keyword">from</span> <span class="hljs-keyword">User</span><br><span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%a%&#x27;</span> <span class="hljs-keyword">and</span> tag <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%a%&#x27;</span><br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> name <span class="hljs-keyword">desc</span>, id <span class="hljs-keyword">asc</span><br></code></pre></td></tr></table></figure>
+
+<p>更复杂的查询语句可以直接在后台的xbiz模型中调用<code>dao.xlib</code>标签库中的标签实现。可以直接使用EQL对象查询语法，非常类似于SQL语言，支持各种SQL函数和复杂的嵌套子查询，比使用JSON语法要简单得多。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">&lt;</span>dao:FindPage <span class="hljs-keyword">offset</span><span class="hljs-operator">=</span>&quot;0&quot; limit<span class="hljs-operator">=</span>&quot;100&quot;<span class="hljs-operator">&gt;</span><br>   <span class="hljs-keyword">with</span> SectionCount <span class="hljs-keyword">as</span><br>    (<br>    <span class="hljs-keyword">select</span> t.section, <span class="hljs-built_in">count</span>(t.studentId) <span class="hljs-keyword">as</span> studentCount<br>    <span class="hljs-keyword">from</span> Taking t<br>    <span class="hljs-keyword">where</span> t.section.year <span class="hljs-operator">=</span> <span class="hljs-number">2017</span> <span class="hljs-keyword">and</span> t.section.semester <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;Fall&#x27;</span><br>    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> t.section<br>    )<br>    <span class="hljs-keyword">select</span> o.section, o.studentCount<br>    <span class="hljs-keyword">from</span> SectionCount o<br>    <span class="hljs-keyword">where</span> o.studentCount <span class="hljs-operator">=</span> (<br>    <span class="hljs-keyword">select</span> <span class="hljs-built_in">max</span>(sc.studentCount) <span class="hljs-keyword">from</span> SectionCount sc<br>    )<br><span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>dao:FindPage<span class="hljs-operator">&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>在xbiz模型中，我们还可以利用xpl模板标签来对SQL构造的过程进行进一步的抽象，简化复杂SQL的编写。EQL语法可以支持最复杂的SQL语句，而在APIJSON的设计中很多复杂SQL是难以直接表达的，特别是我们没有一种很简单的抽象手段将动态SQL的构造过程抽象到某个局部概念中。</p>
+<p>关于复杂SQL的进一步介绍，可以参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_5-CSfY5SXquknvdINemNA">Nop入门：动态SQL管理</a></p>
+<h3 id="19-全局关键词"><a href="#19-全局关键词" class="headerlink" title="19. 全局关键词"></a>19. 全局关键词</h3><p>Nop平台并不是专为数据库访问而设计的，CrudBizModel模型仅仅是它其中提供的一个很普通的帮助类。NopGraphQL是一个通用的GraphQL引擎， 而NopORM是一个与Hibernate定位差不多的一个通用的ORM引擎。借助于这些基础引擎，结合BizModel等业务流模型，我们可以提供更加复杂、更加通用的低代码处理平台。</p>
+<p>参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2mFC0nQon_l2M82tOlJVhg">从零开始编写的下一代逻辑编排引擎 NopTaskFlow</a>,<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CMBcV9Riehlf4_Ds_BmyEw">通过NopTaskFlow逻辑编排实现后台服务函数</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>Nop平台可以通过配置实现APIJSON所提供的各项功能</li>
+<li>Nop平台在安全性方面控制更加严格，可以同时支持小型快速原型的开发和严谨的大型项目的持久演化</li>
+<li>Nop平台提供了业内独一无二的可扩展性，参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vCPpnE-VMF7GW7yCOGWKxw">Nop平台为什么是一个独一无二的开源软件开发平台 </a></li>
+</ol>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/compare/nop-vs-apijson.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
