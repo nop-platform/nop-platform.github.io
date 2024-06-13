@@ -1263,7 +1263,7 @@
 <p>Nop平台作为一个通用的下一代低代码平台，它的发展目标远比APIJSON要宏大得多。Nop平台推行的是所谓面向语言编程范式，即先支持用户快速开发属于自己的DSL领域特定语言，然后再用这个DSL去开发具体业务。APIJSON提供的功能可以看作是一种面向数据访问的DSL，而Nop平台提供了开发类似DSL的底层支撑工具，并内置了NopGraphQL和NopORM等一系列成熟的DSL，便于用户在此基础上组合使用。</p>
 </blockquote>
 <h2 id="一-示例"><a href="#一-示例" class="headerlink" title="一.示例"></a>一.示例</h2><p>在Nop平台中，REST请求由NopGraphQL引擎来负责执行。NopGraphQL同时支持GraphQL协议、gRPC协议、REST协议等多种访问协议，可以使用多种方式来调用同一个后台服务函数。<br>对于REST请求方式，NopGraphQL支持两种访问连接模式： <code>/r/&#123;bizObjName&#125;__&#123;bizAction&#125;</code>和<code>/p/&#123;bizObjName&#125;__&#123;bizAction&#125;</code>。</p>
-<p>其中<code>/r/</code>请求会发现<code>ApiResponse&lt;T&gt;</code>结构，它包含headers, data, stats, code, msg等属性。 如果status为0，则表示成功。如果失败，则通过code来返回错误码，通过msg来返回异常消息。</p>
+<p>其中<code>/r/</code>请求会返回<code>ApiResponse&lt;T&gt;</code>结构，它包含headers, data, stats, code, msg等属性。 如果status为0，则表示成功。如果失败，则通过code来返回错误码，通过msg来返回异常消息。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiResponse</span>&lt;T&gt;&#123;<br>  Map&lt;String,Object&gt; headers;<br>  T data;<br>  <span class="hljs-type">int</span> status;<br>  String code;<br>  String message;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>/p/</code>请求会直接返回<code>T</code>结构，而不会使用<code>ApiResponse&lt;T&gt;</code>来包装。此外<code>/p/</code>请求会设置contentType，因此下载二进制文件、返回XML格式等功能也需要使用<code>/p/</code>请求。<br>例如Nop平台内置的<code>/p/DevDoc__beans</code>会以XML格式返回NopIoC中所有启用的bean的配置。</p>
@@ -1622,8 +1622,8 @@
 <h3 id="19-全局关键词"><a href="#19-全局关键词" class="headerlink" title="19. 全局关键词"></a>19. 全局关键词</h3><p>Nop平台并不是专为数据库访问而设计的，CrudBizModel模型仅仅是它其中提供的一个很普通的帮助类。NopGraphQL是一个通用的GraphQL引擎， 而NopORM是一个与Hibernate定位差不多的一个通用的ORM引擎。借助于这些基础引擎，结合BizModel等业务流模型，我们可以提供更加复杂、更加通用的低代码处理平台。</p>
 <p>参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/2mFC0nQon_l2M82tOlJVhg">从零开始编写的下一代逻辑编排引擎 NopTaskFlow</a>,<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CMBcV9Riehlf4_Ds_BmyEw">通过NopTaskFlow逻辑编排实现后台服务函数</a></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>Nop平台可以通过配置实现APIJSON所提供的各项功能</li>
-<li>Nop平台在安全性方面控制更加严格，可以同时支持小型快速原型的开发和严谨的大型项目的持久演化</li>
+<li>Nop平台可以通过配置实现APIJSON所提供的各项功能,且使用标准的GraphQL协议，无需太多特殊约定</li>
+<li>Nop平台在安全性方面控制更加严格，支持严格的操作权限、字段权限和数据权限控制，可以同时支持小型快速原型的开发和严谨的大型项目的持久演化</li>
 <li>Nop平台提供了业内独一无二的可扩展性，参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vCPpnE-VMF7GW7yCOGWKxw">Nop平台为什么是一个独一无二的开源软件开发平台 </a></li>
 </ol>
 
