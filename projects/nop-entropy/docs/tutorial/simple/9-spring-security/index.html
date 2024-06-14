@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop入门：集成使用SpringSecurity - Nop</title>
+
+
+  <meta property="og:title" content="Nop入门：集成使用SpringSecurity">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Nop入门：集成使用SpringSecurity</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>与Spring集成的时候有些人希望沿用以前的登录认证机制，不想引入Nop平台的用户、角色表等，此时可以不引入<code>nop-auth-service</code>服务，然后适配少数几个接口即可。</p>
+<p>示例工程可以参见 nop-spring-security-demo。</p>
+<h2 id="一-引入nop-spring-web-starter依赖"><a href="#一-引入nop-spring-web-starter依赖" class="headerlink" title="一. 引入nop-spring-web-starter依赖"></a>一. 引入nop-spring-web-starter依赖</h2><p>这个包会使用SpringBoot的配置自发现机制启动Nop平台，并注册SpringGraphWebService。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.entropy-cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nop-spring-web-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在application.yaml配置文件中启用如下配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">nop:</span><br>  <span class="hljs-attr">auth:</span><br>    <span class="hljs-attr">enable-data-auth:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">enable-action-auth:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">http-server-filter:</span><br>      <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>这里启用了数据权限和操作权限校验，并禁用了内置的<code>AuthHttpServerFilter</code>，原先是由这个Filter负责检查登录状态。</p>
+<h2 id="二-实现IActionAuthChecker接口"><a href="#二-实现IActionAuthChecker接口" class="headerlink" title="二. 实现IActionAuthChecker接口"></a>二. 实现IActionAuthChecker接口</h2><p>Nop平台内部使用IActionAuthChecker接口来检查操作权限，而SpringSecurity则是使用PermissionEvaluator接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringActionAuthChecker</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IActionAuthChecker</span> &#123;<br>  <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">LOG</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(SpringActionAuthChecker.class);<br><br>  <span class="hljs-meta">@Inject</span><br>  PermissionEvaluator permissionEvaluator;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPermitted</span><span class="hljs-params">(String permission, ISecurityContext context)</span> &#123;<br>    LOG.info(<span class="hljs-string">&quot;nop.check-action-auth:permission=&#123;&#125;,user=&#123;&#125;&quot;</span>, permission, context.getUserContext());<br><br>    <span class="hljs-keyword">if</span> (context.getUserContext() == <span class="hljs-literal">null</span>)<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-type">IUserContext</span> <span class="hljs-variable">userContext</span> <span class="hljs-operator">=</span> context.getUserContext();<br><br>    <span class="hljs-comment">// 这里如何构造token需要根据具体授权框架的要求来</span><br>    <span class="hljs-type">UserIdToken</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserIdToken</span>(userContext.getUserId());<br>    <span class="hljs-keyword">return</span> permissionEvaluator.hasPermission(token, <span class="hljs-string">&quot;BizObject&quot;</span>, permission);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一般情况下Nop平台中的permission格式为 <code>&#123;bizObjName&#125;:&#123;method&#125;</code>，代码生成时会生成<code>NopAuthUser:query</code><br>和<code>NopAuthUser:mutation</code>这种权限标识，它们分别对应读操作（GraphQL的query）和写操作（GraphQL的mutation）。<br>自己根据业务情况可以进一步细化，比如将upload和download独立出来等。</p>
+<p>当然，具体permission的格式并没有硬性要求，都是自己内部约定的，只要底层的PermissionEvaluator能够识别即可。</p>
+<h2 id="三-SpringSecurity登录成功后初始化Nop平台的用户上下文"><a href="#三-SpringSecurity登录成功后初始化Nop平台的用户上下文" class="headerlink" title="三. SpringSecurity登录成功后初始化Nop平台的用户上下文"></a>三. SpringSecurity登录成功后初始化Nop平台的用户上下文</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">void</span> <span class="hljs-title function_">onLoginSuccess</span>(<span class="hljs-params">IContext context, HttpServletRequest request</span>) &#123;<br>     <span class="hljs-title class_">String</span> userId = <span class="hljs-string">&quot;nop&quot;</span>;<br>     <span class="hljs-title class_">String</span> userName = <span class="hljs-string">&quot;123&quot;</span>;<br><br>     <span class="hljs-comment">// 这里应该按照具体框架要求设置token，这里仅仅是</span><br>     <span class="hljs-title class_">SecurityContext</span> secureContext = <span class="hljs-title class_">SecurityContextHolder</span>.<span class="hljs-title function_">getContext</span>();<br>     secureContext.<span class="hljs-title function_">setAuthentication</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">UserIdToken</span>(userId));<br>     request.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-title class_">RequestAttributeSecurityContextRepository</span>.<span class="hljs-property">DEFAULT_REQUEST_ATTR_NAME</span>, secureContext);<br><br>     <span class="hljs-comment">// context上保存了一些最基本的信息，IUserContext是更多的用户相关信息</span><br>     context.<span class="hljs-title function_">setUserId</span>(userId);<br>     context.<span class="hljs-title function_">setUserName</span>(userName);<br><br>     <span class="hljs-comment">// 这里模拟登录成功后设置user上下文</span><br>     <span class="hljs-title class_">UserContextImpl</span> userContext = <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserContextImpl</span>();<br>     userContext.<span class="hljs-title function_">setAccessToken</span>(<span class="hljs-string">&quot;aaa&quot;</span>);<br>     userContext.<span class="hljs-title function_">setLastAccessTime</span>(<span class="hljs-title class_">CoreMetrics</span>.<span class="hljs-title function_">currentTimeMillis</span>());<br>     userContext.<span class="hljs-title function_">setUserId</span>(userId);<br>     userContext.<span class="hljs-title function_">setUserName</span>(userName);<br>     userContext.<span class="hljs-title function_">setRoles</span>(<span class="hljs-title class_">Set</span>.<span class="hljs-title function_">of</span>(<span class="hljs-string">&quot;manager&quot;</span>, <span class="hljs-string">&quot;checker&quot;</span>));<br><br>     <span class="hljs-title class_">IUserContext</span>.<span class="hljs-title function_">set</span>(userContext);<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>SecurityContextHolder是SpringSecurity登录验证成功后保存安全上下文的地方。这里使用的UserIdToken仅仅是一个示例，具体保存什么内容要看具体登录框架的要求。</li>
+<li>为了支持异步调用，这里还需要把安全上下文保存到HttpServletRequest上，否则Controller返回异步结果时会出现上下文丢失的情况。</li>
+</ul>
+<h2 id="四-调整SpringSecurity的配置"><a href="#四-调整SpringSecurity的配置" class="headerlink" title="四. 调整SpringSecurity的配置"></a>四. 调整SpringSecurity的配置</h2><p>Nop平台的ContextHttpServerFilter需要在SpringSecurity的认证Filter之前执行，在认证Filter中会需要调用上面的onLoginSuccess函数注册用户上下文，此时要求Nop平台的IContext已经初始化完毕。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">@<span class="hljs-title class_">EnableWebSecurity</span><br>@<span class="hljs-title class_">EnableMethodSecurity</span><br>@<span class="hljs-title class_">Configuration</span><br>public <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringSecurityConfig</span> &#123;<br>    @<span class="hljs-title class_">Inject</span><br>    <span class="hljs-title class_">SpringHttpServerFilterConfiguration</span> config;<br><br>    @<span class="hljs-title class_">Bean</span><br>    public <span class="hljs-title class_">SecurityFilterChain</span> <span class="hljs-title function_">securityFilterChain</span>(<span class="hljs-title class_">HttpSecurity</span> http) throws <span class="hljs-title class_">Exception</span> &#123;<br>        http<br>                .<span class="hljs-title function_">authorizeRequests</span>()<br>                .<span class="hljs-title function_">requestMatchers</span>(<span class="hljs-string">&quot;/r/**&quot;</span>).<span class="hljs-title function_">authenticated</span>()<br>                .<span class="hljs-title function_">requestMatchers</span>(<span class="hljs-string">&quot;/p/**&quot;</span>).<span class="hljs-title function_">authenticated</span>()<br>                .<span class="hljs-title function_">requestMatchers</span>(<span class="hljs-string">&quot;/f/**&quot;</span>).<span class="hljs-title function_">authenticated</span>()<br>                .<span class="hljs-title function_">requestMatchers</span>(<span class="hljs-string">&quot;/graphql&quot;</span>).<span class="hljs-title function_">authenticated</span>()<br>                .<span class="hljs-title function_">requestMatchers</span>(<span class="hljs-string">&quot;/error&quot;</span>).<span class="hljs-title function_">permitAll</span>();<br><br>        http<br>                .<span class="hljs-title function_">csrf</span>(<span class="hljs-title class_">Customizer</span>.<span class="hljs-title function_">withDefaults</span>())<br>                .<span class="hljs-title function_">addFilterAfter</span>(<span class="hljs-title function_">authFilter</span>(), <span class="hljs-title class_">CsrfFilter</span>.<span class="hljs-property">class</span>)<br>                <span class="hljs-comment">// 将Nop Context的初始化放到authFilter之前</span><br>                .<span class="hljs-title function_">addFilterBefore</span>(config.<span class="hljs-title function_">registerSysFilter</span>().<span class="hljs-title function_">getFilter</span>(), <span class="hljs-title class_">WebAuthFilter</span>.<span class="hljs-property">class</span>);<br>        <span class="hljs-keyword">return</span> http.<span class="hljs-title function_">build</span>();<br>    &#125;<br><br>    <span class="hljs-comment">// 其他配置</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="五-使用-Auth注解"><a href="#五-使用-Auth注解" class="headerlink" title="五. 使用@Auth注解"></a>五. 使用<code>@Auth</code>注解</h2><p>在业务代码中我们可以使用<code>@Auth</code>注解来声明权限约束。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizModel(&quot;Demo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DemoBizModel</span> &#123;<br>  <span class="hljs-meta">@BizQuery</span><br>  <span class="hljs-meta">@Auth(permissions = &quot;Demo:hello&quot;)</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">hello</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;message&quot;)</span> String message)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello:&quot;</span> + message;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在Spring的Controller中可以使用<code>@PreAuthorize</code>注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DemoController</span> &#123;<br><br>  <span class="hljs-meta">@GetMapping(&quot;/hello&quot;)</span><br>  <span class="hljs-meta">@PreAuthorize(&quot;hasPermission(&#x27;Biz&#x27;,&#x27;Demo:hello&#x27;)&quot;)</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">hello</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;message&quot;)</span> String message)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hi,&quot;</span> + message;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/tutorial/simple/9-spring-security.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
