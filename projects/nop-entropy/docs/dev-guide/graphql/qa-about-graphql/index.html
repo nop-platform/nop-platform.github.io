@@ -1298,7 +1298,7 @@
 
 <p>在这种视角下，<strong>GraphQL不过是一个pull mode的REST调用而已</strong>。在Nop平台的实现中，NopGraphQL实现了所谓的最小化信息表达，因此它没有任何对特定运行时环境的依赖，可以适配到任意的接口协议上，同时提供了GraphQL、REST、gRPC等多种调用方式。</p>
 <p>详细介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7Ou1h7NwyI4eAX4m_Zbftw">为什么在数学的意义上GraphQL严格的优于REST?</a></p>
-<h2 id="四-利用Fragment语法简化字段选择"><a href="#四-利用Fragment语法简化字段选择" class="headerlink" title="四. 利用Fragment语法简化字段选择"></a>四. 利用Fragment语法简化字段选择</h2><p>GraphQL内置了所谓的Fragment概念，它本质上时一种可重用的字段集，可以在多个查询中被引用。我们可以给每个类型都定义一个<code>F_defaults</code>片段，它包含所有缺省返回字段（在Nop平台中对应于非lazy加载的字段）。</p>
+<h2 id="四-利用Fragment语法简化字段选择"><a href="#四-利用Fragment语法简化字段选择" class="headerlink" title="四. 利用Fragment语法简化字段选择"></a>四. 利用Fragment语法简化字段选择</h2><p>GraphQL内置了所谓的Fragment概念，它本质上是一种可重用的字段集，可以在多个查询中被引用。我们可以给每个类型都定义一个<code>F_defaults</code>片段，它包含所有缺省返回字段（在Nop平台中对应于非lazy加载的字段）。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">fragment F_defaults on Book &#123;<br>  title<br>  pages<br>&#125;<br><br>fragment F_defaults on Author &#123;<br>  name<br>  birthdate<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>借助于Fragment定义，就可以简化服务调用的编写。</p>
