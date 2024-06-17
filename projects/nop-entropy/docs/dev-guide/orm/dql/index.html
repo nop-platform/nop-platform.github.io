@@ -1293,6 +1293,12 @@
 </li>
 </ol>
 <p>Nop平台中的MdxQueryExecutor实现了类似DQL的维度对齐查询。因为EQL已经内置支持了对象属性关联，所以只要实现对QueryBean对象的拆分、分片执行、数据并置融合就可以了。</p>
+<h2 id="MdxQueryExecutor的执行逻辑"><a href="#MdxQueryExecutor的执行逻辑" class="headerlink" title="MdxQueryExecutor的执行逻辑"></a>MdxQueryExecutor的执行逻辑</h2><ol>
+<li>拆分出主表字段和关联子表字段</li>
+<li>如果主表字段包含汇总自动，则非汇总的字段自动被加入group by部分，并成为dimFields。查询子表的时候会取主表dimFields对应的结果，然后作为filter过滤子表数据</li>
+<li>求取主表的dimFields和关联子表的关联字段的交集，则成为子表的dimFields。取交集是因为主表中的关联字段可能被汇总掉了，从而不是最终的dimFields的一部分。dimFields必须在选择列表中，因为最后需要利用这些字段进行关联。</li>
+<li>如果是一对多关联，则dimFields全部加入group by</li>
+</ol>
 
 </div>
       <footer class="Article-footer col-md-3">
