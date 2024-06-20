@@ -1329,7 +1329,8 @@
 <p>库文件按照页面的粒度进行加载，在加载schema之后先扫描所有lib，动态加载所有库。加载完毕之后再根据schema创建Page对象。</p>
 <h3 id="Schema渲染"><a href="#Schema渲染" class="headerlink" title="Schema渲染"></a>Schema渲染</h3><p>Schema实际渲染的时候可能需要插入额外的中间节点，用于适配低代码框架和Nop上下文</p>
 <p><code>xui:import</code>导入的函数不需要初始化，但是store则需要构建，需要额外处理。</p>
-
+<p>useStore(path)和useContext(StoreType)本质上是一回事</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Editor(data)<br><br>Editor = GenericEditor&lt;Components,Store&gt;<br><br>Components = Loader(componentLib)<br>Store = Loader(storeLib)<br><br>storeLib = Generator&lt;EditorModel&gt;<br>componentLib = Generator&lt;EditorModel&gt;<br><br>eventHandler = store.method<br><br>data = useStore(state=&gt; selector(state))<br><br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
