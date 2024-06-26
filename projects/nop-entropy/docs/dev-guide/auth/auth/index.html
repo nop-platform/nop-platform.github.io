@@ -1337,7 +1337,7 @@
 <h3 id="通过NopAuthRoleDataAuth表来定义数据权限"><a href="#通过NopAuthRoleDataAuth表来定义数据权限" class="headerlink" title="通过NopAuthRoleDataAuth表来定义数据权限"></a>通过NopAuthRoleDataAuth表来定义数据权限</h3><p>数据库中定义的数据权限会和<code>data-auth.xml</code>配置文件中定义的权限合并。</p>
 <h3 id="业务场景拆分"><a href="#业务场景拆分" class="headerlink" title="业务场景拆分"></a>业务场景拆分</h3><p>经常出现一种情况是同样的业务对象在不同的业务场景中过滤条件不同，比如说每个人都可以查询自己的数据，而admin可以查询所有人的数据，但是他仍然需要一个查询自己数据的页面。<br>这本质上是同一个业务对象分裂为两个业务场景，一个是查询owner的数据，一个是查询全部数据。对于这种应用可以有三种解决方案：</p>
 <h4 id="1-对象拆分"><a href="#1-对象拆分" class="headerlink" title="1. 对象拆分"></a>1. 对象拆分</h4><p>   直接新建一个新的业务对象，比如<code>MyObject_self</code>，然后它会自动使用缺省的xmeta模型和xbiz配置。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;bean id=&quot;MyObject_self&quot; class=&quot;xxx.MyObjectBizModel&quot; /&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;bean id=&quot;MyObject_self&quot; class=&quot;xxx.MyObjectBizModel&quot; &gt;<br>  &lt;prop name=&quot;bizObjName&quot; value=&quot;MyObject_self&quot; /&gt;<br>&lt;/bean&gt;<br></code></pre></td></tr></table></figure>
 
 <p>如果增加<code>MyObject_self.xmeta</code>，则<code>MyObject_self</code>会使用这个meta配置，否则会使用缺省的MyObject.xmeta。对于xbiz配置，同样是这样处理。</p>
 <blockquote>
