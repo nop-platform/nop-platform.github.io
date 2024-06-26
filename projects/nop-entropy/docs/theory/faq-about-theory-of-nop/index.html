@@ -1258,7 +1258,7 @@
 
       </header>
       <div class="Article-content col-md-9"><h2 id="1-代理对象-被代理对象时，代表双向可逆转换吗？"><a href="#1-代理对象-被代理对象时，代表双向可逆转换吗？" class="headerlink" title="1. 代理对象&#x3D;被代理对象时，代表双向可逆转换吗？"></a>1. 代理对象&#x3D;被代理对象时，代表双向可逆转换吗？</h2><p>不是。<strong>代理对象或者说任何一种基于接口或者多态实现的解决方案，都可以看作是一种数学上的同态（homomorphic）映射，在范畴论中也就是所谓的函子(Functor)映射</strong>。</p>
-<p>因为有很多同学反映对同态这一数学概念不熟悉，下面我们就用一种就用一种不严谨的方式来简单讲解一下。假设在空间F中存在对象a,b,c,d…，它们之间存在某种运算关系f,g,h…。</p>
+<p>因为有很多同学反映对同态这一数学概念不熟悉，下面我们就用一种不严谨的方式来简单讲解一下。假设在空间F中存在对象a,b,c,d…，它们之间存在某种运算关系f,g,h…。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">f(a,b), g(b,c),h(b,d), ...<br></code></pre></td></tr></table></figure>
 
 <p>同态映射 $\phi: F \rightarrow G $是将空间F中的对象和运算关系映射到空间G中，且保持原空间F中的结构关系，也就是说同态映射是一种所谓的<strong>保结构映射</strong>。</p>
@@ -1268,13 +1268,13 @@
 <p><img src="/knosys/project-nop-entropy/theory/nop/homomorphic.png"></p>
 <p><strong>同态映射允许空间F中的多个对象映射到空间G中的同一个对象</strong>，比如上面的例子中c和d都映射到c’，这就很自然的形成一种化简机制：原空间F中的复杂关系映射到空间G中时可以减少元素数量和关系数量，从而相比于原先的结构实现简化，但是又保留了原先结构中的核心部分不变。</p>
 <p>回到我们最开始的问题。接口或者说多态机制可以看作如下同态映射</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">f(objA,objB)  ==映射到接口空间==&gt;  f&#x27;(interfaceA, interfaceB) <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">f(objA,objB)  ==映射到接口空间==&gt;  f&#x27;(interfaceA, interfaceB)<br></code></pre></td></tr></table></figure>
 
 <p>在原有的对象空间中，可能的对象关系很多，但是如果我们考虑一个新的空间，其中只考虑少量接口对象，然后将原对象空间中的结构投影到接口空间，则我们需要认知的对象数量减少了，而且函数的数量也减少了，更特别的，代码形式上<code>f&#39;</code>和<code>f</code>完全一样！但是我们需要认识到，对应于接口的函数f’和对应于对象的函数f完全相同并不是一件天经地义的事情。如果是基于泛型的某些语言，对于同样的函数源码，编译器也完全可能针对不同的对象生成不同的二进制代码。</p>
 <p><strong>借助于同态映射这一概念，我们可以很清楚的看出接口或者说所谓多态概念的技术价值</strong>。我们可以利用多态把真正需要编写的逻辑表达投影到一个子空间中，在子空间中保留了原始空间中的主要结构关系，不重要的细节关系被映射过程自动的隐藏起来。</p>
 <p>可逆计算理论中的可逆具有多重含义，其中一个含义是可逆变换，而可逆变换是一种同构关系，同态可以看作是一种单向映射，而同构是一种双向映射。具体介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Fngl7vYWhULn0VKeAEKPkQ">可逆计算理论中的可逆到底指的是什么？</a></p>
 <h2 id="2-PDF、HTML都可以看作是open-api的多重表象。比如转换为HTML后，需要css加样式，这部分就无法转回去了，这个css是不是就是差量，把差量找出来很多东西就可以拓展并信息可逆？"><a href="#2-PDF、HTML都可以看作是open-api的多重表象。比如转换为HTML后，需要css加样式，这部分就无法转回去了，这个css是不是就是差量，把差量找出来很多东西就可以拓展并信息可逆？" class="headerlink" title="2. PDF、HTML都可以看作是open api的多重表象。比如转换为HTML后，需要css加样式，这部分就无法转回去了，这个css是不是就是差量，把差量找出来很多东西就可以拓展并信息可逆？"></a>2. PDF、HTML都可以看作是open api的多重表象。比如转换为HTML后，需要css加样式，这部分就无法转回去了，这个css是不是就是差量，把差量找出来很多东西就可以拓展并信息可逆？</h2><p>在某种意义上说是的。</p>
-<p>实际应用中我们接触的到变换大部分是近似等价 </p>
+<p>实际应用中我们接触的到变换大部分是近似等价</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">A ~ F(B), G(A) ~ B<br></code></pre></td></tr></table></figure>
 
 <p>通过补充差量可以使得上面的关系成为等式</p>
