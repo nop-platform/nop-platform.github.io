@@ -1332,6 +1332,13 @@
 <li>可以使用import来引入Java类</li>
 <li>可以使用inject(beanName)引入IoC容器中定义的bean</li>
 </ul>
+<h2 id="条件样式"><a href="#条件样式" class="headerlink" title="条件样式"></a>条件样式</h2><p>可以根据条件动态计算得到单元格的样式。</p>
+<ol>
+<li><p>在报表模板中需要增加XptWorkbookModel这个Sheet页，在其中定义命名样式。<br><img src="/knosys/project-nop-entropy/user-guide/report/named-styles.png"></p>
+</li>
+<li><p>配置单元格的styleIdExpr</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">styleIdExpr=cell.ev == 2002 ? &#x27;red&#x27; : null<br></code></pre></td></tr></table></figure></li>
+</ol>
 
 </div>
       <footer class="Article-footer col-md-3">
