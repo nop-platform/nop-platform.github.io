@@ -1292,6 +1292,10 @@
 <li>菜单项对应的<code>resourceType=SUBM</code>， 页面中对应的具体的功能点（例如修改按钮）对应<code>resourceType=FNPT</code></li>
 <li>如果使用amis页面，需要配置<code>component=AMIS</code>，<code>url=页面的虚拟文件路径</code></li>
 </ol>
+<h3 id="按钮权限"><a href="#按钮权限" class="headerlink" title="按钮权限"></a>按钮权限</h3><ul>
+<li>在前端可以通过<code>SiteMap__getSiteMap?siteId=xx&amp;includeFunctionPoints=true</code>来获取到包含功能点定义的菜单配置。</li>
+<li>功能点可以对应到前端的按钮（多个按钮可以对应于一个功能点）。</li>
+</ul>
 <h3 id="通过界面配置权限"><a href="#通过界面配置权限" class="headerlink" title="通过界面配置权限"></a>通过界面配置权限</h3><p>先不要开启操作权限，通过界面增加admin角色，然后给指定用户分配admin角色，此后再开启操作权限。通过具有admin角色的用户给其他用户分配角色，<br>并为角色指定它所能访问的NopAuthResource。</p>
 <p>NopAuthResource按照siteId进行组织，缺省使用siteId&#x3D;MAIN作为主站点的网站菜单。nop-auth支持同时管理多个前端应用所对应的菜单链接。<br>比如siteId&#x3D;mobile可以用于移动端菜单，而siteId&#x3D;MAIN用于Web端等。</p>
 <h3 id="后台Action"><a href="#后台Action" class="headerlink" title="后台Action"></a>后台Action</h3><p>在action函数上通过<code>@Auth</code>注解来指定需要对应的<code>permissions</code>或者允许访问的<code>roles</code>。如果不指定，则按照是否是<code>@BizQuery</code><br>或者<code>@BizMutation</code>自动设置<code>permissions</code>为<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:query</code>，以及<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:mutation</code></p>

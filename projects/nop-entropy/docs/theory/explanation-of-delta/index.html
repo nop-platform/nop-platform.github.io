@@ -1261,6 +1261,9 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = Delta x-extends Generator&lt;DSL&gt;<br></code></pre></td></tr></table></figure>
 
 <p>Nop平台的整个实现可以看作是对这个公式的一种具体落地实践。这其中，最关键也是最容易引起误解的部分是可逆计算理论中的差量概念，也就是上面公式中的Delta。</p>
+<blockquote>
+<p>详细介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CwCQgYqQZxYmlZcfXEWlgA">可逆计算：下一代软件构造理论</a></p>
+</blockquote>
 <p>可逆计算可以看作是针对差量概念的一个系统化的完整理论，所以业内目前常见的基于差量概念的实践都可以在可逆计算理论的框架下得到诠释。我在举例时经常会提到git和docker，比如</p>
 <blockquote>
 <p>问: 什么是Delta? 每一次git的commit是不是一个delta？</p>
@@ -1271,12 +1274,12 @@
 <blockquote>
 <p>可逆计算理论对差量的理解和使用在数学层面上其实非常简单，只是它的应用对象不是一般人习以为常的数值或者数据，导致没有经过专门抽象训练的同学一时转不过来弯而已。</p>
 </blockquote>
-<p>因为有些同学反映对于此前文章中提到的数学名词感觉懵懵懂懂，所以在本文中我会尝试补充一些更详细的概念定义和分析步骤。如果仍然有感觉不清楚的地方，欢迎加入Nop平台的讨论群继续提问，讨论群的二维码见微信公众号的菜单。</p>
+<p>因为有些同学反映对于此前文章中提到的数学名词感觉懵懵懂懂，所以在本文中我会尝试补充一些更详细的概念定义和实例分析。如果仍然有感觉不清楚的地方，欢迎加入Nop平台的讨论群继续提问，讨论群的二维码见微信公众号的菜单。</p>
 <h2 id="一-差量的普适性和存在性"><a href="#一-差量的普适性和存在性" class="headerlink" title="一. 差量的普适性和存在性"></a>一. 差量的普适性和存在性</h2><p>在数学和物理领域，当我们提出一个新的概念时，第一步就是论证它的普适性和存在性。所以可逆计算对于差量概念的第一个关键性理解是：<strong>差量是普遍存在的</strong>。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">A = 0 + A<br></code></pre></td></tr></table></figure>
 
-<p>任何一个存在单位元的系统都可以很自然的定义出差量：任何一个全量都等价于单位元+自身，也就是说任何一个全量都是差量的特例。而单位元这个概念在一般情况下是自然存在的，比如什么都不干的情况下对应于空操作，而空操作和任何其他操作结合在一起都等价于这个操作本身。</p>
-<p>很多人听到<strong>全量是差量的特例</strong>这句话之后可能会感到很疑惑，这很显然，但是它有什么意义吗？一般人无法蒋数学原理和真实的物理世界联系起来，导致他们会认为数学的精确定义是无用的。这里有个很关键的推论是这样的：既然全量是差量的特例，那么原则上<strong>全量可以采用和差量一模一样的形式</strong>，没有必要为了表达差量，单独设计一个不同的差量形式。比如说，JSON格式的差量可以用JSON Patch语法来表达，但是JSON Patch的格式与原始的JSON格式有着很大的区别，它这个差量形式就是特制的，不是与全量格式保持一致的。</p>
+<p>任何一个存在单位元的系统都可以很自然的定义出差量：任何一个全量都等价于单位元+自身，也就是说任何一个全量都是差量的特例。而单位元这个概念在一般情况下是自然存在的，比如什么都不干的情况下对应于空操作，而空操作和任何其他操作结合在一起都等价于这个操作本身，因此空操作就是一个自然存在的单位元。</p>
+<p>很多人听到<strong>全量是差量的特例</strong>这句话之后可能会感到很疑惑，这很显然，但是它有什么意义吗？一般人无法将数学原理和真实的物理世界联系起来，导致他们会认为数学的精确定义是无用的。这里有个很关键的推论是这样的：既然全量是差量的特例，那么原则上<strong>全量可以采用和差量一模一样的形式</strong>，没有必要为了表达差量，单独设计一个不同的差量形式。比如说，JSON格式的差量可以用JSON Patch语法来表达，但是JSON Patch的格式与原始的JSON格式大相径庭，它这个差量形式就是特制的，而不是与全量格式保持一致的。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">[<br>  &#123;<br>    &quot;op&quot;: &quot;add&quot;,<br>    &quot;path&quot;: &quot;/columns/-&quot;,<br>    &quot;value&quot;: &#123;<br>      &quot;name&quot;: &quot;newColumn&quot;,<br>      &quot;type&quot;: &quot;string&quot;, // 或者其他数据类型<br>      &quot;primary&quot;: false // 是否为主键<br>    &#125;<br>  &#125;,<br>  &#123;<br>     &quot;op&quot;: &quot;remove&quot;,<br>     &quot;path&quot;: &quot;/columns/2&quot;<br>   &#125;<br>]<br></code></pre></td></tr></table></figure>
 
 <p>Nop平台中的做法是：</p>
@@ -1377,9 +1380,9 @@
 <p>假设现在我们已经构造好了$a<em>c</em>d$，则我们可以复用这个构造结果来构造$a*b$</p>
 <p>$$<br>acd * d^{-1} * c^{-1} * b &#x3D; ab<br>$$</p>
 <blockquote>
-<p>在我们所处的物理世界中，在人力所不能及的量子虚空中，表面上看起来空空如也，实际上只是正粒子和反粒子相互竞争达成了某种动态平衡。此时如果附近存在一个黑洞，由于黑洞的引力场很强，可能会导致随机涨落创生的正反粒子被拉开，最终其中一个落入黑洞视界，另外一个逃离黑洞，产生传说中的霍金辐射，黑洞蒸发现象。</p>
+<p>在我们所处的物理世界中，在人力所不能及的量子虚空中，表面上看起来空空如也，实际上只是正粒子和反粒子相互竞争达成了某种动态平衡。如果附近恰好存在一个黑洞，由于黑洞的引力场很强，可能会导致随机涨落创生的正反粒子被拉开，最终其中一个堕入黑洞视界，另外一个逃离黑洞。这就是传说中的霍金辐射、黑洞蒸发。</p>
 </blockquote>
-<p>在可逆计算理论中，这一点正是实现粗粒度复用的关键所在。</p>
+<p>在可逆计算理论中，逆元的引入正是实现粗粒度复用的关键所在。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>Y = A + B + D <br>  = A + B + C + (-C) + D <br>  = X + (-C+D) = X + Delta<br></code></pre></td></tr></table></figure>
 
 <p>假设X由<code>A+B+C</code>构成，我们现在想生产<code>A + B +D</code>所组成的Y，如果存在逆元和单位元，则我们可以从X出发，<strong>在完全不拆解X的前提下</strong>，通过一系列的差量运算将X转换为Y。利用结合律，我们可以将<code>-C</code>和D聚集在一起，形成一个完整、独立的Delta差量。在可逆计算的视角下，软件复用的原理发生了本质性的变化：从组件复用的<strong>相同可复用</strong>转换到可逆计算的<strong>相关可复用</strong>：任意的Y和任意的X之间都可以通过Delta建立转换关系（Transformation)，从而形成复用，而不需要它们之间构成传统的部分-整体这样的组合关系(Compostion)。</p>
@@ -1395,19 +1398,73 @@
 <h2 id="四-Docker中的差量运算"><a href="#四-Docker中的差量运算" class="headerlink" title="四. Docker中的差量运算"></a>四. Docker中的差量运算</h2><h3 id="1-Docker的差量运算是在哪个空间中定义的"><a href="#1-Docker的差量运算是在哪个空间中定义的" class="headerlink" title="1. Docker的差量运算是在哪个空间中定义的?"></a>1. Docker的差量运算是在哪个空间中定义的?</h3><p>Docker所依赖的核心技术之一是所谓的堆叠文件系统OverlayFS，它依赖并建立在其它的文件系统之上（例如 ext4fs 和 xfs 等等），并不直接参与磁盘空间结构的划分，<strong>仅仅将原来底层文件系统中不同的目录进行 “合并”，然后向用户呈现，这也就是联合挂载技术</strong>。OverlayFS在查找文件的时候会先在上层找，找不到的情况下再到下层找。如果需要列举文件夹内的所有文件，则会合并上层目录和下层目录的所有文件统一返回。</p>
 <p><strong>Docker镜像的Delta差量是定义在文件系统空间中，所谓的Delta的最小单位不是字节而是文件</strong>。比如说，如果我们现在有一个10M的文件，如果我们为这个文件增加一个字节，则镜像会增大10M，因为OverlayFS要经历一个<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15770331/article/details/96702613">copy up</a>过程，将下层的整个文件拷贝到上层，然后再在上层进行修改。</p>
 <p>有些人可能会认为Git和Docker的差量的区别在于一个是线性列表，一个是树形结构。但是这并不是两者之间的本质性差异。真正重要的区别是<strong>Docker的差量结构空间中存在着可以用于唯一定位的稳定坐标</strong>：每个文件的完整文件路径可以看作是在文件结构空间中定位的唯一坐标。这个坐标或者说所有坐标组成的坐标系之所以被称为是稳定的，是因为当我们对文件系统进行局部改变时，比如新增一个文件或者删除一个文件，不会影响到其他文件的坐标。而Git中不同，它是使用行号来作为定位坐标的，因此只要新增行或者删除行，就会产生大量后续行的坐标变动，因此Git所提供的坐标系是不稳定的。</p>
-<p>Docker的坐标系只管到文件级别，如果我们想在文件内部进行唯一定位并实现差量计算，那应该怎么办？Nop平台通过XDef元模型在DSL领域模型文件内部建立了领域坐标系，可以精确的定位到XML或者JSON文件中的任意节点。除此之外，Nop平台还内置了一个类似OverlayFS的虚拟文件系统，它将多个Delta层堆叠为一个统一的DeltaFileSystem。</p>
-<p>是不是一定要采用树形结构空间？也不一定。比如说，AOP技术所应用的结构空间可以看作是<code>包-类-方法</code>这样一个固定的三层结构空间，而不是支持任意深度嵌套的树形结构空间。类似的，在关系数据库领域，我们使用的是<code>表-行-列</code>这样一种三层结构空间。只要定位坐标是稳定的，我们都可以基于它们发展一些系统化的差量运算机制。</p>
+<blockquote>
+<p>如果从哲学的角度去考虑，Docker的结构设计包含名和实两个部分，每个文件都有自己专属的名，也就是它的文件路径，可以用于在差量结构中间中进行唯一定位。这个<code>名</code>所对应的<code>实</code>对于差量合并而言并不重要，也无人关心，直接覆盖就可以了。而在Git的设计中，行号只能看作是一种临时的名，它要受到其他行的影响，为了准确定位行，patch文件中还会包含相邻行的内容，相当于是根据<code>实</code>来作为一种定位的辅助手段。以<code>实</code>为<code>名</code>直接限制了patch的独立性。</p>
+</blockquote>
+<p><strong>Docker的坐标系只管到文件级别，如果我们想在文件内部进行唯一定位并实现差量计算，那应该怎么办</strong>？Nop平台通过XDef元模型在DSL领域模型文件内部建立了领域坐标系，可以精确的定位到XML或者JSON文件中的任意节点。除此之外，Nop平台还内置了一个类似OverlayFS的虚拟文件系统，它将多个Delta层堆叠为一个统一的DeltaFileSystem。</p>
+<p>有人可能要问，是不是一定要采用树形结构空间？也不一定。比如说，AOP技术所应用的结构空间可以看作是<code>包-类-方法</code>这样一个固定的三层结构空间，而不是支持任意深度嵌套的树形结构空间。类似的，在关系数据库领域，我们使用的是<code>表-行-列</code>这样一种三层结构空间。只要定位坐标是稳定的，我们都可以基于它们发展一些系统化的差量运算机制。</p>
 <blockquote>
 <p>Tree结构具有很多优点。首先，它<strong>实现了相对坐标与绝对坐标的统一</strong>：从根节点开始到达任意节点只存在唯一的一条路径，它可以作为节点的绝对坐标，而另一方面，在某一个子树范围内，每一个节点都具有一个子树内的唯一路径，可以作为节点在子树内的相对坐标。根据节点的相对坐标和子树根节点的绝对坐标，我们可以很容易的计算得到节点的绝对坐标（直接拼接在一起就可以了）。  </p>
 <p>Tree结构的另一个优点是<strong>便于管控，每一个父节点都可以作为一个管控节点</strong>，可以将一些共享属性和操作自动向下传播到每个子节点。</p>
 </blockquote>
-<p>关于差量结构空间，还有一个需要注意的细节：当存在逆元的情况下，差量结构空间是一种正元素和负元素混合产生的一种扩展空间，并不是我们习惯的正元素空间。当我们说”Docker的差量运算是定义在文件系统空间中”的时候，这个文件系统一定是需要支持负文件这个概念的。具体的做法是通过一个特殊约定的Whiteout文件来表示删除一个文件或者目录。</p>
+<p>关于差量结构空间，还有一个需要注意的细节：当存在逆元的情况下，差量结构空间必然是一种正元素和负元素混合产生的扩展空间，而不是我们习惯的正元素空间。当我们说”Docker的差量运算是定义在文件系统空间中”的时候，这个文件系统一定是需要支持负文件这个概念的。Docker具体的做法是通过一个特殊约定的Whiteout文件来表示删除一个文件或者目录。也即是说，<strong>我们将删除这个转瞬即逝的动作转换为了一个静态的、持久存在的、可操作的对象（文件或目录）</strong>。在数学上相当于是将 <code>A - B</code>转换为 <code>A + (-B)</code>，这是一个非常不起眼但又非常关键的概念转换。</p>
+<p>”<strong>差量结构空间必然是正元素和负元素混合产生的一种扩展空间</strong>“，这句话听起来可能有点莫名奇妙，我再补充一点示例说明。假设我们现在处理的是一个有一定复杂度的多维空间，</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = [A, 0], <br>Y = [0, -B],<br>X + Y = [A, -B]<br></code></pre></td></tr></table></figure>
+
+<p>如果X表示在第一个维度上增加A，而Y表示在第二个维度上减少B，那么如果再允许X和Y之间进行结合运算，我们得到的结果就是一个同时包含<code>+A</code>和<code>-B</code>的混合物。如果我们只允许每个维度上的值都是正对象，那么这个混合物就是一个非法对象。<strong>为了确保Delta合并运算总可以成功</strong>，我们唯一的选择只能是扩展原有的正对象空间为允许同时包含正对象和负对象的扩展空间。再比如，在Nop平台的ORM模型定义中，我们规定的差量结构空间是一个DSL语法空间，在这个空间中我们可以表达如下的Delta，</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = 增加表A(+字段C1,+字段C2)<br>Y = 修改表A(+字段C3)<br>Z = 修改表A(-字段C3, +字段C4)<br>X + Y = 增加表A(+字段C1, +字段C2,+字段C3)<br>X + Y + Z = 增加表A(+字段C1, +字段C2,+字段C4)<br>X + Z = ?<br></code></pre></td></tr></table></figure>
+
+<p>在上面的例子中，X表示增加一个表A，它包含两个字段C1和C2。Y表示修改表A，为它增加字段C3，那么X和Y执行结合运算后得到的结果是：增加表A，包含字段C1、C2和C3。继续和Z结合，得到的结果是：增加表A，包含字段C1、C3和C4。这其中，C3字段在Y中增加，在Z中减少，最后的结果相当于C3被删除了。现在问题就来了：X和Z进行结合运算的结果是什么？因为根据X的定义，此时表A上没有字段C3，那么Z要求删除一个表A上不存在的字段，这怎么执行？我们在数据库里执行这种语句，直接就会报错。为了保证差量运算总是可以执行，我们的选择是承认如下定义是一个合法的差量定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">U = 增加表A(+字段1, +字段2, -字段3, +字段4)<br></code></pre></td></tr></table></figure>
+
+<p>这样的话，我们就可以表示出X和Y进行结合运算的结果</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X + Z = U<br></code></pre></td></tr></table></figure>
+
+<p>有些人可能要问，最终我们生成建表语句的时候不允许出现负字段，这要怎么办？很简单，扩展空间其实是一个允许计算发生的可行空间（抽象数学空间），它包含了所有可能发生的运算，这些可能的运算只是发生在抽象的数学空间中，并不会真正影响到我们的物理世界。当我们真的需要根据运算结果生成建表语句，到数据库中创建真正的数据库表时，我们可以增加一个投影运算，将对象从可行空间投影到只包含正对象的物理空间。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">P(U) = 增加表A(+字段1, +字段2, +字段4)<br></code></pre></td></tr></table></figure>
+
+<p>这个投影运算负责删除所有的负对象，只保留所有的正对象。</p>
+<blockquote>
+<p>在数学上这是一种非常标准的工作套路：将非法的运算结果添加到原先的空间中，从而形成一个扩展空间，使得运算在扩展空间中变成合法的运算。比如说我们必须要把复数添加到解空间中，这样的话二次方程才存在通用的解，否则有些二次方程在实数空间中是无解的。</p>
+</blockquote>
+<p>$$<br>x^2 + 1&#x3D; 0 \Longrightarrow x &#x3D; ?<br>$$</p>
 <h3 id="2-Docker的差量运算的结果是否仍然在文件系统空间中？"><a href="#2-Docker的差量运算的结果是否仍然在文件系统空间中？" class="headerlink" title="2. Docker的差量运算的结果是否仍然在文件系统空间中？"></a>2. Docker的差量运算的结果是否仍然在文件系统空间中？</h3><p>与Git不同，Docker的差量运算总是产生合法的合并结果。首先，<strong>任意两个Delta层都可以自由合并，并不像Git那样存在很强的容许限制</strong>。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8<br>WORKDIR /work/<br>RUN chown 1001 /work \<br>    &amp;&amp; chmod &quot;g+rwX&quot; /work \<br>    &amp;&amp; chown 1001:root /work<br>COPY --chown=1001:root target/*-runner /work/application<br><br>EXPOSE 8080<br>USER 1001<br><br>ENTRYPOINT [&quot;./application&quot;, &quot;-Dquarkus.http.host=0.0.0.0&quot;]<br></code></pre></td></tr></table></figure>
 
 <p>我们可以随意修改DockerFile中的FROM配置。当升级操作系统镜像层的时候，我们不需要修改应用层的DockerFile，也不需要修改应用层的任何文件，直接重新打包就可以了。而在Git中，如果直接更改原始的Base文件，则依据于原有Base文件制作的所有patch都会失效。</p>
-<p>第二，<strong>Docker的差量合并永远不会出现冲突的情况</strong>。</p>
-<h2 id="五-同一个对象可以投射到不同的表示空间"><a href="#五-同一个对象可以投射到不同的表示空间" class="headerlink" title="五. 同一个对象可以投射到不同的表示空间"></a>五. 同一个对象可以投射到不同的表示空间</h2><p>当我们修改了一个函数，这件事情实际上是同时被投射到了多个表示空间。</p>
+<blockquote>
+<p>打包成镜像之后，Docker的上层镜像会通过唯一的Hash码来绑定它所依赖的下层镜像，但是这可以看作是一种实际应用中的安全保证手段。在概念层面上，上层镜像与下层镜像是独立的，当下层镜像的内容发生变化的时候，上层镜像的内容包括DockerFile都不需要做任何的改变，只需要重新打包就可以了。</p>
+</blockquote>
+<p>第二，<strong>Docker的差量合并永远不会出现冲突的情况</strong>。这使得镜像构建的自动化程度得到了极大的提升。<strong>结合上一节的内容，这实际上是意味着在Docker的差量结构空间中，任意的两个Delta都可以发生相互作用</strong>。</p>
+<blockquote>
+<p>Docker镜像的合并核心规则就是按照名称进行覆盖，而且覆盖的方向就是确定性的从上到下，显然不会出现冲突的情况。</p>
+</blockquote>
+<p>如果已经存在一些Delta，那么这些Delta通过差量运算可以产生更多新的Delta。很自然的，我们要问，这些原始的Delta从哪里来呢？我们肯定是希望可用的Delta越多越好。在数学中，一个标准的工作套路是先论证某种数学对象具有很多优秀的性质，然后再想办法构造出大量这种对象出来。反映到软件领域，就对应于用生成器来生成Delta。</p>
+<p>Docker的神来之笔是引入了DockerFile和Docker Build工具。它复用了Linux世界积累了数十年的历史遗产，每一个用于文件操纵的命令行工具都立刻转化为Docker差量结构空间中的一个有效的Generator。每一个Generator都具有明确的业务含义，可以独立的被理解和使用，并且可以串接在一起组成更复杂的Generator。如果从数学角度去理解，Docker的差量结构空间定义了基本的加减法，但是我们能不能在这个空间中再定义函数概念，从而将空间中的一个结构转换为另外一个结构？<strong>Generator可以看作是差量结构空间中的映射函数，而且它确确实实可以被表达为程序语言中的一个函数</strong>。</p>
+<p>与之相比，Git的差量结构空间就缺乏一个有意义的Generator映射机制。因为底层的Delta就缺乏独立存在的意义，在它之上要建立一个有意义的函数映射机制就更是难上加难。虽然说patch本身采用的也是文本表达形式，我们可以在任意程序语言中编写文本处理函数来生成patch，但是因为缺乏通用性，一般只是在极少数情况下，我们会针对特定的场景编写自己专用的某些Generator或者Transformer工具，而不像Docker那样，可以复用大量别人已经编好的Generator，并且毫无阻碍的把它们组合在一起使用。</p>
+<blockquote>
+<p>一个好的数学空间需要有良好的基本单元和基础运算性质，还要在其上能够引入丰富的动力学特性。Generator的引入确保我们可以源源不断的产生新的Delta结构，同时也可以将不同抽象层次的Delta结构适配到一起。</p>
+</blockquote>
+<p>可逆计算理论将Generator和Delta的构造规律总结为一个通用的软件构造公式，并为它的落地实现提供了一个标准的技术路线</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = Delta x-extends Generator&lt;DSL&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这里的DSL指的是领域特定语言(Domain Specific Language,</p>
+<p> DSL），同时它也隐含的定义了一种差量结构空间。<strong>一个程序语言能够描述的所有结构的整体构成一个差量结构空间（AST语法树空间）</strong>。与文件系统空间不同，并不存在统一的AST语法树空间，我们只能对每种程序语言单独去研究它的AST语法树空间。不过，在Nop平台中，我们并不直接使用通用语言来编写业务逻辑，而是大量使用DSL。比如说IoC容器使用beans.xml，ORM引擎使用的app.orm.xml，逻辑编排引擎使用的task.xml等，都是专用于某个领域的DSL。在Nop平台中，所有的XDSL都使用XLang语言中的XDef元模型语言来定义语言的语法结构，这些语法结构共享了XLang语言中定义的通用的差量合并语法规则，从而确保所有使用XDef定义的DSL都支持差量合并运算，并自动定义一个差量结构空间。也就是说虽然不存在统一的AST语法树空间，但是在差量运算这个层面，我们是可以定义出统一的差量合并运算，并且统一实现的。</p>
+<p>可逆计算理论中的Generator泛指一切在差量结构空间中执行的结构生成和结构变换功能，它可以是一个独立的代码生成工具，也可以是语言内置的编译期元编程机制，如宏函数等。Nop平台为所有的DSL都增加了标准化的编译期元编程语法。也就是说在各个DSL中不需要定义元编程相关的语法，可以复用XLang中定义的标准语法和标准库。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">workflow</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">oa:GenWorkflowFromDingFlow</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/wf/xlib/oa.xlib&quot;</span>&gt;</span><br>        &#123; <br>          // 类钉钉工作流设计器所生成JSON<br>        &#125;<br>      <span class="hljs-tag">&lt;/<span class="hljs-name">oa:GenWorkflowFromDingFlow</span>&gt;</span>  <br>   <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span>  <br>   <span class="hljs-comment">&lt;!-- 这里的内容会和x:gen-extends生成的内容执行Delta差量合并 --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">workflow</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>可以利用XLang内置的x:gen-extends语法把类钉钉工作流的JSON格式转换为NopWorkflow的DSL格式。</li>
+<li>在<code>x:gen-extends</code>生成的基础之上，还可以进行局部修改。</li>
+</ul>
+<p>Generator作用到DSL之后得到的结果可能是一个新的DSL，这样就可以继续使用XLang的机制进行差量化处理。但是也可能会脱离Nop平台，生成某种通用程序语言代码，比如Java、Vue等，此时我们就只能利用语言内置的extends等机制实现部分差量合并运算能力。通用程序语言的AST语法树空间虽然也可以定义差量合并运算，但是它们的数学性质就没有XDSL中那么良好。关于XDSL的进一步介绍，可以参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/usInt7_odzvFzuiIUPw4iQ">XDSL：通用的领域特定语言设计</a>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// _NopAuthUser是代码生成器自动生成的部分，手写的代码与自动生成的代码通过extends语法实现隔离</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthUser</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">_NopAuthUser</span>&#123;<br>   <span class="hljs-comment">// 在手写的代码中可以增加新的函数和属性，它们相当于是在基类基础上的Delta差量</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isAdminUser</span><span class="hljs-params">()</span>&#123;<br>      <span class="hljs-keyword">return</span> getRoles().contains(<span class="hljs-string">&quot;admin&quot;</span>);<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>java的extends语法不支持删除语义，同时也不支持类似Tree结构的深层嵌套合并。</li>
+</ul>
+<p><strong>Git和Docker都可以看作是利用某种大家已经熟知的、已有的差量结构空间（行文本空间和文件系统空间）。而可逆计算理论是总结出相关的规律，支持系统化的构建专用的差量结构空间</strong>。Nop平台为此提供了一系列可复用的基础技术架构工具。Docker可以看作是可逆计算理论的一个具体应用实例。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = DockerBuild&lt;DockerFile&gt; overlay-fs BaseImage<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Docker中的差量运算是否满足结合律？"><a href="#3-Docker中的差量运算是否满足结合律？" class="headerlink" title="3. Docker中的差量运算是否满足结合律？"></a>3. Docker中的差量运算是否满足结合律？</h3><h2 id="五-同一个对象可以投射到不同的表示空间"><a href="#五-同一个对象可以投射到不同的表示空间" class="headerlink" title="五. 同一个对象可以投射到不同的表示空间"></a>五. 同一个对象可以投射到不同的表示空间</h2><p>当我们修改了一个函数，这件事情实际上是同时被投射到了多个表示空间。</p>
 <h2 id="六-总结"><a href="#六-总结" class="headerlink" title="六. 总结"></a>六. 总结</h2><p>世界的本体是不可观测的。物理学格物以致知，我们所能感受到的不过是深不可测的世界本体之上被激发的一丝涟漪（差量）而已。</p>
 <p>要深入的理解差量概念，需要从数学中群结构定义出发：封闭性、结合性、单位元、逆元。这其中，逆元是一个非常关键性的概念。在软件领域，函数式编程炒热了Monad一词，它基本是满足群结构定义四大天条中的前三条，可以看作是幺半群结构，缺少逆元的概念。</p>
 <blockquote>
