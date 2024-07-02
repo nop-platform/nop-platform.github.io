@@ -37,10 +37,10 @@
 
 
 
-  <title>业务扩展 - Nop</title>
+  <title>Action装饰器 - Nop</title>
 
 
-  <meta property="og:title" content="业务扩展">
+  <meta property="og:title" content="Action装饰器">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1025,7 +1025,7 @@
           
           
         
-        <a class="is-selected" href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
       
       
     </li>
@@ -1251,16 +1251,19 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">业务扩展</h1>
+    <h1 class="Article-title">Action装饰器</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><h2 id="编码规则"><a href="#编码规则" class="headerlink" title="编码规则"></a>编码规则</h2><p>参见<a href="./coderule/">coderule.md</a></p>
-<h2 id="验证模型"><a href="#验证模型" class="headerlink" title="验证模型"></a>验证模型</h2><p>CrudBizModel中内置的验证规则，参见<a href="./validate/">validate.md</a></p>
-<p>验证模型详细介绍参见 <a href="./validator/">validator.md</a></p>
-<h2 id="Action装饰器"><a href="#Action装饰器" class="headerlink" title="Action装饰器"></a>Action装饰器</h2><p>参见<a href="./action-decorator/">action-decorator.md</a></p>
+      <div class="Article-content col-md-9"><p>BizModel的每个操作函数和Loader函数都会被封装为IServiceAction接口。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IServiceAction</span> &#123;<br>  Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object request, FieldSelectionBean selection, IServiceContext context)</span>;<br>&#125;<br>````<br><br>* request是传递给action的请求数据，一般情况下是Map结构，也可以是对应的强类型的RequestBean<br>* selection是前台发送过来的字段选择机制<br>* context是服务调用上下文环境对象，通过它可以获取IUserContext等<br>* 返回值就是BizModel中服务方法的返回值，可能同步可能异步。<br><br>## 注册Decorator<br><br><span class="hljs-number">1.</span> 仿照CacheActionDecoratorCollector实现IActionDecoratorCollector接口<br><span class="hljs-number">2.</span> 在beans.xml中注册actionDecoratorCollector<br><span class="hljs-number">3.</span> BizObjectManager启动的时候会自动搜集IoC容器中注册的decoratorCollector，然后用于生成actionDecorator<br><br>```java<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IServiceActionDecorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">IOrdered</span> &#123;<br>  IServiceAction <span class="hljs-title function_">decorate</span><span class="hljs-params">(IServiceAction action)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>ServiceActionDecorator在初始化的时候会作用于serviceAction，从而构建得到一个装饰后的IServiceAction</li>
+<li>decorator具有优先级顺序设置，在应用之前会按照优先级排队，order值小的排在前面。</li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1273,7 +1276,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/biz/index.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/biz/action-decorator.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
