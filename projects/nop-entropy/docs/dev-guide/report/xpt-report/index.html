@@ -1283,6 +1283,7 @@
 <li>colParent或者cp: 列父格</li>
 <li>expandValue 或者ev: 单元格展开表达式返回的条目值</li>
 <li>expandIndex 或者ei: 单元格展开时在父格中的下标，从0开始</li>
+<li>value 当前单元格的值</li>
 </ul>
 <h2 id="单元格展开"><a href="#单元格展开" class="headerlink" title="单元格展开"></a>单元格展开</h2><p>在单元格的批注中可以写如下属性</p>
 <ul>
@@ -1305,6 +1306,10 @@
 <p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/relative-coord.png"></p>
 <p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/absolute-coord.png"></p>
 <p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/absolute-coord-value.png"></p>
+<h2 id="报表整体配置"><a href="#报表整体配置" class="headerlink" title="报表整体配置"></a>报表整体配置</h2><h3 id="在【XptWorkbookModel】这个sheet中配置全局参数"><a href="#在【XptWorkbookModel】这个sheet中配置全局参数" class="headerlink" title="在【XptWorkbookModel】这个sheet中配置全局参数"></a>在【XptWorkbookModel】这个sheet中配置全局参数</h3><ul>
+<li>展开前：在报表引擎执行展开算法之前调用的xpl代码。可以在这里准备数据。通过assign函数设置数据到报表上下文中</li>
+<li>删除隐藏单元：缺省情况下隐藏的行或者列会被输出，在这里可以设置为true，从而输出时删除隐藏列。</li>
+</ul>
 <h2 id="常用公式"><a href="#常用公式" class="headerlink" title="常用公式"></a>常用公式</h2><ol>
 <li><p>在C3(占比)单元格中直接使用占比公式：&#x3D;PROPORTION(B3)；占比：当前值占总值的比例</p>
 </li>
