@@ -1314,6 +1314,12 @@
 </ol>
 <h2 id="与spring和quarkus框架共享配置"><a href="#与spring和quarkus框架共享配置" class="headerlink" title="与spring和quarkus框架共享配置"></a>与spring和quarkus框架共享配置</h2><p>Nop平台的缺省配置文件名为application.yaml，它与quarkus框架和spring框架的配置文件名相同。因此在这个配置文件中配置的内容实际上在spring&#x2F;quarkus框架以及Nop平台中都可以读到。<br>不过需要注意的是，spring的配置有一个命名规范化的过程，它会自动将大小写混排的变量名规范化为通过减号分隔，例如spring.datasource.jdbcUrl会被规范化为spring.datasource.jdbc-url，<br>但是Nop平台为了提高一致性并没有引入这种规范化过程，所以表现出来的配置行为会有差异。另外spring框架对于通过环境变量传递的配置参数，会采用猜测的方法多次读取，对性能有一定影响，<br>而Nop平台的做法是按照确定性的规则对环境变量名进行规范化，例如nop.datasource.jdbc_url对应的环境变量名固定为NOP_DATASOURCE_JDBC__URL，这种规范化方式与spring也不同。<br>具体规范化的语法规则参见 <code>StringHelper.envToConfigVar(envName)</code></p>
 <h2 id="常见配置参数"><a href="#常见配置参数" class="headerlink" title="常见配置参数"></a>常见配置参数</h2><ul>
+<li><p>nop.debug: true<br>启用调试功能，会输出更多的日志。开启&#x2F;p&#x2F;DevDoc__graphql等多种调试输出链接</p>
+</li>
+<li><p>nop.profile<br> 启用application-{profile}.yaml等附加配置文件</p>
+</li>
+<li><p>nop.application.name<br> 应用名称，也是注册到服务中心时的名称</p>
+</li>
 <li><p>nop.orm.init-database-schema: true<br>如果是空库，自动创建所有表</p>
 </li>
 <li><p>nop.auth.login.allow-create-default-user<br>如果用户表为空，则自动创建缺省账户nop, 密码123</p>
@@ -1334,7 +1340,7 @@
 </li>
 <li><p>nop.web.validate-page-model<br>系统启动的时候是否自动检查所有page.yaml文件可以正常解析并加载。</p>
 </li>
-<li><p>quarkus.log.level<br>quakus框架的Log级别设置</p>
+<li><p>quarkus.log.level<br>quarkus框架的Log级别设置</p>
 </li>
 </ul>
 
