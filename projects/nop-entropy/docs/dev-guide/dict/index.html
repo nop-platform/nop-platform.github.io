@@ -1263,7 +1263,7 @@
 
 <h2 id="字典表文件"><a href="#字典表文件" class="headerlink" title="字典表文件"></a>字典表文件</h2><p>我们可以在<code>_vfs/dict</code>目录下存放字典表文件，例如 <code>wf/wf-step-status</code>对应于<code>_vfs/dict/core/wf/wf-step-status.dict.yaml</code></p>
 <p>这个yaml文件中存放的就是DictBean类型的Java对象，例如</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">label:</span> <span class="hljs-string">步骤状态</span><br><span class="hljs-attr">locale:</span> <span class="hljs-string">zh-CN</span><br><span class="hljs-attr">valueType:</span> <span class="hljs-string">int</span><br><span class="hljs-attr">description:</span> <br><span class="hljs-attr">options:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">label:</span> <span class="hljs-string">已创建</span><br>    <span class="hljs-attr">value:</span> <span class="hljs-number">0</span><br>    <span class="hljs-attr">description:</span> <br>  <br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">label:</span> <span class="hljs-string">已暂停</span><br>    <span class="hljs-attr">value:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">description:</span> <br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">label:</span> <span class="hljs-string">步骤状态</span><br><span class="hljs-attr">locale:</span> <span class="hljs-string">zh-CN</span><br><span class="hljs-attr">valueType:</span> <span class="hljs-string">int</span><br><span class="hljs-attr">description:</span><br><span class="hljs-attr">options:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">label:</span> <span class="hljs-string">已创建</span><br>    <span class="hljs-attr">value:</span> <span class="hljs-number">0</span><br>    <span class="hljs-attr">description:</span><br><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">label:</span> <span class="hljs-string">已暂停</span><br>    <span class="hljs-attr">value:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">description:</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2><p>DictProvider在加载字典表的时候，会检查字典定义中的locale与外部要求的locale是否相同。如果不同，会自动进行I18n翻译。</p>
 <p>具体翻译规则是：</p>
@@ -1281,6 +1281,9 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;eql name=&quot;my_dict&quot;&gt;<br>  select o.fldA as label, o.fldB as value<br>  from MyEntity o<br>&lt;/eql&gt;<br></code></pre></td></tr></table></figure>
 
 <p>字典表SQL返回的字段名必须是DictOptionBean这个Java类中的属性名，它会被自动包装为DictOptionBean对象。</p>
+<h2 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h2><ul>
+<li>nop.core.dict.return-normalized-label<br>缺省为true，会将字典的值和label拼接在一起显示</li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">
