@@ -37,10 +37,10 @@
 
 
 
-  <title>万字长文讲清DDD在低代码平台中的最佳实践 - Nop</title>
+  <title>NopGraphQL中的数据类型 - Nop</title>
 
 
-  <meta property="og:title" content="万字长文讲清DDD在低代码平台中的最佳实践">
+  <meta property="og:title" content="NopGraphQL中的数据类型">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,75 +1251,17 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">万字长文讲清DDD在低代码平台中的最佳实践</h1>
+    <h1 class="Article-title">NopGraphQL中的数据类型</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>在微服务的语境中引发了DDD的一轮文艺复兴，但是它的最佳实践能否被标准化为某种技术框架存在着很大的争论。在落地DDD的过程中，<br>很多设计会议都充斥着大量无谓的针对技术细节的争吵，谁也说服不了谁。</p>
-<p>DDD的优势是能够更好的适应对象生态环境？还是更好的统一涉众的心智，将管理层面的阻力明确表达到技术世界？更好的实现技术与业务之间的映射？还是存在着某些数学层面可以得到证明的技术必然性？本文结合开源低代码平台Nop平台的技术实现方案，剖析一下DDD的技术内核。</p>
-<p>面向对象中的状态封装概念没有那么重要。最混乱的代码实际上来源于封装后无法通过合法的手段进行操作，采用了hack方式进行绕过。</p>
-<p>DDD只有在一种低代码平台或者模型驱动的框架中才能发挥最大的价值</p>
-<h2 id="设计空间的有效组织"><a href="#设计空间的有效组织" class="headerlink" title="设计空间的有效组织"></a>设计空间的有效组织</h2><ol>
-<li>纵向分割</li>
-<li>横向分割</li>
-<li>时间与空间层面的组织：生命周期，服务单例</li>
-</ol>
-<p>分割之后寻找相似性，然后抽象出公共部分。</p>
+      <div class="Article-content col-md-9"><h2 id="扩展的Scalar类型"><a href="#扩展的Scalar类型" class="headerlink" title="扩展的Scalar类型"></a>扩展的Scalar类型</h2><p>GraphQL缺省只有Float、Int、String、Boolean、ID这几种基本类型。NopGraphQL引入了更多的Scalar类型，以便于更好的支持业务数据模型。<br>比如区分了Float、Double、Int、Double、BigDecimal等。</p>
+<h2 id="Long作为String返回"><a href="#Long作为String返回" class="headerlink" title="Long作为String返回"></a>Long作为String返回</h2><p>对于前台JS而言，超过一定大小的Long无法在前台正常处理，必须要转换成String类型。</p>
 <ol>
-<li>分而治之自然得到多层分解</li>
-<li>在边界设置瓶颈</li>
-</ol>
-<p>结构化的模型而不是平面式的领域服务。<br>与依赖注入的关系：对象树与业务流分离</p>
-<h2 id="领域语言"><a href="#领域语言" class="headerlink" title="领域语言"></a>领域语言</h2><ul>
-<li>一种语言可以看作是一种描述坐标系</li>
-<li>通过坐标系定义一个领域语义空间</li>
-<li>多个领域空间对应不同的坐标系，语义等价的部分需要粘合</li>
-<li>业务表达独立于技术实现</li>
-<li>价值链：有人提出以财务为引导</li>
-<li>领域建模的价值是将领域名词转为领域模型，需要抽象和提炼，比如把柜员，大堂经理抽象成岗位，更加深入业务本质，而不仅仅停留在表面，是DDD最重要的成果沉淀。</li>
-</ul>
-<h2 id="聚合根"><a href="#聚合根" class="headerlink" title="聚合根"></a>聚合根</h2><p>聚合不是为了实现事务</p>
-<ul>
-<li>主分解维度，门面模式<br>面向对象而不是面向DTO，不是面向ID</li>
-<li>全局关系 + 内部的局部关系。不同比例尺的地图</li>
-<li>信息尽在指尖</li>
-<li>实体 + 延迟加载 + session缓存：结构聚合</li>
-<li>BizObject: 行为聚合</li>
-<li>GraphQL: 结构的选择和组合</li>
-</ul>
-<p>聚合根首先是逻辑的聚合，BizModel的切片构造就是一种聚合方式，这种做法不是传统的面向对象中的继承方式和组合方式。另外聚合的对偶概念是动态切片，GraphQL恰好提供了一种在获取信息时的一种动态切片能力，使得我们可以在概念层面上维持一个庞大的聚合根概念，但是在实际层面每次都只加载少量数据。没有对偶的切片概念，本身聚合根就会非常臃肿，成为性能的拖累。</p>
-<p>从坐标的观点理解聚合</p>
-<p>取数据是为了用，纯粹的历史数据查询，走专门的查询服务</p>
-<h2 id="贫血还是充血"><a href="#贫血还是充血" class="headerlink" title="贫血还是充血"></a>贫血还是充血</h2><ul>
-<li>均衡分工</li>
-<li>不同的稳定性和信息范围</li>
-<li>通用的CRUD问题 + 特定的业务问题。不同的问题子空间可以应用不同的解法，并不需要用一个统一的处理。BizService不包含CRUD。</li>
-</ul>
-<h2 id="CQRS"><a href="#CQRS" class="headerlink" title="CQRS"></a>CQRS</h2><ul>
-<li>是否要封装为明确的Command形式？ ApiRequest + 领域特定结构，通用结构的唯一目的是以标准方式引入扩展数据。但在实现层没有必要显式表达</li>
-<li>结合TCC，需要请求可以被持久化</li>
-<li>边界层和内部模型层的表示是不同的：id &#x3D;&gt; entity。对内视角与对外视角</li>
-<li>领域事件与Command的区别. Event作为建模的切入点。状态的Delta</li>
-</ul>
-<h2 id="差量更新"><a href="#差量更新" class="headerlink" title="差量更新"></a>差量更新</h2><ul>
-<li>领域事件作为Delta</li>
-<li>可逆变换所要求的完备性</li>
-<li>固定的通知与可变的命令<br>已发生的事实（确定）与引发事件的操作（不确定）</li>
-<li>多重宇宙：读写分离</li>
-</ul>
-<h2 id="逻辑编排"><a href="#逻辑编排" class="headerlink" title="逻辑编排"></a>逻辑编排</h2><p>逻辑编排是面向函数的，本身每个单元都是函数。只是函数的实现有可能是触发服务对象上的方法而已，这是一个次级问题</p>
-<p>从domain的概念上说DDD也应该包含编排方面的内容，编排中涉及到的可以是基于domain术语的。但是传统的DDD都是面向数据模型，编排是尚未涉及到的内容</p>
-<p>面向领域的编排要求对领域逻辑进行抽象，将它对应的具体的技术实体，然后通过各种手段来操纵。传统上数据建模比较成熟，但是逻辑建模就很薄弱，特别是建模之后如何使用建模结果缺乏系统化手段。</p>
-<h2 id="实现技术"><a href="#实现技术" class="headerlink" title="实现技术"></a>实现技术</h2><p>sqlalchemy的延迟加载属性如果要改成eager加载，需要在获取数据时指定。</p>
-<p>通过深度实现抽象： A生成B，然后再运行B，比同时在运行时处理多个可能的B要简单。多阶段，每个阶段只处理部分复杂性，而且这个复杂性不会被传递到下一阶段，而是被逐步消减掉。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>对象化是很自然的抽象手段</li>
-<li>聚合根源于聚合，归于选择</li>
-<li>IoC容器在时间维度上管理对象生命周期</li>
-<li>信息的合理分布可以最小化扰动影响范围</li>
-<li>面向差量重构一切理解</li>
+<li>在Excel数据模型中定义一个domain，string-long，在【域定义中】设置它对应的Java类型为String。这样在生成实体属性的时候会修改为String类型。</li>
+<li>另外一种做法是在XMeta的prop上指定<code>graphql:type</code>为String，这样在GraphQL中返回的时候会自动转换成String类型。</li>
 </ol>
 
 </div>
@@ -1333,7 +1275,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/ddd-in-nop.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/graphql/graphql-type.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
