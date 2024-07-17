@@ -1323,6 +1323,9 @@
 <li>阿里云要求pathStyleAccess必须设置为false</li>
 </ul>
 <p><strong>注意: 配置项是nop.integration.oss.enabled，而不是nop.file.integration.oss.enabled</strong></p>
+<h2 id="前端显示"><a href="#前端显示" class="headerlink" title="前端显示"></a>前端显示</h2><p>如果excel数据模型中设置了<code>domain=file</code>或者<code>domain=file-list</code>，则XMeta中会自动生成对应FileStatus属性，例如NopAuthUser中的avatar字段对应生成<code>avatarComponentFileStatus</code>。</p>
+<p>FileStatus会返回文件的名称、大小等信息。</p>
+<p><code>control.xlib</code>中的<code>&lt;view-file&gt;</code>用于在前台显示文件下载链接，它会使用FileStatus中的信息来获取文件名等。</p>
 <h2 id="配置变量"><a href="#配置变量" class="headerlink" title="配置变量"></a>配置变量</h2><ul>
 <li>nop.file.store-dir<br>使用本地文件系统存储上传文件时使用的目录，缺省为&#x2F;nop&#x2F;file</li>
 <li>nop.file.store-impl<br>如果设置为oss则表示启用分布式存储，否则使用本地存储</li>
