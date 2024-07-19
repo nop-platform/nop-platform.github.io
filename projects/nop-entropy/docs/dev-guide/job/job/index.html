@@ -12,11 +12,8 @@
 
 
   
-    
-    
-
-    
-      
+  
+  
     
   
 
@@ -40,10 +37,10 @@
 
 
 
-  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+  <title>整体设计 - Nop</title>
 
 
-  <meta property="og:title" content="Nop">
+  <meta property="og:title" content="整体设计">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1254,13 +1251,20 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title"></h1>
+    <h1 class="Article-title">整体设计</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9">
+      <div class="Article-content col-md-9"><ol>
+<li>TaskFlow是单次执行的核心引擎</li>
+<li>Job为Task增加定时调度功能，单次直接触发不需要从Job进入</li>
+<li>BatchTask是TaskFlow的一个步骤，相当于是扩展Task的某个Step存储信息。可以独立于TaskFlow运行。</li>
+<li>BatchTask有专用的去重记录表。</li>
+<li>前端对于TaskFlow异步执行状态有一个统一的监控手段。</li>
+</ol>
+
 </div>
       <footer class="Article-footer col-md-3">
         
