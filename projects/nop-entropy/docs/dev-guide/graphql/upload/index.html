@@ -1326,6 +1326,14 @@
 <h2 id="前端显示"><a href="#前端显示" class="headerlink" title="前端显示"></a>前端显示</h2><p>如果excel数据模型中设置了<code>domain=file</code>或者<code>domain=file-list</code>，则XMeta中会自动生成对应FileStatus属性，例如NopAuthUser中的avatar字段对应生成<code>avatarComponentFileStatus</code>。</p>
 <p>FileStatus会返回文件的名称、大小等信息。</p>
 <p><code>control.xlib</code>中的<code>&lt;view-file&gt;</code>用于在前台显示文件下载链接，它会使用FileStatus中的信息来获取文件名等。</p>
+<h2 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h2><p>IOrmEntityFileStore提供了copyFile函数，可以根据指定fileId复制一份NopFileRecord记录，从而允许多个附件字段复用同一个文件存储。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span> <span class="hljs-title function_">copyFile</span>(<span class="hljs-title class_">String</span> fileId, <span class="hljs-title class_">String</span> newBizObjName, <span class="hljs-title class_">String</span> newObjId, <span class="hljs-title class_">String</span> newFieldName);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>copyFile返回一个新的fileId</li>
+<li>在NopFileRecord记录上增加了originFileId字段，从同一个NopFileRecord复制得到的记录都具有同样的originFileId值。</li>
+<li>detachFile的时候会检查当前记录是否是最后一个共享originFileId的记录。如果是，则也删除文件存储中的文件，否则只删除对应的NopFileRecord。</li>
+</ul>
 <h2 id="配置变量"><a href="#配置变量" class="headerlink" title="配置变量"></a>配置变量</h2><ul>
 <li>nop.file.store-dir<br>使用本地文件系统存储上传文件时使用的目录，缺省为&#x2F;nop&#x2F;file</li>
 <li>nop.file.store-impl<br>如果设置为oss则表示启用分布式存储，否则使用本地存储</li>
