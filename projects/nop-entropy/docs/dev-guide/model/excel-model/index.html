@@ -1346,6 +1346,8 @@
 </li>
 <li><p><code>clock</code>: 标记字段根据调用时刻的时钟来动态确定，因此在自动化单元测试录制时需要记录为变量。</p>
 </li>
+<li><p><code>like</code>: 标记在文本字段上，会自动生成prop上的<code>ui:filterOp=&quot;contains&quot;</code>，表示使用模糊查询</p>
+</li>
 </ul>
 <h2 id="字段显示"><a href="#字段显示" class="headerlink" title="字段显示"></a>字段显示</h2><p>代码生成的时候会在<code>view.xml</code>页面结构文件中自动生成列表和表单布局定义。列表缺省按照模型中的字段顺序显示。表单布局如果字段个数超过10个，则按照两列显示，否则按照一列显示。</p>
 <p>为了减少手工调整<code>view.xml</code>的工作量，可以在模型中设置最常用的一些显示控制</p>
