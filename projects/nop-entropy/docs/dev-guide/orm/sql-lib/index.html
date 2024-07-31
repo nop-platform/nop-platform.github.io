@@ -1326,10 +1326,10 @@
 </li>
 </ol>
 <p>如果确实希望直接输出SQL文本，拼接到SQL语句中，可以使用raw函数来包装。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">from MyEntity_$&#123;raw(postfix)&#125; o<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">from</span> MyEntity_$&#123;raw(postfix)&#125; o<br></code></pre></td></tr></table></figure>
 
 <p>此外，NopOrm对于参数化SQL对象本身也建立了一个简单的包装模型</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">SQL = Text + Params<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">SQL = Text + Params<br></code></pre></td></tr></table></figure>
 
 <p>通过sql &#x3D; SQL.begin().sql(“o.id &#x3D; ? “, name).end() 这种形式可以构造带参数的SQL语句对象。Xpl模板的sql输出模式会自动识别SQL对象，并自动对文本和参数集合分别进行处理。</p>
 <h2 id="5-自动验证"><a href="#5-自动验证" class="headerlink" title="5. 自动验证"></a>5. 自动验证</h2><p>外部文件中管理SQL模板存在一个缺点：它无法依赖类型系统进行校验，只能期待运行时测试来检查SQL语法是否正确。如果数据模型发生变化，则可能无法立刻发现哪些SQL语句受到影响。<br>对于这个问题，其实存在一些比较简单的解决方案。毕竟，SQL语句既然已经作为结构化的模型被管理起来了，我们能够对它们进行操作的手段就变得异常丰富起来。<br>NopOrm内置了一个类似Contract Based<br>Programming的机制：每个EQL语句的模型都支持一个validate-input配置，我们可以在其中准备一些测试数据，然后ORM引擎在加载sql-lib的时候会自动运行validate-input得到测试数据，并以测试数据为基础执行SQL模板来生成EQL语句，然后交由EQL解析器来分析它的合法性，从而实现以一种准静态分析的方式检查ORM模型与EQL语句的一致性。</p>
@@ -1344,10 +1344,10 @@
 <li><p>任何表达式都可以追加调用扩展函数<code>$</code>，它会自动打印当前表达式对应的文本、行号以及表达式执行的结果, 并返回表达式的结果值。例如</p>
 </li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">x = a.f().$(prefix) 实际对应于<br>x = DebugHelper.v(location,prefix, &quot;a.f()&quot;,a.f())<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">x = a.f().$(prefix)<br><span class="hljs-comment">// 实际对应于</span><br>x = DebugHelper.v(location,prefix, <span class="hljs-string">&quot;a.f()&quot;</span>,a.f())<br></code></pre></td></tr></table></figure>
 
 <h2 id="7-根据Dialect生成对应的SQL语句"><a href="#7-根据Dialect生成对应的SQL语句" class="headerlink" title="7. 根据Dialect生成对应的SQL语句"></a>7. 根据Dialect生成对应的SQL语句</h2><p>利用标签库可以引入各种自定义的扩展逻辑。比如根据不同的数据库方言生成不同的SQL语句。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">select<br>&lt;sql:when-dialect name=&quot;h2&quot;&gt;<br>    ...<br>&lt;/sql:when-dialect&gt;<br>        from my_entity<br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">select<br><span class="hljs-tag">&lt;<span class="hljs-name">sql:when-dialect</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;h2&quot;</span>&gt;</span><br>    ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">sql:when-dialect</span>&gt;</span><br>from my_entity<br></code></pre></td></tr></table></figure>
 
 <h2 id="8-Mapper接口"><a href="#8-Mapper接口" class="headerlink" title="8. Mapper接口"></a>8. Mapper接口</h2><p>只要在Excel数据模型中为实体增加mapper标签，代码生成的时候就会自动生成类似MyBatis的强类型的Mapper接口，通过它可以调用SqlLibManager所管理的SQL模型文件。例如<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-app-mall/blob/master/app-mall-dao/src/main/java/app/mall/dao/mapper/LitemallGoodsMapper.java">LitemallGoodsMapper.java</a>。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><br><span class="hljs-meta">@SqlLibMapper(&quot;/app/mall/sql/LitemallGoods.sql-lib.xml&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">LitemallGoodsMapper</span> &#123;<br><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">syncCartProduct</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;product&quot;)</span> LitemallGoodsProduct product)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1409,17 +1409,17 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xxx&quot;</span> <span class="hljs-attr">enableFilter</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>        select u.xx from MyEntity u, OtherEntity t where u.fldA = t.fldA<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>也可以使用在构造SQL对象时直接指定enableFilter属性</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable constant_">SQL</span> sql = <span class="hljs-variable constant_">SQL</span>.<span class="hljs-title function_">begin</span>().<span class="hljs-title function_">enableFilter</span>(<span class="hljs-literal">true</span>).<span class="hljs-title function_">sql</span>(<span class="hljs-string">&quot;...&quot;</span>).<span class="hljs-title function_">end</span>();<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">SQL</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> SQL.begin().enableFilter(<span class="hljs-literal">true</span>).sql(<span class="hljs-string">&quot;...&quot;</span>).end();<br></code></pre></td></tr></table></figure>
 
 <p>启用enableFilter后，会自动利用<code>IServiceContext.bindingCtx()</code>获取当前上下文中的IServiceContext，并调用<code>IDataAuthChecker.getFilter()</code><br>来获取到数据权限过滤条件，转换为SQL语句后拼接到原始的SQL语句中。</p>
 <blockquote>
 <p>如果允许用户直接编写SQL语句，则可以利用enableFilter特性来自动追加数据权限过滤条件，避免产生数据泄露</p>
 </blockquote>
-<h3 id="allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名"><a href="#allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名" class="headerlink" title="allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名"></a>allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;eql name=&quot;xx&quot; allowUnderscoreName=&quot;true&quot;&gt;<br>  &lt;source&gt;<br>     select o.statusId, o.status_id from MyEntity o<br>  &lt;/source&gt;<br>&lt;/eql&gt;<br></code></pre></td></tr></table></figure>
+<h3 id="allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名"><a href="#allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名" class="headerlink" title="allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名"></a>allowUnderscoreName设置为true，将会允许在EQL中直接使用数据库字段名</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xx&quot;</span> <span class="hljs-attr">allowUnderscoreName</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>     select o.statusId, o.status_id from MyEntity o<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>使用statusId或者status_id都可以访问实体上的属性。</p>
 <p>也可以使用在构造SQL对象时直接指定allowUnderscoreName属性</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable constant_">SQL</span>.<span class="hljs-title function_">begin</span>().<span class="hljs-title function_">allowUnderscoreName</span>(<span class="hljs-literal">true</span>).<span class="hljs-title function_">sql</span>(<span class="hljs-string">&quot;....&quot;</span>).<span class="hljs-title function_">end</span>();<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">SQL.begin().allowUnderscoreName(<span class="hljs-literal">true</span>).sql(<span class="hljs-string">&quot;....&quot;</span>).end();<br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         

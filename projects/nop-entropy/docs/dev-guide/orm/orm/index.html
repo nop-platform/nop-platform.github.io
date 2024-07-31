@@ -1258,7 +1258,7 @@
 
       </header>
       <div class="Article-content col-md-9"><p>NopORM是一个类似Hibernate的完整ORM引擎，因此它也是通过OrmSession来管理所有加载到内存中的实体对象。在同一个session中，只会按照id从数据库加载一次，然后得到的实体对象就会被缓存到session中。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">MyEntity</span> entity = dao.<span class="hljs-title function_">getEntityById</span>(<span class="hljs-string">&quot;3&quot;</span>);<br><span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">MyEntity</span>&gt; entities = dao.<span class="hljs-title function_">findAll</span>();<br><span class="hljs-title function_">assertTrue</span>(entityes.<span class="hljs-title function_">contains</span>(entity));<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">MyEntity</span> <span class="hljs-variable">entity</span> <span class="hljs-operator">=</span> dao.getEntityById(<span class="hljs-string">&quot;3&quot;</span>);<br>List&lt;MyEntity&gt; entities = dao.findAll();<br>assertTrue(entityes.contains(entity));<br></code></pre></td></tr></table></figure>
 
 <p>同一个id所对应的实体一定是唯一的对象。在上面的例子中，findAll从数据库中查找得到实体数据，返回给调用者之前会检查是否已经有同样id的实体已经存在，<br>如果session中已经存在，则会使用已经存在的实体对象替换从数据库加载得到的实体对象。</p>
 <blockquote>
@@ -1269,7 +1269,7 @@
 <li>向集合对象中加入实体隐含的就表示该实体也要同步到数据库中，因此调用parent.getChildren().add(child)之后不需要再调用dao.saveEntity(child)来保存子实体。</li>
 <li>从集合对象中删除实体会自动删除该实体，除非它的owner属性值被设置为null.</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">parent.getChildren().remove(child);<br>// child.setParent(null); <br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">parent.getChildren().remove(child);<br><span class="hljs-comment">// child.setParent(null);</span><br></code></pre></td></tr></table></figure>
 
 <p>如果不调用child.setParent(null)，则从parent的children集合中删除child表示要从数据库中删除child。而如果设置了child的parent为null，则表示解除父实体和子实体的关联关系。</p>
 <h2 id="不支持自增主键"><a href="#不支持自增主键" class="headerlink" title="不支持自增主键"></a>不支持自增主键</h2><p>NopOrm引擎不支持MySQL数据库内置的自增主键特性。具体原因如下：</p>
