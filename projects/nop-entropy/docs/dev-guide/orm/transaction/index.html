@@ -1273,6 +1273,7 @@
 
 <h2 id="多数据源事务"><a href="#多数据源事务" class="headerlink" title="多数据源事务"></a>多数据源事务</h2><p>参见 <a href="../multi-db/">multi-db.md</a></p>
 <p>NopORM引擎支持同时使用多个数据源，例如一些表存放在数据库A中，另一些表存放在数据库B中，它们映射到实体对象后可以存在于同一个OrmSession中。<br>缺省情况下，所有的的数据源都属于同一个事务组(txnGroup&#x3D;default)，当打开事务的时候会认为打开的是事务组，然后不同数据源的事务都挂接在这一个事务组中。<br>事务组提交的时候会逐一提交打开的下层数据源的事务。</p>
+<h2 id="监听事务提交或者回滚事件"><a href="#监听事务提交或者回滚事件" class="headerlink" title="监听事务提交或者回滚事件"></a>监听事务提交或者回滚事件</h2><p><code>ITransactionTemplate.addTransactionListener(txnGroup, listener)</code>可以注册事务事件</p>
 
 </div>
       <footer class="Article-footer col-md-3">
