@@ -1328,6 +1328,12 @@
 </ul>
 <p>实际翻译得到的EQL语句为</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o<br><span class="hljs-keyword">from</span> NopAuthSite o<br><span class="hljs-keyword">where</span><br>  <span class="hljs-keyword">exists</span>(<span class="hljs-keyword">select</span> o2 <span class="hljs-keyword">from</span> NopAuthResource o2 <span class="hljs-keyword">where</span> o2.siteId<span class="hljs-operator">=</span> o.id<br>   <span class="hljs-keyword">and</span> o2.status <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;main&#x27;</span> &#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><p><code>graphql:transFilter</code>的类型是<code>xpl-fn</code>，它的返回值要求是XNode类型，但是它不直接支持输出。要使用xpl来输出XNode时，需要使用一个节点包装一下，设置outputMode</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">graphql:transFilter</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">and</span> <span class="hljs-attr">xpl:outputMode</span>=<span class="hljs-string">&quot;node&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">alwaysTrue</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">filter:sql</span>&gt;</span><br>            exists(select o2 from NopAuthResource o2 where o2.siteId= o.id<br>            and o2.status &gt;= $&#123;filter.getAttr(&#x27;value&#x27;)&#125;)<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">filter:sql</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">and</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">graphql:transFilter</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>另外在配置<code>graphql:transFilter</code>的情况下，仍然可以设置allowFilterOp为多种op，在执行生成代码时通过<code>filter.tagName</code>可以判断前台传过来的到底是哪个op。</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         

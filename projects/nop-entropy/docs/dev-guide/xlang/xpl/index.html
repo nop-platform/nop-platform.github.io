@@ -1476,7 +1476,11 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">crud</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">api</span> <span class="hljs-attr">url</span>=<span class="hljs-string">&quot;xxx&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">crud</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>各种逻辑结构的形式边界在xpl模板语言中可以被很自然的消解，这才是最关键的部分。</p>
+<h2 id="代码生成特性"><a href="#代码生成特性" class="headerlink" title="代码生成特性"></a>代码生成特性</h2><p>XLang内置了一些特殊的名字空间，比如x,xpl等，它们会在编译期被处理。如果就是要生成<code>x:abstract</code>这样的属性，可以使用<code>xgen-</code>前缀，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">xgen-x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 
+<p>则实际输出时会移除<code>xgen-</code>前缀，最终生成</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         

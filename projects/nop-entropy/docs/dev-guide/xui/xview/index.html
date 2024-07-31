@@ -1367,6 +1367,7 @@
 <li>在指定view.xml模型文件中增加page定义，然后利用Delta定制可以继承已有的页面，定制initApi配置即可。这是在XView模型层面定制。</li>
 </ul>
 <p>也可以通过view引入page.yaml，然后在page.yaml中继承已有的page.yaml，在AMIS层面定制。</p>
+<h2 id="default-query配置"><a href="#default-query配置" class="headerlink" title="default-query配置"></a>default-query配置</h2><p>如果meta具有<code>default-query</code>标签，则会自动把所有<code>visible and !internal and queriable and ui:show不包含Q</code>的所有字段收集到query form中，<br>使用AMIS的autoGenerateFilter机制来实现前端查询表单。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
