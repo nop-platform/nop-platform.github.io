@@ -1334,6 +1334,10 @@
 <li>在NopFileRecord记录上增加了originFileId字段，从同一个NopFileRecord复制得到的记录都具有同样的originFileId值。</li>
 <li>detachFile的时候会检查当前记录是否是最后一个共享originFileId的记录。如果是，则也删除文件存储中的文件，否则只删除对应的NopFileRecord。</li>
 </ul>
+<h2 id="设置文件允许匿名下载"><a href="#设置文件允许匿名下载" class="headerlink" title="设置文件允许匿名下载"></a>设置文件允许匿名下载</h2><ol>
+<li><code>IOrmEntityFileStore.changePublic(fileId, true)</code>设置文件允许被公开访问</li>
+<li>设置<code>nop.auth.download-file-public=true</code>，或者定制<code>auth-service.beans.xml</code>中的nopAuthFilterConfig，允许公开访问<code>/f/download/*</code></li>
+</ol>
 <h2 id="配置变量"><a href="#配置变量" class="headerlink" title="配置变量"></a>配置变量</h2><ul>
 <li>nop.file.store-dir<br>使用本地文件系统存储上传文件时使用的目录，缺省为&#x2F;nop&#x2F;file</li>
 <li>nop.file.store-impl<br>如果设置为oss则表示启用分布式存储，否则使用本地存储</li>
