@@ -1287,15 +1287,24 @@
 </ul>
 <h2 id="单元格展开"><a href="#单元格展开" class="headerlink" title="单元格展开"></a>单元格展开</h2><p>在单元格的批注中可以写如下属性</p>
 <ul>
-<li>expandType:  r表示沿行的方向展开，而c表示沿列的方向展开</li>
-<li>expandExpr:  如果非空，则表达式应该返回一个集合，当前单元格会按照此集合的值展开成多个单元格。</li>
-<li>ds: 当前数据源对象</li>
-<li>field: 如果没有指定expandExpr，而指定了field，则按照该字段对当前数据集进行汇总，然后针对分组情况进行展开。</li>
-<li>keepExpandEmpty: 当展开集合返回空时，缺省情况下会把对应单元格及其子单元格都删除。但是如果设置了keepExpandEmpty，则这些未展开的单元格会保留，但值会被设置为null</li>
-<li>rowParent: 行父格。必须是一个设置了expandType的单元格。行父格展开时会复制所有的子单元格。如果不指定，则向左侧查找。</li>
-<li>colParent: 列父格。必须是一个设置了expandType的单元格。列父格展开时会复制所有的子单元格。如果不指定，则向上查找。</li>
-<li>expandMinCount: 控制展开时最少有多少个元素，如果expandExpr返回的长度较小，则补充null。</li>
-<li>expandMaxCount: 控制展开时最多有多少个元素。超过的行将会被自动丢弃</li>
+<li><p>expandType:  r表示沿行的方向展开，而c表示沿列的方向展开</p>
+</li>
+<li><p>expandExpr:  如果非空，则表达式应该返回一个集合，当前单元格会按照此集合的值展开成多个单元格。</p>
+</li>
+<li><p>ds: 当前数据源对象</p>
+</li>
+<li><p>field: 如果没有指定expandExpr，而指定了field，则按照该字段对当前数据集进行汇总，然后针对分组情况进行展开。</p>
+</li>
+<li><p>keepExpandEmpty: 当展开集合返回空时，缺省情况下会把对应单元格及其子单元格都删除。但是如果设置了keepExpandEmpty，则这些未展开的单元格会保留，但值会被设置为null</p>
+</li>
+<li><p>rowParent: 行父格。必须是一个设置了expandType的单元格。行父格展开时会复制所有的子单元格。如果不指定，则向左侧查找。</p>
+</li>
+<li><p>colParent: 列父格。必须是一个设置了expandType的单元格。列父格展开时会复制所有的子单元格。如果不指定，则向上查找。</p>
+</li>
+<li><p>expandMinCount: 控制展开时最少有多少个元素，如果expandExpr返回的长度较小，则补充null。</p>
+</li>
+<li><p>expandMaxCount: 控制展开时最多有多少个元素。超过的行将会被自动丢弃</p>
+</li>
 </ul>
 <ul>
 <li>rowParent和colParent如果设置为A0，则表示它们是根单元格，没有父格。</li>

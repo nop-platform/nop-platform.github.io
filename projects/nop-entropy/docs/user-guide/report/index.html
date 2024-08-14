@@ -1273,6 +1273,8 @@
 <h3 id="复杂多源报表"><a href="#复杂多源报表" class="headerlink" title="复杂多源报表"></a>复杂多源报表</h3><p><img src="/knosys/project-nop-entropy/user-guide/report/multi-ds-report.png"><br><img src="/knosys/project-nop-entropy/user-guide/report/multi-ds-report-result.png"></p>
 <h3 id="交叉报表—数据双向扩展"><a href="#交叉报表—数据双向扩展" class="headerlink" title="交叉报表—数据双向扩展"></a>交叉报表—数据双向扩展</h3><p><img src="/knosys/project-nop-entropy/user-guide/report/cross-table-report.png"><br><img src="/knosys/project-nop-entropy/user-guide/report/cross-table-report-result.png"></p>
 <h3 id="同比环比等财务统计表"><a href="#同比环比等财务统计表" class="headerlink" title="同比环比等财务统计表"></a>同比环比等财务统计表</h3><p><img src="/knosys/project-nop-entropy/user-guide/report/MOM-YOY-report.png"><br><img src="/knosys/project-nop-entropy/user-guide/report/MOM-YOY-report-result.png"></p>
+<h3 id="兄弟节点并行展开"><a href="#兄弟节点并行展开" class="headerlink" title="兄弟节点并行展开"></a>兄弟节点并行展开</h3><p><img src="/knosys/project-nop-entropy/user-guide/report/sibling-expand.png"><br><img src="/knosys/project-nop-entropy/user-guide/report/sibling-expand-result.png"></p>
+<p>列父格D2的展开将导致D3被复制为多个，而当D3执行行展开的时候，就产生了多个兄弟节点同时进行行展开。<br>兄弟节点进行行展开时将会自动共享新建的行，因此父节点最终被扩展为多少行，由所有子节点的总计的展开数量来决定。</p>
 <h3 id="Excel模型扩展"><a href="#Excel模型扩展" class="headerlink" title="Excel模型扩展"></a>Excel模型扩展</h3><p>NopReport报表模型可以看作是对Excel模型的一种扩展。在单元格的批注中我们可以通过expandType、expandExpr和field等属性来指定单元格展开方向和展开内容。另外在单元格的文本中，我们可以直接写表达式语法。优点是在界面上可以直接看见表达式内容，而不需要把批注展开。支持两种格式的文本表达式语法：</p>
 <ol>
 <li>EL表达式：例如${entity.myField}</li>
