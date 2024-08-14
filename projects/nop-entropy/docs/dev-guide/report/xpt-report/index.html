@@ -1347,6 +1347,10 @@
 <h2 id="常用表达式"><a href="#常用表达式" class="headerlink" title="常用表达式"></a>常用表达式</h2><ul>
 <li>xptRt.seq(seqName): 相当于是 seqName ++，即读取seqName对应的变量值，执行递增操作，然后返回递增之前的值。如果一开始变量不存在，则认为初始化为1</li>
 </ul>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>在【XptWorkbookModel】配置中可以设置<code>dump=true</code>启用调试文件输出，在模板展开的过程中会把每一个中间结果输出到dumpDir目录下，dumpDir的缺省值为<code>./target</code>。</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/report-dump.png"></p>
+<p>调试文件的文件名格式为<code>&#123;seq&#125;-&#123;cellPos&#125;.html</code><br><img src="/knosys/project-nop-entropy/dev-guide/report/xpt-report/report-dump-file.png"></p>
+<p>调试文件中的每个单元格中的内容为 <code>cellText &lt;- cellLayerCoordinate</code>。</p>
 <h2 id="常见问题解答："><a href="#常见问题解答：" class="headerlink" title="常见问题解答："></a>常见问题解答：</h2><h3 id="1-单元格的展开值cell-expandValue和单元格个的值cell-value之间有什么区别"><a href="#1-单元格的展开值cell-expandValue和单元格个的值cell-value之间有什么区别" class="headerlink" title="1. 单元格的展开值cell.expandValue和单元格个的值cell.value之间有什么区别?"></a>1. 单元格的展开值<code>cell.expandValue</code>和单元格个的值<code>cell.value</code>之间有什么区别?</h3><p>展开和计算单元格的值是两个步骤，第一步是按照层次坐标展开，此时使用的是展开表达式expandType，得到的是展开值expandValue。<br>只有设置了expandType和expandExpr的单元格才具有展开值。</p>
 <p>全部展开完毕后再执行单元格计算，此时根据valueExpr计算单元格的值。如果没有设置valueExpr，则单元格会取展开值expandValue为自己的缺省值。</p>
 <h3 id="2-如何支持默认多个空行"><a href="#2-如何支持默认多个空行" class="headerlink" title="2. 如何支持默认多个空行"></a>2. 如何支持默认多个空行</h3><ul>
