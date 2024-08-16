@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+    
+      
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+
+
+  <meta property="og:title" content="Nop">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title"></h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>Nop Platform 2.0是基于可逆计算理论从零开始构建的下一代低代码开发平台，它从理论层面超越了传统的组件技术和模型驱动架构，可以有效的解决粗粒度软件复用的问题，克服低代码平台扩展性差、性能低，且只能应用于少数成熟领域的限制。</p>
+<p>Nop平台采用面向语言编程范式（Language Oriented Programming），在应用开发时并不是直接使用通用程序语言（如Java、C#）来开发，而是先定义一个领域特定语言（DSL），然后再应用DSL来表达业务。Nop平台的设计目标是成为简单易用的领域语言工作台（Domain Language Workbench） 。通过增加简单的元数据定义，就可以自动得到对应的DSL解析器、验证器、IDE插件、调试工具等，并自动为DSL领域语言增加模块分解、差量定制、元编程等通用语言特性。在这一点上，它类似于Jetbrains公司的MPS产品 ，只是它的设计原理和技术实现路径与MPS有着本质性差别。</p>
+<p>传统的组件技术只能复用A和B之间的公共部分，导致复用的粒度一定是比A和B都要小的，在理论层面就无法实现一个复杂的完整系统的复用。可逆计算理论明确指出了逆元概念在软件构造领域的重要性，并结合产生式编程（Generative Programming），提出了一个系统化的实现粗粒度软件复用的技术路线</p>
+<blockquote>
+<p><code>App = Delta x-extends Generator&lt;DSL&gt;</code></p>
+</blockquote>
+<p>可逆计算将复用的基本原理从相同可复用拓展到了相关可复用，在软件世界中引入了新的软件构造原理，可以用通用的方式解决此前的技术所不可能解决的软件复用问题。业内最新的一些基于差量概念的创新实践，如Docker和K8s中的kustomize技术等，都可以在可逆计算理论的框架下得到统一的理论解释，详细介绍参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64004026">可逆计算：下一代软件构造理论</a>。</p>
+<p>Nop平台是可逆计算理论的一个具体实现。</p>
+<ol>
+<li><p>nop-entropy是Nop平台的后端部分。它采用Java语言实现，不依赖第三方框架，可以和Quarkus、Spring或者Solon框架集成在一起使用。</p>
+</li>
+<li><p>nop-entropy支持GraalVM技术，可以借助于Quarkus 或者SpringNative 框架编译为原生可执行程序，运行时不需要安装JDK，且启动速度提升数十倍。</p>
+</li>
+<li><p>nop-entropy采用云原生设计，内置分布式事务和多租户支持，可以单机运行，也可以作为分布式集群运行，可以提供在线的API服务，也可以将针对单个业务对象的在线服务自动包装为针对批处理文件的批处理任务。对于大多数业务应用场景均提供相应的模型支持，只需少量配置即可完成主要功能，大大降低对手工编码的需求。</p>
+</li>
+<li><p>nop-entropy在开发期可以作为支持增量式开发的低代码平台，自动生成各类代码以及相关文档，在运行期可以作为面向最终用户的无代码平台的支撑技术，允许客户在线调整业务模块功能，以所见即所得的方式进行产品迭代。</p>
+</li>
+<li><p>Nop平台为DSL的设计和研发提供了完整的理论支撑和底层工具集，可以极大简化AIGC与业务领域的结合。可以利用Nop平台的XDef元模型和XDSL领域语言迅速的集成AI大模型。</p>
+</li>
+<li><p>Nop平台自身就是使用Nop平台所开发的，它有约一半的代码由工具自动生成。内部实现也大量使用了Nop平台内置的元编程和Delta合并运算能力。</p>
+</li>
+</ol>
+<p>Nop平台所有部分都会完全开源，不会发布商业化版本。目前已经发布的部分主要包含XLang语言的实现，以及ORM、依赖注入容器(IoC)、分布式配置（Config）、GraphQLEngine、报表引擎（Report Engine）、任务调度引擎(Job Scheduler)、批处理引擎（Batch Prcessing Engine）、规则引擎（Rule Engine）等基础框架， 后续规划包括工作流引擎（Workflow Engine）、商业智能（BI）、流处理引擎等业务开发常用部分。</p>
+<p>这些框架并不是对现有开源软件的简单复刻，而是根据可逆计算理论的要求从零开始设计、编写，包含了大量原创设计。Nop平台在代码量减少一个数量级的情况下（不到15万行手写Java代码）实现了比开源框架更多的功能特性，并达到了前所未有的内在一致性、灵活性和可扩展性。</p>
+<blockquote>
+<p>X &#x3D; A + B + C</p>
+<p>Y &#x3D; A + B + D &#x3D; X + (-C + D) &#x3D; X + Delta</p>
+</blockquote>
+<p>对于一个满足可逆计算原理的系统X，在不拆解X的情况下，我们总可以补充额外的Delta信息，将它转换为任意的目标Y。因此，在不修改Nop平台源码的情况下，我们总可以通过补充Delta描述实现对平台所有功能的定制修改，比如定制数据库表结构、业务逻辑、可视化设计器等。基于Nop平台开发的所有业务产品也自动继承了这种Delta定制的能力，它可以极大降低大型业务软件的定制化开发难度。</p>
+<h2 id="Nop的亮点优势"><a href="#Nop的亮点优势" class="headerlink" title="Nop的亮点优势"></a>Nop的亮点优势</h2><p>Nop平台为AI时代的软件智能制造提供了新的技术架构支撑，它是唯一的在理论层面解决粗粒度软件复用问题的开源平台，可以实现大型银行核心应用在不同客户处进行深度二次开发时无需修改基础产品源码。<br>Nop平台为实现底层框架、引擎等也提供了新的思路。传统上每个引擎如(Hibernate ORM引擎和Flowable流程引擎等)都是单独设计并实现的，它们最多只会共享少量commons包。而Nop平台将每个引擎都看作是一个模型，将模型结构明确通过元模型定义出来，保存到文本文件中就成为DSL，借助于Nop平台底层的基础设施，可以快速开发和扩展DSL，因此所有引擎可以共享Nop平台的元模型和元编程能力，只要设计自己特有的运行时执行器即可，不用再考虑可扩展性、灵活性、模型可视化设计等事项，使得引擎实现可以极大瘦身。在Nop平台中，所有引擎基本都只有几千行代码量，远小于开源框架动辄数万行的代码量。</p>
+<p>Nop平台的目标并不是成为一个 开箱即用、用户友好，在细节上精细打磨的开发框架，而是探索下一代软件构造原理，提供面向未来的软件架构最佳实践。</p>
+<h2 id="可逆计算的方法论来源"><a href="#可逆计算的方法论来源" class="headerlink" title="可逆计算的方法论来源"></a>可逆计算的方法论来源</h2><p>一直以来，我对于软件领域的大量设计原则和所谓的方法论都持有很深的怀疑态度。为什么会存在这些原则，能否从科学的层面证明它们的有效性？比如，我们总是说要高内聚、低耦合、关注点分离，但是什么是高、什么是低、需要分离到什么样的程度？在研究生阶段我开始研发自己的软件框架，试图将物理学和数学中的思想引入到软件架构领域，并于2007年左右相对完整的提出可逆计算理论，在后续的大量产品研发中也逐步验证了该理论的有效性。</p>
+<p>大型软件产品普遍存在着从有序到混乱的发展历程，在物理学中对应于热力学第二定律，也就是所谓的熵增原理：熵度量了系统的混乱程度，所有自然发展的过程必然会自发的向着混乱最大化的方向发展，熵永不减少。若过程可逆，则熵不变，若不可逆，则熵增加。</p>
+<p>可逆计算的核心是可逆性，而可逆性之所以重要，不仅仅在于它方便了软件元素的灵活复用，深层次的原因是它体现了我们这个世界本质的运作规律。通过遵循可逆计算原则，我们能够有效的控制软件演进过程中的熵增速度。理想情况下，如果系统能够做到完全可逆，则熵是保持不变的。</p>
+<p>现实世界中，熵增是无法逃避的宿命。但是即使无法完全消除熵增，我们仍然可以选择熵增发生的地方，例如将熵增集中在差量Delta中。特定客户的需求总是包含着大量随机的、偶然的因素，把它们纳入系统不可避免的会破坏原先统一均衡的系统结构，如果能够把这些偶然因素集中在一个可抛弃的差量Delta中，则可以保护核心架构不会受到侵蚀。当系统交付给新的客户时，我们不必携带上一个客户的个性化需求，可以始终从一个低熵的状态开始。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64004026">可逆计算理论</a>试图为软件构造提供一个更加坚实的理论基础，它明确提出应该将“差量”提升为第一性的概念，将全量看作是差量的一种特例（全量&#x3D;单位元+全量），围绕差量概念去重建整个领域概念体系。可逆计算将软件看作是处于不断演化过程中的抽象实体，<br> 在不同的复杂性层次上由不同的运算规则所描述，它所关注的是演化过程中产生的微小差量如何在系统内有序的传播并发生相互作用。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/nop-intro.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
