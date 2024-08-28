@@ -1268,7 +1268,7 @@
 <p>正所谓人无法理解他尚未理解的事物。因为目前主流技术体系没有解决方案，所以导致很多人认为某个问题不存在通用解，更进而会认为某些问题压根不存在或不需要被解决：<strong>不能被解决的问题会被潜意识的认为是不需要被解决的</strong>。</p>
 <p>Nop平台的设计目标是成为一个通用的领域语言工作台(Domain Specific Language Workbench)，也就是说，它为创建新的领域语言提供了一系列的技术支持，力争将开发新的领域语言的成本降到最低。领域特定语言最重要的部分是它的语义结构（存在哪些领域特有的原子概念，以及这些概念之间如何相互作用），而表观的语法形式其实是一个次要问题。<strong>设计并实现一个DSL并不需要从零开始，而是可以复用一系列的通用基础设施</strong>。Nop的出现是通用语言设计发展到顶峰之后的自然结果，是通用语言自身基础设施标准化之后的进一步发展。实际上，在2024年开发一个新的通用语言，其成本已经远远小于20年前，比如Moonbit这样的十多人的小团队就可以开发新的语言。而开发一个DSL语言的运行时没有通用语言那样严苛的性能要求，可以通过Generator翻译为通用语言，其成本更是远小于开发一个通用语言。</p>
 <p>Nop平台系统化的使用DSL来解决传统软件工程中的问题，这也导致它引入了大量的自定义DSL，在不熟悉Nop的同学看来，可能就是一堆xdef、xpl、xrun、xdsl，甚至还用上了antlr，这么多不同后缀名的DSL文件到底怎么协同工作的？本文就以XCodeGenerator的执行过程为例，讲解一下Nop平台代码生成器中用到的各种DSL。</p>
-<h2 id="一-XCodeGenerator的执行过程"><a href="#一-XCodeGenerator的执行过程" class="headerlink" title="一. XCodeGenerator的执行过程"></a>一. XCodeGenerator的执行过程</h2><p>  <code>App = Delta x-extends Generator&lt;DSL&gt;</code>这个公式中提到的Generator是一个抽象概念，它泛指一切针对领域结构的抽象变换机制，具体的表现可以是一个独立的代码生成工具，也可以是某种内置在程序语言内部的宏函数(Macro Function)和元编程(Meta Programming)机制。XCodeGenerator是Nop平台内置的一个通用代码生成器。</p>
+<h2 id="一-XCodeGenerator的执行过程"><a href="#一-XCodeGenerator的执行过程" class="headerlink" title="一. XCodeGenerator的执行过程"></a>一. XCodeGenerator的执行过程</h2><p><code>App = Delta x-extends Generator&lt;DSL&gt;</code>这个公式中提到的Generator是一个抽象概念，它泛指一切针对领域结构的抽象变换机制，具体的表现可以是一个独立的代码生成工具，也可以是某种内置在程序语言内部的宏函数(Macro Function)和元编程(Meta Programming)机制。XCodeGenerator是Nop平台内置的一个通用代码生成器。</p>
 <blockquote>
 <p>参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rd36AFh5pmjwtRFmApRswg">地表最强的模型驱动代码生成器NopCodeGen</a></p>
 </blockquote>
@@ -1316,7 +1316,7 @@
 <p>Nop平台提供的是一个通用解析器，它会根据ImportModel模型给出的信息来决定如何解析一个ExcelWorkbook对象，从它的单元格中解析出字段值，并执行转换和验证逻辑，最后组装出一个强类型的Java对象。在反方向上，对于一个给定的ModelObject，借助于ReportModel给定的信息，我们利用NopReport报表引擎来生成ExcelWorkbook对象。</p>
 <p>需要注意的是，这里的转换逻辑比JSON序列化复杂，因为解析得到的模型对象丢失了Excel格式和布局信息，它和ExcelWorkbook的相互转换在两个方向上是不对称的，可以看作是JSON序列化的一种非对称扩展。</p>
 <blockquote>
-<p><strong>ExcelWorkbook  + ImportModel &#x3D;&gt; ModelObject</strong> </p>
+<p><strong>ExcelWorkbook  + ImportModel &#x3D;&gt; ModelObject</strong></p>
 <p><strong>ModelObject + ReportModel &#x3D;&gt; ExcelWorkbook</strong></p>
 </blockquote>
 <p>ImportModel是ImportExcelParser在运行时所使用的模型信息，它可以保存为imp.xml文件，以DSL的形态存在。</p>
@@ -1373,7 +1373,7 @@
 <li><p>XDef元模型本身也通过<code>xdef.xdef</code>来进行约束，但是在具体实现层面XDefinitionParser解析XDef模型文件的时候是手工编写的，并没有使用自动解析，否则解析XDef需要先解析<code>xdef.xdef</code>会导致循环。</p>
 </li>
 <li><p>Xpl虽然采用XML语法，但是它解析后得到的抽象语法树AST与XScript是一致的，都是XLangAST。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:unit</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">c:for</span> <span class="hljs-attr">var</span>=<span class="hljs-string">&quot;x&quot;</span> <span class="hljs-attr">items</span>=<span class="hljs-string">&quot;$&#123;list&#125;&quot;</span>&gt;</span><br>      ...<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">c:for</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>      for(let x of list)&#123;<br>         // ... <br>      &#125;<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:unit</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:unit</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">c:for</span> <span class="hljs-attr">var</span>=<span class="hljs-string">&quot;x&quot;</span> <span class="hljs-attr">items</span>=<span class="hljs-string">&quot;$&#123;list&#125;&quot;</span>&gt;</span><br>      ...<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">c:for</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>      for(let x of list)&#123;<br>         // ...<br>      &#125;<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:unit</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>上面的<code>&lt;c:for&gt;</code>标签和<code>&lt;c:script&gt;</code>标签中的for语句解析得到的都是ForOfStatement。</p>
 </li>
