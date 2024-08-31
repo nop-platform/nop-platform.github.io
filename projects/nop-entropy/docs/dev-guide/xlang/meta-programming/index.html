@@ -1258,7 +1258,7 @@
 
       </header>
       <div class="Article-content col-md-9"><p>在众多的编程语言中，爷爷辈的Lisp语言一直是一个独特的存在，这种独特性有人把它总结为”Lisp是可编程的编程语言”<br>。这指的是Lisp具有强大的元编程能力，可以由程序员自主创造新的语法抽象。<br>编程通俗的说就是<strong>写代码</strong>, 而所谓的元编程指的是<strong>写生成代码的代码</strong>。<br>Lisp通过宏提供了元编程的能力，而Lisp宏本质上就是一种内嵌在语言中的代码生成器。除了Lisp语言之外，Scala和Rust这些比较现代的程序语言也提供了所谓的宏的设计，但是宏一般被看作是非常复杂的底层技术，很少进入普通程序员的工具箱。</p>
-<p>Nop平台的XLang语言是实现可逆计算原理的核心技术之一，为了落实可逆计算理论所提出的 <code>App = Biz x-extends Generator&lt;DSL&gt;</code><br>这样一种面向DSL和差量编程的新的编程范式，<br>XLang定义了一整套系统化的、覆盖应用系统开发方方面面的Generator方案。Lisp的宏仅仅是提供了生成Lisp<br>AST的元编程机制，而XLang除了引入宏函数用于生成XLang AST之外，还提供了面向代码生成的Xpl模板语法，<br>生成的范围从局部的函数实现体，到单个模型文件，再到整个模块目录。特别是Nop平台中定义的所有DSL语言都内置了<code>x:gen-extends</code><br>这样的差量生成机制，可以在模型解析、加载的过程中动态生成模型差量再自动实现差量合并，<br>从而创造了一种新的软件结构复用手段，解决了很多在传统编程范式下难以处理的技术问题。在本文中，我将简单介绍一下Nop平台中所内置的这些元编程机制。</p>
+<p>Nop平台的XLang语言是实现可逆计算原理的核心技术之一，为了落实可逆计算理论所提出的 <code>App = Delta x-extends Generator&lt;DSL&gt;</code><br>这样一种面向DSL和差量编程的新的编程范式，<br>XLang定义了一整套系统化的、覆盖应用系统开发方方面面的Generator方案。Lisp的宏仅仅是提供了生成Lisp<br>AST的元编程机制，而XLang除了引入宏函数用于生成XLang AST之外，还提供了面向代码生成的Xpl模板语法，<br>生成的范围从局部的函数实现体，到单个模型文件，再到整个模块目录。特别是Nop平台中定义的所有DSL语言都内置了<code>x:gen-extends</code><br>这样的差量生成机制，可以在模型解析、加载的过程中动态生成模型差量再自动实现差量合并，<br>从而创造了一种新的软件结构复用手段，解决了很多在传统编程范式下难以处理的技术问题。在本文中，我将简单介绍一下Nop平台中所内置的这些元编程机制。</p>
 <h2 id="宏函数"><a href="#宏函数" class="headerlink" title="宏函数"></a>宏函数</h2><p>XLang语言中也定义了类似Lisp宏的宏函数。所谓宏函数是在编译期执行，自动生成Expression抽象语法树节点的函数。</p>
 <p>宏函数具有特殊的参数要求，并且需要增加<code>@Macro</code><br>注解。具体示例可以参见<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xlang/src/main/java/io/nop/xlang/functions/GlobalFunctions.java">GlobalFunctions</a>。</p>
 <blockquote>
@@ -1324,7 +1324,7 @@
 </tr>
 </tbody></table>
 <p>因为宏函数在编译期执行，因此用宏函数来实现解析功能可以优化系统执行性能。例如从XNode中读取子节点a的b属性时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">node.selectOne(xpath `a/@b`) <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">node.selectOne(xpath `a/@b`)<br></code></pre></td></tr></table></figure>
 
 <p>因为xpath是一个宏函数，所以它在编译期就会完成解析，在运行期相当于是传送一个常量对象给selectOne函数。</p>
 <p>通过宏函数可以实现自定义的语法结构，例如IF(X,Y,Z)会被转换为if语句。</p>
@@ -1339,7 +1339,7 @@
 <li>sql模式：输出SQL语句，对于表达式输出结果，自动变换为SQL参数</li>
 </ol>
 <p>例如对于以下SQL输出，</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;filter:sql&gt;<br>  o.id in (select o.id from MyTable o where o.id = $&#123;entity.id&#125;) <br>&lt;/filter:sql&gt; <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;filter:sql&gt;<br>  o.id in (select o.id from MyTable o where o.id = $&#123;entity.id&#125;)<br>&lt;/filter:sql&gt;<br></code></pre></td></tr></table></figure>
 
 <p>实际会生成 <code>o.id in (select o.id from MyTable o where o.id = ? )</code>，表达式的值不会直接拼接到SQL文本中，而是会被替换为SQL参数。</p>
 <h2 id="编译期表达式"><a href="#编译期表达式" class="headerlink" title="编译期表达式"></a>编译期表达式</h2><p>Xpl模板语言内置了<code>&lt;macro:gen&gt;</code>和<code>&lt;macro:script&gt;</code>等标签，它们会在编译期自动执行。</p>
@@ -1390,7 +1390,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;model x:extends=&quot;A,B&quot;&gt;<br>    &lt;x:gen-extends&gt;<br>        &lt;C/&gt;<br>        &lt;D/&gt;<br>    &lt;/x:gen-extends&gt;<br><br>    &lt;x:post-extends&gt;<br>        &lt;E/&gt;<br>        &lt;F/&gt;<br>    &lt;/x:post-extends&gt;<br>&lt;/model&gt;<br></code></pre></td></tr></table></figure>
 
 <p>合并结果为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">F x-extends E x-extends model x-extends D x-extends C x-extends B x-extends A <br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">F x-extends E x-extends model x-extends D x-extends C x-extends B x-extends A<br></code></pre></td></tr></table></figure>
 
 <p>当前模型会覆盖<code>x:gen-extends</code>和<code>x:extends</code>的结果，而<code>x:post-extends</code>会覆盖当前模型。</p>
 <p>借助于<code>x:extends</code>和<code>x:gen-extends</code><br>我们可以有效的实现DSL的分解和组合。具体介绍参见 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/612512300">XDSL：通用的领域特定语言设计</a></p>
