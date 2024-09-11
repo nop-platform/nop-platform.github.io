@@ -1305,6 +1305,9 @@
 <li>通过<code>nop.auth.site-map.static-config-path</code>配置指定其他的<code>action-auth.xml</code>文件，缺省会使用<code>main.action.xml</code></li>
 </ul>
 <h3 id="后台Action"><a href="#后台Action" class="headerlink" title="后台Action"></a>后台Action</h3><p>在action函数上通过<code>@Auth</code>注解来指定需要对应的<code>permissions</code>或者允许访问的<code>roles</code>。如果不指定，则按照是否是<code>@BizQuery</code><br>或者<code>@BizMutation</code>自动设置<code>permissions</code>为<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:query</code>，以及<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:mutation</code></p>
+<ul>
+<li>如果允许所有人都访问，可以配置<code>roles=&quot;user&quot;</code>， 所有登录用户都具有user角色</li>
+</ul>
 <p>在权限分配的时候，如果允许所有读取操作，则可以配置<code>&#123;BizObjName&#125;:query</code>，这样就不需要挨个指定<code>&#123;actionName&#125;</code></p>
 <p>例如</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">@<span class="hljs-title class_">Auth</span>(permissions=<span class="hljs-string">&quot;delete&quot;</span>)<br>@<span class="hljs-title class_">BizMutation</span><br>public boolean <span class="hljs-title function_">delete</span>(<span class="hljs-params">@Name(<span class="hljs-string">&quot;id&quot;</span>) @Description(<span class="hljs-string">&quot;@i18n:biz.id|对象的主键标识&quot;</span>) <span class="hljs-built_in">String</span> id, IServiceContext context</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">delete</span>(id, context);<br>&#125;<br></code></pre></td></tr></table></figure>
