@@ -1296,6 +1296,9 @@
 <h2 id="问题诊断"><a href="#问题诊断" class="headerlink" title="问题诊断"></a>问题诊断</h2><h3 id="1-quarkus定义的bean找不到"><a href="#1-quarkus定义的bean找不到" class="headerlink" title="1. quarkus定义的bean找不到"></a>1. quarkus定义的bean找不到</h3><p>quarkus的Bean定义如果被封装到库模块中，则此模块必须配置<code>jandex-maven-plugin</code></p>
 <h3 id="2-前端访问服务返回400，BadRequest"><a href="#2-前端访问服务返回400，BadRequest" class="headerlink" title="2. 前端访问服务返回400，BadRequest"></a>2. 前端访问服务返回400，BadRequest</h3><p>url中不允许包含特殊字符，必须要进行UTF8编码。例如 <code>http://localhost:8080/r/NopAuthUser__findPage?@selection=items&#123;id&#125;</code> 会报错，<br>必须采用如下编码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">http://localhost:8080/r/NopAuthSite__findPage?%40selection=items%7Bid%7D<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-如何设置dev和prod环境的配置"><a href="#3-如何设置dev和prod环境的配置" class="headerlink" title="3. 如何设置dev和prod环境的配置"></a>3. 如何设置dev和prod环境的配置</h3><p>quarkus通过<code>quarkus.profile</code>配置来区分dev和prod环境，可以在<code>application.yaml</code>中设置<code>quarkus.profile: dev</code>或者<code>quarkus.profile: prod</code>来区分环境</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
