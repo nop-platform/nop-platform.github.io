@@ -1328,6 +1328,8 @@
 <p>事务管理类似</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><br>@<span class="hljs-title class_">Inject</span><br><span class="hljs-title class_">ITransactionTemplate</span> transactionTemplate;<br><br>transactionTemplate.<span class="hljs-title function_">runInTransaction</span>(txn-&gt;&#123;<br>   ...<br>&#125;)<br></code></pre></td></tr></table></figure>
 
+<h2 id="OrmEntity实体属性"><a href="#OrmEntity实体属性" class="headerlink" title="OrmEntity实体属性"></a>OrmEntity实体属性</h2><p>NopORM中的所有实体类都从OrmEntity类继承。OrmEntity不支持JSON序列化，但是提供了帮助函数可以获取实体上的字段值。</p>
+<p>实体上当前的字段值是 <code>entity.orm_initedValues()</code>, 修改前的值是 <code>orm_dirtyOldValues()</code>。</p>
 <h2 id="与MyBatis的区别"><a href="#与MyBatis的区别" class="headerlink" title="与MyBatis的区别"></a>与MyBatis的区别</h2><p>NopORM是一个类似JPA的完整的ORM引擎，因此它使用OrmSession来管理所有加载到内存中的实体，整体使用类似于JPA和Hibernate，相比于MyBatis要少很多手工调用步骤。</p>
 <h3 id="1-修改的时候不需要调用update方法。"><a href="#1-修改的时候不需要调用update方法。" class="headerlink" title="1. 修改的时候不需要调用update方法。"></a>1. 修改的时候不需要调用update方法。</h3><p>一般情况下我们是使用IEntityDao接口来实现实体的增删改查。它内部使用OrmTemplate来调用底层的NopORM引擎。<br>OrmTemplate类似于Spring中的HibernateTemplate，调用它上面的方法时会自动打开OrmSession，并在操作完毕后调用<code>session.flush()</code><br>来将内存中的修改刷新到数据库中。</p>
 <p>因此从数据库中加载到实体之后，我们只需要调用set方法即可，不需要调用任何update方法，引擎会负责检测实体是否已经被修改，如果已经被修改，则自动更新数据库。<br>更新数据库的时候与MyBatis不同，NopORM会自动根据修改了的字段生成对应的update语句，因此即使调用了set方法，但是如果实际并没有修改实体属性，则最后实体的状态不会转化为dirty，也就不会更新数据库。</p>

@@ -1270,7 +1270,9 @@
 <p>这里体现了Nop平台的做法：能够利用通用机制实现的组织，绝不会引入一个特定的仅具有狭窄用途的配置文件。引入这种配置文件还需要实现解析、装配、应用等功能，而利用IoC容器的标准功能，根本不需要做任何额外工作。</p>
 <h2 id="MVC框架"><a href="#MVC框架" class="headerlink" title="MVC框架"></a>MVC框架</h2><h2 id="实体引擎-Entity-Engine"><a href="#实体引擎-Entity-Engine" class="headerlink" title="实体引擎(Entity Engine)"></a>实体引擎(Entity Engine)</h2><p>OFBiz的<code>entitymodel.xml</code>定义可以直接转换为Nop平台的<code>orm.xml</code>模型文件。</p>
 <h2 id="元模型定义"><a href="#元模型定义" class="headerlink" title="元模型定义"></a>元模型定义</h2><p>OFBiz使用的xsd语法非常臃肿，而且引入了完全不必要的顺序依赖。</p>
-<h2 id="服务引擎-Service-Engine"><a href="#服务引擎-Service-Engine" class="headerlink" title="服务引擎(Service Engine)"></a>服务引擎(Service Engine)</h2><p>与程序语言无关</p>
+<h2 id="服务引擎-Service-Engine"><a href="#服务引擎-Service-Engine" class="headerlink" title="服务引擎(Service Engine)"></a>服务引擎(Service Engine)</h2><p>与程序语言无关。输入是Map，输出也是Map</p>
+<p>You can also override a service by using the same name down in the deployment context (which is first framework, then themes, then applications, then specialpurpose, then hot-deploy)</p>
+<p>ECA (Event Condition Action) is much like a trigger. When a service is called, a lookup is performed to see if any ECAs are defined for this event.</p>
 <h2 id="组件系统-Widget-System"><a href="#组件系统-Widget-System" class="headerlink" title="组件系统(Widget System)"></a>组件系统(Widget System)</h2><p>类似于报表引擎，可以产生多种输出形式。CSV,HTML,PDF等</p>
 <h2 id="数据模型-Data-Model"><a href="#数据模型-Data-Model" class="headerlink" title="数据模型(Data Model)"></a>数据模型(Data Model)</h2><p>可以直接复用</p>
 <h2 id="服务库-Service-Library"><a href="#服务库-Service-Library" class="headerlink" title="服务库(Service Library)"></a>服务库(Service Library)</h2><p>并不是完全的声明式表达</p>
