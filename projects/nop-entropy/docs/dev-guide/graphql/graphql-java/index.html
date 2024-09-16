@@ -1432,7 +1432,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">XXX_findPage(query:QueryBeanInput):PageBean_XXX<br></code></pre></td></tr></table></figure>
 
 <h3 id="返回值类型"><a href="#返回值类型" class="headerlink" title="返回值类型"></a>返回值类型</h3><p>BizModel上的服务方法不需要将返回值类型包装为ApiResponse，框架自身会负责进行ApiResponse包装。而且如果返回String类型，那么对应到前台就是String，不会自动解析为JSON。<br>如果返回Map或者其他bean对象，则会按照DataLoader机制进行属性加载然后返回。如果返回的是CompletionStage，则表示异步执行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@BizQuery<br>public Map&lt;String,Object&gt; myMethod()&#123;<br>   ...<br>&#125;<br><br>@BizQuery<br>public CompletionStage&lt;Map&lt;String,Object&gt;&gt; myMethod2Async()&#123;<br>   return ...<br>&#125;<br><br>@BizQuery<br>public MyResultBean myMethod3()&#123;<br>   return ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BizQuery</span><br><span class="hljs-keyword">public</span> Map&lt;String,Object&gt; <span class="hljs-title function_">myMethod</span><span class="hljs-params">()</span>&#123;<br>   ...<br>&#125;<br><br><span class="hljs-meta">@BizQuery</span><br><span class="hljs-keyword">public</span> CompletionStage&lt;Map&lt;String,Object&gt;&gt; <span class="hljs-title function_">myMethod2Async</span><span class="hljs-params">()</span>&#123;<br>   <span class="hljs-keyword">return</span> ...<br>&#125;<br><br><span class="hljs-meta">@BizQuery</span><br><span class="hljs-keyword">public</span> MyResultBean <span class="hljs-title function_">myMethod3</span><span class="hljs-params">()</span>&#123;<br>   <span class="hljs-keyword">return</span> ...<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="四-框架无关的设计"><a href="#四-框架无关的设计" class="headerlink" title="四. 框架无关的设计"></a>四. 框架无关的设计</h2><p>使用传统的Web框架在编写业务代码的时候总是不可避免的会用到框架特有的一些环境对象，例如HttpServletRequest或者SpringMVC中的ModelAndView等。这些对象都和框架特定的运行时环境强相关，使得我们的代码与某个运行时环境绑定，难以应用到多种使用场景中。最明显的，一个为在线API调用编制的服务函数，一般无法直接作为消息队列的消费者来使用。我们必须抽象出一个额外的层次:<br>Service层，然后在Service层的基础上分别包装为Controller和MessageConsumer，让它们负责响应Web请求和消息队列。</p>
 <p>NopGraphQL在实现业务方法时，采用的是一种框架无关的非侵入式设计，它扩展了服务方法的使用场景，简化了服务层的编写。具体来说，NopGraphQL引入了少量注解，使用POJO对象来作为输入输出对象，自动将业务方法翻译为GraphQL引擎所需的DataFetcher和DataLoader。例如</p>
@@ -1450,7 +1450,7 @@
 </ol>
 <p><img src="/knosys/project-nop-entropy/arch/BizModel.svg"></p>
 <p>基于NopGraphQL引擎编写的服务方法，可以看作具有如下函数签名</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">ApiResponse</span>&lt;<span class="hljs-title class_">Object</span>&gt; <span class="hljs-title function_">service</span>(<span class="hljs-title class_">ApiRequest</span>&lt;<span class="hljs-title class_">Map</span>&gt; request);<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiRequest</span>&lt;T&gt;&#123;<br>    <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>,<span class="hljs-title class_">Object</span>&gt; headers;<br>    <span class="hljs-title class_">FieldSelectionBean</span> selection;<br>    T data;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">ApiResponse&lt;Object&gt; <span class="hljs-title function_">service</span><span class="hljs-params">(ApiRequest&lt;Map&gt; request)</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ApiRequest</span>&lt;T&gt;&#123;<br>    Map&lt;String,Object&gt; headers;<br>    FieldSelectionBean selection;<br>    T data;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>服务方法都是接收一个POJO的request对象，返回一个POJO的response对象。因为输入和输出都是简单对象，所以可以无需编码，只需要简单配置，就可以做到</p>
 <ol>
@@ -1488,15 +1488,15 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">(@query|@mutation):&#123;operationName&#125;/&#123;selection&#125;?参数名=参数值<br></code></pre></td></tr></table></figure>
 
 <p>当我们需要为表单或者表格编写加载函数时，如果字段比较多，则手工编写graphql请求很容易出现字段遗漏。因为Nop平台的前端代码也是自动生成的，所以我们可以利用编译期信息自动生成graphql请求，使得我们恰好只选择表单或者表格中用到的数据。具体做法是引入编译期的变量formSelection,<br>pageSelection等。例如</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">@<span class="hljs-attr">query</span>:<span class="hljs-title class_">NopAuthUser</span>_get/&#123;@formSelection&#125;?id=$id<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@query</span>:NopAuthUser_get/&#123;<span class="hljs-meta">@formSelection</span>&#125;?id=$id<br></code></pre></td></tr></table></figure>
 
 <p><code>&#123;@formSelection&#125;</code>表示选择当前表单中用到的所有字段。</p>
 <h2 id="GraphQL扩展"><a href="#GraphQL扩展" class="headerlink" title="GraphQL扩展"></a>GraphQL扩展</h2><h3 id="Map类型"><a href="#Map类型" class="headerlink" title="Map类型"></a>Map类型</h3><p>GraphQL是一种强类型的框架，它要求所有数据都有明确的类型定义，这在某些动态场景中使用时并不方便。例如有的时候我们可能需要把一个扩展集合返回到前端。</p>
 <p>NopGraphQL引入了一个特殊的Scalar类型: Map，可以利用它来描述那些动态数据结构。例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type QueryBean&#123;<br>    filter: Map<br>    orderBy: [OrderFieldBean]<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">type <span class="hljs-title class_">QueryBean</span>&#123;<br>    <span class="hljs-attr">filter</span>: <span class="hljs-title class_">Map</span><br>    <span class="hljs-attr">orderBy</span>: [<span class="hljs-title class_">OrderFieldBean</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="树形结构"><a href="#树形结构" class="headerlink" title="树形结构"></a>树形结构</h3><p>对于单位树、菜单树这样的树形结构的获取，NopGraphQL通过Directive机制提供了一个扩展语法，可以直接表达递归拉取数据，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">NopAuthDept_findList&#123;<br>    value: id,<br>    label: displayName<br>    children @TreeChildren(max=5)<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">NopAuthDept</span>_findList&#123;<br>    <span class="hljs-attr">value</span>: id,<br>    <span class="hljs-attr">label</span>: displayName<br>    children @<span class="hljs-title class_">TreeChildren</span>(max=<span class="hljs-number">5</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>@TreeChildren(max=5)</code>表示按照本层的结构最多嵌套5层。</p>
 <h2 id="文件上传下载"><a href="#文件上传下载" class="headerlink" title="文件上传下载"></a>文件上传下载</h2><p>参见<a href="../upload/">upload.md</a></p>
