@@ -1279,6 +1279,18 @@
 <p>因为已经在<code>reflect-config.json</code>等文件中补充了graalvm编译所需的信息，所以一般情况下不需要使用solon提供的RuntimeNativeRegistrar机制。</p>
 <h3 id="3-编译"><a href="#3-编译" class="headerlink" title="3. 编译"></a>3. 编译</h3><p>将bootstrap.yaml中的nop.profile配置去除，然后执行如下指令</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">mvn native:compile -DskipTests -Pnative<br></code></pre></td></tr></table></figure>
+
+<h2 id="问题诊断"><a href="#问题诊断" class="headerlink" title="问题诊断"></a>问题诊断</h2><ol>
+<li>报错找不到<code>/nop/schema/register-model.xdef</code><br>必须先以调试模式启动应用，并在<code>bootstrap.yaml</code>中配置<code>&quot;nop.codegen.trace.enabled: true</code>和<code>nop.debug:true</code>, 这样才会自动生成<code>nop-vfs-index.txt</code>，解决native编译后无法执行类扫描的问题。</li>
+</ol>
+<ul>
+<li>只要以IDEA的调试模式启动，quarkus就会自动设置<code>quarkus.profile=dev</code>, Nop平台的QuarkusIntegration中就会自动强制设置<code>nop.debug=true</code></li>
+<li>启动程序后应该在界面上使用一下应用，从而让需要被记录的反射调用都能够被调用到。在IDEA中关闭应用时会自动生成graalvm配置文件到<code>src/main/resources</code>目录下</li>
+</ul>
+<ol start="2">
+<li>graalm编译报错<br>需要确保graalvm版本和程序中引用的quarks版本一致。目前quarkus3.14.4使用的是graalvm js 23.1.2，对应于graalvm版本为<code>GraalVM CE 21.0.2+13.1 (build 21.0.2+13-jvmci-23.1-b30)</code></li>
+</ol>
+
 </div>
       <footer class="Article-footer col-md-3">
         
