@@ -1493,12 +1493,12 @@
 <p><code>&#123;@formSelection&#125;</code>表示选择当前表单中用到的所有字段。</p>
 <h2 id="GraphQL扩展"><a href="#GraphQL扩展" class="headerlink" title="GraphQL扩展"></a>GraphQL扩展</h2><h3 id="Map类型"><a href="#Map类型" class="headerlink" title="Map类型"></a>Map类型</h3><p>GraphQL是一种强类型的框架，它要求所有数据都有明确的类型定义，这在某些动态场景中使用时并不方便。例如有的时候我们可能需要把一个扩展集合返回到前端。</p>
 <p>NopGraphQL引入了一个特殊的Scalar类型: Map，可以利用它来描述那些动态数据结构。例如</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">type <span class="hljs-title class_">QueryBean</span>&#123;<br>    <span class="hljs-attr">filter</span>: <span class="hljs-title class_">Map</span><br>    <span class="hljs-attr">orderBy</span>: [<span class="hljs-title class_">OrderFieldBean</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">type QueryBean&#123;<br>    filter: Map<br>    orderBy: [OrderFieldBean]<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="树形结构"><a href="#树形结构" class="headerlink" title="树形结构"></a>树形结构</h3><p>对于单位树、菜单树这样的树形结构的获取，NopGraphQL通过Directive机制提供了一个扩展语法，可以直接表达递归拉取数据，例如</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">NopAuthDept</span>_findList&#123;<br>    <span class="hljs-attr">value</span>: id,<br>    <span class="hljs-attr">label</span>: displayName<br>    children @<span class="hljs-title class_">TreeChildren</span>(max=<span class="hljs-number">5</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query &#123;<br>    NopAuthDept_findList&#123;<br>        value: id<br>        label: displayName<br>        children @TreeChildren(max:5)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><code>@TreeChildren(max=5)</code>表示按照本层的结构最多嵌套5层。</p>
+<p><code>@TreeChildren(max:5)</code>表示按照本层的结构最多嵌套5层。</p>
 <h2 id="文件上传下载"><a href="#文件上传下载" class="headerlink" title="文件上传下载"></a>文件上传下载</h2><p>参见<a href="../upload/">upload.md</a></p>
 <h2 id="REST链接"><a href="#REST链接" class="headerlink" title="REST链接"></a>REST链接</h2><p>NopGraphQL引擎支持通过REST链接的方式调用后台服务函数。<br>在某种意义上它统一了GraphQL和REST，使得它们可以实现同样的功能，区别仅仅是请求和响应消息的格式不同</p>
 <p>参见 <a href="../rest/">rest.md</a></p>

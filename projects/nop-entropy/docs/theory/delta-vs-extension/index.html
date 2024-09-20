@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>金蝶云苍穹的Extension与Nop平台的Delta的区别 - Nop</title>
+
+
+  <meta property="og:title" content="金蝶云苍穹的Extension与Nop平台的Delta的区别">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">金蝶云苍穹的Extension与Nop平台的Delta的区别</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>最近有同学介绍我看一篇金蝶云苍穹的文章，<a target="_blank" rel="noopener" href="https://developer.kingdee.com/article/263716004755702784?productLineId=29&lang=zh-CN">都1202年了，听说还有人不知道扩展与继承的区别</a>，这其中介绍了一个有别于传统继承概念的所谓 扩展(Extension)概念。这个概念也不是云苍穹原创的，在odoo框架中就存在类似的做法，参见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/baishoujing/p/6399147.html">继承和扩展</a>。一个有趣的问题是，Nop平台中的<code>x:extends</code>运算和云苍穹的扩展是同一个概念吗？答案是：并不是同一个概念，<strong>扩展只是一种AdHoc式的针对具体问题的不完整的解决方案</strong>，而Nop平台中的Delta合并，则是更高层面的抽象，它在数学层面上定义了完备的数学运算机制，相当于是引入了一种标准化的、新的底层语法结构。</p>
+<h2 id="一-继承与扩展的区别"><a href="#一-继承与扩展的区别" class="headerlink" title="一. 继承与扩展的区别"></a>一. 继承与扩展的区别</h2><p>在云苍穹的定义中</p>
+<blockquote>
+<p>扩展与继承统称为扩展开发，是金蝶云苍穹提供的对已有实体进行个性化开发时采取的开发模式。  </p>
+</blockquote>
+<p><img src="/knosys/project-nop-entropy/theory/nop/extension.png"></p>
+<p>从云苍穹的文章中可以看出，他们已经明确意识到了扩展本质上是一种差量数据（Delta)。继承在抽象层面上是标准结构结合差量结构产生一个新的结构。也就是说，继承是保持原有的结构和原有的实体名不变，但是增加了一个新的实体名和新的实体结构。</p>
+<blockquote>
+<p>ClassB &#x3D; ClassA  + Delta</p>
+</blockquote>
+<p>而扩展是结合差量结构后直接替换原有的结构。也就是说，<strong>保持实体的名不变，这样所有使用到该实体的地方都会自动使用扩展后的实体结构</strong>。</p>
+<blockquote>
+<p>ClassA &lt;- ClassA + Delta</p>
+</blockquote>
+<h2 id="二-Delta差量与Extension扩展的区别"><a href="#二-Delta差量与Extension扩展的区别" class="headerlink" title="二. Delta差量与Extension扩展的区别"></a>二. Delta差量与Extension扩展的区别</h2><p>可逆计算理论是我于2007年左右提出的支持面向语言编程范式（Language Oriented Programming）的下一代软件构造理论，它在数学层面定义了一整套严谨的Delta差量运算机制，并通过XLang程序语言将它们固化为具体的程序语法结构。可逆计算理论中的Delta差量是真正原创的概念，它的思想来源是物理学和数学中的微分动力系统、微扰论、熵增原理、群论等基础理论，与软件工程领域已有的扩展概念并没有直接关系。</p>
+<blockquote>
+<p>关于可逆计算理论的介绍，参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64004026">可逆计算：下一代软件构造理论</a>和<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/645650082">可逆计算理论中的可逆到底指的是什么？</a>。</p>
+</blockquote>
+<p>与可逆计算理论中的Delta概念相比，<strong>扩展可以看作是一种基于程序员经验总结的、面向特定应用场景的、AdHoc式的一种具体解决方案，而Delta则是一种系统化的、数学层面上具有严谨定义的、应用范围更广的一种通用软件构造原理</strong>（Docker技术就可以看作是可逆计算的一个具体实例）。具体来说，有如下区别</p>
+<h3 id="2-1-云苍穹的扩展只针对少数具体的模型"><a href="#2-1-云苍穹的扩展只针对少数具体的模型" class="headerlink" title="2.1 云苍穹的扩展只针对少数具体的模型"></a>2.1 云苍穹的扩展只针对少数具体的模型</h3><p>云苍穹中的扩展主要应用于实体模型和视图模型等少数固定模型，而且为了支持扩展概念，需要在实体模型引擎和视图模型引擎中增加相应的实现代码。也就是说，它是针对少数几个特定模型特殊设计和开发的机制。针对每一个模型，具体的差量内容和差量合并规则都需要特殊编码去实现。换句话说，<strong>并没有统一的差量结构定义规则和差量结构合并规则，云苍穹是在具体的模型层面针对每一个模型去定义对应的扩展机制</strong>。</p>
+<blockquote>
+<p>EntityModelA &lt;-MergerForEntityModel(EntityModelA, DeltaForEntityModel)</p>
+<p>ViewModelA &lt;- MergerForViewModel(ViewModelA, DeltaForViewModel)</p>
+</blockquote>
+<p>具体实现过程大概是，先解析得到EntityModel对象，然后再应用某个EntityModelMerger来合并EntityModel和DeltaForEntityModel。具体的合并算法针对不同的模型需要单独进行编制。</p>
+<p>可逆计算中的Delta差量合并是在模型层之下的统一的结构层完成，与具体的模型无关，合并规则由xdef元模型来规定。</p>
+<blockquote>
+<p>XNode &#x3D; Loader(virtualPath)</p>
+<p>Model &#x3D; Parser(XNode)</p>
+</blockquote>
+<p>Nop平台中我们是通过虚拟文件系统来统一管理模型文件，然后使用统一的XNode加载器解析得到通用的XNode节点，在这个过程中会实现Delta合并算法。得到XNode之后我们再解析XNode得到具体的模型。也就是说，并不是<code>EntityModel = EntityModel + Delta</code>，而是<code>XNode = XNode + Delta</code>, <code>EntityModel = Parser(XNode)</code>。Delta差量合并不是作用于具体的模型层面，而是作用于元模型约束下的XNode统一结构层面。</p>
+<p><strong>所有的数学定理只要证明一次，世界上所有其他人就不要证明了</strong>。类似的，Delta的运算规律只要在Nop平台中定义一次，所有的模型（包括现在和未来可能的模型）就都不需要实现了。相比于云苍穹的扩展概念，Delta差量是在更高的抽象层面上定义，它与扩展是本质上不同的做法。</p>
+<p>具体XNode合并算法的介绍，参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/usInt7_odzvFzuiIUPw4iQ">XDSL：通用的领域特定语言设计</a>和<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/27x95zc-YrVCBPhedBPq5w">通用的Delta差量化机制</a></p>
+<h2 id="2-2-Delta差量合并作用于Tree结构并且包含删除语义"><a href="#2-2-Delta差量合并作用于Tree结构并且包含删除语义" class="headerlink" title="2.2 Delta差量合并作用于Tree结构并且包含删除语义"></a>2.2 Delta差量合并作用于Tree结构并且包含删除语义</h2><p>传统的继承和扩展本质上都是基于类结构的，而类是一个两级结构：类名+成员列表。在一个类中，我们通过方法名和属性名定位到具体的某一个方法或者属性。如果从结构层面看，类就相当于是一个Map结构，类的继承和扩展在结构层面上可以被理解为Map的覆盖合并。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Map = Map extends Map<br></code></pre></td></tr></table></figure>
+
+<p> 如果有一个属性具有内部结构，比如它是一个对象或者一个列表，那么一般的类扩展只会整体覆盖该属性，并没有一种合适的方法来定位到属性内部的某个条目或者子属性。</p>
+<p>可逆计算理论中明确引入了领域坐标系的概念，强调每一个语法节点都具有唯一的可用于定位的领域坐标，如果采用分层坐标，很自然的就构成一个树结构。树结构中，从根节点到当前节点的路径就是这个节点的一种绝对坐标，节点在父节点中的名称可以看作是它在父节点范围内的相对坐标。Delta差量合并定义在树结构上而不是Map结构上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Tree = Tree x-extends Tree<br></code></pre></td></tr></table></figure>
+
+<p>在使用XML存储形式时，我们为XML节点引入了特殊约定的<code>x:extends</code>属性</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/orm/orm.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;base.orm.xml&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">x:post-extends</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">orm-gen:JsonComponentSupport</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/orm/xlib/orm-gen.xlib&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">x:post-extends</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">entities</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xxx.MyEntity&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;jsonExt&quot;</span> <span class="hljs-attr">code</span>=<span class="hljs-string">&quot;JSON_EXT&quot;</span> <span class="hljs-attr">propId</span>=<span class="hljs-string">&quot;101&quot;</span> <span class="hljs-attr">tagSet</span>=<span class="hljs-string">&quot;json&quot;</span>                           <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;VARCHAR&quot;</span></span><br><span class="hljs-tag">                        <span class="hljs-attr">precision</span>=<span class="hljs-string">&quot;4000&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;remove&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 最终会自动生成component配置</span><br><span class="hljs-comment">           &lt;components&gt;</span><br><span class="hljs-comment">              &lt;component name=&quot;jsonExtComponent&quot;</span><br><span class="hljs-comment">                         class=&quot;io.nop.orm.component.JsonOrmComponent&quot;&gt;</span><br><span class="hljs-comment">                 &lt;prop name=&quot;jsonText&quot; column=&quot;jsonExt&quot; /&gt;</span><br><span class="hljs-comment">              &lt;/component&gt;</span><br><span class="hljs-comment">           &lt;/components&gt;</span><br><span class="hljs-comment">         --&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">entities</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span> <br></code></pre></td></tr></table></figure>
+
+<p>通过<code>x:extends</code>可以继承已有的Tree结构，然后可以任意定制这个复杂嵌套的Tree结构中的任意一个节点上任意属性。从根节点向下进行合并时，如果是集合节点，要求这个集合元素必须具有name&#x2F;id这种可以用于唯一定位的标识属性。</p>
+<p>Delta差量合并提供了删除语义，例如上面的例子中<code>x:override=&quot;remove&quot;</code>表示删除本节点。传统的继承、扩展等机制一般都没有提供真正的删除语义，大部分是新增语义，修改语义都很少。但是可逆计算是面向程序结构长期演化的软件构造理论，演化一定是要允许破坏已有结构的，所以它必然包含删除和更新语义。</p>
+<p>除了两个静态Tree结构之间的合并运算之外，可逆计算理论的完整形式需要引入动态Generator。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = Delta x-extends Generator&lt;DSL&gt;<br></code></pre></td></tr></table></figure>
+
+<p>反映到结构层面就是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Tree = Tree x-extends Tree&lt;Tree&gt;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>整个应用程序可以用一个Tree来表达（源码目录树+源码内部的抽象语法树），Delta本身也可以用Tree表达。Generator本质上就是一段代码，可以用抽象语法树(Abstract Syntax Tree)来表达，而DSL领域特定语言同样是使用AST来表达。</p>
+</blockquote>
+<p>在上面的例子中，<code>x:post-extends</code>就是一种动态生成机制，它可以动态生成base节点用于Delta合并。</p>
+<h3 id="2-3-完整的关于Delta差量的理论"><a href="#2-3-完整的关于Delta差量的理论" class="headerlink" title="2.3 完整的关于Delta差量的理论"></a>2.3 完整的关于Delta差量的理论</h3><p>云苍穹的扩展概念虽然提到了差量，但是对于差量的理解局限于浅层的常识层面，而可逆计算理论中的Delta差量则接近于数学中群(Group)的概念，在概念的一致性和完备性方面远远超过扩展。关于群和Delta差量的关系，可以参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例</a>。</p>
+<p>首先，根据 A &#x3D; 0 + A，任何全量都是差量的特例，我们完全可以采用同样的形式来表达差量和全量，没有必要为差量单独定义一个特殊的形式。如果差量和全量采用同样的形式，那么一个必然的推论就是<strong>差量的差量也是一个普通的差量</strong>，我们可以引入更丰富的差量应用模式。</p>
+<p>第二，可逆计算中的差量满足结合律，我们可以利用它定义独立于Base的差量合并运算，实现差量的独立管理。换句话说，在不知道应用到哪个Base之前，我们就可以将多个Delta合并在一起构成一个新的Delta。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">A = (B+Delta1) + Delta2 = B + (Delta1 + Delta2)<br></code></pre></td></tr></table></figure>
+
+<p>第三， 可逆计算中的差量独立于Base存在，同一个差量可以作用于多个不同的Base。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">A = A1 + Delta,  B = B1 + Delta<br></code></pre></td></tr></table></figure>
+
+<p>利用这一点，我们可以开发出新的软件复用模式。比如通过一个工作流的Delta来为任意实体引入工作流支持等。<br>在Nop平台中，我们将元编程和Delta差量结合在一起，实现了大量传统软件工程中无法想象的高阶复用模式。而且它们全部在编译期完成，对运行期性能没有任何影响，也不会把复杂性带到运行时。</p>
+<p>更多介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aT99VX6ecmZXdemBPnBcoQ">写给程序员的可逆计算理论辨析</a>和<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zGfo7pvKjOCa11PYLJHzzA">写给程序员的可逆计算理论辨析补遗</a></p>
+<h3 id="2-4-多个Delta分支"><a href="#2-4-多个Delta分支" class="headerlink" title="2.4 多个Delta分支"></a>2.4 多个Delta分支</h3><p><img src="/knosys/project-nop-entropy/theory/nop/extension-chain.png"></p>
+<p> 在云苍穹的文章中，提到扩展和继承的一个区别是”一个单只能扩展一次，但是可以对扩展之后的单再次扩展。而一个单可以继承多次，继承后的单也可以继续继承多次”。也就是如上图所示，扩展只能形成唯一的扩展链，而继承则可以形成多个不同的继承链。但是在可逆计算理论中，Delta差量并不存在这种限制。在Nop平台的具体实现中，我们可以通过给Delta赋予不同的名字，从而允许存在多条Delta扩展链。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/_delta/hunan/abc<br>/_delta/anhui/abc<br>/_delta/product/abc<br>/abc<br></code></pre></td></tr></table></figure>
+
+<p>上面的示例中，<code>/_delta/hunan/abc</code>表示在<code>deltaId=hunan</code>的Delta层中定义了abc这个文件，而<code>/_delta/product/abc</code>则表示在<code>deltaId=product</code>的Delta层中定义了abc这个文件。<br>在<code>/_delta/hunan/abc</code>文件中，我们可以通过<code>x:extends=&quot;super&quot;</code>来表示继承上一层的内容，如果没有设置<code>x:extends</code>属性，则表示当前文件会覆盖上一层的文件，而不是实现两者的合并。</p>
+<p>在配置文件中，我们可以通过<code>nop.core.vfs.delta-layer-ids=hunan,product</code>来控制如何实现多个Delta层之间的堆叠。也就是说，<strong>利用这种额外的装配机制，我们可以突破云苍穹中只允许单一扩展链的限制</strong>。</p>
+<h2 id="三-可逆计算的具体实现"><a href="#三-可逆计算的具体实现" class="headerlink" title="三. 可逆计算的具体实现"></a>三. 可逆计算的具体实现</h2><p>虽然不知道云苍穹的扩展机制的具体实现，但如果要在模型层实现，必然会导致大量冗余的代码，还很容易产生各种潜在的不一致性。在Nop平台中，实现差量运算和动态差量生成只需要数千行代码（不考虑XScript脚本语言自身的实现，本质上也可以利用现有的脚本语言引擎，但是会缺少一些方便的元编程机制），而且所有的可逆计算支持可以被封装在统一的模型加载器抽象之下。也就是说，只要将普通Java工程中常用的<code>JsonReader.readJson(classPath)</code>调用替换成Nop平台的<code>ResourceComponentManager.instance().loadComponentModel(virtualPath)</code>我们就可以立刻获得差量合并、动态模型生成、模型解析缓存、模型依赖追踪等一系列差量运算支持机制。同时可以自动获得多租户支持，每个租户都可以具有自己不同的Delta差量定义。设计原理的介绍参见<a href="">从张量积看低代码平台的设计</a></p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/delta-vs-extension.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

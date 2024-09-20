@@ -1325,6 +1325,16 @@
 <li><code>xdef:bean-sub-type-prop=&quot;type&quot;</code>表示json反序列化的时候，根据<code>type</code>属性来确定子节点类型</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">  以下 DSL 定义转换为 JSON 后的结构为：</span><br><span class="hljs-comment">  &#123;</span><br><span class="hljs-comment">    &quot;steps&quot;: [&#123;</span><br><span class="hljs-comment">      &quot;type&quot;: &quot;step&quot;,</span><br><span class="hljs-comment">      &quot;name&quot;: &quot;a&quot;</span><br><span class="hljs-comment">    &#125;, &#123;</span><br><span class="hljs-comment">      &quot;type&quot;: &quot;join&quot;,</span><br><span class="hljs-comment">      &quot;name&quot;: &quot;b&quot;</span><br><span class="hljs-comment">    &#125;]</span><br><span class="hljs-comment">  &#125;</span><br><span class="hljs-comment">--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">steps</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;a&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">join</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;b&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">steps</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="常见问题解答"><a href="#常见问题解答" class="headerlink" title="常见问题解答"></a>常见问题解答</h2><ol>
+<li><p>使用<code>&lt;parent&gt; &lt;item xdef:value=&quot;string&quot;&gt; &lt;/parent&gt;</code>定义 和<code>&lt;parent item=&quot;string&quot;&gt;</code> 定义有什么区别？<br>生成到java中没有区别，这种只是在xml形式层面有区别</p>
+</li>
+<li><p>如果指定<code>xdef:body-type=&quot;list&quot;</code>, 那么它的子节点必须是对象类型吗？如果是int或者string之类的基本类型应该怎么写?<br>我没有处理过这种情况，如果一定要处理。目前的做法大概是 <code>&lt;list xdef:body-type=&quot;list&quot;&gt; &lt;_ xdef:value=&quot;int&quot; /&gt;</code> 类似这种。<br>另外对于常用的逗号分隔的列表值，可以直接写 <code>&lt;list xdef:value=&quot;csv-list&quot; /&gt;</code></p>
+</li>
+<li><p>如果一个节点已经设置了<code>xdef:body-type=&quot;list&quot;</code>, 但是还有别的属性 例如<br><code>&lt;row name=&quot;string&quot; xdef:body-type=&quot;list&quot; height=&quot;string&quot;&gt;</code>, 这会生成什么结构？<br>  缺省情况下body内容会对应于body属性。这是和AMIS的约定保持一致，tagName对应于type, body内容对应于body。</p>
+</li>
+</ol>
+
 </div>
       <footer class="Article-footer col-md-3">
         

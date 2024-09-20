@@ -1278,10 +1278,10 @@
 </ul>
 <p><strong>REST方式下的selection如果只表达到对象层级，则会自动向下展开。</strong></p>
 <h2 id="二-通过-TreeChildren指令简化树形结构查询"><a href="#二-通过-TreeChildren指令简化树形结构查询" class="headerlink" title="二. 通过@TreeChildren指令简化树形结构查询"></a>二. 通过<code>@TreeChildren</code>指令简化树形结构查询</h2><p>对于单位树、菜单树这样的树形结构的获取，NopGraphQL通过Directive机制提供了一个扩展语法，可以直接表达递归拉取数据，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">NopAuthDept_findList&#123;<br>    value: id,<br>    label: displayName<br>    children @TreeChildren(max=5)<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">query &#123;<br>    NopAuthDept_findList&#123;<br>        value: id<br>        label: displayName<br>        children @TreeChildren(max:5)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><code>@TreeChildren(max=5)</code>表示按照本层的结构最多嵌套5层。</li>
+<li><code>@TreeChildren(max:5)</code>表示按照本层的结构最多嵌套5层。</li>
 </ul>
 <h2 id="三-Map类型"><a href="#三-Map类型" class="headerlink" title="三. Map类型"></a>三. Map类型</h2><p>GraphQL是一种强类型的框架，它要求所有数据都有明确的类型定义，这在某些动态场景中使用时并不方便。例如有的时候我们可能需要把一个扩展集合返回到前端。</p>
 <p>NopGraphQL引入了一个特殊的Scalar类型: Map，可以利用它来描述那些动态数据结构。例如</p>

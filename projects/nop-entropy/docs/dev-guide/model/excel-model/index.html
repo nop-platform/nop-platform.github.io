@@ -1390,6 +1390,9 @@
 <p>因为是外部表，不需要为该表生成代码，所以增加<code>not-gen</code>标签。同时需要指定这个表所在的模块，<code>模块ID</code>的格式为<code>A/B</code>这种形式，对应于二级目录结构。<br>例如<code>nop-auth</code>这个包生成的资源文件都存放在<code>/_vfs/nop/auth</code>目录下，它对应的模块名是<code>nop/auth</code></p>
 <p>Excel模型中如果定义了<code>所属模型</code>这个参数，则会在自动生成<code>_app.orm.xml</code>和关联字段的meta定义中都增加<code>biz:moduleId</code>配置。</p>
 <p>前端页面使用的控件缺省由<code>control.xlib</code>库根据meta配置来自动推定。<code>edit-relation</code>控件会调用<code>XuiHelper.getRelationPickerUrl</code><br>函数来生成<code>picker</code>页面对应的链接，链接格式为  <code>&quot;/&quot; + moduleId + &quot;/pages/&quot; + bizObjName + &quot;/picker.page.yaml&quot;</code>。如果关联子表的meta配置中<br>设置了<code>biz:moduleId</code>属性，则<code>moduleId</code>以设置的值为准，否则会自动根据meta文件的路径推定它所在的模块。</p>
+<h2 id="常见问题诊断"><a href="#常见问题诊断" class="headerlink" title="常见问题诊断"></a>常见问题诊断</h2><ol>
+<li>在Excel模型中定义了关联属性，但是生成的<code>app.orm.xml</code>文件中却没有。<br>注意关联属性是在【关联列表】中定义，对于列表结构，每一个条目的第一列是序号列，其中必须设置为整数值。<img src="/knosys/project-nop-entropy/dev-guide/model/images/relation.png"></li>
+</ol>
 
 </div>
       <footer class="Article-footer col-md-3">
