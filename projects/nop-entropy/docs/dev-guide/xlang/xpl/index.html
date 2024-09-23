@@ -1312,6 +1312,12 @@
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;groovy&quot;</span>&gt;</span><br>  代码<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
+<p>XLang平台内置了<code>lang=java</code>支持, 通过args指定从上下文中获取哪些变量，在脚本代码中可以直接访问这些变量。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:unit</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>    let x = 1;<br>    let y = 2;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">c:script</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;java&quot;</span> <span class="hljs-attr">args</span>=<span class="hljs-string">&quot;x:int,y:int&quot;</span> <span class="hljs-attr">returnType</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br>    return x + y;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">c:unit</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>可以通过ScriptCompilerRegistry注册更多的脚本引擎支持。脚本引擎接口如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IScriptCompiler</span> &#123;<br>    IEvalFunction <span class="hljs-title function_">compile</span><span class="hljs-params">(SourceLocation loc, String text,</span><br><span class="hljs-params">                          List&lt;? extends IFunctionArgument&gt; args, IGenericType returnType,</span><br><span class="hljs-params">                          IXLangCompileScope scope)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <h3 id="编译期"><a href="#编译期" class="headerlink" title="编译期"></a>编译期</h3><ul>
 <li><code>&lt;c:import&gt;</code><br>导入常量类或者标签库</li>
 </ul>
