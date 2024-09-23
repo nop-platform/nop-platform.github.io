@@ -37,10 +37,10 @@
 
 
 
-  <title>如何使用函数式编程来实现解耦 - Nop</title>
+  <title>函数式编程为什么有利于解耦(Decouple) - Nop</title>
 
 
-  <meta property="og:title" content="如何使用函数式编程来实现解耦">
+  <meta property="og:title" content="函数式编程为什么有利于解耦(Decouple)">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,13 +1251,182 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">如何使用函数式编程来实现解耦</h1>
+    <h1 class="Article-title">函数式编程为什么有利于解耦(Decouple)</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9">
+      <div class="Article-content col-md-9"><p>最近面试中发现很多人对于函数式编程的理解就是Lambda表达式和flatMap&#x2F;map&#x2F;join这种集合处理函数，对于函数式编程为什么有用，在什么场景下有用只有很模糊的感觉。在本文中，我就简单介绍一下函数式编程的思想以及在我们日常编程中如何应用函数式编程来实现逻辑解耦，函数式编程在哪些方面提供了对于面向对象编程的一种有益的补充。</p>
+<p>什么是函数式编程？以下是智谱清言AI的回答：</p>
+<p>函数式编程（Functional Programming, FP）是一种编程范式，它强调将计算过程构建为一系列的函数调用。函数式编程的基础是数学函数的概念，它具有以下特点：</p>
+<ol>
+<li><p><strong>纯函数（Pure Functions）</strong>：</p>
+<ul>
+<li>函数的输出只依赖于输入的参数。</li>
+<li>函数执行过程中没有副作用，例如不会改变外部状态。</li>
+</ul>
+</li>
+<li><p><strong>不可变性（Immutability）</strong>：</p>
+<ul>
+<li>数据一旦创建，就不能被修改。如果要改变数据，需要创建一个新的数据副本。</li>
+</ul>
+</li>
+<li><p><strong>高阶函数（Higher-Order Functions）</strong>：</p>
+<ul>
+<li>函数可以作为参数传递给其他函数，也可以作为其他函数的返回值。</li>
+</ul>
+</li>
+<li><p><strong>函数组合（Function Composition）</strong>：</p>
+<ul>
+<li>将多个函数组合成一个新的函数，以实现更复杂的操作。</li>
+</ul>
+</li>
+<li><p><strong>递归（Recursion）</strong>：</p>
+<ul>
+<li>函数通过调用自身来解决问题，而不是使用循环控制结构。</li>
+</ul>
+</li>
+<li><p><strong>惰性求值（Lazy Evaluation）</strong>：</p>
+<ul>
+<li>表达式的求值被推迟到真正需要其结果时进行，这可以提高效率。</li>
+</ul>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;智谱AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+</li>
+</ol>
+<p>以上这一大段可以说是老生常谈，但为什么存在这些概念？ 不使用这些概念是不是就不行？是不是只有在专门为函数式编程设计的库或者框架中这些概念才有用？</p>
+<h2 id="一-函数应该具有参数和返回值"><a href="#一-函数应该具有参数和返回值" class="headerlink" title="一. 函数应该具有参数和返回值"></a>一. 函数应该具有参数和返回值</h2><p>函数式编程只是一种思想，在面向对象编程语言中一样可以应用。最简单的一种应用就是发掘函数概念的能力：<strong>函数应该有输入参数和返回值</strong>。在面向对象编程语言中，<br>因为很多时候我们都可以通过this指针访问参数信息，通过数据库保存修改结果（一种副作用），所以大量的函数并没有参数或者返回值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 计算利息</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">calcInterest</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-title class_">String</span> accountId = <span class="hljs-variable language_">this</span>.<span class="hljs-property">requestMessage</span>.<span class="hljs-title function_">getAccountId</span>();<br>  <span class="hljs-title class_">Account</span> account = accountRepository.<span class="hljs-title function_">getAccount</span>(accountId);<br>  ...<br>  interestRepository.<span class="hljs-title function_">saveInterest</span>(interest);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>比如上面这个计算利息的函数，它从成员变量中读取accountId，而不是从函数参数中获取这一信息，在处理过程中大量使用各种repository，并且计算结果也保存到数据库中，没有返回值。</p>
+<p>这种函数典型的问题是它没有什么可复用性，基本上只能在某个特定的场景中使用。比如说，我们现在要提供一个利息试算的功能，虽然计算利息的逻辑已经在上面的函数中编写了，但是<strong>计算逻辑和持久化逻辑</strong>耦合在了一起，导致我们无法复用上面的函数来实现利息试算。</p>
+<p><strong>一个函数应该具有返回值</strong>，这样的话我们就可以<strong>将如何完成计算和如何使用计算结果这两件事情分开</strong>，实现这两者的解耦。</p>
+<p>同样重要的是，<strong>一个函数应该具有请求参数</strong>，除了定时任务之外，一个业务函数应该是根据明确的外部驱动信息来触发，函数和外部世界的之间的依赖关系应该尽量通过参数来明确表达出来，<strong>具有参数的函数才能实现与上下文环境的解耦</strong>。<br>应该尽量避免从ThreadLocal等上下文变量中获取信息，特别是业务层面的信息（非通用架构层面）应该明确表达、明确传递。</p>
+<p>理想的情况下，通过观察一个函数的签名（函数名+参数类型+返回值类型）就可以知道这个函数的功能，它需要哪些信息，产生哪些信息，而不需要深入到这个函数的具体代码细节才能获取这些知识。</p>
+<p><strong>在使用DDD架构的情况下，在编写业务逻辑时，我们可以完全通过聚合根对象来表达业务对象数据，从而完全避免使用repository</strong>。这样的话，具体的数据到底是存储在数据库中，还是通过远程REST API获取，这种变化可以被屏蔽在聚合根对象接口之下。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">IntersetCalcResult</span> <span class="hljs-title function_">calcInterest</span>(<span class="hljs-params">IAccountBo accountBo</span>)&#123;<br>  <span class="hljs-comment">// 这里所有需要获取的信息都可以从accountBo这个聚合根对象读取到，因此不再需要使用各种repository依赖</span><br>  <span class="hljs-comment">// 利息计算的结果通过返回值返回，而不是调用repository保存到</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="二-尽量减少对共享数据的修改操作"><a href="#二-尽量减少对共享数据的修改操作" class="headerlink" title="二. 尽量减少对共享数据的修改操作"></a>二. 尽量减少对共享数据的修改操作</h2><p>函数式编程非常推崇不可变性，因为它是实现所谓引用透明性的关键。关于不可变性和引用透明性的关系，智谱清言AI的解释如下：</p>
+<p>引用透明性指的是一个表达式在任何地方都可以被它的值所替代，而不影响程序的行为。简单来说，如果一个表达式是引用透明的，那么它的结果只取决于它的参数，并且没有副作用。<br>以下是不可变性与引用透明性之间的关系：</p>
+<ol>
+<li><strong>不可变性是引用透明性的前提</strong>：<ul>
+<li>为了让一个表达式是引用透明的，它所依赖的数据必须是不可变的。如果数据是可变的，那么同一个表达式的结果可能会因为外部状态的变化而不同，这就违反了引用透明性的原则。</li>
+</ul>
+</li>
+<li><strong>引用透明性促进不可变性</strong>：<ul>
+<li>当你追求引用透明性时，你自然会倾向于使用不可变数据，因为只有这样才能保证表达式在程序中的任何位置都可以被它的值所替代，而不影响其他部分。</li>
+</ul>
+</li>
+<li><strong>共同目标</strong>：<ul>
+<li>不可变性和引用透明性都旨在减少副作用，提高代码的可预测性。不可变性确保数据在创建后不会改变，而引用透明性确保表达式的结果只依赖于其输入。</li>
+</ul>
+</li>
+<li><strong>可推理性</strong>：<ul>
+<li>不可变性和引用透明性都使得代码更加容易推理。不可变性让你不用担心数据在程序的某个地方被意外修改，而引用透明性让你可以安全地假设表达式的结果只与它的输入有关。</li>
+</ul>
+</li>
+<li><strong>函数式编程的核心价值</strong>：<ul>
+<li>在函数式编程中，不可变性和引用透明性是实现纯函数的关键。纯函数没有副作用，并且对于相同的输入总是返回相同的输出，这是函数式编程的核心价值之一。<br>总结来说，不可变性和引用透明性是相辅相成的概念，它们共同构成了函数式编程中许多优秀特性的基础，包括代码的可读性、可维护性、可测试性和可重用性。通过在代码中坚持这两个原则，可以构建更加健壮和高效的软件系统。</li>
+</ul>
+</li>
+</ol>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;智谱AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>虽然不可变性非常有用，但在主流的程序语言如Java中却很少有人去强调，因为修改变量很多时候比构造全新的对象要方便很多，而且性能更好。在Java中强调在每一个细节处都维护不可变性是不现实的。但是一个有益的努力方向是尽量减少修改操作，特别是减少多线程并发修改同一个全局对象。<strong>一个典型的做法是在全局Map中管理不可变对象，在局部环境中编辑时使用一个可修改的副本，并允许局部修改</strong>，但是更新到全局Map中后就不再修改。这种做法可以尽量减少锁的作用范围，在局部编辑时完全不需要使用锁，也不需要对象使用volatile、synchronized等同步关键字。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">MyObject obj = g_objects.get(objName);<br>MyObject copy = obj.cloneInstance(); // 或者 new MyObject()新建一个实例<br>copy.setXX(xx);<br>g_objects.put(objName,copy);<br></code></pre></td></tr></table></figure>
+
+<p>这种做法也可以看作是一种类似数据库MVCC事务处理的做法：开始事务后提交事务前的修改对其他人是不可见的，同一个对象有可能同时处于多个状态版本，在处理过程我们始终可以读取到修改前的状态版本。这个版本满足数据一致性要求，而我们正在修改的版本有可能充满临时变更，并不满足业务上的一致性要求。</p>
+<p>在前端同样存在着类似的做法。比如说，前端Redux框架原本非常强调不可变数据，但是最近几年的发展出现了一个有趣的变化：开始引入Immer这个库来实现局部的可变修改。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 传统的构建不可变数据的做法</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">todoReducer</span> = (<span class="hljs-params">state = initialState, action</span>) =&gt; &#123;<br>  <span class="hljs-keyword">switch</span> (action.<span class="hljs-property">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-attr">ADD_TODO</span>:<br>      <span class="hljs-comment">// 使用展开操作符来创建 todos 数组的新副本</span><br>      <span class="hljs-keyword">return</span> &#123;<br>        ...state,<br>        <span class="hljs-attr">todos</span>: [<br>          ...state.<span class="hljs-property">todos</span>,<br>          &#123;<br>            <span class="hljs-attr">id</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(),<br>            <span class="hljs-attr">text</span>: action.<span class="hljs-property">payload</span>,<br>            <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span><br>          &#125;<br>        ]<br>      &#125;;<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span><br> state;<br>  &#125;<br>&#125;;<br><span class="hljs-comment">// 使用Immer简化后的做法</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">todoReducer</span> = (<span class="hljs-params">state = initialState, action</span>) =&gt; &#123;<br>  <span class="hljs-keyword">switch</span> (action.<span class="hljs-property">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-attr">ADD_TODO</span>:<br>      <span class="hljs-comment">// 使用 Immer 的 produce 函数来更新状态</span><br>      <span class="hljs-keyword">return</span> <span class="hljs-title function_">produce</span>(state, <span class="hljs-function">(<span class="hljs-params">draft</span>) =&gt;</span> &#123;<br>        draft.<span class="hljs-property">todos</span>.<span class="hljs-title function_">push</span>(&#123; <span class="hljs-attr">id</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(), <span class="hljs-attr">text</span>: action.<span class="hljs-property">payload</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span> &#125;);<br>      &#125;);<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span> state;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p> Immer的produce函数类似开启了一个事务，在produce函数内部，我们可以修改draft这个临时对象，Immer通过类似AOP的Proxy代理技术记录所有修改动作，最后在退出produce函数的时候根据所有修改动作自动构建一个新的state对象。</p>
+<p><strong>不使用Immer的时候所谓的不可变性意味着总是构建新的全量对象，而Immer的作用是将修改动作记录下来成为Delta差量，然后再应用Delta到初始state上，产生一个新的state</strong>。</p>
+<p>不可变性最本质的影响是我们可以区分出状态空间中所有演化的细节，这是可预测性的本质来源。如果是允许修改，则同一个对象的状态会被覆盖，除非我们记录下每次修改前的拷贝或者修改产生的Delta，否则我们就会丢失历史上的状态信息。而不可变意味着我们不会覆盖掉已有的信息，如果我们对某个时刻的状态细节感兴趣，只要记录下当时存在的对象指针即可。每一次覆盖都会引入某种含混性。比如说，当我们中途处理失败，需要回退到初始时的一致性状态时，如果已经做了大量覆盖性的修改，则如何才能找回原始的一致性呢？</p>
+<p>多个线程共享同一个对象时，如果不具备不可变性，则修改时必然需要加锁，锁的作用是实现排他访问，它将会阻塞多个线程，从中选择一个执行。<strong>如果我们把一个线程看作是一个时间线，则不具备不可变性会导致多个时间线发生耦合，并相互阻塞</strong>。而在（全局共享对象）具备不可变性的情况下，每个时间线可以独立演化，从而实现解耦。当然，这也意味着我们可能会观测到同一个对象的多个历史快照并存（平行宇宙）。</p>
+<h2 id="三-使用高阶函数代替继承"><a href="#三-使用高阶函数代替继承" class="headerlink" title="三.使用高阶函数代替继承"></a>三.使用高阶函数代替继承</h2><p>使用面向对象编程时，一个非常容易出现滥用的情况就是大量使用继承来实现复用。比如说，我们经常使用所谓模板方法模式（Template Method Pattern)，在基类中实现一个模板方法，它调用几个虚拟函数，然后在不同的派生类中提供不同的实现，就可以复用基类中的模板方法逻辑。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 抽象类</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractProcess</span> &#123;<br>    <span class="hljs-comment">// 模板方法，定义了算法骨架</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">process</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">this</span>.primitiveOperation1();<br>        <span class="hljs-built_in">this</span>.primitiveOperation2();<br>    &#125;<br><br>    <span class="hljs-comment">// 抽象操作，由子类实现</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation1</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation2</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>模板方法的本质是通过一个隐式传递的this指针获取到可定制的函数指针，它的代价是每一次组合都要求产生一个新的子类，而且子类中编写的代码还与模板方法绑定，不能自由的应用于其他场景</strong>。</p>
+<p>一般情况下，采用传入回调函数和回调接口的方式会优于模板方法模式。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteProcess</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">process</span><span class="hljs-params">(IProcessor processor)</span>&#123;<br>       processor.primitiveOperation1();<br>       processor.primitiveOperation2();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>模板方法相当于是使用固定的this参数来获取函数指针。通过函数参数直接传入回调接口的做法要灵活得多，比如说，拆分出多个回调接口参数，实现交叉组合。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">```java<br>class ConcreteProcess&#123;<br>    public void process(IProcessor1 processor1, IProcessor2 processor2)&#123;<br>       processor1.primitiveOperation1();<br>       processor2.primitiveOperation2();<br>    &#125;<br>&#125;<br><br>class OtherProcess&#123;<br>    public void process(IProcessor1 processor1, IProcessor3 processor3)&#123;<br>       processor1.primitiveOperation1();<br>       processor3.primitiveOperation2();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的例子中，IProcessor1和IProcessor2接口中的代码不仅仅可以用于当前的ConcreteProcess类，而是可以用于其他应用场景，比如OtherProcess。在调用ConcreteProcess的时候，传入不同的Processor1和Processor2，就可以很自然的通过交叉组合实现不同的逻辑。而模板方法模式则是固化了Process和Processor1， Processor2的一种组合关系，相当于是将三者耦合在了一起。</p>
+<h2 id="四-函数组合的价值源于函数的结合律"><a href="#四-函数组合的价值源于函数的结合律" class="headerlink" title="四. 函数组合的价值源于函数的结合律"></a>四. 函数组合的价值源于函数的结合律</h2><p>函数的组合是指将两个或多个函数合并为一个函数的过程。如果有两个函数 f: A → B 和 g: B → C，则它们的组合 g ∘ f 是一个从 A 到 C 的函数，定义为 (g ∘ f)(x) &#x3D; g(f(x)) 对于所有 x ∈ A。<br>例如：</p>
+<ul>
+<li>设 f(x) &#x3D; x + 2</li>
+<li>设 g(x) &#x3D; 2x</li>
+<li>则它们的组合 (g ∘ f)(x) &#x3D; g(f(x)) &#x3D; g(x + 2) &#x3D; 2(x + 2) &#x3D; 2x + 4</li>
+</ul>
+<p>函数的组合之所以有用，本质上是因为函数的组合满足结合律。也就是说，如果三个函数 f, g, 和 h 可以组合，则它们的组合满足结合律，即 (h ∘ (g ∘ f)) &#x3D; ((h ∘ g) ∘ f)。这意味着先将 f 和 g 组合，然后再与 h 组合，与先将 g 和 h 组合，再与 f 组合的结果是一样的。</p>
+<ul>
+<li>(h ∘ (g ∘ f))(x) &#x3D; ((h ∘ g) ∘ f)(x) 对于所有 x ∈ A<br>这里的 “∘” 表示函数的组合。</li>
+</ul>
+<p>结合律的存在使得我们可以基于局部信息将多个函数组织在一起。而如果没有结合律，我们就必须要知道函数的具体应用对象和具体应用的上下文，而无法将几个函数独立的抽取出来成为一个可以到处复用的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">h</span>(<span class="hljs-title function_">g</span>(<span class="hljs-title function_">f</span>(x)) == <span class="hljs-title function_">p</span>(<span class="hljs-title function_">f</span>(x)) <span class="hljs-comment">// p = h ∘ g</span><br><span class="hljs-title function_">h</span>(<span class="hljs-title function_">g</span>(<span class="hljs-title function_">u</span>(x)) == <span class="hljs-title function_">p</span>(<span class="hljs-title function_">u</span>(x)) <span class="hljs-comment">// h∘g结合的结果p可以被复用到不同的上下文中</span><br></code></pre></td></tr></table></figure>
+
+<p>对于结合律的进一步分析，参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例 </a>。</p>
+<p>需要强调的是，<strong>任何满足结合律的东西都必然是自动实现了与上下文的解耦，它们都是上下文无关的</strong>！是否是函数并不关键，关键的是满足结合律。（可逆计算理论中的Delta差量也满足结合律！）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">(a*(b*c))*d  == a * BC * d, BC = b*c<br>u*((b*c)*v)  == u * BC * v, BC = b*c<br></code></pre></td></tr></table></figure>
+
+<p>满足结合律意味着我们可以在整个计算过程中随意添加括号，括号内的部分可以独立于括号外的部分进行局部计算。例如上面的例子中，无论外部的环境是什么，<code>b*c</code>都可以结合在一起产生一个可以被复用的BC。</p>
+<p>在函数式编程领域，有一个对于初学者而言有些神秘晦涩的概念：Monad（单子）。很多函数式的拥趸认为Monad是函数式编程的精华所在，是高贵的范畴论赋予它神秘的抽象力量。但是从实用主义的角度上说，<strong>Monad作为函数式编程中特有的一种设计模式，它表达的不过是一组形如<code>a-&gt; m b</code>这种形式的函数满足结合律而已</strong>。关于Monad的详细介绍，可以参见我在知乎的文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65449477">写给小白的Monad指北</a>。</p>
+<h2 id="五-解耦遍历逻辑和计算逻辑"><a href="#五-解耦遍历逻辑和计算逻辑" class="headerlink" title="五. 解耦遍历逻辑和计算逻辑"></a>五. 解耦遍历逻辑和计算逻辑</h2><p>如果仔细观察我们日常编写的代码，会发现它们经常是两种逻辑的耦合：我们一边在查找&#x2F;遍历需要参与计算的数据，一边在完成具体的计算。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"> <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>,<span class="hljs-title class_">Integer</span>&gt; <span class="hljs-title function_">wordCount</span>(<span class="hljs-params">File file</span>)&#123;<br>    <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-title class_">Integer</span>&gt; wordCount = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-title class_">String</span> text = <span class="hljs-title function_">readText</span>(file);<br>    <span class="hljs-comment">// 遍历逻辑和计算逻辑耦合在一个循环中</span><br>    <span class="hljs-title class_">String</span>[] words = text.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;\\s+&quot;</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-title class_">String</span> word : words) &#123;<br>        <span class="hljs-comment">// 遍历逻辑：遍历每个单词</span><br>        <span class="hljs-comment">// 计算逻辑：计算单词出现次数</span><br>        wordCount.<span class="hljs-title function_">put</span>(word, wordCount.<span class="hljs-title function_">getOrDefault</span>(word, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> wordCount;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的例子中，遍历逻辑（解析文件并循环word）和计算逻辑（更新<code>HashMap</code>中的计数）被紧密地耦合在一起。</p>
+<p>函数式编程借助于高阶函数，可以有效地将遍历数据的逻辑与对数据进行处理的逻辑分离开来。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">void</span> <span class="hljs-title function_">forEachWord</span>(<span class="hljs-params">File file, Consumer&lt;<span class="hljs-built_in">String</span>&gt; consumer</span>)&#123;<br>    <span class="hljs-title class_">String</span> text = <span class="hljs-title function_">readText</span>(file);<br>    <span class="hljs-title class_">Arrays</span>.<span class="hljs-title function_">stream</span>(text.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;\\s+&quot;</span>)).<span class="hljs-title function_">forEach</span>(consumer);<br>&#125;<br><br><span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-title class_">Integer</span>&gt; wordCount = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><span class="hljs-title class_">Consumer</span>&lt;<span class="hljs-title class_">String</span>&gt; consumer = <br>    word -&gt; wordCount.<span class="hljs-title function_">merge</span>(word, <span class="hljs-number">1</span>, <span class="hljs-title class_">Integer</span>::sum);<br><br><span class="hljs-title function_">forEachWord</span>(file, consumer);<br></code></pre></td></tr></table></figure>
+
+<p>我们可以编写一个forEachWord函数，它负责实现遍历文件中每个word的功能，通过传入的consumer函数来提供具体的计算功能。分离遍历逻辑和计算逻辑之后，同样的forEachWord函数可以传入不同的consumer来实现不同的功能，比如说，我们可以统计所有的大写字母开头的word的个数。这种需求的变动不需要修改forEachWord的实现。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-title class_">Integer</span>&gt; wordCount = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><span class="hljs-title class_">Consumer</span>&lt;<span class="hljs-title class_">String</span>&gt; consumer = word -&gt; &#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title class_">Character</span>.<span class="hljs-title function_">isUpperCase</span>(word.<span class="hljs-title function_">charAt</span>(<span class="hljs-number">0</span>))) &#123;<br>      wordCount.<span class="hljs-title function_">merge</span>(word, <span class="hljs-number">1</span>, <span class="hljs-title class_">Integer</span>::sum);<br>    &#125;<br>&#125;;<br><br><span class="hljs-title function_">forEachWord</span>(file, consumer);<br></code></pre></td></tr></table></figure>
+
+<p>类似的，同样的consumer也可以用于不同的遍历函数。比如要求统计指定目录下所有文件中的word计数，此时不需要修改consumer，只需要提供一个新的forEachWordInDir函数即可。</p>
+<h3 id="Y组合子：递归结构和计算结构的解耦"><a href="#Y组合子：递归结构和计算结构的解耦" class="headerlink" title="Y组合子：递归结构和计算结构的解耦"></a>Y组合子：递归结构和计算结构的解耦</h3><p>在函数式编程中，一个更为微妙的解耦方式是递归遍历与计算结构的解耦。在一般的程序语言中，实现递归非常简单，但是它要求函数必须有一个名字，我们在函数内部通过函数的名字来递归的引用自己。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fact</span>(<span class="hljs-params">n</span>)&#123;<br>    <span class="hljs-keyword">return</span> n &lt; <span class="hljs-number">2</span> ? <span class="hljs-number">1</span> : n * <span class="hljs-title function_">fact</span>(n-<span class="hljs-number">1</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>有一个神奇的Y组合子（Y Combinator）函数，它可以吃进去一个普通的、不包含递归引用的函数，然后吐出一个实现了自递归调用的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">fact0</span> = f =&gt; <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n &lt; <span class="hljs-number">2</span> ? <span class="hljs-number">1</span> : n * <span class="hljs-title function_">f</span>(n-<span class="hljs-number">1</span>)<br><span class="hljs-keyword">const</span> fact = <span class="hljs-title function_">Y</span>(fact0)<br></code></pre></td></tr></table></figure>
+
+<p><strong>fact0是一个普通的匿名函数，它的实现体中并没有用到函数名fact0</strong>。这个所谓的Y组合子长下面这个样子，看上去有点吓人</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">function Y(f) &#123;<br>    const g = x =&gt; &#123;<br>       return f(y =&gt; x(x)(y));<br>    &#125;;<br>    return g(g);<br>&#125;<br><br>//可以验证<br>fact(n) == Y(fact0)(n)<br></code></pre></td></tr></table></figure>
+
+<p>Y组合子看上去似乎非常不直观，但是我提出了一个启发式的推导，可以让Y组合子的构造过程变得简单直观，并可以推广得到更多得组合子。具体参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ARsrYJpApqB2_72tl-MSQQ">Y组合子的一个启发式推导 </a>。</p>
+<h2 id="六-惰性求值减少不必要的因果耦合"><a href="#六-惰性求值减少不必要的因果耦合" class="headerlink" title="六. 惰性求值减少不必要的因果耦合"></a>六. 惰性求值减少不必要的因果耦合</h2><p>什么是惰性求值？以下是智谱清言AI的回答：</p>
+<p>所谓惰性求值（Lazy Evaluation），就是一种编程语言中的求值策略，它允许表达式的计算被延迟到真正需要其结果的时候。这种策略使得程序在执行时可以更加高效地利用资源，尤其是当涉及到大型数据结构或潜在无限的数据集时。通过惰性求值，我们可以避免不必要的计算，减少内存占用，并且能够以声明式的方式编写代码，让程序逻辑更加清晰。惰性求值的实现通常涉及到将表达式封装成某种 thunk 或 Promise 对象，这些对象包含了足够的信息，以便在需要时能够完成计算。这种按需计算的特性，是函数式编程语言中的一个重要工具，它使得开发者能够以更加抽象和简洁的方式来表达复杂的算法和数据流。</p>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>很多受到函数式深刻影响的语言会提供支持惰性求值的语法特性，比如Kotlin语言中的lazy语法。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// 示例代码由智谱清言AI生成</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-comment">// 使用 lazy 关键字创建一个惰性属性</span><br>    <span class="hljs-keyword">val</span> lazyValue: String <span class="hljs-keyword">by</span> lazy &#123;<br>        println(<span class="hljs-string">&quot;Computing the value...&quot;</span>)<br>        <span class="hljs-string">&quot;Hello, Lazy World!&quot;</span><br>    &#125;<br><br>    <span class="hljs-comment">// 第一次访问惰性属性时，会计算其值</span><br>    println(lazyValue)<br><br>    <span class="hljs-comment">// 后续访问惰性属性时，不会重新计算，而是直接返回之前计算的结果</span><br>    println(lazyValue)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Scala语言中内置的Stream也是惰性求值的</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// 示例代码由文心一言AI生成</span><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Fibonacci</span> </span>&#123;  <br>  <span class="hljs-comment">// 使用Stream定义一个惰性求值的斐波那契数列  </span><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fibonacci</span></span>: <span class="hljs-type">Stream</span>[<span class="hljs-type">BigInt</span>] = &#123;  <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loop</span></span>(a: <span class="hljs-type">BigInt</span>, b: <span class="hljs-type">BigInt</span>): <span class="hljs-type">Stream</span>[<span class="hljs-type">BigInt</span>] = a #:: loop(b, a + b)  <br>    loop(<span class="hljs-type">BigInt</span>(<span class="hljs-number">0</span>), <span class="hljs-type">BigInt</span>(<span class="hljs-number">1</span>))  <br>  &#125;  <br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;  <br>    <span class="hljs-comment">// 打印斐波那契数列的前10个数  </span><br>    fibonacci.take(<span class="hljs-number">10</span>).foreach(println)  <br><br>    <span class="hljs-comment">// 注意：这里不会造成无限循环或内存溢出，因为Stream是惰性的  </span><br>    <span class="hljs-comment">// 并且我们通过take操作限制了需要计算的元素数量  </span><br>  &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>fibonacci</code>方法使用了一个内部定义的<code>loop</code>函数来递归地生成斐波那契数列。<code>#::</code>操作符用于将当前元素（<code>a</code>）添加到由<code>loop(b, a + b)</code>生成的流的前面，从而形成一个新的流。由于<code>Stream</code>是惰性的，所以这个递归调用只有在需要下一个斐波那契数时才会进行。</p>
+<p>在<code>main</code>方法中，我们通过调用<code>fibonacci.take(10)</code>来获取斐波那契数列的前10个元素，并通过<code>foreach</code>来遍历并打印这些元素。由于<code>Stream</code>的惰性特性，只有当我们实际需要这些元素时，它们才会被计算出来。</p>
+<p>在Java语言中，并没有直接内置支持惰性求值的语法，但是我们可以用函数来模拟实现。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LazyValue</span>&lt;T&gt; &#123;<br>    <span class="hljs-keyword">private</span> Supplier&lt;T&gt; supplier;<br>    <span class="hljs-keyword">private</span> T value;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">computed</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LazyValue</span><span class="hljs-params">(Supplier&lt;T&gt; supplier)</span> &#123;<br>        <span class="hljs-built_in">this</span>.supplier = supplier;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">get</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span> (!computed) &#123;<br>            value = supplier.get();<br>            computed = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> value;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LazyEvaluationExample</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 创建一个惰性求值的对象，它在第一次调用 get() 时计算其值</span><br>        LazyValue&lt;Integer&gt; lazyValue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LazyValue</span>&lt;&gt;(() -&gt; &#123;<br>            System.out.println(<span class="hljs-string">&quot;Computing value...&quot;</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">42</span>; <span class="hljs-comment">// 示例计算：返回一个固定的值</span><br>        &#125;);<br><br>        <span class="hljs-comment">// 第一次调用 get() 将执行计算</span><br>        System.out.println(<span class="hljs-string">&quot;Value: &quot;</span> + lazyValue.get());<br>        <span class="hljs-comment">// 后续调用 get() 将复用之前的计算结果</span><br>        System.out.println(<span class="hljs-string">&quot;Value: &quot;</span> + lazyValue.get());<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 输出：</span><br><span class="hljs-comment">// Computing value...</span><br><span class="hljs-comment">// Value: 42</span><br><span class="hljs-comment">// Value: 42</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>惰性求值的本质就是将值替换为一个求值的函数，并不立刻求值，只有当实际用到这个值的时候才执行对应的计算过程</strong>，并且一般会缓存计算结果，下次再获取时不会再重复计算。</p>
+<p>Eager Evaluation的问题在于，当我们通过一个变量名来引用某个值的时候，要求这个值的计算已经完成，这导致了大量不必要的因果依赖关系。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">a,b</span>)&#123;<br>    <span class="hljs-keyword">const</span> x = <span class="hljs-title function_">h</span>(b);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">g</span>(a, x);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，调用函数f之前，参数a的值就必须要完成计算，我们传入f的只能是一个计算后的结果。虽然函数f中并没有实际用到参数a的值（只是转手传给了别的函数），但是f的计算过程却被迫和a的计算过程产生了依赖关系：f的计算不能和a的计算并行执行，而只能是在a的计算完成之后执行。<strong>只有存在因果依赖的代码才需要按照先后顺序执行：因在前，果在后</strong>。但是目前我们所使用的主流程序语言都是命令式语言，代码中的函数调用（表达）顺序一般就预示了代码执行时的实际顺序。</p>
+<p>在实际编程中，<strong>很多框架和设计模式的作用，就是帮助我们分离逻辑的表达顺序和实际执行顺序</strong>。我们可以按照一个容易理解的顺序进行表达，甚至是乱序表达，<strong>关键点在于先表达的并不一定要先执行，而是实际发生因果依赖的时候才确定执行顺序</strong>。一个具体的应用实例是DDD中的聚合根对象（Aggregate Root)。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">IAccountBo</span> <span class="hljs-variable">accountBo</span> <span class="hljs-operator">=</span> accountManager.getAccount(accountId);<br><span class="hljs-type">ICustomerBo</span> <span class="hljs-variable">customerBo</span> <span class="hljs-operator">=</span> accountBo.getCustomerBo();<br></code></pre></td></tr></table></figure>
+
+<p>在DDD的开发中，一般性的做法都是进入后台服务函数时，先根据业务参数获取到一个聚合根对象，比如账户对象accountBo，这个聚合根对象提供了大量的业务数据获取方法，比如获取账户关联的客户对象信息可以使用<code>accountBo.getCustomerBo()</code>函数。可以说，聚合根对象包含了所有账户相关的业务数据信息，<strong>获取到聚合根相当于是持有了所有这些信息，在后续的业务代码中，我们就再也不需要访问数据库了，仅仅使用聚合根对象就足够了，因为所有的信息都可以通过聚合根对象的属性访问到</strong>！  </p>
+<p>getCustomerBo的典型实现方法是使用延迟加载，</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">ICustomerBo</span> <span class="hljs-title function_">getCustomerBo</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">if</span>(customerBo == <span class="hljs-literal">null</span>)<br>       customerBo = accountManagerImpl.<span class="hljs-title function_">getCustomerBo</span>(<br>           account.<span class="hljs-title function_">getCustomerId</span>(), dataCache);<br>    <span class="hljs-keyword">return</span> customerBo;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>accountBo.getCustomerBo()</code>对应的JavaBean属性表达式是 <code>accountBo.customerBo</code> 。显然，在属性表达式层面，延迟加载就是一种惰性求值。</p>
+<p>聚合根对象是对于业务领域中所谓领域模型（也就是数据实体关系）的一种表达，但是这种表达与具体获取数据的执行过程并没有直接关系。实际用到聚合根中某个属性的时候才应该去执行加载过程。</p>
+<p>因为目前国内大部分公司使用的是MyBatis这种功能薄弱的ORM引擎，导致在实施DDD的时候存在潜在的困难。一般人所编写的获取聚合根的代码总是会获取大量多余的数据！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">AccountDTO accountDTO = accountManager.getAccount(accountId);<br>CustomerDTO customerDTO = accountDTO.getCustomer();<br></code></pre></td></tr></table></figure>
+
+<p>很多人编写的代码中我们获取到的数据对象都是完全没有任何动态特性的POJO对象，或者说DTO对象。<strong>根据accountId获取到AccountDTO时，如果使用了聚合根的概念，一般人会将关联的customer信息直接加载，设置到accountDTO的属性上</strong>。即使外部调用者没有实际用到customer的信息，也避免不了这一加载过程。这种做法本质上是在用面向对象语言编写传统的命令式脚本，没有充分发挥面向对象的封装能力。如果是使用这种方式去实施DDD，那么为了避免出现重复获取数据导致的性能问题，我们就必须要限制函数的表达顺序，而且可能还需要提供一些额外的上下文环境来保存临时缓存数据，这些都会引入不必要的复杂性。例如虽然在逻辑上步骤A和步骤B之间没有任何依赖关系，它们的执行顺序可以是任意的，但是为了复用已经加载过的数据，我们可能会强制要求步骤A在步骤B之前执行，否则步骤B就缺少某个参数或者上下文中的某个数据。</p>
+<p>关于声明式和命令式的进一步介绍，参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85491177">什么是声明式编程</a>。</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
