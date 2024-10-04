@@ -37,10 +37,10 @@
 
 
 
-  <title>Paxos算法讲解 - Nop</title>
+  <title>小学生也能轻松掌握的Paxos&amp;amp;Raft算法奥秘 - Nop</title>
 
 
-  <meta property="og:title" content="Paxos算法讲解">
+  <meta property="og:title" content="小学生也能轻松掌握的Paxos&amp;amp;Raft算法奥秘">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,18 +1251,26 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">Paxos算法讲解</h1>
+    <h1 class="Article-title">小学生也能轻松掌握的Paxos&amp;Raft算法奥秘</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>Paxos算法的基本知识，可以参考 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/275710507">200行代码实现基于paxos的kv存储</a>, <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145044486">可靠分布式系统-paxos的直观解释</a></p>
-<h2 id="为什么要学习Paxos算法？"><a href="#为什么要学习Paxos算法？" class="headerlink" title="为什么要学习Paxos算法？"></a>为什么要学习Paxos算法？</h2><p>有人可能会问我的工作没有涉及到分布式系统，有必要学习Paxos算法吗？回答是，只要你的问题中涉及到多个状态空间，多种独立活动的实体，就会遇到类似的问题，解决的方法都可以从Paxos算法中找到答案。</p>
-<p>还有人可能会说，现在都是用Raft算法，很少有人使用Paxos了。回答是,Raft算法可以看作是Paxos算法的一个变种，它是在Paxos算法的总体精神下选择了一些特殊的实现策略。</p>
+      <div class="Article-content col-md-9"><blockquote>
+<p>Paxos算法的基本知识，可以参考知乎上xp的文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/275710507">200行代码实现基于paxos的kv存储</a>, <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145044486">可靠分布式系统-paxos的直观解释</a></p>
+</blockquote>
+<h2 id="为什么要学习Paxos算法？"><a href="#为什么要学习Paxos算法？" class="headerlink" title="为什么要学习Paxos算法？"></a>为什么要学习Paxos算法？</h2><p>有人可能会问, 我的工作没有涉及到分布式系统，有必要学习Paxos算法吗？回答是，只要你的问题中涉及到多个状态空间，多种独立活动的实体，就会遇到类似的问题，解决的方法都可以从Paxos算法中找到答案。</p>
+<p>还有人可能会说，现在都是用Raft算法，很少有人使用Paxos。回答是,Raft算法可以看作是Paxos算法的一个变种，它是在Paxos算法的总体精神下选择了一些特殊的实现策略。</p>
 <p>Paxos可以类似于一个高层的接口描述，其中只包含最核心的观念和策略，而Raft是一种具体的实现，补充了更多的实现细节，但是这些细节本质上是可选的，并不是实现分布式共识所必须的。</p>
-<h2 id="什么是Paxos算法？"><a href="#什么是Paxos算法？" class="headerlink" title="什么是Paxos算法？"></a>什么是Paxos算法？</h2><p>Paxos算法的执行过程是什么？</p>
-<p>以下是智谱清言AI的回答：</p>
+<p>物理学的学习和研究非常讲究物理图像，物理系的人永远不会老老实实的按照数学规则去推导，他们之所以相信某个推导结果完全是因为这个结果对应于合理的物理解释。那么对于Paxos算法，我们不禁要问，它背后的物理图像是什么？</p>
+<h2 id="什么是Paxos算法？"><a href="#什么是Paxos算法？" class="headerlink" title="什么是Paxos算法？"></a>什么是Paxos算法？</h2><p>Paxos 解决的是分布式系统中达成共识的一个最简单的问题，即多个节点如何在可能发生故障的情况下就某个值达成一致。</p>
+<p>正确的共识算法需要满足以下性质：</p>
+<p><strong>一致性（Agreement）</strong>: 所有的节点必须对同一个值达成一致。</p>
+<p><strong>合法性（Validity）</strong>: 这个达成一致的值只能来自于某个节点的提议。</p>
+<p><strong>终止性（Termination）</strong>: 最终所有节点会达成一致。</p>
+<p>Safety + Liveness</p>
+<p>Paxos算法的执行过程是什么？以下是智谱清言AI的回答：</p>
 <p>Paxos算法是Leslie Lamport在1990年提出的一种分布式一致性算法，用于解决分布式系统中多个节点之间如何达成一致的问题。Paxos算法的核心思想是通过多个节点之间的相互通信和投票，最终达成一致的结果。</p>
 <p>Paxos算法的执行过程可以分为以下三个主要阶段：提案阶段（Prepare阶段）、接受阶段（Accept阶段）和学习阶段。下面详细描述这三个阶段：</p>
 <h3 id="1-提案阶段（Prepare阶段）"><a href="#1-提案阶段（Prepare阶段）" class="headerlink" title="1. 提案阶段（Prepare阶段）"></a>1. 提案阶段（Prepare阶段）</h3><ul>
@@ -1281,6 +1289,8 @@
 <li><p><strong>提案编号的唯一性</strong>：为了保证算法的正确性，提案编号必须是全局唯一的。通常，可以通过组合提议者的唯一标识和该提议者生成的序列号来实现。</p>
 </li>
 <li><p><strong>活性问题</strong>：Paxos算法需要解决活性问题，即保证算法最终能够收敛到一个值。这可能涉及到处理网络延迟、节点故障、提案冲突等问题。<br>Paxos算法通过这种多轮的消息交换和投票，保证了分布式系统中的节点最终能够就某个值达成一致，即使是在网络不可靠和节点可能故障的情况下。这个过程虽然复杂，但它是理解和实现分布式系统一致性的关键。<br>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;</p>
+</li>
+<li><p>Lamport专门强调了：”This need not be the same set of acceptors that responded to the initial requests.”</p>
 </li>
 </ul>
 <h2 id="Paxos算法的变体"><a href="#Paxos算法的变体" class="headerlink" title="Paxos算法的变体"></a>Paxos算法的变体</h2><p>Paxos算法是解决分布式系统中一致性问题的经典算法，由Leslie Lamport在1990年提出。随着时间的推移，Paxos算法衍生出了一些变体，这些变体旨在提高算法的性能、简化理解、增强可用性或适应特定的应用场景。以下是一些Paxos算法的变体：</p>
@@ -1329,14 +1339,50 @@
 <p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;</p>
 <p>值被chosen的定义：<br>  值被多数（超过半数）的acceptor接受。</p>
 <p>组变更：任意两个quorum必须有交集。</p>
-<p>Fast Paxos:<br>  使用rnd&#x3D;0直接尝试一次phase2写入。<br>为了防止第一次尝试写入冲突后正确执行，quorum需要<code>n*3/4</code>，这样后续paxos读取的时候至少要读取<code>1/2+</code>，在这<code>1/2</code>多中，已经写入的值仍然是多数派。</p>
-<p>$$<br>[\frac 1 2 ] &#x3D; (\frac 1 4) + [\frac 1 4]<br>$$</p>
-<p>也就是说，时间可能冲突，但是仍然可以通过数多数派得到已经被选定的值。</p>
+<h2 id="成员变更"><a href="#成员变更" class="headerlink" title="成员变更"></a>成员变更</h2><p>成员变更的约束条件：</p>
+<ul>
+<li><p>上一个 config 在当前 commit_index 上提交后才允许 propose 下一个配置.</p>
+</li>
+<li><p>下一个配置必须跟最后一个已提交的配置有交集.</p>
+</li>
+</ul>
 <h2 id="Quorum并不需要是Majority"><a href="#Quorum并不需要是Majority" class="headerlink" title="Quorum并不需要是Majority"></a>Quorum并不需要是Majority</h2><p>Quorum的要求是任意两个quorum之间存在交集。比如，要求所有Quorum都包含一个指定元素a，这样也是合法的Quorum，只是不容错。<code>&#123;&#123;a&#125;,&#123;a,b&#125;,&#123;a,b,c&#125;,&#123;a,c&#125;&#125;</code></p>
 <p>hierarchical quorum <img src="https://pic1.zhimg.com/80/v2-e2a584b6379a039596b303442ad849de_1440w.webp"></p>
 <p>$$<br>Q’ &#x3D; (Q -  {Q_i}) \cup  {\bar Q_i}<br>$$</p>
 <p>去掉一个quorum，然后再加上它的补集，我们得到的仍然是一个合法的quorum集合。</p>
+<h2 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h2><p>如果很确定自己是第一个提出一个值的话，那么就可以安全地跳过第一阶段，直接进入第二阶段提交。</p>
+<p>使用rnd&#x3D;0直接尝试一次phase2写入。<br>为了防止第一次尝试写入冲突后正确执行，quorum需要<code>n*3/4</code>，这样后续paxos读取的时候至少要读取<code>1/2+</code>，在这<code>1/2</code>多中，已经写入的值仍然是多数派。</p>
+<p>$$<br>[\frac 1 2 ] &#x3D; (\frac 1 4) + [\frac 1 4]<br>$$</p>
+<p>也就是说，时间可能冲突，但是仍然可以通过对多数派进行计数得到已经被选定的值。</p>
+<p>如果一个值想要被快速提交，它不仅要得到大多数成员的认可，还要在大多数的大多数中得到认可，才能安全地提交。</p>
 <h2 id="EPaxos"><a href="#EPaxos" class="headerlink" title="EPaxos"></a>EPaxos</h2><p>记录deps,  mmp3与EPaxos的不同在于它记录所有依赖的instance，包括所有间接依赖的，由此才能保证线性一致性。</p>
+<h2 id="Paxos与-Raft"><a href="#Paxos与-Raft" class="headerlink" title="Paxos与 Raft"></a>Paxos与 Raft</h2><p>参考xp的文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/488629044">将 paxos 和 raft 统一为一个协议: abstract-paxos</a></p>
+<p>Raft对 multi-paxos 没有明确定义的问题, 即多条日志之间的关系到底应该是怎样的, 给出了一个确定的答案.</p>
+<h2 id="Generalized-Paxos"><a href="#Generalized-Paxos" class="headerlink" title="Generalized Paxos"></a>Generalized Paxos</h2><p>共识不变式： 对于每一个顶点 v ，最多只能够有一个值 <code>(x,deps(v))</code> ，就如同 Raft 的日志中，一个日志项要么没有提交，一旦提交了所有节点都是同一个值。</p>
+<p>依赖不变式：形式化的描述了依赖图中的冲突关系。如果x和y存在冲突，则要么$v_i \in deps(v_y)$, 要么$v_y\in deps(v_x)$, 要么两者同时满足。</p>
+<p><img src="https://picx.zhimg.com/80/v2-e367275aa567652df6bbc7d3ff79aab1_1440w.webp"></p>
+<p>两个冲突的操作，可能是同时发起的，而不同的消息到达不同的依赖服务节点的顺序有可能不同，这就导致了在不同服务节点中的依赖关系可能不同。即使依赖服务维护的冲突图是无环的，Replica 中形成的冲突图也有可能有环。</p>
+<h2 id="微观与宏观"><a href="#微观与宏观" class="headerlink" title="微观与宏观"></a>微观与宏观</h2><p>主世界的时间线类似于宏观世界，而小世界的时间线类似于微观世界。</p>
+<p>如果我们世界的底层是一台超级计算机，我们这个世界的所有规律完全可能是由这台机器所模拟出来的。反观我们的世界，现在处于末法时代，天地间灵气耗尽，魔力散失，真正的魔法在这个世界上已经不复存在。但是我们手上还有一台计算机，在这个低魔的世界中，是不是还可以用这台计算机去模拟高魔世界的规律？</p>
+<p>时间静止在主世界中发生。</p>
+<p>世界观的转换：我们可以先定义主世界中的规律，然后再寻求小世界中的实现方案。</p>
+<h2 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h2><p>2PC（两阶段提交）可以看作是由Coordinator提供一致性的来源，各个Participant逐渐和Coordinator建立纠缠。而Paxos是逐步建立一个Quorum，Quorum中的参与者纠缠在一起。</p>
+<p>2PC运行之前，各个Participant都是可以独立选择成功或者失败，也就是说结果是随机的。第一阶段运行完毕之后，如果单独去观察每一个Participant，它仍然是可能成功或者失败，结果仍然是随机的。但是如果我们观察整个状态空间，却会发现状态空间中可行的状态被削减了，只有部分纠缠态存留下来。</p>
+<p>$$<br>|成功,成功\rangle + |失败,失败\rangle<br>$$</p>
+<p>关于量子纠缠态，以下是智谱清言AI的介绍：</p>
+<h3 id="量子纠缠态"><a href="#量子纠缠态" class="headerlink" title="量子纠缠态"></a>量子纠缠态</h3><p>量子纠缠态是量子力学中一个非常特殊且非经典的现象，它描述了两个或多个粒子之间的一种强相关性，即使这些粒子被分隔得非常远，它们之间的状态仍然可以即时地相互影响。</p>
+<p>假设我们有两个粒子A和B，它们可以被制备在一个特殊的量子态中，比如一个纠缠态。一个简单的纠缠态例子是贝尔态（Bell state）之一，可以表示为：</p>
+<p>$$<br> \frac{1}{\sqrt{2}} (|00\rangle + |11\rangle)<br>$$</p>
+<p>在这个态中，”0” 和 “1” 分别代表粒子的某种量子属性（比如自旋方向）的两个可能状态，而 $|00\rangle$ 表示粒子A处于状态”0”且粒子B处于状态”0”，$|11\rangle$ 则表示粒子A处于状态”1”且粒子B处于状态”1”。</p>
+<h4 id="纠缠粒子的行为"><a href="#纠缠粒子的行为" class="headerlink" title="纠缠粒子的行为"></a>纠缠粒子的行为</h4><p>当粒子A和B处于上述纠缠态时，不论它们相隔多远，以下现象会发生：</p>
+<ul>
+<li><strong>测量一致性</strong>：假设我们在粒子A的位置测量它的状态，并且发现它处于状态”0”。由于粒子A和B处于纠缠态，粒子B的状态将会立即确定为”0”，即使它距离粒子A非常远。如果我们测量粒子B并发现它处于状态”1”，那么粒子A的状态也立即确定为”1”。这种即时的状态关联是量子纠缠的一个关键特征。</li>
+<li><strong>随机性</strong>：在纠缠态中，当我们测量粒子A或B时，我们无法预测具体会得到”0”还是”1”，因为纠缠态是这两个结果的叠加。然而，一旦我们测量了其中一个粒子，另一个粒子的状态也会立即确定，并且与第一个粒子的测量结果相关。</li>
+<li><strong>非局域性</strong>：量子纠缠展现了非局域性，意味着粒子A的状态可以即时影响粒子B的状态，而不需要任何信号在它们之间传递。这一点违反了经典物理学中的局域实在论，即物理效应不可能瞬间传递。</li>
+</ul>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<h2 id="FLP定理"><a href="#FLP定理" class="headerlink" title="FLP定理"></a>FLP定理</h2><p>FLP定理（Fischer, Lynch, and Paterson theorem）指出在完全异步的分布式系统中，不存在一种共识算法能够同时满足一致性、可靠性和终止性这三个条件。</p>
+<p>异步模型指的是没有全局时钟，进程可以以任意速度执行，消息可以在任意时间到达，但是消息最终会被保证送达。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
