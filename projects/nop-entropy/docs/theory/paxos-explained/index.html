@@ -1268,16 +1268,34 @@
 <p><strong>一致性（Agreement）</strong>: 所有的节点必须对同一个值达成一致。</p>
 <p><strong>合法性（Validity）</strong>: 这个达成一致的值只能来自于某个节点的提议。</p>
 <p><strong>终止性（Termination）</strong>: 最终所有节点会达成一致。</p>
-<p>Safety + Liveness</p>
-<p><img src="/knosys/project-nop-entropy/theory/paxos/paxos-diagram.webp"></p>
+<p>以上条件也被称为 Safety + Liveness，这是典型的既要又要，既要正确又要可行。一致性体现了共识的基本含义，而合法性用于排除一些平庸的情况，比如说所有节点约定不管外部提议是什么，我们都固定选择值是3，这样相当于是也可以形成共识，但是这种共识缺乏动态性，没有什么用。</p>
+<p>共识算法所描绘的场景：一开始整个系统处于不确定状态，允许存在很多种可能性，比如值x和值y都可能，但是<strong>执行完某个关键动作之后，整个系统会突然转变（类似于物理学中的相变，水突然冻成了冰），进入一种确定性的全局协同状态（凝固在某个选定的值上）</strong>，按照算法的运行规则执行下去，最终所有的节点都会承认值只能是x，而不可能是y。</p>
+<blockquote>
+<p>如果把参与共识算法的所有节点的所有动作按照一定的顺序组织成一个动作序列，则必然存在一个关键性动作，在这个动作执行之前允许多种可能，执行完这个动作之后结果固化。比如说一个Acceptor记录下一个值，则构成多数派，值被固化。如果它没有成功记录，则尚未构成多数派，还允许新的可能。</p>
+<p>虽然共识算法中所有节点都是并行运行的，但是在事后我们总是可以将所有动作组织成一个动作序列，并识别出其中的关键转变动作。</p>
+</blockquote>
+<p>有趣的是，系统有没有可能进入一种类似薛定谔猫的状态，即选定了值，又没有选定值呢？从观察者的角度看，确实会存在这种状态，但是Paxos算法解决了这个问题，它内置了一种观测手段，使得最终必然会出现波包塌缩，得到确定性的结果。</p>
+<h3 id="FLP定理"><a href="#FLP定理" class="headerlink" title="FLP定理"></a>FLP定理</h3><p>有趣的是，<strong>满足上面的三个条件的共识算法在绝对的意义上是不存在的</strong>！FLP定理（Fischer, Lynch, and Paterson theorem）指出在完全异步的分布式系统中，不存在一种共识算法能够同时满足一致性、可靠性和终止性这三个条件。</p>
+<p>异步模型指的是没有全局时钟，进程可以以任意速度执行，消息可以在任意时间到达，但是消息最终会被保证送达。</p>
+<p>FLP本质上是在说，如果一个全知全能的神故意对共识的进程进行捣乱，每次在共识将要达成的前夕（在关键性的转变即将发生的时候）都将一个关键节点无限期挂起，则没有任何算法可以确保达成共识。幸运的是，在我们的世界中目前还没有发现这种无聊的神明，多尝试几次，总会有成功的运气。</p>
+<h3 id="Paxos算法速览"><a href="#Paxos算法速览" class="headerlink" title="Paxos算法速览"></a>Paxos算法速览</h3><p><img src="/knosys/project-nop-entropy/theory/paxos/paxos-diagram.webp"></p>
 <p><img src="/knosys/project-nop-entropy/theory/paxos/phase1.png"></p>
 <p><img src="/knosys/project-nop-entropy/theory/paxos/phase2.png"></p>
 <p><img src="/knosys/project-nop-entropy/theory/paxos/paxos-algorithm.png"></p>
 <p>以上图片出自阿里巴巴基础架构事业部何登成的ppt, <a target="_blank" rel="noopener" href="https://github.com/hedengcheng/tech/blob/master/distributed/PaxosRaft%20%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%80%E8%87%B4%E6%80%A7%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E5%8F%8A%E5%85%B6%E5%9C%A8%E5%AE%9E%E6%88%98%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.pdf">PaxosRaft 分布式一致性算法原理剖析及其在实战中的应用.pdf</a></p>
 <p>值被chosen的定义： 值被多数（超过半数）的acceptor接受。</p>
-<h2 id="三-Paxos的魔法学图像"><a href="#三-Paxos的魔法学图像" class="headerlink" title="三. Paxos的魔法学图像"></a>三. Paxos的魔法学图像</h2><p>物理学的学习和研究非常讲究物理图像，物理系的人永远不会老老实实的按照数学规则去推导，他们之所以相信某个推导结果完全是因为这个结果对应于合理的物理解释。那么对于Paxos算法，我们不禁要问，它背后的物理图像是什么？</p>
-<p>分布式系统的底色是生的自由、死的随机的一片混沌，矛盾冲突无处不在，但是Paxos算法却偏偏在这一片混沌之上建立了统一一致的共识世界，这看起来宛如神迹。但是，凡人是很难理解神迹的，他无法站在神的高度俯瞰众生，只能凭借自己有限的生活经验去追索揣摩神的意图，最终必然会产生属于凡人的困惑。</p>
-<p>作为全知全能的神，解决问题的方式可以非常简单：</p>
+<h3 id="相对论、时间和分布式系统"><a href="#相对论、时间和分布式系统" class="headerlink" title="相对论、时间和分布式系统"></a>相对论、时间和分布式系统</h3><p><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/359545.359563">Time, Clocks and the Ordering of Events in a Distributed System(1978)</a></p>
+<p>是Lamport被引用次数最多的文章，也号称是分布式领域最重要的一篇文章。Lamport在对这篇文章的回顾中有这么一段话：</p>
+<blockquote>
+<p>The origin of this paper was the note <a target="_blank" rel="noopener" href="http://www.rfc-archive.org/getrfc.php?rfc=677">The Maintenance of Duplicate Databases</a> by Paul Johnson and Bob Thomas. I believe their note introduced the<br>idea of using message timestamps in a distributed algorithm. I happen to<br> have a solid, visceral understanding of special relativity .<br> This enabled me to grasp immediately the essence of what they were<br>trying to do. Special relativity teaches us that there is no invariant<br>total ordering of events in space-time; different observers can disagree<br> about which of two events happened first. There is only a partial order<br> in which an event e1 precedes an event e2 iff e1 can causally affect<br>e2. I realized that the essence of Johnson and Thomas’s algorithm was<br>the use of timestamps to provide a total ordering of events that was<br>consistent with the causal order. This realization may have been<br>brilliant. Having realized it, everything else was trivial. <strong>Because<br>Thomas and Johnson didn’t understand exactly what they were doing</strong>, they didn’t get the algorithm quite right; their algorithm permitted<br>anomalous behavior that essentially violated causality. I quickly wrote a<br> short note pointing this out and correcting the algorithm.</p>
+</blockquote>
+<p>Lamport具有MIT的数学学士学位（1960年），并且是布兰迪斯大学的数学博士（1972年），系统化的学习过狭义相对论。Lamport的这段自述充分说明，<strong>学好计算机必须要懂一点物理</strong>！</p>
+<p>爱因斯坦通过想象发射一个光子去探测周围的世界，发现了一个惊天的秘密：<strong>不同地方的时间只具有因果关联所导致的偏序关系，时间线并不是唯一的</strong>！Lamport看到别人的文章中描述了消息发送、消息时间戳这样的概念之后，立刻意识到消息传递和光子传播是一回事，这背后的物理图像就是狭义相对论。一旦意识到这一点，后面的逻辑推导就是完全平凡的！而<strong>Thomas和Johnson吃亏在没有学好物理学，压根没有理解自己创造的算法到底在干什么事情，导致算法中存在微妙的错漏</strong>。缺少物理图像的指引，难免会在关键的时候犯迷糊。</p>
+<p>有趣的是，Lamport虽然受到了狭义相对论的指引，他在自己的文章中却只是大谈特谈逻辑时钟，只字未提狭义相对论，导致有些人还以为这是Lamport拍脑袋拍出来的神来之笔。</p>
+<p>Lamport的关于Paxos的原始论文<a target="_blank" rel="noopener" href="https://ying-zhang.github.io/dist/1989-paxos-cn/">The Part-Time Parliament</a>在1998年好不容易正式发表之后，一堆人大呼看不懂，于是Lamport在2001年又写了<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1bbbfbe300d1">Paxos Made Simple</a>一文，开宗明义就是一句话：Paxos算法，当用日常语言来表述时，是非常简单的（The Paxos algorithm, when presented in plain English, is very simple）。在这篇文章中，Lamport对于Paxos提供了一个为什么如此设计的解释（Why），只是这种解释是基于一步步的数学推理，相当于是强按着别人的头迫使别人承认Paxos算法的合理性，结果必然是一堆人刚看的时候以为是懂了，但一转头又迷糊了。</p>
+<p>物理学的学习和研究非常讲究物理图像，物理系的人永远不会老老实实的按照数学规则去推导，他们之所以相信某个推导结果完全是因为这个结果对应于合理的物理解释。那么对于Paxos算法，我们不禁要问，它背后的物理图像是什么？在Lamport的心底，是否还隐藏着一个不为人知的、非数学化的对Paxos算法必然性的理解？就像当年他对那帮搞计算机的家伙悄悄隐瞒了相对论的存在？</p>
+<h2 id="三-Paxos的魔法学图像"><a href="#三-Paxos的魔法学图像" class="headerlink" title="三. Paxos的魔法学图像"></a>三. Paxos的魔法学图像</h2><p>分布式系统的底色是生的自由、死的随机的一片混沌，矛盾冲突无处不在，但是Paxos算法却偏偏在这一片混沌之上建立了统一一致的共识世界，这看起来宛如神迹。但是，凡人是很难理解神迹的，他无法站在神的高度俯瞰众生，只能凭借自己有限的生活经验去追索揣摩神的意图，最终必然会产生属于凡人的困惑。</p>
+<p>人神之分，在于神域。神域之中，言出法随。制定规则，是神的起点，而谦卑的接纳规则、并狡诈的利用规则则是人之本质。所谓天人鸿沟，尽在于此。但是如果人族起了不臣之心，幻想着他也是规则掌控者，那么是否可以洞察这凡间一切的不可思议？所谓僭越一念起，刹那天地宽。我们突然发现，神，作为凌驾于一切有限客体之上的最完满的存在，解决共识问题只需要三步：</p>
 <ol>
 <li><p>神说：要有时间</p>
 </li>
@@ -1286,10 +1304,35 @@
 <li><p>神说：值应是X</p>
 </li>
 </ol>
-<h2 id="微观与宏观"><a href="#微观与宏观" class="headerlink" title="微观与宏观"></a>微观与宏观</h2><p>如果我们世界的底层是一台超级计算机，我们这个世界的所有规律完全可能是由这台机器所模拟出来的。反观我们的世界，现在处于末法时代，天地间灵气耗尽，魔力散失，真正的魔法在这个世界上已经不复存在。但是我们手上还有一台计算机，在这个低魔的世界中，是不是还可以用这台计算机去模拟高魔世界的规律？</p>
-<p>时间静止在主世界中发生。主世界的时间线类似于宏观世界，而小世界的时间线类似于微观世界。</p>
+<ul>
+<li><p>时间静止的前提是时间需要先存在</p>
+</li>
+<li><p>在已经存在时间的情况下，如果全宇宙的时间都静止下来，那么就不会出现任何意料之外的事情发生，此时神可以从容的去干任意他想干的事情。注意，我们总是通过观察变化来认知时间的存在，比如比较单摆的摆动和其他变化的比例关系。<strong>如果时间静止，就意味着没有出现任何可观测的变化</strong>。但这并不意味着完全没有变化发生，比如说如果在我们这个宇宙中所有的变化都齐刷刷的延迟1秒钟，我们是无法发现这种变化的。</p>
+</li>
+<li><p>在时间静止之后，神在多处直接指定相同的值即可。这样当时间重新流动之后，处于不同地点的人们会发现同样的值突然出现在眼前，共识已经达成。</p>
+</li>
+</ul>
+<p>我们的世界现在处于末法时代，天地间灵气耗尽，魔力散失，真正的魔法在这个世界上已经不复存在。但是，我们手上还有一台计算机。如果我们世界的底层是一台超级计算机，那这个世界的所有物理规律完全可能是由这台机器所模拟出来的。那么在现在这个低魔的世界中，是不是同样可以用手中的计算机去模拟高魔世界的魔法？</p>
+<blockquote>
+<p>计算机的本质是图灵机，而图灵机的本质是它是万能模拟器，可以模拟一切计算过程，这就是所谓的图灵完备。</p>
+</blockquote>
+<p><strong>Paxos算法是对时间静止这一九级魔法的模拟实现，而Leader based Paxos则是利用八级魔法-大傀儡术来节约魔力</strong>。</p>
+<p>一旦想清楚Paxos的真正秘密是它是来源于异次元的魔法学，剩下的就只是一些平凡的技术细节了。</p>
+<blockquote>
+<p>这里需要的是世界观或者说认知范式的转换：我们为达到目标先设计一个自然法则，然后再去思考如何落实这个法则。就好像在编程中我们先设计一套接口，然后再去具体实现这些接口。</p>
+</blockquote>
+<p>回想一下，<strong>Paxos算法中Proposer和Acceptor的一系列动作本质上都是在保证时间的单向流动</strong>。</p>
+<ol>
+<li><p>Proposer 生成全局唯一且递增的Proposal ID，这个Proposal ID就是一种时间的标记，每个ID对应一个唯一的时刻。</p>
+</li>
+<li><p>Acceptor 收到Propose后，为什么不再应答 Proposal ID 小于等于当前请求的 Propose？因为时间是单向流动的，Propose成功表示时间静止的开始，在时刻t静止，就不能再在小于时刻t的时刻静止。</p>
+</li>
+<li><p>Acceptor 收到Propose后，为什么不再应答 Proposal ID 小于当前请求的 Accept请求？从Propose到Accept是时间静止的阶段，所以我们可以接受时间静止开始时刻t对应的Accept，但是不能接受小于时刻t的时间的Accept。</p>
+</li>
+</ol>
+<p>在我们这个低魔的世界中模拟魔法，最基本的手段是认知删除，也就说，将一切不符合魔法学原理的事实从我们的认知中删除就好了，<strong>看不见的就不存在！</strong>  Acceptor一系列看起来古怪的行为只是在忽略那些会导致时间静止魔法穿帮的事实而已。</p>
+<h2 id="微观与宏观"><a href="#微观与宏观" class="headerlink" title="微观与宏观"></a>微观与宏观</h2><p>时间静止在主世界中发生。主世界的时间线类似于宏观世界，而小世界的时间线类似于微观世界。</p>
 <p>微观上可能有些成功了，有些失败了，但只要大多数(Majority)成功了，则我们就定义它在宏观上成功了。因为一个Majority不可能既是X，又不是X，所以这种宏观定义是明确的。</p>
-<p>世界观的转换：我们可以先定义主世界中的规律，然后再寻求小世界中的实现方案。</p>
 <h2 id="2PC与量子纠缠态"><a href="#2PC与量子纠缠态" class="headerlink" title="2PC与量子纠缠态"></a>2PC与量子纠缠态</h2><p>2PC（两阶段提交）可以看作是由Coordinator提供一致性的来源，各个Participant逐渐和Coordinator建立纠缠。而Paxos是逐步建立一个Quorum，Quorum中的参与者纠缠在一起。</p>
 <p>2PC运行之前，各个Participant都是可以独立选择成功或者失败，也就是说结果是随机的。第一阶段运行完毕之后，如果单独去观察每一个Participant，它仍然是可能成功或者失败，结果仍然是随机的。但是如果我们观察整个状态空间，却会发现状态空间中可行的状态被削减了，只有部分纠缠态存留下来。</p>
 <p>$$<br>|成功,成功\rangle + |失败,失败\rangle<br>$$</p>
@@ -1305,82 +1348,24 @@
 <li><strong>非局域性</strong>：量子纠缠展现了非局域性，意味着粒子A的状态可以即时影响粒子B的状态，而不需要任何信号在它们之间传递。这一点违反了经典物理学中的局域实在论，即物理效应不可能瞬间传递。</li>
 </ul>
 <p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<h2 id="相对论、时间和分布式系统"><a href="#相对论、时间和分布式系统" class="headerlink" title="相对论、时间和分布式系统"></a>相对论、时间和分布式系统</h2><p>Time, Clocks and the Ordering of Events in a Distributed System（1978）</p>
-<p>Lamport的原话:</p>
-<blockquote>
-<p>The origin of this paper was the note <a target="_blank" rel="noopener" href="http://www.rfc-archive.org/getrfc.php?rfc=677">The Maintenance of Duplicate Databases</a> by Paul Johnson and Bob Thomas. I believe their note introduced the<br>idea of using message timestamps in a distributed algorithm. I happen to<br> have a solid, visceral understanding of special relativity .<br> This enabled me to grasp immediately the essence of what they were<br>trying to do. Special relativity teaches us that there is no invariant<br>total ordering of events in space-time; different observers can disagree<br> about which of two events happened first. There is only a partial order<br> in which an event e1 precedes an event e2 iff e1 can causally affect<br>e2. I realized that the essence of Johnson and Thomas’s algorithm was<br>the use of timestamps to provide a total ordering of events that was<br>consistent with the causal order. This realization may have been<br>brilliant. Having realized it, everything else was trivial. Because<br>Thomas and Johnson didn’t understand exactly what they were doing, they<br>didn’t get the algorithm quite right; their algorithm permitted<br>anomalous behavior that essentially violated causality. I quickly wrote a<br> short note pointing this out and correcting the algorithm.</p>
-</blockquote>
-<h2 id="一些常见问题"><a href="#一些常见问题" class="headerlink" title="一些常见问题"></a>一些常见问题</h2><h2 id="成员变更"><a href="#成员变更" class="headerlink" title="成员变更"></a>成员变更</h2><p>成员变更的约束条件：</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="一些常见问题"><a href="#一些常见问题" class="headerlink" title="一些常见问题"></a>一些常见问题</h2><h2 id="成员变更"><a href="#成员变更" class="headerlink" title="成员变更"></a>成员变更</h2><p>成员变更的约束条件：</p>
 <ul>
 <li><p>上一个 config 在当前 commit_index 上提交后才允许 propose 下一个配置.</p>
 </li>
 <li><p>下一个配置必须跟最后一个已提交的配置有交集.也就是任意两个quorum必须有交集。</p>
 </li>
 </ul>
-<h2 id="Quorum并不需要是Majority"><a href="#Quorum并不需要是Majority" class="headerlink" title="Quorum并不需要是Majority"></a>Quorum并不需要是Majority</h2><p>Quorum的要求是任意两个quorum之间存在交集。比如，要求所有Quorum都包含一个指定元素a，这样也是合法的Quorum，只是不容错。<code>&#123;&#123;a&#125;,&#123;a,b&#125;,&#123;a,b,c&#125;,&#123;a,c&#125;&#125;</code></p>
+<h2 id="Quorum并不需要是Majority"><a href="#Quorum并不需要是Majority" class="headerlink" title="Quorum并不需要是Majority"></a>Quorum并不需要是Majority</h2><p>Quorum（法定代表）的要求是任意两个quorum之间存在交集。比如，要求所有Quorum都包含一个指定元素a，这样也是合法的Quorum，只是不容错。<code>&#123;&#123;a&#125;,&#123;a,b&#125;,&#123;a,b,c&#125;,&#123;a,c&#125;&#125;</code></p>
 <p>hierarchical quorum <img src="https://pic1.zhimg.com/80/v2-e2a584b6379a039596b303442ad849de_1440w.webp"></p>
 <p>$$<br>Q’ &#x3D; (Q -  {Q_i}) \cup  {\bar Q_i}<br>$$</p>
 <p>去掉一个quorum，然后再加上它的补集，我们得到的仍然是一个合法的quorum集合。</p>
 <h2 id="接受Accept消息的需要是此前返回Propose响应的Acceptor吗？"><a href="#接受Accept消息的需要是此前返回Propose响应的Acceptor吗？" class="headerlink" title="接受Accept消息的需要是此前返回Propose响应的Acceptor吗？"></a>接受Accept消息的需要是此前返回Propose响应的Acceptor吗？</h2><p><img src="/knosys/project-nop-entropy/theory/paxos/acceptor.png"></p>
 <ul>
 <li>Lamport专门强调了：”This need not be the same set of acceptors that responded to the initial requests.”</li>
+<li>在第一阶段，我们可能从A1、A2、A3接收到了成功响应，然后我们并不需要向A1、A2、A3发起第二阶段请求，而是完全可以选择其他的节点发起请求。Paxos只要求多数派成功响应即可，并不要求第一阶段和第二阶段的多数派完全一样。</li>
 </ul>
-<h2 id="Paxos算法的变体"><a href="#Paxos算法的变体" class="headerlink" title="Paxos算法的变体"></a>Paxos算法的变体</h2><p>Paxos算法是解决分布式系统中一致性问题的经典算法，由Leslie Lamport在1990年提出。随着时间的推移，Paxos算法衍生出了一些变体，这些变体旨在提高算法的性能、简化理解、增强可用性或适应特定的应用场景。以下是一些Paxos算法的变体：</p>
-<ol>
-<li><p><strong>Multi-Paxos</strong>:</p>
-<ul>
-<li>为了解决Paxos算法在处理连续决策时的效率问题，Multi-Paxos允许对多个实例（或多个值）使用相同的领导者，从而减少了选择领导者的开销。</li>
-</ul>
-</li>
-<li><p><strong>Fast Paxos</strong>:</p>
-<ul>
-<li>是Paxos的一个优化版本，它通过减少一轮通信来加速决策过程，但这需要在某些条件下才能实现。</li>
-</ul>
-</li>
-<li><p><strong>EPaxos (Efficient Paxos)</strong>:</p>
-<ul>
-<li>EPaxos通过允许并行处理多个提案来提高性能，它适用于冲突较少的场景。</li>
-</ul>
-</li>
-<li><p><strong>Generalized Paxos</strong>:</p>
-<ul>
-<li>旨在处理更复杂的一致性要求，允许某些操作可以在不同服务器上以不同的顺序执行。</li>
-</ul>
-</li>
-<li><p><strong>Vertical Paxos</strong>:</p>
-<ul>
-<li>专门为支持大型集群设计的Paxos变体，它通过分层结构来提高可扩展性。</li>
-</ul>
-</li>
-<li><p><strong>Cheap Paxos</strong>:</p>
-<ul>
-<li>旨在减少Paxos算法中的存储需求，通过减少必须存储的信息量来实现。</li>
-</ul>
-</li>
-<li><p><strong>Paxos Made Live</strong>:</p>
-<ul>
-<li>是Google实现Paxos算法的一个实践版本，它包含了对算法的工程化改进。</li>
-</ul>
-</li>
-<li><p><strong>Disk Paxos</strong>:</p>
-<ul>
-<li>专为在具有持久性存储的系统中实现Paxos算法而设计，确保了即使在系统崩溃后也能恢复状态。</li>
-</ul>
-</li>
-<li><p><strong>State Machine Replication with Paxos</strong>:</p>
-<ul>
-<li>这不是一个单独的变体，而是一种使用Paxos算法来实现状态机复制的通用方法。</li>
-</ul>
-</li>
-<li><p><strong>Raft</strong>:</p>
-</li>
-</ol>
-<ul>
-<li>虽然不是Paxos的直接变体，但Raft算法受到了Paxos的启发，它旨在提供更易于理解和实现的一致性算法。<br>这些变体各有优缺点，它们在设计时都考虑了不同的应用场景和性能要求。在选择适合自己系统的算法时，开发者需要根据具体需求来决定使用哪种变体。</li>
-</ul>
-<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 智谱清言AI创作完毕&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<h2 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h2><p>如果很确定自己是第一个提出一个值的话，那么就可以安全地跳过第一阶段，直接进入第二阶段提交。</p>
-<p>使用rnd&#x3D;0直接尝试一次phase2写入。<br>为了防止第一次尝试写入冲突后正确执行，quorum需要<code>n*3/4</code>，这样后续paxos读取的时候至少要读取<code>1/2+</code>，在这<code>1/2</code>多中，已经写入的值仍然是多数派。</p>
+<h2 id="Paxos算法的变体"><a href="#Paxos算法的变体" class="headerlink" title="Paxos算法的变体"></a>Paxos算法的变体</h2><p>参见<a target="_blank" rel="noopener" href="https://escholarship.org/uc/item/9w79h2jg">SoK: A Generalized Multi-Leader State Machine Replication Tutorial</a></p>
+<h2 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h2><p>如果很确定自己是第一个提出一个值的话，那么就可以安全地跳过第一阶段，直接进入第二阶段提交。Fast Paxos使用rnd&#x3D;0直接尝试一次phase2写入。<br>为了防止第一次尝试写入冲突后正确执行，quorum需要<code>n*3/4</code>，这样后续paxos读取的时候至少要读取<code>1/2+</code>，在这<code>1/2</code>多中，已经写入的值仍然是多数派。</p>
 <p>$$<br>[\frac 1 2 ] &#x3D; (\frac 1 4) + [\frac 1 4]<br>$$</p>
 <p>也就是说，时间可能冲突，但是仍然可以通过对多数派进行计数得到已经被选定的值。</p>
 <p>如果一个值想要被快速提交，它不仅要得到大多数成员的认可，还要在大多数的大多数中得到认可，才能安全地提交。</p>
@@ -1390,12 +1375,18 @@
 <p>Raft对 multi-paxos 没有明确定义的问题, 即多条日志之间的关系到底应该是怎样的, 给出了一个确定的答案.</p>
 <p>Multi-Paxos: 很多instance共用一个Promise。</p>
 <h3 id="幽灵复现问题"><a href="#幽灵复现问题" class="headerlink" title="幽灵复现问题"></a>幽灵复现问题</h3><p>某类没有提交且过时的日志可能被新 Leader 重新提交。也就是说在上一个leader没有达成共识的条目会不会在下一个Leader达成共识，从未知状态转成提交状态。</p>
-<h2 id="Generalized-Paxos"><a href="#Generalized-Paxos" class="headerlink" title="Generalized Paxos"></a>Generalized Paxos</h2><p>共识不变式： 对于每一个顶点 v ，最多只能够有一个值 <code>(x,deps(v))</code> ，就如同 Raft 的日志中，一个日志项要么没有提交，一旦提交了所有节点都是同一个值。</p>
-<p>依赖不变式：形式化的描述了依赖图中的冲突关系。如果x和y存在冲突，则要么v_i \in deps(v_y), 要么v_y\in deps(v_x), 要么两者同时满足。</p>
+<h2 id="Generalized-Paxos"><a href="#Generalized-Paxos" class="headerlink" title="Generalized Paxos"></a>Generalized Paxos</h2><p>Multi-Paxos和Raft考虑的都是线性日志，日志中的条目构成一个全序(total order)集合：排在前面的日志总是要先执行。但是实际情况中日志中某些项的执行先后顺序是可以颠倒的，只要它们之间不存在冲突关系（比如读后写，写后读等），例如<code>a=1</code>和<code>b=2</code>这两个命令互不相关，可以交换执行顺序。泛化Paxos的做法是通过依赖服务来计算日志条目之间的偏序依赖关系，然后构成冲突图。</p>
+<p>部署配置：</p>
+<p>proposers: 至少f+1个节点</p>
+<p>dependency service nodes: 2f + 1个节点</p>
+<p>acceptors: 2f+1个</p>
+<p>replicas: 至少f+1个</p>
+<p>$deps(v_x)$是至少f+1个依赖服务节点所计算得到的依赖集合的并集。</p>
+<p>依赖服务接收到x，再接收到与之冲突的y时，会增加一个节点$v_y$到节点$v_x$的箭头，$v_x \in deps(v_y)$</p>
+<p>共识不变式： 对于每一个顶点 v ，最多只能够有一个值 <code>(x,deps(v))</code> ，就如同 Raft 的日志中，一个日志项要么没有提交，一旦提交了所有节点都是同一个值。</p>
+<p>依赖不变式：形式化的描述了依赖图中的冲突关系。如果x和y存在冲突，则要么$v_i \in deps(v_y)$, 要么$v_y\in deps(v_x)$, 要么两者同时满足。</p>
 <p><img src="https://picx.zhimg.com/80/v2-e367275aa567652df6bbc7d3ff79aab1_1440w.webp"></p>
 <p>两个冲突的操作，可能是同时发起的，而不同的消息到达不同的依赖服务节点的顺序有可能不同，这就导致了在不同服务节点中的依赖关系可能不同。即使依赖服务维护的冲突图是无环的，Replica 中形成的冲突图也有可能有环。</p>
-<h2 id="FLP定理"><a href="#FLP定理" class="headerlink" title="FLP定理"></a>FLP定理</h2><p>FLP定理（Fischer, Lynch, and Paterson theorem）指出在完全异步的分布式系统中，不存在一种共识算法能够同时满足一致性、可靠性和终止性这三个条件。</p>
-<p>异步模型指的是没有全局时钟，进程可以以任意速度执行，消息可以在任意时间到达，但是消息最终会被保证送达。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
