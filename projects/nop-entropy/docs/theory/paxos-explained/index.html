@@ -1396,7 +1396,7 @@
 <h3 id="什么时候达成的共识？"><a href="#什么时候达成的共识？" class="headerlink" title="什么时候达成的共识？"></a>什么时候达成的共识？</h3><p> 当共识被确定时，系统中的参与者是否立即意识到共识已经达成？一个有趣的事实是，当共识达成的那一刹那，系统中所有的参与者，包括Acceptor和Proposer，没有任何人知道共识已经达成！只不过，随着时间的推移，算法的运行会<strong>把共识已经达成这一事实逐步的揭示出来</strong>。</p>
 <p><img src="/knosys/project-nop-entropy/theory/paxos/paxos_consensus.png" alt="paxos\_consensus"></p>
 <p>首先，我们注意到当共识没有达成之前，<strong>Acceptor是有可能改变自己接受的值的</strong>，例如A3先接受了P2，后面又接受了P3。因为Proposer随时有可能失联，所以Acceptor只能选择接受新的值。这导致当A3接受P3的时候，它不可能知道共识已经达成，P3就是最终选定的值。同样的道理，A2和A4也只知道自己局部的情况，无从判断系统整体是否已经达成共识。而在Proposer一端，在接收到多数派Acceptor的成功响应之前，它也不知道自己提交的P3能否被多数Acceptor接受，成为最终的共识。所以说<strong>共识是属于整体的，单个参与者对于共识是否达成需要有一个理解的过程</strong>。这正是学习者（Learner）角色的关键所在。学习者首先识别到共识已经达成，然后将这一信息传播出去，从而避免了每个参与者都需要独立收集和推理信息的过程。</p>
-<p>这里还有一个有趣的细节。在t2时刻，如果第一阶段收集到的多数派响应来自A3,A4,A5，则我们可以提出任意的值P2（如果多数派中包含A1和A2，则按照Paxos的规则，P2只能是等于P1了）。但是写入多数派的时候并不要求写入A3, A4,A5，而是允许选择任意一个多数派，所以我们能够将不同于P1的P2写入A1。为了强调这一点，Lamport在他的论文中还专门写了一句话：This need not be the same set of acceptors that responded to the initial requests。关于这一点，如果没有建立主时间线的图像也是很容易犯迷糊的。</p>
+<p>这里还有一个有趣的细节。在t2时刻，如果第一阶段收集到的多数派响应来自A3,A4,A5，则我们可以提出任意的值P2（如果多数派中包含A1和A2，则按照Paxos的规则，P2只能是等于P1了）。但是写入多数派的时候并不要求写入A3, A4,A5，而是允许选择任意一个多数派，所以我们能够将不同于P1的P2写入A1（能在t时刻写入就隐含的说明在t时刻之后没有发生任何变化）。为了强调这一点，Lamport在他的论文中还专门写了一句话：This need not be the same set of acceptors that responded to the initial requests。关于这一点，如果没有建立主时间线的图像也是很容易犯迷糊的。</p>
 <h2 id="五-Leader-Based-复制粘贴"><a href="#五-Leader-Based-复制粘贴" class="headerlink" title="五. Leader Based: 复制粘贴"></a>五. Leader Based: 复制粘贴</h2><p>施展九级魔法是相当消耗魔力的行为。一个具有社会主义核心价值观、勤俭节约的神绝对不会无端的浪费魔力。所以一旦时间静止下来，为了维系分处多地的节点的行为一致，神的最佳选择是施展一个八级魔法”大傀儡术“，将一个节点（称为Leader）上的行为复刻到其他所有节点上。</p>
 <p>这种复刻源自于神的力量，因此一旦leader发动新的动作，它将穿越千山万水，无视物理阻隔直接降临于远端的follower身上，follower没有反驳的权利，只有执行的自由。不过，俗话说的好，上面动动嘴，下面跑断腿。在我们这样一个低魔世界中，实现大傀儡术并不是一件很轻松的事情，一般通过在发送端和接收端各自增加一个日志文件来实现。</p>
 <p>发送端把动作决定写入日志，从而使它成为不可变的神谕。发送组件扫描日志系统，确保将其逐条传达到远端。如果连接不上接收端，或者发送出错，或者发送后没有接收到期待的响应信息，发送组件不能抱怨，不能放弃，唯有努力工作，<strong>不断重试</strong>，直到接收到成功响应为止，这一过程可以保证至少成功发送一次（At Least Once）。接收端必须无条件接收所有消息，不能拒收，不得篡改。因为有可能多次接收到同一个消息，它必须通过本地日志进行<strong>幂等检查</strong>，过滤掉所有重复消息，从而实现最多成功处理一次（At Most Once）。如果消息需要通过一个流式处理系统（Stream）进行接力处理，为避免每次从源头开始不断重播，需要中间节点能够通过<strong>快照机制</strong>把已经完成的处理结果记录下来。</p>
@@ -1424,24 +1424,35 @@
 <h3 id="分布式最本质的困难：不知道"><a href="#分布式最本质的困难：不知道" class="headerlink" title="分布式最本质的困难：不知道"></a>分布式最本质的困难：不知道</h3><p>在凡人的眼中，这个世界充斥着令人心烦意乱的不确定性，每一步行为都产生三种可能的结果：<strong>1. 成功，2. 失败 3. 不知道什么结果</strong>。曾几何时，孤立的单机系统为我们提供了一种乌托邦式的幻象，世界是二分的，好与坏，成功与失败，光明与黑暗。但是真实的世界让人清醒，在由偶然所主宰的世界中，这种内在的不确定性造就了分布式系统的本质性的困难。</p>
 <p>当一个动作的结果是不知道的情况下，我们能够怎么办呢？答案是，我们只能等待反馈。要么被动等待负责执行的实体返回执行结果，要么发起主动探查，等待探查到执行结果。比如说，我们要确定一个数据导出任务是否成功生成了导出文件，唯一的方法就是在执行完生成任务之后，检查生成文件是否存在并且数据完整。如果探查失败怎么办？那就只能反复重试。</p>
 <h2 id="六-Paxos算法的变体"><a href="#六-Paxos算法的变体" class="headerlink" title="六. Paxos算法的变体"></a>六. Paxos算法的变体</h2><p>参见<a target="_blank" rel="noopener" href="https://escholarship.org/uc/item/9w79h2jg">SoK: A Generalized Multi-Leader State Machine Replication Tutorial</a></p>
-<h3 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h3><p>如果很确定自己是第一个提出一个值的话，那么就可以安全地跳过第一阶段，直接进入第二阶段提交。Fast Paxos使用rnd&#x3D;0直接尝试一次phase2写入。</p>
+<h3 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h3><p>如果很确定自己是第一个提出一个值的话，那么就可以安全地跳过第一阶段，直接进入第二阶段提交。Fast Paxos使用rnd&#x3D;0直接尝试一次phase2写入，但是要求quorum大小为<code>n*3/4</code>。</p>
 <blockquote>
 <p>第一轮，Proposer跳过Leader，直接连接Acceptor，尝试写入</p>
 </blockquote>
-<p>为了防止第一次尝试写入冲突后正确执行，quorum需要<code>n*3/4</code>，这样后续执行出错，采用普通paxos尝试继续处理时，读取的时候至少要读取<code>1/2+</code>，在这<code>1/2</code>多中，已经写入的值仍然是多数派。</p>
-<p>$$<br>[\frac 1 2 ] &#x3D; (\frac 1 4) + [\frac 1 4]<br>$$</p>
-<p>也就是说，<code>t=0</code>时刻存在两个活动者，所以我们需要新的信息来判断它们的执行顺序。在时间冲突的情况下，仍然可以通过对多数派进行计数得到已经被选定的值。</p>
-<p>如果一个值想要被快速提交，它不仅要得到大多数成员的认可，还要在大多数的大多数中得到认可，才能安全地提交。</p>
+<p><strong>如果一个值想要被快速提交，它不仅要得到大多数成员的认可，还要在大多数的大多数中得到认可，才能安全地提交</strong>。</p>
+<p><code>t=0</code>时刻存在多个并行的Proposer，有可能写入多个值，如果第一轮没有成功，那么第二轮开始使用普通的Paxos算法来执行，但是第二轮开始时我们无法像普通Paxos那样选择Acceptor返回的最大时刻对应的值，因为<code>t=0</code>时刻可能存在多个值。幸运的是，仍然可以选择多数派所对应的值，因为如果fast round成功写入了<code>n*3/4</code>，则多数派中的多数派的值一定是共识的值。</p>
+<p>$$<br>[\frac n 2] &#x3D; (\frac n 4) + [\frac n 4]<br>$$</p>
+<blockquote>
+<p>最多有不到1&#x2F;4的值不同于共识的值，则多数派（1&#x2F;2+）中一定有超过1&#x2F;4的值是共识的值。</p>
+</blockquote>
+<p>当然，也有可能rnd&#x3D;0阶段并没有成功写入Quorum，我们选择多数派中的多数派也是一个安全的选择。如果不存在多数派的多数派，则肯定尚未达成共识，可以自由选择。</p>
 <h3 id="Flexible-Paxos"><a href="#Flexible-Paxos" class="headerlink" title="Flexible Paxos"></a>Flexible Paxos</h3><p>为了在一个偶然的、不确定的世界中奋力求生，我们唯有精诚合作，形成超越个体的集体意识。个体可以消亡，而集体通过新陈代谢实现永生。一个有趣的问题是，多数派（Majority）是否是形成集体意识的唯一选择？显然不是。精神的传承，只需要种子的存在。</p>
 <p>来看一个Grid Quorum的例子，</p>
 <p><img src="/knosys/project-nop-entropy/theory/paxos/paxos_grid_quorum.png" alt="paxos\_grid\_quorum"></p>
 <p>对于上面<code>3*6</code>个Acceptor所组成的一个Grid，我们可以规定只要<strong>写入任意一列</strong>所构成的Quorum即可认为共识达成。显然，任意两列都是不相交的。为了避免做出自相矛盾的选择，我们需要横向架设一个桥梁，规定Paxos第一阶段读取的时候必须至少读取一行。假设某个时刻共识已经诞生，则下一个共识必然先经过一个行读取再执行一个列写入。因为任意的行和任意的列都是相交的，行读取必然会读到共识的值，因此写入的新值必然是和此前的共识保持一致的。注意到这个例子中的行Quorum与相交的列Quorum都没有达到多数派，而且它们的总元素个数为3+6-1&#x3D;8个，也没有构成多数派。所以，读取和写入时候的Quorum既不需要相同，也不需要占据多数，只要能够相交，足以传递信息即可。</p>
-<blockquote>
 <p>Flexible Paxos指出第一阶段和第二阶段的 quorums 必须相交，但同一阶段内的 quorums 则不需要相交。这意味着任何具有这种性质的 quorum 系统都可以使用，而不仅仅是多数派 quorums。<strong>第一阶段（读）+第二阶段（写）是时间静止过程中（逻辑时间为固定值）的一个原子操作，所以只需要第一阶段Quorum+第二阶段Quorum产生的结果互斥即可</strong>，这样两个主时间线上的时间点就不会重叠，且后面的时间点上可以看到前面的时间点上的值。</p>
+<p>定义$Q_{2c}$为经典Paxos算法第二阶段的Quorum集合</p>
+<p>$$<br>\forall Q\in Q_1,\forall Q’ \in Q_{2c}: Q\cap Q’ \ne \emptyset<br>$$</p>
+<blockquote>
 <p>Paxos原始的要求是所有用到的Quorum都相交。</p>
 </blockquote>
 <p>Flexible Paxos有利于提升性能。比如后面要介绍的Multi-Paxos，它的第一阶段的执行频率要远低于第二阶段，因此我们可以尽量缩小第二阶段的Quorum大小。</p>
-<p>要超越个体，只需要把个体升华为Quorum中的一员。一个个体可以属于多个Quorum。只要过去和未来所有的Quorum协调一致，不会做出相互冲突的选择，最终我们就可以形成统一的集体意志。</p>
+<p>如果应用到Fast Paxos，则还需要考虑fast round阶段的Quorum要求</p>
+<p>$$<br>\forall Q\in Q_1, \forall Q’,Q’’\in Q_{2f} : Q\cap Q’\cap Q’’ \ne \emptyset<br>$$</p>
+<p>$Q\cap Q’ \cap Q’’$不为空可以排除$Q\cap Q’$选择出值X而$Q\cap Q’’$选择出Y这样的冲突情况。</p>
+<p>如果转化为关于Quorum中成员个数的不等式，则得到</p>
+<p>$$<br>q_1 + q_{2c} \gt n\<br>q_1 + 2q_{2f} \gt 2n<br>$$</p>
+<p>两个$Q_{2f}$重叠的元素个数为 $2q_{2f}-n$，那么这个重叠的集合与Q1相交的条件是</p>
+<p>$$<br>q_1 + (2q_{2f} -n) &gt; n<br>$$</p>
 <h3 id="Quorum并不需要是大多数"><a href="#Quorum并不需要是大多数" class="headerlink" title="Quorum并不需要是大多数"></a>Quorum并不需要是大多数</h3><p>Quorum（法定代表）的要求是Quorum之间存在交集。比如，要求所有Quorum都包含一个指定元素a，这样也是合法的Quorum，只是不容错。<code>&#123;&#123;a,d&#125;,&#123;a,b&#125;,&#123;a,c&#125;&#125;</code></p>
 <p>此外我们还注意到，$A \cap B $不为空，且A没有包含于B的情况下，实际上意味着A和B的补集的交集也不为空，所以$A\cap \bar B \ne \emptyset $ ，这也就意味着说一组存在交集的互不包含的Quorum</p>
 <p>$$<br>Q_i \cap Q_j \ne \emptyset \Longrightarrow Q_i \cap \bar {Q_j} \ne \emptyset<br>$$</p>
@@ -1525,7 +1536,7 @@
 <p>依赖不变式：形式化的描述了依赖图中的冲突关系。如果x和y存在冲突，则要么$v_i \in deps(v_y)$, 要么$v_y\in deps(v_x)$, 要么两者同时满足。</p>
 <p><img src="https://picx.zhimg.com/80/v2-e367275aa567652df6bbc7d3ff79aab1_1440w.webp"></p>
 <p>两个冲突的操作，可能是同时发起的，而不同的消息到达不同的依赖服务节点的顺序有可能不同，这就导致了在不同服务节点中的依赖关系可能不同。即使依赖服务维护的冲突图是无环的，Replica 中形成的冲突图也有可能有环。</p>
-<h2 id="EPaxos"><a href="#EPaxos" class="headerlink" title="EPaxos"></a>EPaxos</h2><p>记录deps, mmp3与EPaxos的不同在于它记录所有依赖的instance，包括所有间接依赖的，由此才能保证线性一致性。</p>
+<p>日志项和它的依赖项都实现共识之后，每个副本就可以采用一种确定性的排序算法对日志项进行排序，排序得到的结果在各个副本是一致的，因此可以按照同样的顺序应用到状态机上。</p>
 <h2 id="七-关于时间线的其他技术"><a href="#七-关于时间线的其他技术" class="headerlink" title="七. 关于时间线的其他技术"></a>七. 关于时间线的其他技术</h2><p>对于凡人而言，时间是一种神奇的先验存在。似乎我们所有的协调工作本质上都是在利用时间箭头所提供的方向指引。在我们这个位面，牛顿爵士第一个发现，时间切分了因果，时间的左边是因，右边是果，为此他写下了伟大不朽的牛二定律</p>
 <blockquote>
 <p>F &#x3D; m* a，因 &#x3D; 线性系数 * 果</p>
@@ -1633,7 +1644,7 @@
 <li>当多数派Acceptor接受Promise请求时，它们将本地时间戳更新为请求中的时间戳t，实现对齐。此时会创造主时间线上的一个时刻t。</li>
 <li>若多数派Acceptor在时间戳t上接受并写入相同的值X，则认为值X在主时间线上被确定。</li>
 <li>若写入值不一致或少部分Acceptor未写入，则时间戳t处于不确定状态。若多数派Acceptor未写入，则时间戳t被视为未写入值。</li>
-<li>在一个包含2f+1个Acceptor的系统中，最多允许f个Acceptor失败，这保证了在任何时刻多数派Acceptor都是存活的，并且它们之间存在交集，从而维持了主时间线的连续性。每个逻辑时间戳至多记录一个确定值，只要至少有一个Acceptor存活，该值便不会丢失。若在时刻t未达成共识，即使部分Acceptor写入值后失败，这种值的不确定性也不会影响共识的最终确定。我们关注的是主时间线上已确定或可能已确定的值。</li>
+<li>在一个包含2f+1个Acceptor的系统中，最多允许f个Acceptor失败，这保证了在任何时刻多数派Acceptor都是存活的，并且它们之间存在交集，从而维持了主时间线的连续性。每个逻辑时间戳至多记录一个确定值，只要多数派Acceptor存活，该值便不会丢失。若在时刻t未达成共识，即使部分Acceptor写入值后失败，这种值的不确定性也不会影响共识的最终确定。我们关注的是主时间线上已确定或可能已确定的值。</li>
 </ul>
 </li>
 <li><p><strong>Promise请求的作用与处理</strong>：</p>
