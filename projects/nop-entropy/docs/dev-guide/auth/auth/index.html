@@ -1396,6 +1396,9 @@
 <li>whenConfig可以直接配置标签名，比如 <code>biz:WhenAdmin</code>或者<code>&lt;biz:WhenXX type=&#39;1&#39; /&gt;</code></li>
 </ul>
 <p><strong>注意: 数据权限是作用于业务场景的，因此它会对get和findXX函数都起作用，get调用时会执行check配置。如果没有明确指定check，则会自动将filter翻译为在内存中执行的check。 因此，如果filter中使用SQL子查询则会出现翻译失败报错的情况。</strong></p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>如何区分两个不同的查询<br><code>NopAuthUser:query</code>表示允许针对用户的所有查询，而<code>NopAuthUser:findPage_active</code>则只对应于<code>findPage_active</code>这一个方法。可以在action上通过Auth注解使得方法名对应于指定的permission。否则每个方法名都缺省对应于一个permission名。</li>
+</ol>
 
 </div>
       <footer class="Article-footer col-md-3">
