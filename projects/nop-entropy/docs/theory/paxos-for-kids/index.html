@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+    
+      
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+
+
+  <meta property="og:title" content="Nop">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title"></h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>我在上一篇文章<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LD8fDbyPohJkA9sbWGjXkQ">小学生也能轻松掌握的Paxos&#x2F;Raft算法奥秘</a>简单介绍了Paxos算法的一种直观理解方式。但是有同学反映说内容还是有点难以理解，恐怕只有天才小学生才能看懂。出现这种情况，可能是因为文章内容比较多，在其中解释了分布式共识算法的方方面面。为了确保普通资质的小学生也可以看懂，我在本文中做了进一步简化，只集中讲述Paxos算法的基础部分。</p>
+<p><strong>Paxos算法是对时间静止这一九级魔法的模拟实现</strong>。一旦理解了这一点，剩下的就只是一些平凡的技术细节了。<strong>Paxos中的很多细节本质上都是对模拟失败时的补救措施和容错机制而已</strong>，它的核心逻辑为：</p>
+<ol>
+<li><p>如果时间静止模拟成功，则我们可以<strong>百分百确认共识已经达成</strong>。</p>
+</li>
+<li><p><strong>如果我们不确定时间静止是否模拟成功</strong>，则重试下一轮模拟。</p>
+</li>
+<li><p>重试的时候为了<strong>避免已经达成的共识被推翻</strong>，需要看一眼上一轮模拟的结果，不能选择与已经达成的共识冲突的值。</p>
+</li>
+<li><p>为了允许一定的容错性，<strong>多数派成功就算成功</strong>。</p>
+</li>
+</ol>
+<p>在建立时间静止的图像之后不需要任何超过小学生认知程度的推理能力就可以完全理解Paxos算法。以下是一个详细的分步骤的推理过程。如果有哪个步骤存在逻辑跳跃，可以留言讨论，我再修改一下。</p>
+<ol>
+<li><p>我们要解决的是一个最简单的共识问题：如何让分散在多个地方的人共同选择一个同样的值。<br>例如我们如何让A,B,C三个人都同意选择值为X。困难在于，你刚让人送信给A，B，C让他们选择值1，他们的回信还在路上，不知道什么人找上了A，告诉他值应该是2，导致A将自己的决定改成了2。因为A,B,C不在同一个地方，你只能逐一写信去和他们说，但是每次接到信，再给你回信的过程中，都可能有意外情况发生，总有其他人也试图写信说服A,B,C选择其他的值。因为A,B,C对所有人都是一视同仁的，所以他们如果能接受你的意见，肯定也就能接受后来的其他人的意见，导致他们的意见总是变来变去，无法统一。<br>（理解共识问题是什么，以及它有什么难度，应该只需要小学文化）</p>
+</li>
+<li><p>如果你会魔法，要避免其他人的干扰就很简单。可以施展时间静止魔法，让所有人的时间都静止下来，停在t0时刻，然后你直接找到A，和他说值是1， 说完你再去找B，和他说值是1。因为时间静止的过程中，只有你是自由活动的，其他人的活动都被冻结了，所以不会有任何干扰的存在。当你和A,B,C都说完之后，再让时间流动起来，这样A,B,C就在t0时刻统一了认识，认为值是1。<br>（理解时间静止可以帮助实现共识也只需要小学文化，看过魔法相关的动画片可能会有帮助）</p>
+</li>
+<li><p>虽然我们的世界并没有魔法，但是我们可以模拟魔法的实现。你可以写信给ABC（第一阶段），信的内容是：请假装时间静止在9点钟。ABC接到信后给你回复：同意。然后他们将自己的钟的指针拨到9点钟。你从ABC接收到回信后，发出第二阶段的信：如果时间还静止在9点钟，则设置值为1，同时时间前进到9点01秒。如果ABC都回复了你的第二阶段的信件，反馈说9点钟的时候设置值为1成功，你就知道时间静止成功了，而且ABC的值都设置为了1。<br>（模拟时间静止魔法需要分为两个步骤：一是请求时间静止，二是验证时间确实是静止的。时间静止之后我们才能干活，干完活才能验证。这个逻辑非常简单，小学生肯定可以理解）</p>
+</li>
+<li><p>为了保证模拟的真实性，ABC需要主动维护时间的概念，避免破坏时间的内在特性。首先，时间是单向流动的，如果时间已经来到了9点，所有9点前发生的事情应该都已经发生过了，不可能在9点之后再发生8点的事情，因此ABC如果已经同意时间静止在9点，就不可能再同意时间静止在9点之前，比如在8点静止。第二，如果时间静止了，则只有发起时间静止魔法的人可以活动，其他人的活动都会被冻结。所以如果ABC已经同意你的要求将时间静止在9点了，就不会再同意另外一个同样时间的时间静止要求，否则意味着在时间静止的时候还存在着两个活动者，这和时间静止的定义不符合。<strong>ABC通过主动忽略那些违背时间特性的事实，从而实现了想象中的时间的单向流动</strong>，这可以帮助我们排除很多混乱的情况。<br>（ABC每次接收到信件都会导致时间前进，因此接收到第二阶段信件的时候如果发现时间没变，则表示在请求时间静止到设置值的过程中，没有任何事情发生，也就没有其他人要求设置值。时间的这个特性小学生应该可以理解）</p>
+</li>
+<li><p>ABC在同意时间静止在9点之后，如果有人写信请求时间静止在10点钟，则ABC也会同意这一请求，这是因为ABC对所有人都是一视同仁的，他们只是维护时间概念的单向性，并不会专门支持你的选择。如果ABC做出了这样的选择，则表示前一轮的时间静止魔法模拟被自动结束了，并没有完成设置值的过程，而且因为时间已经移动到10点钟，9点钟的设值请求会被拒绝。为什么ABC在接收你的时间静止请求后，不坚持等待你的第二封信的到来？这是为了系统的容错性。如果你的信在途中丢失了或者你信写了一半干别的去了，那ABC死等你的第二封信岂不是有点冤？所以为了避免中间过程出错后无法继续下去，ABC最好的选择就是接受其他人的第一封信，重新开始新一轮的尝试。需要注意的是，如果ABC曾经同意过时间静止，那么这就意味着在9点钟曾经发生过时间静止，即使最后被意外结束，也只是说此次时间静止没有成功设置值。前一个时间静止被自动终止是为了保证时间静止不会交错，只能先后执行。<br>（毕竟是模拟魔法，必然需要考虑到模拟失败的情况，失败后只要不产生矛盾，不要有两个人同时实现时间静止就可以。一次模拟失败后可以重新尝试，小学生也可以理解真正的魔法和模拟的魔法之间的区别）</p>
+</li>
+<li><p>如果你成功模拟了9点钟的时间静止，通知ABC设置值为1，那会不会有其他人后面会再次成功模拟一次10点钟的时间静止，将值又改为2？因为我们要实现的是一个最基本的共识算法，它<strong>有个额外的技术要求，就是一旦值达成共识，就不允许再被修改</strong>（如果允许修改，再考虑到多数派响应，会导致无法判定的情况）。因此我们还需要设计一个额外的机制，来避免上面说的情况。避免的方法也很简单，就是接收到第一封请求时间静止的信件的时候，如果ABC发现自己此前已经接受过值了，除了回复同意之外，还把这个值和接受它的时间告诉新一轮的时间静止发起者，而发起者如果发现ABC都已经接受了值为1，那么他不能改变这个值，只能是用值1去继续完成时间静止模拟的第二阶段。ABC在不同的时刻反复设置值为同一个值不会产生任何矛盾。<br>（两个时间静止魔法T1和T2肯定不会交错，一定是先后执行。那么执行T2的时候只要主动看一下T1的结果，如果T1成功设置了值为1，那么T2就也要采用值为1，这样就不会产生T2覆盖T1结果的情况。写之前看一下上次读的情况，这是小学生也能理解的避免冲突的策略）</p>
+</li>
+<li><p>如果ABC都成功同意在t时刻时间静止，然后在t时刻都成功设置同样的值，我们接到三人的回复后发现他们都在t时刻设置了同样的值，那么我们很容易做出判断：共识已经达成。复杂的情况在于，如果信件中途丢失怎么办？如果A出远门了或者回信很慢怎么办？为了提高容错性，我们可以改变策略，不要求每次都得到ABC三者的响应，而是只要求多数派（三人中的任意两人）成功响应即可。此时我们可以验证，上面的执行策略仍然可以保证达成共识。首先，当t时刻多数派同意接受值为1的时候，t时刻就不可能有另外的值也得到多数派的认可。因为任意两个多数派必定有交集，例如AB和BC这两个多数派都包含B，而因为时间静止才能成功写入，所以B不可能在t时刻既接受值1，又接受值2（B在不同的时刻仍然有可能接受不同的值），所以只要是多数派成功设置的值，那就一定是在t时刻的一个可以被公认的值。当A和B都承认值是1后，即使信件丢失或者C已经做出了与AB相反的选择，他的任何行为都不会推翻t时刻的这个结果（多数派承认值是1），这样只需要用某种方法通知C多数派的结果就可以了。也就是说，当ABC都认可多数派的决定的时候，最终ABC的认识可以被统一为值是1。<br>（在t时刻多数派接受值是X后，这个X就成为t时刻的共识的值。将共识的定义修改为多数派认可虽然看起来有点绕，但一般的小学生应该还是可以理解的）</p>
+</li>
+<li><p>第一阶段发起时间静止模拟的时候，我们也可以只要求多数派响应。如果AB成功回复说同意时间静止在9点钟，仿照上一节的推理，显然就不可能再有另外一个多数派回复说同意时间静止在9点钟。此时，如果A和B都回复说尚未接受任何值，我们就可以任意选择一个值来进行第二阶段的设置值。但是如果A和B其中有任何一个人回复说已经有人在8点钟设置了值为2，则需要仔细分析一下：第一个可能是两人都回复说8点钟设置了值为2，则此时已经满足多数派接受的要求，共识已经达成，但是我们也可以选择值为2，然后继续执行第二阶段，反正重复设置共识值为2没有任何问题。第二个可能是两个人的回复不一致，此时因为没有读取到C的结果，所以有可能已经达成多数派一致，也可能尚未达成，在仅接收到A和B的回复的时候无法确定（正是因为可能存在这种无法确定的情况，我们才要求共识一旦达成就不能被改变）。我们注意到值总是在时间静止状态下被接受的，也就是说<strong>如果A接受了8点钟值是1，那么一定有多数派承诺过8点钟时间静止</strong>。因为<strong>多数派同意的所有时间静止的时刻可以按照先后顺序排成一个序列</strong>，而且每个时刻最多只有一个值，所以对于A和B返回结果不一致的情况，我们只需要选择时间刻度最大的那个值就可以了。这样可以保证如果前面一个时刻已经达成共识，后面的时刻一定会选择同样的值。<br>（一旦意识到多数派在所有时间静止时刻的处理结果是一个单向发展的情况：一开始多数派都没有值，然后有可能有共识的值，最后是确定有共识的值，那么选择最大时刻所对应的值就不是一件很难理解的事情了）</p>
+</li>
+</ol>
+<p>整体的推理策略是先不考虑任何异常情况，总是认为可以接收到所有人的响应，这种情况下只要时间静止模拟成功，我们就可以确定共识的值被确定下来。然后再考虑容错的情况，此时我们经过分析，发现只要多数派接受值就可以确定是否成功实现了时间静止，并成功设置了共识的值。当我们不确定是否已经成功模拟时间静止的情况下，可以反复重试直至成功。最后是发现多数派上进行的时间静止模拟是一个单向发展序列，反复重试时只要选择时间刻度最大的值就不会破坏已经达成的共识。</p>
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>最后我们对比一下采用时间静止这一魔法学图像的Paxos算法描述和传统的Paxos算法描述：</p>
+<ol>
+<li>准备阶段（Prepare Phase）：</li>
+</ol>
+<p>（1）提议者选择一个提案编号N，并向接受者的多数派发送准备请求（Prepare(N)）。</p>
+<p>对比：提议者选择一个时刻t，并向接受者的多数派发送时间静止模拟请求，</p>
+<p>（2）当接受者收到准备请求后，如果提案编号N大于该接受者之前见过的任何提案编号，则接受者承诺不再接受编号小于N的提案，并将其之前接受的最高编号的提案作为响应发送给提议者。</p>
+<p>对比：  当接受者收到时间静止请求后，如果发现时刻t是一个未来的时刻，则把时钟拨到这一时刻，承诺时间静止在此时刻，并把之前接受过的最大时刻的提案作为响应发送给提议者。</p>
+<ol start="2">
+<li>接受阶段（Accept Phase）：</li>
+</ol>
+<p>（1）当提议者从多数派的接受者那里收到准备阶段的响应后，它会将提案内容（value）发送给接受者的多数派，该提案内容为准备阶段响应中最高编号提案的内容，如果没有响应，则可以为任意值。</p>
+<p>对比：当提议者从多数派的接受者那里收到时间静止请求阶段的响应后，它会将提案内容发送给接受者的多数派，该提案内容为请求阶段响应中最近一次时间静止所设置的值（可能实现了共识的值），如果没有响应，则可以为任意值</p>
+<p>（2）接受者收到提案（Propose(N, value)）后，如果提案编号N大于等于该接受者之前承诺的提案编号，则接受该提案，并将其作为已接受的提案。</p>
+<p>对比：接受者收到提案后，如果提案中的时刻大于等于该接收者承诺的时间静止时刻，则表示从承诺的时刻到提案中的时刻，这个接受者的本地时间一直处于静止状态，接受该提案。（但是这并不保证多数派都实现了本地时间静止，只是可能静止，此时接受者接受的提案是可能实现了共识的提案）</p>
+<h2 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h2><p><strong>提案编号的唯一性和递增</strong>：在Paxos算法中，每个提案必须有一个唯一的、递增的编号，以确保算法的进展。一般的做法是每个发起者具有一个不同的编号k，然后它再维护一个不断递增的序列号seq，然后以<code>(seq,k)</code>作为唯一递增编号。首先比较seq，当seq相等时，可以比较k的大小来确定相对大小。对应到时间静止的模拟，这个编号就可以看作是一种时刻的表达方式。同一个时刻，不应该有两个人发起时间静止模拟请求。另外，即使是有两个人同时发起时间静止模拟也不会影响到算法的正确性，在算法设计中要求接受者在承诺时间静止在某一时刻之后，拒绝后续的对同一时刻的时间静止请求，这样在多数派层面，不会有两个人同时成功实现在时刻t发起时间静止。对于提案编号的唯一性要求是为了减少冲突，改善性能。即使提案编号不唯一、不递增也不会产生问题，只是所有具有不唯一、不递增的编号的提案都会被拒绝或者忽略掉。</p>
+<p><strong>多个提议者的问题</strong>：在分布式系统中可能有多个提议者，这可能导致“提案冲突”。采用时间静止的图像，首先接受者会抛弃所有时间静止之前时刻的提案，从而避免了一部分冲突。然后在每一个得到多数派同意的时间静止时刻，多数派最多只会接受一个值，这使得多数派层面的冲突图像变得简化。因为每个提议者提出的时间静止时刻是唯一的、递增的，肯定不会重复，而在一次提议中只会提议一个值，所以每次时间静止最多只会设置一个值，如果中途被更新时刻的时间静止所打断，则此次时间静止可能还没有设置值，或者在局部接受者的本地设置了值。但只要在多数派层面没有在指定时刻设置成一样的值，就还没有达成共识。</p>
+<p><strong>失败和恢复的处理</strong>：在分布式系统中，节点可能会失败，之后又恢复。前面的分析表明，只要多数派同意时间静止开始，就可以认为时间静止开始，多数派认为时间静止成功，就可以认为时间静止成功。因此无论节点何时失败，何时恢复，只需要考虑多数派的汇总意见即可。另外一个隐含的假定是，节点具有记忆能力，如果它失败了再恢复不应该丢失以前的记忆，也就是接受过的值和承诺过的内容。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/paxos-for-kids.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
