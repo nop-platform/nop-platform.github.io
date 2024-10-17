@@ -12,11 +12,8 @@
 
 
   
-    
-    
-
-    
-      
+  
+  
     
   
 
@@ -40,10 +37,10 @@
 
 
 
-  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+  <title>工作流 - Nop</title>
 
 
-  <meta property="og:title" content="Nop">
+  <meta property="og:title" content="工作流">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1254,13 +1251,22 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title"></h1>
+    <h1 class="Article-title">工作流</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9">
+      <div class="Article-content col-md-9"><h2 id="流程引擎后台变量"><a href="#流程引擎后台变量" class="headerlink" title="流程引擎后台变量"></a>流程引擎后台变量</h2><ul>
+<li>wfRt: IWorkflowRuntime类型</li>
+<li>wf: IWorkflow类型</li>
+<li>wfVars: IWorkflowVarSet类型，对应于<code>wf.getGlobalVars()</code></li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>arg定义具有persist属性，如果设置为true，则会保存到wfVars集合中，存储到<code>nop_wf_var</code>表中。</p>
+<h2 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">when</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;wfVars.day&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;7&#125;&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;wfVars.day&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@:7&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">when</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>条件判断中值如果不是字符串类型，则可以用表达式语法或者前缀引导语法来标识数值类型。</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
