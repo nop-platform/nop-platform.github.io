@@ -1486,7 +1486,7 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Nop平台内置的差量化软件生产线如下图所示：</p>
 <p><img src="/knosys/project-nop-entropy/tutorial/delta-pipeline.png"></p>
 <p>它可以用如下公式表达</p>
-<p>$$<br>\begin{aligned} XORM   &amp;&#x3D; Generator\langle XExcel \rangle + \Delta XORM \<br>XMeta &amp;&#x3D; Generator\langle XORM \rangle + \Delta XMeta \<br>GraphQL &amp;&#x3D; Builder\langle XMeta\rangle + BizModel \<br>XView &amp;&#x3D; Generator\langle XMeta\rangle  + \Delta XView \<br>XPage &amp;&#x3D;  Generator\langle XView\rangle  + \Delta XPage \<br>end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned} XORM   &amp;&#x3D; Generator\langle XExcel \rangle + \Delta XORM \<br>XMeta &amp;&#x3D; Generator\langle XORM \rangle + \Delta XMeta \<br>GraphQL &amp;&#x3D; Builder\langle XMeta\rangle + BizModel \<br>\<br>XView &amp;&#x3D; Generator\langle XMeta\rangle  + \Delta XView \<br>XPage &amp;&#x3D;  Generator\langle XView\rangle  + \Delta XPage \<br>\end{aligned}<br>$$</p>
 <p>整个推理关系的各个步骤都是可选环节：<strong>我们可以从任意步骤直接开始，也可以完全舍弃此前步骤所推理得到的所有信息</strong>。例如我们可以手动增加<code>xview</code>模型，并不需要它一定具有特定的<code>xmeta</code>支持，也可以直接新建<code>page.yaml</code>文件，按照AMIS组件规范编写JSON代码，AMIS框架的能力完全不会受到推理管线的限制。</p>
 <p>在日常开发中，我们经常可以发现一些逻辑结构之间存在相似性和某种<strong>不精确的衍生关系</strong>，例如后端数据模型与前端页面之间密切的关联，对于最简单的情况，我们可以根据数据模型直接推导得到它对应的增删改查页面，或者反向根据表单字段信息推导得到数据库存储结构。但是，这种不精确的衍生关系很难被现有的技术手段所捕获和利用，如果强行约定一些关联规则，则只能应用于非常受限的特定场景，而且还会导致与其他技术手段的不兼容性，难以复用已有的工具技术，也难以适应需求从简单到复杂的动态演化。</p>
 <p>Nop平台基于可逆计算理论为实现这种面向动态相似性的复用提供了标准的技术路线：</p>
