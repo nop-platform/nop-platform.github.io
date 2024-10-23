@@ -1391,7 +1391,10 @@
 <p>Excel模型中如果定义了<code>所属模型</code>这个参数，则会在自动生成<code>_app.orm.xml</code>和关联字段的meta定义中都增加<code>biz:moduleId</code>配置。</p>
 <p>前端页面使用的控件缺省由<code>control.xlib</code>库根据meta配置来自动推定。<code>edit-relation</code>控件会调用<code>XuiHelper.getRelationPickerUrl</code><br>函数来生成<code>picker</code>页面对应的链接，链接格式为  <code>&quot;/&quot; + moduleId + &quot;/pages/&quot; + bizObjName + &quot;/picker.page.yaml&quot;</code>。如果关联子表的meta配置中<br>设置了<code>biz:moduleId</code>属性，则<code>moduleId</code>以设置的值为准，否则会自动根据meta文件的路径推定它所在的模块。</p>
 <h2 id="常见问题诊断"><a href="#常见问题诊断" class="headerlink" title="常见问题诊断"></a>常见问题诊断</h2><ol>
-<li>在Excel模型中定义了关联属性，但是生成的<code>app.orm.xml</code>文件中却没有。<br>注意关联属性是在【关联列表】中定义，对于列表结构，每一个条目的第一列是序号列，其中必须设置为整数值。<img src="/knosys/project-nop-entropy/dev-guide/model/images/relation.png"></li>
+<li><p>在Excel模型中定义了关联属性，但是生成的<code>app.orm.xml</code>文件中却没有。<br>注意关联属性是在【关联列表】中定义，对于列表结构，每一个条目的第一列是序号列，其中必须设置为整数值。<img src="/knosys/project-nop-entropy/dev-guide/model/images/relation.png"></p>
+</li>
+<li><p>在Excel中定义了字典，但是没有生成dict.yaml文件<br>注意字典的第一列必须是数字。解析列表结构的时候需要根据第一列确定到底哪些内容是列表的内容。第一列是序号列。</p>
+</li>
 </ol>
 
 </div>
