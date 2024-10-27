@@ -1260,7 +1260,7 @@
       <div class="Article-content col-md-9"><h2 id="1-input-tree缺省设置了最大高度-max-height-300px"><a href="#1-input-tree缺省设置了最大高度-max-height-300px" class="headerlink" title="1. input-tree缺省设置了最大高度 max-height:300px"></a>1. input-tree缺省设置了最大高度 max-height:300px</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;input-tree&#x27;</span>,<br>  <span class="hljs-attr">treeContainerClassName</span>: <span class="hljs-string">&#x27;h-full&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>h-full可以去除max-height设置</p>
-<h2 id="2-设置page的aside区域的宽度"><a href="#2-设置page的aside区域的宽度" class="headerlink" title="2. 设置page的aside区域的宽度"></a>2. 设置page的aside区域的宽度</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;page&#x27;</span>,<br>  <span class="hljs-attr">aside</span>: [&#123;<br>    type : <span class="hljs-string">&#x27;input-text&#x27;</span><br>  &#125;],<br>  <span class="hljs-attr">asideResizor</span>: <span class="hljs-literal">true</span><br>  <span class="hljs-attr">asideClassName</span>: w-<span class="hljs-number">60</span><br>&#125; <br></code></pre></td></tr></table></figure>
+<h2 id="2-设置page的aside区域的宽度"><a href="#2-设置page的aside区域的宽度" class="headerlink" title="2. 设置page的aside区域的宽度"></a>2. 设置page的aside区域的宽度</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">&#123;<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;page&#x27;</span>,<br>  <span class="hljs-attr">aside</span>: [&#123;<br>    type : <span class="hljs-string">&#x27;input-text&#x27;</span><br>  &#125;],<br>  <span class="hljs-attr">asideResizor</span>: <span class="hljs-literal">true</span><br>  <span class="hljs-attr">asideClassName</span>: w-<span class="hljs-number">60</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>可配置的宽度类参见 amis-ui&#x2F;helper&#x2F;sizing&#x2F;_width.scss</p>
 <table>
@@ -1670,6 +1670,9 @@
 </ul>
 <h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>可以在onClick事件中插入debugger指令。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&quot;onClick&quot;: &quot;debugger; props.store.closeDialog()&quot;<br></code></pre></td></tr></table></figure>
+
+<h2 id="url中的参数"><a href="#url中的参数" class="headerlink" title="url中的参数"></a>url中的参数</h2><p>AMIS的设计中对于url中的参数存在特殊假定。比如 <code>url: &#39;/test?filter_type=1&#39;</code>，当picker控件的filter段中存在type过滤条件时，会覆盖url中的filter_type变量，需要放到data段中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&#123;<br>  url: &#x27;/test&#x27;,<br>  data:&#123;<br>    filter_type: 1<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         

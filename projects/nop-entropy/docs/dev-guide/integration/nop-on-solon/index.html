@@ -1269,7 +1269,7 @@
 <p>Nop提供了一个兼容Spring 1.0配置语法的IoC容器NopIoc，并增加了类似SpringBoot的动态条件匹配机制。为了兼容底层框架的IoC容器，它实际是将底层框架提供的IoC作为自己的parent使用，即在NopIoC中查找不到的bean会在父容器中查找。</p>
 </blockquote>
 <p>关于NopIoc的详细介绍，可以参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/579847124">如果重写SpringBoot，我们会做哪些不同的选择？</a></p>
-<h3 id="CoreInitialization分阶段初始化"><a href="#CoreInitialization分阶段初始化" class="headerlink" title="CoreInitialization分阶段初始化"></a>CoreInitialization分阶段初始化</h3><p>Nop平台使用<code>CoreInitalization.initialize()</code>调用实现平台初始化，它的实现是使用Java的ServiceLoader机制来加载<code>ICoreInitializer</code>接口。<br>内置的常用初始化器按照如下顺序执行:</p>
+<h3 id="CoreInitialization分阶段初始化"><a href="#CoreInitialization分阶段初始化" class="headerlink" title="CoreInitialization分阶段初始化"></a>CoreInitialization分阶段初始化</h3><p>Nop平台使用<code>CoreInitialization.initialize()</code>调用实现平台初始化，它的实现是使用Java的ServiceLoader机制来加载<code>ICoreInitializer</code>接口。<br>内置的常用初始化器按照如下顺序执行:</p>
 <ol>
 <li>ReflectionHelperMethodInitializer: 向反射系统注册扩展函数</li>
 <li>XLangCoreInitializer: 注册XLang表达式中使用的全局函数和全局对象</li>

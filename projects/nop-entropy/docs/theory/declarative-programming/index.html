@@ -1299,10 +1299,10 @@
 <p>多重诠释的可能性，使得一段代码的语义永远处于开放状态，一切都是虚拟化的。</p>
 <h2 id="四-差量修订"><a href="#四-差量修订" class="headerlink" title="四. 差量修订"></a>四. 差量修订</h2><p>可逆计算将差量作为第一性的概念，将全量看作是差量的特例。按照可逆计算的设计，DSL必须要定义差量表示，允许增量改进，同时，DSL展开后的处理逻辑也应该支持增量扩展。以Antlr4为例，它引入了import语法和visitor机制，从而第一次实现了模型的差量修订。</p>
 <p>在Antlr4中，import语法类似面向对象编程语言中的继承概念。它是一种智能的include，当前的grammar会继承导入的grammar的所有规则，tokens specifications，names actions等，并可以重写规则来覆盖继承的规则。</p>
-<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/10/7/16da6af3d900971f~tplv-t2oaga2asx-image.image" alt="antlr\_combined"></p>
+<p><img src="/knosys/project-nop-entropy/theory/antlr/combined.png" alt="antlr\_combined"></p>
 <p>在上面的例子中，MyElang通过继承ELang得到若干规则，同时也重写了expr规则并增加了INT规则。终于，我们不再需要每次扩展语法都要拷贝粘贴了。</p>
 <p>在Antlr4，不再推荐将处理动作直接嵌入在语法定义文件中，而是使用Listener或者Visitor模式，这样就可以通过面向对象语言内置的继承机制来实现对处理过程的增量修订。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">// Simple.g4<br>grammar Simple; <br><br>expr  : left=expr op=(&#x27;*&#x27;|&#x27;/&#x27;) right=expr #opExpr<br>      | left=expr op=(&#x27;+&#x27;|&#x27;-&#x27;) right=expr #opExpr<br>      | &#x27;(&#x27; expr &#x27;)&#x27;                      #parenExpr<br>      | atom=INT                          #atomExpr<br>      ;<br><br>INT : [0-9]+ ;<br><br>// Generated Visitor<br>public class SimpleBaseVisitor&lt;T&gt; extends AbstractParseTreeVisitor&lt;T&gt; implements SimpleVisitor&lt;T&gt; &#123;<br>    @Override public T visitOpExpr(SimpleParser.OpExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>    @Override public T visitAtomExpr(SimpleParser.AtomExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>    @Override public T visitParenExpr(SimpleParser.ParenExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>&#125;<br><br>class MyVisitor&lt;Double&gt; extends SimpleBaseVisitor&lt;Double&gt;&#123;<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">// Simple.g4<br>grammar Simple;<br><br>expr  : left=expr op=(&#x27;*&#x27;|&#x27;/&#x27;) right=expr #opExpr<br>      | left=expr op=(&#x27;+&#x27;|&#x27;-&#x27;) right=expr #opExpr<br>      | &#x27;(&#x27; expr &#x27;)&#x27;                      #parenExpr<br>      | atom=INT                          #atomExpr<br>      ;<br><br>INT : [0-9]+ ;<br><br>// Generated Visitor<br>public class SimpleBaseVisitor&lt;T&gt; extends AbstractParseTreeVisitor&lt;T&gt; implements SimpleVisitor&lt;T&gt; &#123;<br>    @Override public T visitOpExpr(SimpleParser.OpExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>    @Override public T visitAtomExpr(SimpleParser.AtomExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>    @Override public T visitParenExpr(SimpleParser.ParenExprContext ctx) &#123; return visitChildren(ctx); &#125;<br>&#125;<br><br>class MyVisitor&lt;Double&gt; extends SimpleBaseVisitor&lt;Double&gt;&#123;<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="五-自动微分"><a href="#五-自动微分" class="headerlink" title="五. 自动微分"></a>五. 自动微分</h2><p>如果说声明式编程的理想是人们只需要描述问题，由机器自动找出解决方案，那么我们从哪里去找一类足够通用，而且又能够自动求解的问题呢？幸而自牛顿以降，科学昌明，我们还是积攒了几个这样的祖传问题的，其中一个就是自动微分。</p>
 <p>只要指定几个基础函数的微分表达式，我们就可以自动计算大量复合函数的微分，这一能力是目前所有深度学习框架的必备技能。可逆计算理论指出，自动计算差量这一概念可以被扩展到数学或者算法领域之外，成为一种有效的软件结构构造机制。</p>
@@ -1326,8 +1326,7 @@
 <p>可逆计算强调逻辑结构的可逆转化，从而试图在软件构造领域建立起类似数学的抽象表达能力，而这只有当上下游软件各个部分都满足可逆原则时才能够实现效用的最大化。例如，当细粒度组件和处理过程均可逆时，可视化设计器可以根据DSL直接生成，而不需要进行特殊编码</p>
 <p>$$<br>可视化界面 &#x3D; 界面生成器(DSL)\<br>DSL &#x3D; 数据提取(可视化界面)\<br>DSL &#x3D; 界面生成器^{-1}\cdot界面生成器(DSL)<br>$$</p>
 <p>在现实开发过程中实现可逆性的一个障碍在于，目前软件开发的目的性都是很强的，因此与当前场景无关的信息往往无处安放。为了解决这个问题，必须在系统底层增加允许自定义扩展的元数据空间。</p>
-<p>$$<br>A \approx B \<br>    A + A’ \equiv &#x3D; B + B’ \</p>
-<p>$$</p>
+<p>$$<br>A \approx B \<br>    A + A’ \equiv &#x3D; B + B’ \<br>$$</p>
 <p>对应于A’部分的信息在当前的系统A中不一定会使用，但是为了适应系统B的应用逻辑，我们必须找到一个地方把这些信息存储下来。这是一种整体性的协同处理过程。你注意到没有，所有能称得上现代的程序语言都经历了戴帽子工程改造，都支持某种形式的自定义注解（Annotation）机制，一些扩展的描述信息会存在帽子里随身携带。换句话说，(data, metadata)配对才是信息的完整表达，这和消息对象总是包含(body, headers)是一个道理。</p>
 <p>世界如此复杂，目的为何唯一？在声明式的世界中，我们有必要持有一种更加开放的态度。戴帽子不为了挡风挡雨，也不为了遮阳防晒，我就为了好看不行吗？metadata是声明式的，一般我们说它是描述数据的数据，但实际上它就算当前不描述任何东西可以有自己存在的理由，不是说有一种用叫“无用之用”吗。</p>
 
