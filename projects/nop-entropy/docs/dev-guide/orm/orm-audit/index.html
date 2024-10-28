@@ -37,10 +37,10 @@
 
 
 
-  <title>标准增删改查操作 - Nop</title>
+  <title>操作审计 - Nop</title>
 
 
-  <meta property="og:title" content="标准增删改查操作">
+  <meta property="og:title" content="操作审计">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,140 +1251,14 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">标准增删改查操作</h1>
+    <h1 class="Article-title">操作审计</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>CrudBizModel提供了标准的增删改查操作，以NopAuthUser为例：</p>
-<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__save?@selection=name,status<br><br>&#123;<br>  &quot;data&quot;: &#123;<br>     字段名:字段值<br>  &#125;<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__save(data: $data)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__update?@selection=name,status<br><br>&#123;<br>  &quot;data&quot;: &#123;<br>     id: 主键值<br>     字段名:字段值<br>  &#125;<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__update(data: $data)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="保存或者修改"><a href="#保存或者修改" class="headerlink" title="保存或者修改"></a>保存或者修改</h2><p>如果提交的data中包含主键，则认为是修改，否则是新建。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__save_update?@selection=name,status<br><br>&#123;<br>  &quot;data&quot;: &#123;<br>     id: 主键值<br>     字段名:字段值<br>  &#125;<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__save_update(data: $data)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__delete?@selection=name,status<br><br>&#123;<br>  &quot;id&quot;: &quot;主键&quot;<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__delete(id: &quot;主键&quot;)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除"></a>批量删除</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__bathDelete?@selection=name,status<br><br>&#123;<br>  &quot;ids”: [ &quot;1&quot;,&quot;2&quot;,&quot;3&quot;]<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__batchDelete(ids: $ids)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="批量更新"><a href="#批量更新" class="headerlink" title="批量更新"></a>批量更新</h2><p>批量更新指定记录的指定字段</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__batchUpdate<br><br>&#123;<br>  &quot;ids”: [ &quot;1&quot;,&quot;2&quot;,&quot;3&quot;],<br>  &quot;data: &#123;<br>    字段名: 字段值<br>  &#125;<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__batchUpdate(ids: $ids, data:$data)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="批量增删改"><a href="#批量增删改" class="headerlink" title="批量增删改"></a>批量增删改</h2><p>一次请求包含增加、删除、修改等多个操作</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__batchModify<br><br>&#123;<br>  &quot;data: [<br>    &#123;<br>      包含id且_chgType=D，则表示删除<br>      包含id且_chgType!=D和A，则表示更新<br>      不包含id或者_chgType=A，表示新建。<br>    &#125;<br>  ]<br>&#125;<br><br><br>mutation&#123;<br>   NopAuthUser__batchModify(data:$data)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="单条读取"><a href="#单条读取" class="headerlink" title="单条读取"></a>单条读取</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>GET /r/NopAuthUser__get?id=xxx@selection=name,status<br><br><br>query&#123;<br>   NopAuthUser__get(id:&quot;xxx&quot;)&#123;<br>      name<br>      status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="分页读取"><a href="#分页读取" class="headerlink" title="分页读取"></a>分页读取</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__findPage?@selection=total,items&#123;name,status&#125;<br><br>&#123;<br>  &quot;query&quot;: &#123;<br>     &quot;offset&quot;: 2,<br>     &quot;limit&quot;: 10,<br><br>     &quot;filter&quot;: &#123;<br>     &#125;,<br>     &quot;orderBy&quot;:[<br>     ]<br>  &#125;<br>&#125;<br><br><br>query&#123;<br>   NopAuthUser__findPage(query:$query)&#123;<br>      total,<br>      items &#123;<br>        name,<br>        status<br>      &#125;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>前台假定了以findPage为后缀的服务调用，参数都是QueryBean类型，返回的类型都是PageBean</p>
-<h2 id="查询返回列表"><a href="#查询返回列表" class="headerlink" title="查询返回列表"></a>查询返回列表</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__findList?@selection=name,status<br><br>&#123;<br>  &quot;query&quot;: &#123;<br><br>     &quot;filter&quot;: &#123;<br>     &#125;,<br>     &quot;orderBy&quot;:[<br>     ]<br>  &#125;<br>&#125;<br><br><br>query&#123;<br>   NopAuthUser__findList(query:$query)&#123;<br>        name,<br>        status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="查询返回第一条"><a href="#查询返回第一条" class="headerlink" title="查询返回第一条"></a>查询返回第一条</h2><p>findFirst返回满足条件的第一条记录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__findFirst?@selection=name,status<br><br>&#123;<br>  &quot;query&quot;: &#123;<br><br>     &quot;filter&quot;: &#123;<br>        &quot;$type&quot;: &quot;eq&quot;,<br>        &quot;name&quot;: &quot;status&quot;,<br>        &quot;value&quot;: 1<br>     &#125;,<br>     &quot;orderBy&quot;:[<br>     ]<br>  &#125;<br>&#125;<br><br><br>query&#123;<br>   NopAuthUser__findFirst(query:$query)&#123;<br>        name,<br>        status<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="查询返回列表的长度"><a href="#查询返回列表的长度" class="headerlink" title="查询返回列表的长度"></a>查询返回列表的长度</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>POST /r/NopAuthUser__findCount<br><br>&#123;<br>  &quot;query&quot;: &#123;<br><br>     &quot;filter&quot;: &#123;<br>     &#125;<br>  &#125;<br>&#125;<br><br><br>query&#123;<br>   NopAuthUser__findCount(query:$query)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="QueryBean查询条件"><a href="#QueryBean查询条件" class="headerlink" title="QueryBean查询条件"></a>QueryBean查询条件</h2><p>QueryBean中的filter支持and&#x2F;or等复杂嵌套条件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__findPage<br><br>&#123;<br>   &quot;query&quot;: &#123;<br>      &quot;filter&quot;: &#123;<br>          &quot;$type&quot;: &quot;and&quot;,<br>          &quot;$body&quot;: [<br>            &#123;<br>              &quot;$type&quot;: &quot;eq&quot;,<br>              &quot;name&quot;: &quot;deptName&quot;,<br>              &quot;value&quot;: &quot;a&quot;<br>            &#125;<br>          ]<br>      &#125;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>filter对应于后台的TreeBean类型的对象，这是一个通用的Tree结构，并且可以自动转换为XML格式。具体转换规则是Nop平台所定义的一种标准转换机制：</p>
-<ol>
-<li>$type属性对应于标签名</li>
-<li>$body对应于子节点和节点内容</li>
-<li>不以$为前缀的其他属性对应于XML节点的属性</li>
-<li>以<code>@:</code>为前缀的值按照json格式解析</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">and</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@:1&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">gt</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;amount&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@:3&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">and</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>对应于</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;and&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;$body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;eq&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;status&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;$type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gt&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;amount&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
-<p>过滤条件中所支持的运算符如eq,gt等，都是<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-core/src/main/java/io/nop/core/model/query/FilterOp.java">FilterOp.java</a><br>中定义的操作符。<br>重用的算符有：</p>
-<table>
-<thead>
-<tr>
-<th>操作符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>eq</td>
-<td>等于</td>
-</tr>
-<tr>
-<td>gt</td>
-<td>大于</td>
-</tr>
-<tr>
-<td>ge</td>
-<td>大于等于</td>
-</tr>
-<tr>
-<td>lt</td>
-<td>小于</td>
-</tr>
-<tr>
-<td>xe</td>
-<td>小于等于</td>
-</tr>
-<tr>
-<td>in</td>
-<td>在集合中</td>
-</tr>
-<tr>
-<td>between</td>
-<td>介于min和max之间</td>
-</tr>
-<tr>
-<td>dateBetween</td>
-<td>日期在min和max之间</td>
-</tr>
-<tr>
-<td>alwaysTrue</td>
-<td>总是为真</td>
-</tr>
-<tr>
-<td>alwaysFalse</td>
-<td>总是为假</td>
-</tr>
-<tr>
-<td>isEmpty</td>
-<td>name对应的值为空</td>
-</tr>
-<tr>
-<td>startsWith</td>
-<td>字符串的前缀为指定值</td>
-</tr>
-<tr>
-<td>endsWith</td>
-<td>字符串的后缀为指定值</td>
-</tr>
-</tbody></table>
-<h2 id="简化filter语法"><a href="#简化filter语法" class="headerlink" title="简化filter语法"></a>简化filter语法</h2><p>现在后台在REST调用模式下也支持直接简化的filter拼接语法</p>
-<p>&#x2F;r&#x2F;NopAuthUser__findPage?filter_userStatus&#x3D;3</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">过滤字段名格式为: filter_&#123;propName&#125;__&#123;filterOp&#125;<br></code></pre></td></tr></table></figure>
-
-<p>例如 <code>filter_userName__contains</code>表示按照contains运算符对userName字段进行过滤。对于filterOp为eq(等于条件)<br>的情况，可以省略filterOp的部分，例如 filter_userId等价于<code>filter_userId__eq</code></p>
-<h2 id="新增多对多关联"><a href="#新增多对多关联" class="headerlink" title="新增多对多关联"></a>新增多对多关联</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__addManyToManyRelations<br><br>&#123;<br>   &quot;id&quot;: &quot;当前实体id&quot;,<br>   &quot;propName&quot;: &quot;roleMappings&quot;,<br>   &quot;relValues&quot; : [&quot;1&quot;,&quot;2&quot;]<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>id参数指定当前实体，propName参数指定要操作的多对多关联集合属性的名称，relValues对应于多对多关联表中的关联属性值。</p>
-<h2 id="更新多对多关联"><a href="#更新多对多关联" class="headerlink" title="更新多对多关联"></a>更新多对多关联</h2><p>这个函数与addManyToManyRelations的区别在于，它会自动删除没有在relValues集合中的关联对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__updateManyToManyRelations<br><br>&#123;<br>   &quot;id&quot;: &quot;当前实体id&quot;,<br>   &quot;propName&quot;: &quot;roleMappings&quot;,<br>   &quot;relValues&quot; : [&quot;1&quot;,&quot;2&quot;]<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>id参数指定当前实体，propName参数指定要操作的多对多关联集合属性的名称，relValues对应于多对多关联表中的关联属性值。</p>
-<h2 id="删除多对多关联"><a href="#删除多对多关联" class="headerlink" title="删除多对多关联"></a>删除多对多关联</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__removeManyToManyRelations<br><br>&#123;<br>   &quot;id&quot;: &quot;当前实体id&quot;,<br>   &quot;propName&quot;: &quot;roleMappings&quot;,<br>   &quot;relValues&quot; : [&quot;1&quot;,&quot;2&quot;]<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>id参数指定当前实体，propName参数指定要操作的多对多关联集合属性的名称，relValues对应于多对多关联表中的关联属性值。</p>
-<h2 id="根据条件查找到一批实体，更新它们的指定属性"><a href="#根据条件查找到一批实体，更新它们的指定属性" class="headerlink" title="根据条件查找到一批实体，更新它们的指定属性"></a>根据条件查找到一批实体，更新它们的指定属性</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__updateByQuery<br><br>&#123;<br>  “query&quot;: &#123;<br>     &quot;$type&quot;: &quot;eq&quot;,<br>     &quot;name&quot;: &quot;status&quot;,<br>     &quot;value&quot;: 10<br>  &#125;,<br><br>  &quot;data&quot;: &#123;<br>     &quot;fldA&quot;: &quot;aaa&quot;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="一次性更新主子表"><a href="#一次性更新主子表" class="headerlink" title="一次性更新主子表"></a>一次性更新主子表</h2><p>直接传递json嵌套结构</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">POST /r/NopAuthUser__save<br><br>&#123;<br>   &quot;data&quot;: &#123;<br>     &quot;name&quot;: &quot;test&quot;,<br>     &quot;roles&quot;: [<br>       &#123;<br>         &quot;id&quot;: &quot;1&quot;,<br>         &quot;name&quot;: &quot;admin&quot;<br>       &#125;<br>     ]<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是要允许子表数据能够更新，必须在meta中配置对应关联属性的updatable和insertable为true</p>
-<p>CrudBizModel中通过OrmEntityCopier将json嵌套结构的数据更新到实体对象上</p>
+      <div class="Article-content col-md-9"><h2 id="createdBy"><a href="#createdBy" class="headerlink" title="createdBy"></a>createdBy</h2><p>在Excel中如果设置了数据域domain为<code>createdBy/updatedBy</code>，则新增、修改实体时会记录当前用户名，如果domain为<code>createTime/updateTime</code>则会记录修改时间。</p>
+<p>createdBy会存放<code>IContext.getUserRefNo()</code>返回的值，缺省对应于userName。如果希望存放userId,需要配置<code>nop.auth.use-user-id-for-audit-fields</code>为true。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1397,7 +1271,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/graphql/crud.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/orm/orm-audit.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
