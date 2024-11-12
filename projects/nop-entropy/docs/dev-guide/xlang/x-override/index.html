@@ -1315,6 +1315,7 @@
 <li><code>x:virtual</code>: 标记了<code>x:virtual</code>属性的节点必须覆盖基础模型中的某个节点，如果没有覆盖，则这个节点的配置可能是不完整的（例如缺少必填属性等），在最终的输出结果中会自动被删除。<br>利用这一机制，我们可以实现自动生成与可视化设计器同时修改同一个DSL模型。如果可视化设计器是在自动生成代码的基础上进行修改的，而自动化生成器调整后不再生成某个节点，则可视化设计器在此节点上进行的微调内容也会被丢弃。</li>
 </ul>
 <p>另外还需要注意，所有标记了<code>x:override=&quot;remove&quot;</code>的节点最终都会从输出结果中被删除。</p>
+<h2 id="JsonMerger"><a href="#JsonMerger" class="headerlink" title="JsonMerger"></a>JsonMerger</h2><p>在json合并时会自动尝试<code>v-id</code>,<code>id</code>,<code>name</code>等唯一标识属性用于定位。如果同时存在id和name属性，缺省会以id为准，但是如果想覆盖这一点，可以使用<code>&quot;x:unique-attr&quot;:&quot;name&quot;</code>来指定唯一定位属性。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
