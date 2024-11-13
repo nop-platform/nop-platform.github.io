@@ -1306,6 +1306,9 @@
 <h2 id="模型dump"><a href="#模型dump" class="headerlink" title="模型dump"></a>模型dump</h2><p>Nop平台大量使用了元编程来动态生成代码，为了有效跟踪代码生成的细节过程，让最终运行代码片段的实际来源一目了然，Nop平台在调试模式下会自动输出合并后的结果模型文件到项目根目录下的_dump目录中。当我们启动应用程序后，可以看到<code>_dump</code>目录下存在大量输出文件<br><img src="/knosys/project-nop-entropy/dev-guide/model-dump.png"></p>
 <p>如果结果文件是由多个delta文件合并得来，则在结果文件中我们会看到每个来源节点&#x2F;属性的源码位置信息。</p>
 <p>在XDSL模型的根节点上，我们也可以增加<code>x:dump=&quot;true&quot;</code>属性，它会把更细节的合并算法执行过程打印到日志中。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">DslNodeLoader</span>.<span class="hljs-property">INSTANCE</span>.<span class="hljs-title function_">loadFromResource</span>(resource, <span class="hljs-literal">null</span>, <span class="hljs-title class_">XDslExtendPhase</span>.<span class="hljs-property">validate</span>);<br></code></pre></td></tr></table></figure>
+
+<p>通过DslNodeLoader可以加载XDSL文件并返回合并后的XNode。XNode节点合并内部分为多个阶段，可以通过XDslExtendPhase合并到某个中间阶段就返回。</p>
 <h2 id="XLang调试器"><a href="#XLang调试器" class="headerlink" title="XLang调试器"></a>XLang调试器</h2><p>Nop平台的<code>nop-idea-plugin</code>模块提供了IDEA开发插件，其中包含了针对XScript脚本语言的调试器，可以为所有XDSL领域语言增加断点调试功能。具体参见文档 <a href="../../user-guide/idea/idea-plugin/">idea-plugin.md</a></p>
 <h2 id="GraphQL调试工具"><a href="#GraphQL调试工具" class="headerlink" title="GraphQL调试工具"></a>GraphQL调试工具</h2><p>Quarkus框架内置了<code>graphql-ui</code>调试工具。以调试模式启动应用之后，通过链接<code>/q/graphql-ui</code>可以访问到调试页面。<br>在此页面上可以查看所有后台GraphQL端点和类型的定义，并且输入代码时会自动提示候选文本。</p>
 <p><img src="/knosys/project-nop-entropy/tutorial/graphql-ui.png"></p>
