@@ -1258,7 +1258,8 @@
 
       </header>
       <div class="Article-content col-md-9"><h2 id="createdBy"><a href="#createdBy" class="headerlink" title="createdBy"></a>createdBy</h2><p>在Excel中如果设置了数据域domain为<code>createdBy/updatedBy</code>，则新增、修改实体时会记录当前用户名，如果domain为<code>createTime/updateTime</code>则会记录修改时间。</p>
-<p>createdBy会存放<code>IContext.getUserRefNo()</code>返回的值，缺省对应于userName。如果希望存放userId,需要配置<code>nop.auth.use-user-id-for-audit-fields</code>为true。</p>
+<p>createdBy会存放<code>IContext.getUserRefNo()</code><br>返回的值，缺省对应于userName。如果希望存放userId,需要配置<code>nop.auth.use-user-id-for-audit-fields</code>为true。</p>
+<p>如果上下文中没有用户信息，缺省会使用SYS作为用户名，可以通过<code>nop.orm.sys-user-name</code>配置。</p>
 
 </div>
       <footer class="Article-footer col-md-3">

@@ -1487,6 +1487,12 @@
 
 <p>则实际输出时会移除<code>xgen-</code>前缀，最终生成</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;query&quot;</span> <span class="hljs-attr">x:abstract</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="在Java中调用xpl"><a href="#在Java中调用xpl" class="headerlink" title="在Java中调用xpl"></a>在Java中调用xpl</h2><h3 id="调用xpl标签"><a href="#调用xpl标签" class="headerlink" title="调用xpl标签"></a>调用xpl标签</h3><p>参考DdlSqlCreator.java</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">public <span class="hljs-title class_">String</span> <span class="hljs-title function_">dropUniqueKey</span>(<span class="hljs-params">IEntityModel table, OrmUniqueKeyModel uniqueKey</span>) &#123;<br>    <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-title class_">Object</span>&gt; args = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>    args.<span class="hljs-title function_">put</span>(<span class="hljs-string">&quot;table&quot;</span>, table);<br>    args.<span class="hljs-title function_">put</span>(<span class="hljs-string">&quot;uniqueKey&quot;</span>, uniqueKey);<br>    args.<span class="hljs-title function_">put</span>(<span class="hljs-string">&quot;dialect&quot;</span>, dialect);<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">XLang</span>.<span class="hljs-title function_">getTagAction</span>(dmlLibPath, <span class="hljs-string">&quot;DropUniqueKey&quot;</span>).<span class="hljs-title function_">generateText</span>(<span class="hljs-title class_">XLang</span>.<span class="hljs-title function_">newEvalScope</span>(args));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>XLang.getTagAction可以根据标签库路径和标签名获得xpl标签，然后通过IEvalScope传入标签参树。TagAction提供了generateText, invoke等多种函数，分别用于输出文本和作为函数调用返回执行值。</p>
+
 </div>
       <footer class="Article-footer col-md-3">
         
