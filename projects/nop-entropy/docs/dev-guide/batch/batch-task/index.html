@@ -12,11 +12,8 @@
 
 
   
-    
-    
-
-    
-      
+  
+  
     
   
 
@@ -40,10 +37,10 @@
 
 
 
-  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+  <title>批处理任务模型 - Nop</title>
 
 
-  <meta property="og:title" content="Nop">
+  <meta property="og:title" content="批处理任务模型">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1254,13 +1251,46 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title"></h1>
+    <h1 class="Article-title">批处理任务模型</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9">
+      <div class="Article-content col-md-9"><p>批处理模型包含loader、processor、writer配置。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">batch</span> <span class="hljs-attr">taskName</span>=<span class="hljs-string">&quot;test.loadData&quot;</span> <span class="hljs-attr">batchSize</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">saveState</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">concurrency</span>=<span class="hljs-string">&quot;5&quot;</span> <span class="hljs-attr">executor</span>=<span class="hljs-string">&quot;nop-global-worker&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">taskKeyExpr</span>&gt;</span>bizDate<span class="hljs-tag">&lt;/<span class="hljs-name">taskKeyExpr</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">loader</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">file-reader</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;dev:/target/input/$&#123;bizDate&#125;.dat&quot;</span> <span class="hljs-attr">fileModelPath</span>=<span class="hljs-string">&quot;simple.record-file.xlsx&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">loader</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">processor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;processor1&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>      consume(item);<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">processor</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">processor</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;processor2&quot;</span> <span class="hljs-attr">task:taskModelPath</span>=<span class="hljs-string">&quot;process-item.task.xml&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--                    &lt;source&gt;--&gt;</span><br>    <span class="hljs-comment">&lt;!--                        &lt;task:Execute taskModelPath=&quot;process-item.task.xml&quot; inputs=&quot;$&#123;&#123;item,consume,batchChunkCtx&#125;&#125;&quot; xpl:lib=&quot;/nop/task/xlib/task.xlib&quot;/&gt;--&gt;</span><br>    <span class="hljs-comment">&lt;!--                    &lt;/source&gt;--&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">processor</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">consumer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;all&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">file-writer</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;dev:/target/output/$&#123;bizDate&#125;-all.dat&quot;</span> <span class="hljs-attr">record:file-model</span>=<span class="hljs-string">&quot;SimpleFile&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">consumer</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">consumer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;selected&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>      return item.quantity &gt; 500;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">file-writer</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;dev:/target/output/$&#123;bizDate&#125;-selected.dat&quot;</span> <span class="hljs-attr">fileModelPath</span>=<span class="hljs-string">&quot;simple.record-file.xml&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">consumer</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>taskKeyExpr： 同样的taskName，不同的taskKeyExpr会生成不同的任务实例。每个taskKey只允许一个活跃的实例在运行。</li>
+<li>batchSize： 每次处理的数据量</li>
+<li>concurrency: 使用多少个线程并行处理。</li>
+<li>executor: 使用哪个线程池来执行任务，默认使用全局的nop-cached-thread-pool。executor的名称对应于GlobalWorkers中注册的线程池或者BeanContainer管理的某个Executor。</li>
+<li>每个批处理任务包含一个loader, 多个processor，以及多个consumer。processor和consumer都是可选配置。</li>
+</ul>
+<h2 id="分区处理"><a href="#分区处理" class="headerlink" title="分区处理"></a>分区处理</h2><p>如果配置了loader的dispatcher，则会使用PartitionDispatchLoaderProvider来实现分区加载。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">batch</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">loader</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">orm-reader</span> <span class="hljs-attr">entityName</span>=<span class="hljs-string">&quot;DemoIncomingTxn&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">orm-reader</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dispatcher</span> <span class="hljs-attr">loadBatchSize</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">partitionIndexField</span>=<span class="hljs-string">&quot;_t.partitionIndex&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dispatcher</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- reader读取到items集合之后会调用afterLoad回调函数对结果进行加工 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">afterLoad</span>&gt;</span><br>      ...<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">afterLoad</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">loader</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>启动多个内部线程调用内部的IBatchLoader来加载数据，不断将数据放入到分区任务队列中。</li>
+<li>加载时使用loadBatchSize来控制每次加载的数据量。</li>
+<li>使用partitionIndexField来指定分区字段，该字段值相同的记录会被存放到某一个任务队列中，由PartitionDispatchQueue统一管理。</li>
+<li>BatchTask运行的时候会通过loader从PartitionDispatchQueue中读取。</li>
+</ol>
+<h2 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">batch</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">loader</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">file-reader</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;dev:/target/input/$&#123;bizDate&#125;.dat&quot;</span> <span class="hljs-attr">fileModelPath</span>=<span class="hljs-string">&quot;simple.record-file.xlsx&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">loader</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">consumer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;selected&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>      return item.quantity &gt; 500;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">file-writer</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;dev:/target/output/$&#123;bizDate&#125;-selected.dat&quot;</span> <span class="hljs-attr">fileModelPath</span>=<span class="hljs-string">&quot;simple.record-file.xml&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">consumer</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过fileModelPath可以根据Record模型来实现文件格式解析和生成。</li>
+<li>如果不指定fileModelPath，则缺省情况下会按照csv格式进行读写。</li>
+</ul>
+<h2 id="ORM读写"><a href="#ORM读写" class="headerlink" title="ORM读写"></a>ORM读写</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">batch</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">orm-reader</span> <span class="hljs-attr">entityName</span>=<span class="hljs-string">&quot;DemoIncomingTxn&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">query</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">eq</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">orderBy</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">orderBy</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">orm-reader</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">consumer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;all&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 从文件读取数据之后插入到数据库中，插入时判断是否已经存在，如果存在则会忽略这条记录--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">orm-writer</span> <span class="hljs-attr">entityName</span>=<span class="hljs-string">&quot;DemoIncomingTxn&quot;</span> <span class="hljs-attr">allowInsert</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">allowUpdate</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">keyFields</span>&gt;</span>cardNumber,txnAmount,txnTime<span class="hljs-tag">&lt;/<span class="hljs-name">keyFields</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">orm-writer</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">consumer</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>query: 读取时可以使用query来指定查询条件。</li>
+<li>keyFields：如果配置了keyFields，则写入时会检查唯一键，判断数据是否已经存在。</li>
+<li>allowInsert：如果发现数据不存在，是否允许插入数据，缺省为true。</li>
+<li>allowUpdate：如果发现数据已经存在，是否允许更新数据，缺省为false。</li>
+</ul>
+
 </div>
       <footer class="Article-footer col-md-3">
         

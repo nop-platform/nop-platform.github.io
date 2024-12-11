@@ -12,11 +12,8 @@
 
 
   
-    
-    
-
-    
-      
+  
+  
     
   
 
@@ -40,10 +37,10 @@
 
 
 
-  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
+  <title>测试数据生成器 - Nop</title>
 
 
-  <meta property="og:title" content="Nop">
+  <meta property="og:title" content="测试数据生成器">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1254,13 +1251,22 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title"></h1>
+    <h1 class="Article-title">测试数据生成器</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9">
+      <div class="Article-content col-md-9"><p><code>batch-gen</code>模型提供了按照比例动态生成测试数据的机制。</p>
+<p><img src="/knosys/project-nop-entropy/theory/batch/batch-gen.png"></p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/batch/images/batch-gen-case.png"></p>
+<p>以上用例按照比例生成用例：</p>
+<ol>
+<li>生成30%的A类账户和70%的B类账户。</li>
+<li>A类账户再分成Case_AA1和Case_AA2两种情况。Case_AA1包含顺序执行的子用例，先执行【开主卡】，再执行【开附属卡】。<br>执行完子用例之后通过【输出变量】可以记录下临时变量，然后在后续用例中可以通过前缀引导语法 <code>@var:mainCard.id</code>来引用已有的变量。</li>
+</ol>
+<p>在批处理模型中可以通过generator配置来引用batch-gen模型，表示根据批量生成模型来生成数据。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">batch</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">loader</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">generator</span> <span class="hljs-attr">genModelPath</span>=<span class="hljs-string">&quot;create-card.batch-gen.xlsx&quot;</span> <span class="hljs-attr">totalCountExpr</span>=<span class="hljs-string">&quot;totalCount&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">loader</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
