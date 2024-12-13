@@ -1299,6 +1299,16 @@
 <h2 id="执行逻辑编排任务"><a href="#执行逻辑编排任务" class="headerlink" title="执行逻辑编排任务"></a>执行逻辑编排任务</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cli.jar run-task my.task.xml -if=inputs.json<br></code></pre></td></tr></table></figure>
 
 <p>读取<code>inputs.json</code>文件作为task的输入参数，运行<code>my.task.xml</code>逻辑编排模型。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li>如何调整日志输出级别</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -Dquarkus.config.locations=application.yaml -jar nop-cli.jar gen-file my.orm.json -t=/nop/orm/imp/orm.imp.xml<br></code></pre></td></tr></table></figure>
+
+<p>缺省配置了<code>quarkus.log.level=INFO</code>，以及<code>quarkus.log.category.&quot;io.nop&quot;.level=ERROR</code>，可以通过外部的application.yaml来覆盖缺省的quarkus配置。</p>
+<ol start="2">
+<li>如何使用外部的application.yaml配置文件</li>
+</ol>
+<p>通过<code>-Dnop.config.location=application.yaml</code>参数指定外部配置文件</p>
 
 </div>
       <footer class="Article-footer col-md-3">
