@@ -37,10 +37,10 @@
 
 
 
-  <title>第三方框架集成 - Nop</title>
+  <title>DSL设计原理 - Nop</title>
 
 
-  <meta property="og:title" content="第三方框架集成">
+  <meta property="og:title" content="DSL设计原理">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1084,7 +1084,7 @@
           
           
         
-        <a class="is-selected" href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
       
       
         <ul>
@@ -1251,41 +1251,13 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">第三方框架集成</h1>
+    <h1 class="Article-title">DSL设计原理</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>Nop平台的核心模块都是从零开始编写，不依赖任何第三方框架。但是为了提高开发效率，Nop平台也提供了一些第三方框架的集成支持。<br>它可以与Spring或者Quarkus框架集成在一起使用。基本做法都是先启动Spring或者Quarkus框架，然后监听Spring或者Quarkus的启动事件来启动Nop平台。</p>
-<p>Nop平台的启动和停止使用如下调用：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">CoreInitialization.initialize();<br>CoreInitialization.destroy();<br></code></pre></td></tr></table></figure>
-
-<h2 id="初始化过程"><a href="#初始化过程" class="headerlink" title="初始化过程"></a>初始化过程</h2><p>CoreInitialization中会使用Java内置的ServiceLoader机制加载所有的ICoreInitializer接口。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ICoreInitializer</span> &#123;<br>    <span class="hljs-keyword">default</span> <span class="hljs-type">int</span> <span class="hljs-title function_">order</span><span class="hljs-params">()</span> &#123;<br>      <span class="hljs-keyword">return</span> NORMAL_PRIORITY;<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEnabled</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">initialize</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>order用于控制Initializer的初始化顺序，isEnabled用于控制是否启用该Initializer。</p>
-<p>在<code>META-INF/services</code>目录下新建<code>io.nop.core.initialize.ICoreInitializer</code>文件，在其中加入的类名都会被自动装载。</p>
-<p>Nop平台加载时目前是按照如下顺序</p>
-<ol>
-<li>ReflectionHelperMethodInitializer</li>
-<li>XLangCoreInitializer 在<code>nop-xlang</code>模块中</li>
-<li>ConfigInitializer 在nop-config模块中，负责启动config服务，并加载配置</li>
-<li>VirtualFileSystemInitializer 在nop-core模块中，负责初始化虚拟文件系统</li>
-<li>DaoDialectInitializer 在nop-dao模块中，负责加载dialect选择模型</li>
-<li>IocCoreInitializer 在nop-ioc模块中，负责初始化BeanContainer</li>
-<li>CodeGenAfterInitialization 在nop-codegen模块中，负责输出<code>nop-vfs-index</code>等记录文件，它应该是最后一个执行的Initializer</li>
-</ol>
-<p>如果在Nop平台初始化完毕后执行某些功能，可以采用两种方式</p>
-<ol>
-<li>在<code>beans.xml</code>中配置bean的<code>ioc:delay-method</code>，在IoC容器所有bean初始化完毕后会调用bean的delayMethod</li>
-<li>也可以实现一个自定义的ICoreInitializer，并在<code>META-INF/services</code>中注册，order可以设置为 <code>INITIALIZER_PRIORITY_ANALYZE + 10</code>。</li>
-</ol>
-<p><code>INITIALIZER_PRIORITY_ANALYZE</code>是一个特殊的级别，order大于它的Initializer在代码生成阶段不会被执行，否则通过<code>mvn install</code>执行代码生成工具的时候会调用这个Initializer</p>
-<h2 id="Spring集成"><a href="#Spring集成" class="headerlink" title="Spring集成"></a>Spring集成</h2><p>Spring集成配置参见<a href="../spring/">spring.md</a></p>
-<p>也可以改造Spring和MyBatis，加入部分可逆计算支持，参见<a href="../spring/spring-delta/">spring-delta.md</a></p>
-<h2 id="Quarkus集成"><a href="#Quarkus集成" class="headerlink" title="Quarkus集成"></a>Quarkus集成</h2><p>Quarkus集成配置参见<a href="../quarkus/">quarkus.md</a></p>
-<h2 id="Solon集成"><a href="#Solon集成" class="headerlink" title="Solon集成"></a>Solon集成</h2><p>与国产微服务框架Solon的集成配置参见<a href="../integration/nop-on-solon/">nop-on-solon.md</a></p>
+      <div class="Article-content col-md-9"><h2 id="Import语法"><a href="#Import语法" class="headerlink" title="Import语法"></a>Import语法</h2><p>import将绝对名称转换为相对名称。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1298,7 +1270,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/integration.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/dsl-design-principles.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
