@@ -1299,6 +1299,9 @@
 <h2 id="执行逻辑编排任务"><a href="#执行逻辑编排任务" class="headerlink" title="执行逻辑编排任务"></a>执行逻辑编排任务</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cli.jar run-task my.task.xml -if=inputs.json<br></code></pre></td></tr></table></figure>
 
 <p>读取<code>inputs.json</code>文件作为task的输入参数，运行<code>my.task.xml</code>逻辑编排模型。</p>
+<h2 id="重打包操作"><a href="#重打包操作" class="headerlink" title="重打包操作"></a>重打包操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cli.jar repackage -i=app -o=my-tool.jar<br></code></pre></td></tr></table></figure>
+
+<p>repackage指令将根据输入目录下的<code>_vfs</code>目录以及<code>application.yaml</code>、<code>bootstrap.yaml</code>文件，把它们打包到当前<code>nop-cli.jar</code>包中，输出一个新的可执行的jar包。</p>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
 <li>如何调整日志输出级别</li>
 </ol>
