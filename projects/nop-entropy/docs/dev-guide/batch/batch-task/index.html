@@ -1267,6 +1267,12 @@
 <li>executor: 使用哪个线程池来执行任务，默认使用全局的nop-cached-thread-pool。executor的名称对应于GlobalWorkers中注册的线程池或者BeanContainer管理的某个Executor。</li>
 <li>每个批处理任务包含一个loader, 多个processor，以及多个consumer。processor和consumer都是可选配置。</li>
 </ul>
+<h3 id="CSV文件读写"><a href="#CSV文件读写" class="headerlink" title="CSV文件读写"></a>CSV文件读写</h3><p>如果file-reader不配置fileModelPath，则缺省情况下会按照csv格式进行读写。</p>
+<ul>
+<li>csvFormat 配置csv文件的格式，默认为DEFAULT。具体可用格式参见CSVFormat类。</li>
+<li>headers 用于指定解析得到的字段名。缺省情况下使用文件第一行读取的Headers。如果指定，则会忽略第一行指定的Header，以这里指定的header为准。</li>
+<li>headerLabels 如果指定了headerLabels，则只有匹配了headerLabels的列才会被保留，否则会被忽略。忽略列时会打印日志<code>nop.csv.ignore-header:header=&#123;&#125;, allowed=&#123;&#125;</code>。</li>
+</ul>
 <h2 id="分区处理"><a href="#分区处理" class="headerlink" title="分区处理"></a>分区处理</h2><p>如果配置了loader的dispatcher，则会使用PartitionDispatchLoaderProvider来实现分区加载。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">batch</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">loader</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">orm-reader</span> <span class="hljs-attr">entityName</span>=<span class="hljs-string">&quot;DemoIncomingTxn&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">orm-reader</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dispatcher</span> <span class="hljs-attr">loadBatchSize</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">partitionIndexField</span>=<span class="hljs-string">&quot;_t.partitionIndex&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dispatcher</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- reader读取到items集合之后会调用afterLoad回调函数对结果进行加工 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">afterLoad</span>&gt;</span><br>      ...<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">afterLoad</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">loader</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">batch</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
