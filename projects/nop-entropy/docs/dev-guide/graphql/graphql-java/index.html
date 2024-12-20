@@ -1529,6 +1529,18 @@
 
 <h2 id="使用GraphQL的加载器来加载对象属性"><a href="#使用GraphQL的加载器来加载对象属性" class="headerlink" title="使用GraphQL的加载器来加载对象属性"></a>使用GraphQL的加载器来加载对象属性</h2><p>例如使用dao获取到User对象之后，希望自动根据status获取到<code>status_label</code>属性。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">IEntityDao</span>&lt;<span class="hljs-title class_">NopAuthUser</span>&gt; user = daoProvider.<span class="hljs-title function_">daoFor</span>(<span class="hljs-title class_">NopAuthUser</span>.<span class="hljs-property">class</span>);<br><span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">NopAuthUser</span>&gt; list = user.<span class="hljs-title function_">findAll</span>();<br><span class="hljs-title class_">IServiceContext</span> svcCtx = <span class="hljs-literal">null</span>; <span class="hljs-comment">// 在后端模板运行时上下文中一般存在svcCtx</span><br><span class="hljs-title class_">CompletionStage</span>&lt;<span class="hljs-title class_">Object</span>&gt; future = graphQLEngine.<span class="hljs-title function_">fetchResult</span>(list,<br>        <span class="hljs-string">&quot;NopAuthUser&quot;</span>, <span class="hljs-string">&quot;...F_defaults,status_label,relatedRoleList&quot;</span>, svcCtx);<br><span class="hljs-title function_">output</span>(<span class="hljs-string">&quot;result.json5&quot;</span>, <span class="hljs-title class_">FutureHelper</span>.<span class="hljs-title function_">syncGet</span>(future));<br></code></pre></td></tr></table></figure>
+
+<h2 id="将同一个实体模型发布为多个不同的GraphQL对象"><a href="#将同一个实体模型发布为多个不同的GraphQL对象" class="headerlink" title="将同一个实体模型发布为多个不同的GraphQL对象"></a>将同一个实体模型发布为多个不同的GraphQL对象</h2><ul>
+<li>NopGraphQL引擎识别的BizModel需要在<code>beans.xml</code>文件中注册。</li>
+<li>注册的时候可以指定bizObjName，如果没有指定，则尝试从Java类的<code>@BizObjName</code>注解获取。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;MyUserExtBizModel&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;io.nop.graphql.demo.model.MyUserBizModel&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;bizObjName&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;MyUser_ext&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>bizObjName的格式为<code>&#123;BaseName&#125;_&#123;extName&#125;</code>，如果对应的Meta不存在，会自动查找BaseName对应的Meta。</li>
+<li>可以选择增加<code>MyUser_ext.xmeta</code>，然后使用<code>x:extends=&quot;MyUser.xmeta&quot;</code>，让它从BaseMeta继承。</li>
+</ul>
+
 </div>
       <footer class="Article-footer col-md-3">
         
