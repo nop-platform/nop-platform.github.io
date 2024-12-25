@@ -1262,6 +1262,7 @@
 <p>例如，在nop_auth_user_role表中的user_id字段关联了nop_auth_user表。只需要在nop_auth_user_role的配置中增加to-one关联属性，属性名user，<br>关联的实体对象是NopAuthUser。因为设置了关联属性名roleMappings，代码生成时NopAuthUser对象上会增加一个Set<NopAuthUserRole><br>类型的集合属性，<br>属性名为roleMappings。具体生成的实体类伪代码如下:</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthUserRole</span> &#123;<br>    String userId;<br>    NopAuthUser user;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthUser</span> &#123;<br>    <span class="hljs-comment">//...</span><br>    Set&lt;NopAuthUserRole&gt; roleMappings;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h2 id="避免循环依赖"><a href="#避免循环依赖" class="headerlink" title="避免循环依赖"></a>避免循环依赖</h2><p>为了避免数据表之间出现循环依赖，可以在<code>to-one</code>关联上设置<code>ignoreDepends=&quot;true&quot;</code>，对应于Excel模型中设置【忽略关联】属性为TRUE。<br>比如nop-auth模块中<code>app.orm.xml</code>对于User表和Department表之间相互关系的设置。</p>
 <h2 id="支持关联查询"><a href="#支持关联查询" class="headerlink" title="支持关联查询"></a>支持关联查询</h2><p>定义了关联属性之后后台代码就可以直接使用关联查询了。但是为了暴露GraphQL服务还需要在meta文件中进行配置</p>
 <blockquote>
 <p>要求在meta中配置主要是从安全性考虑，避免暴露太多的功能给前端，出现安全漏洞。比如前端不断发起对关联的大表的各种复杂查询请求。</p>
