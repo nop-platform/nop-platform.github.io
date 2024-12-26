@@ -1291,7 +1291,8 @@
 <h3 id="6-虚拟文件扫描"><a href="#6-虚拟文件扫描" class="headerlink" title="6. 虚拟文件扫描"></a>6. 虚拟文件扫描</h3><p>Nop平台启动时会使用类扫描机制查找所有<code>_vfs</code>目录下的虚拟文件，在调试模式下启动时扫描结果会输出到nop-vfs-index.txt中。这个文件中记录了所有可访问的虚拟文件路径</p>
 <h2 id="日志打印"><a href="#日志打印" class="headerlink" title="日志打印"></a>日志打印</h2><h3 id="1-XScript脚本中内置了logInfo-logDebug等函数"><a href="#1-XScript脚本中内置了logInfo-logDebug等函数" class="headerlink" title="1. XScript脚本中内置了logInfo&#x2F;logDebug等函数"></a>1. XScript脚本中内置了logInfo&#x2F;logDebug等函数</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">logInfo</span>(<span class="hljs-string">&quot;nop.err.invalid-name:name=&#123;&#125;&quot;</span>,name);<br></code></pre></td></tr></table></figure>
 
-<p>第一个参数必须是静态字符串，不允许”sss”+yyy这种形式，从而也避免了log注入攻击。</p>
+<p>第一个参数必须是静态字符串，不允许”sss”+yyy这种形式，从而也避免了log注入攻击。注意第一个参数使用了slf4j框架的日志消息模板语法，必须通过<code>&#123;&#125;</code>来表示变量占位。</p>
+<p>日志函数的具体实现参见 <code>LogFunctions.java</code>和<code>LogHelper.java</code>。</p>
 <h3 id="2-任意对象调用-函数都会导致打印调试语句"><a href="#2-任意对象调用-函数都会导致打印调试语句" class="headerlink" title="2. 任意对象调用$函数都会导致打印调试语句"></a>2. 任意对象调用$函数都会导致打印调试语句</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">b = a.<span class="hljs-title function_">f</span>().$(<span class="hljs-string">&quot;test&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 <p>以上调用等价于 <code>b = DebugHelper.v(location(), &quot;test&quot;,a.f());</code>，其中test参数为自定义的提示信息。<br>所以，当我们想查看任意表达式的值的时候，可以在其后增加$调用。打印出的调试信息如下：</p>
@@ -1335,6 +1336,9 @@
 <h3 id="4-如何查看当前启用的配置变量集合"><a href="#4-如何查看当前启用的配置变量集合" class="headerlink" title="4. 如何查看当前启用的配置变量集合"></a>4. 如何查看当前启用的配置变量集合</h3><p>nop-config模块负责从多个配置来源收集配置信息，并按照优先级决定它们之间的覆盖关系，最终启用的配置变量可以通过如下链接查看：<br><code>/r/DevDoc__configVars</code></p>
 <p>在返回的结果中包含每个配置变量的来源资源文件路径。</p>
 <h3 id="5-如何查看后台所有的GraphQL服务以及类型定义"><a href="#5-如何查看后台所有的GraphQL服务以及类型定义" class="headerlink" title="5. 如何查看后台所有的GraphQL服务以及类型定义"></a>5. 如何查看后台所有的GraphQL服务以及类型定义</h3><p><code>/p/DevDoc__graphql</code><br>返回graphql定义</p>
+<h3 id="6-调试模型合并过程"><a href="#6-调试模型合并过程" class="headerlink" title="6. 调试模型合并过程"></a>6. 调试模型合并过程</h3><p>在  <code>x:gen-extends</code>或者 <code>x:post-extends</code>段中增加日志输出代码或者通过扩展属性来输出调试信息。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">orm</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">ext:time</span>=<span class="hljs-string">&quot;$&#123;now()&#125;&quot;</span> <span class="hljs-attr">xgen:x:dump</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><ol>
 <li>自动录制的response中变量名可能不正确<br>因为有可能多个随机变量具有同样的值，因此当保存response数据的时候，有可能根据变量的值反向查找变量名的时候出现错误，导致录制出的变量名不正确。<br>例如updateTime录制为addTime等。</li>
 </ol>

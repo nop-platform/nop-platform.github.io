@@ -1357,6 +1357,9 @@
 <td>对应于AppConfig类</td>
 </tr>
 </tbody></table>
+<h2 id="扩展属性"><a href="#扩展属性" class="headerlink" title="扩展属性"></a>扩展属性</h2><p>实现了IPropGetMissingHook和IPropSetMissingHook扩展接口，在脚本代码或者表达式语言中就可以访问动态实体属性时，形式与访问普通属性相同。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><code class="hljs typescript">entity.<span class="hljs-property">extField</span> = <span class="hljs-number">3</span>;<br><br><span class="hljs-comment">// 等价于</span><br>entity.<span class="hljs-title function_">prop_set</span>(<span class="hljs-string">&#x27;extField&#x27;</span>,<span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+
 <h2 id="特定上下文变量"><a href="#特定上下文变量" class="headerlink" title="特定上下文变量"></a>特定上下文变量</h2><ul>
 <li><code>codeGenerator</code>: <code>XCodeGenerator</code>类型，<code>precompile</code>目录下的代码生成模板中可用</li>
 <li><code>__dsl_root</code>：<code>XNode</code>类型，在<code>x:gen-extends</code>和<code>x:post-extends</code>这样的元编程处理段中可用</li>
