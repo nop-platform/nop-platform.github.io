@@ -1263,6 +1263,7 @@
 </ul>
 <h2 id="优化应用启动时间"><a href="#优化应用启动时间" class="headerlink" title="优化应用启动时间"></a>优化应用启动时间</h2><ul>
 <li><code>nop.web.validate-page-model</code>不设置或者设置为false会跳过启动时的页面验证，跳过对view.xml和page.yaml文件的解析检查。</li>
+<li><code>nop.web.page-validation-thread-count</code>如果设置为大于1的值，且设置<code>nop.web.validate-page-model</code>为true，则会启动多线程进行检查</li>
 <li><code>nop.orm.db-differ.auto-upgrade-database</code>不设置或者设置为false，会跳过启动时的数据库升级检查。</li>
 <li><code>nop.orm.init-database-schema</code>不设置或者设置为false, 会跳过启动时自动建表的操作。</li>
 <li><code>nop.auth.login.allow-create-default-user</code>不设置或者设置为false,启动时就不会检查数据库中是否至少存在一个用户。</li>
