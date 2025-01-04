@@ -1414,6 +1414,11 @@
 <td>字符串的后缀为指定值</td>
 </tr>
 </tbody></table>
+<h3 id="BizArgsNormalizer参数规范格式转换"><a href="#BizArgsNormalizer参数规范格式转换" class="headerlink" title="BizArgsNormalizer参数规范格式转换"></a>BizArgsNormalizer参数规范格式转换</h3><p>CrudBizModel的<code>findPage/findList</code>等函数接收QueryBean格式的query参数，但是前台构造QueryBean结构比较复杂，所以也支持直接传递<code>filter_&#123;propName&#125;</code>格式的过滤条件，例如<code>filter_status=1</code>。<br>后台的实现是利用<code>@BizArgsNormalizer</code>注解引入的IGraphQLArgsNormalizer接口对象来对前台传递的参数进行规范化，将前台传递的<code>filter_xx</code>条件转换为QueryBean对象。这是一种通用机制，不仅仅用在QueryBean结构转换上。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"> @<span class="hljs-title class_">BizQuery</span><br> @<span class="hljs-title class_">BizArgsNormalizer</span>(<span class="hljs-title class_">BizConstants</span>.<span class="hljs-property">BEAN_nopQueryBeanArgsNormalizer</span>)<br> @<span class="hljs-title class_">GraphQLReturn</span>(bizObjName = <span class="hljs-variable constant_">BIZ_OBJ_NAME_THIS_OBJ</span>)<br> public <span class="hljs-title class_">PageBean</span>&lt;T&gt; <span class="hljs-title function_">deleted_findPage</span>(<span class="hljs-params">@Optional @Name(<span class="hljs-string">&quot;query&quot;</span>) @Description(<span class="hljs-string">&quot;@i18n:biz.query|查询条件&quot;</span>) QueryBean query,</span><br><span class="hljs-params">                                     FieldSelectionBean selection, IServiceContext context</span>) &#123;<br>   ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@BizArgsNormalizer</code>的参数是在NopIoC中注册的bean的名字，nopQueryBeanArgsNormalizer对应于<code>biz-defaults.beans.xml</code>中注册的QueryBeanArgsNormalizer对象。</p>
+<p><code>IGraphQLEngine.newRpcContext</code>的时候会调用argsNormalizer，因此前台通过<code>/p/&#123;bizObjName&#125;_&#123;bizAction&#125;</code>或者<code>/r/&#123;bizObjName&#125;_&#123;bizAction&#125;</code>执行后台服务时都会调用到这一逻辑。<br>单元测试参见<code>TestNopAuthUserBizModel.testQueryBeanNormalizer</code>。</p>
 <h2 id="3-3-this指针：知识的相对化"><a href="#3-3-this指针：知识的相对化" class="headerlink" title="3.3 this指针：知识的相对化"></a>3.3 this指针：知识的相对化</h2><p>GraphQL中定义的操作名是全局名称，例如 <code>query&#123; getUser(id:3)&#123; id, userName&#125;&#125;</code><br>查询中用到的getUser方法需要在整个模型中具有唯一性，这一要求对于复用代码来说是不利的。</p>
 <p>NopGraphQL中实现CRUD时只需要继承CrudBizModel基类，对外暴露的GraphQL操作名由对象名和方法名拼接而成。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">CrudBizModel</span>&lt;T&gt; &#123;<br>  <span class="hljs-meta">@BizQuery</span><br>  <span class="hljs-meta">@GraphQLReturn(bizObjName = &quot;THIS_OBJ&quot;)</span><br>  <span class="hljs-keyword">public</span> T <span class="hljs-title function_">get</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;id&quot;)</span> String id)</span> &#123;<br>       ....<br>  &#125;<br>&#125;<br><br><span class="hljs-meta">@BizModel(&quot;NopAuthUser&quot;)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthUserBizModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CrudBizModel</span>&lt;NopAuthUser&gt; &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1589,7 +1594,7 @@
         <div class="Footer-copyright">
           <p>
 
-&copy; 2024 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
 
 </p>
           
