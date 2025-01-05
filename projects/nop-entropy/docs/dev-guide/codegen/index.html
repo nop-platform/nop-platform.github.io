@@ -1316,6 +1316,10 @@
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">控制是否生成某个目录下的文件<br>/src/&#123;package.name&#125;/&#123;webEnabled&#125;/&#123;model.name&#125;Controller.java.xgen<br>                                /&#123;model.name&#125;Service.java.xgen<br><br>也可以控制单个文件是否生成<br>/src/&#123;package.name&#125;/&#123;webEnabled&#125;&#123;model.name&#125;Controller.java.xgen<br></code></pre></td></tr></table></figure>
 
+<h3 id="具体示例"><a href="#具体示例" class="headerlink" title="具体示例"></a>具体示例</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">gen:DefineLoop</span> <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/nop/codegen/xlib/gen.xlib&quot;</span> <span class="hljs-attr">xpl:slotScope</span>=<span class="hljs-string">&quot;builder&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>builder.defineLoopVar(&quot;task&quot;,&quot;tasks&quot;,model=&gt;model);<br>builder.defineLoopVar(&quot;response&quot;,&quot;task&quot;, model =&gt; model.taskResponse?.responseList);<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">gen:DefineLoop</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这样就定义了两个上下文变量，task和response，然后在路径中就可以使用<code>&#123;response.responseCode&#125;</code>这种方式来引用变量属性。</p>
+<p><code>Task&#123;task.taskCode&#125;&#123;response.responseCode&#125;ResponseTrigger.java</code>这种路径会自动识别出task和response之间的循环依赖关系，自动执行循环展开。</p>
 <h3 id="表达式特殊约定"><a href="#表达式特殊约定" class="headerlink" title="表达式特殊约定"></a>表达式特殊约定</h3><ol>
 <li><p><code>&#123;!!entity.field&#125;</code> 这样的表达式中!表示取反，<code>!!</code>表示连续取反，因此对于空值它会返回false。<br>表达式如果返回false，则会跳过此次处理，但是对于空值，则该表达式的值将会被忽略。因此空值与false并不等价。</p>
 </li>
