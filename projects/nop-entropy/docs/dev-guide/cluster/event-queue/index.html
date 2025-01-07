@@ -37,10 +37,10 @@
 
 
 
-  <title>逻辑删除 - Nop</title>
+  <title>事件队列 - Nop</title>
 
 
-  <meta property="og:title" content="逻辑删除">
+  <meta property="og:title" content="事件队列">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,20 +1251,23 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">逻辑删除</h1>
+    <h1 class="Article-title">事件队列</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><h2 id="1-数据模型配置"><a href="#1-数据模型配置" class="headerlink" title="1. 数据模型配置"></a>1. 数据模型配置</h2><p>在Excel模型中指定domain为delFlag和delVersion的字段，分别为Boolean类型和Long类型。</p>
-<p>逻辑删除的时候delFlag设置为1，且delVersion设置为当前时间戳。正常存在时，这两个值都设置为0.</p>
-<p>deleteVersionProp用于避免逻辑删除时唯一键依然存在导致与正常实体的唯一键冲突。</p>
-<p>也就是说假设实体上有一个属性name，要求唯一，那么在启用逻辑删除的时候，需要把name和deleteVersion这两个字段建立成联合唯一键。</p>
-<p>新建的时候deleteVersion为0，而当逻辑删除的时候，deleteVersion设置为删除时刻的时间戳。这样以后仍然可以插入指定name的新记录，不会与已经逻辑删除的记录发生冲突。</p>
-<h2 id="2-EQL查询"><a href="#2-EQL查询" class="headerlink" title="2. EQL查询"></a>2. EQL查询</h2><p>缺省情况下EQL查询和关联集合查询都会考虑到逻辑删除条件，只查询<code>delFlag=0</code>的记录。</p>
-<p>QueryBean和SQL对象都支持disableLogicalDelete设置，从而禁用逻辑删除的过滤条件。</p>
-<p>IOrmEntity上也具有<code>orm_disableLogicalDelete()</code>方法，则可以真正执行物理删除，否则<code>session.delete(entity)</code>实际只会设置entity的deleteFlag属性。</p>
+      <div class="Article-content col-md-9"><h2 id="数据库事件表"><a href="#数据库事件表" class="headerlink" title="数据库事件表"></a>数据库事件表</h2><h3 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h3><ol>
+<li>topic以 <code>bro-</code>为前缀</li>
+<li>启动时查询 <code>eventTime &gt; currentTime - eventTimeOffset</code> 的事件，并依次处理</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> o<br><span class="hljs-keyword">from</span> event o<br><span class="hljs-keyword">where</span> o.topic <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;test&#x27;</span><br>  <span class="hljs-keyword">and</span> o.eventTime <span class="hljs-operator">&gt;</span> $&#123;startTime&#125;<br>  <span class="hljs-keyword">and</span> o.eventID <span class="hljs-operator">&gt;</span> lastProcessEventID<br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> o.eventID <span class="hljs-keyword">asc</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="集群分工"><a href="#集群分工" class="headerlink" title="集群分工"></a>集群分工</h3><ol>
+<li>topic以 <code>cluster-</code>为前缀</li>
+<li>查询所有 <code>processTime &lt; currentTime</code>的记录，修改processTime为<code>currentTime + maxProcessSpan</code>，这样其他节点就不会处理同样的事件</li>
+<li>成功处理完毕后将事件状态设置为processed，或者删除事件</li>
+</ol>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1277,7 +1280,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/orm/logical-delete.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/dev-guide/cluster/event-queue.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
