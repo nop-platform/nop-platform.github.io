@@ -1364,6 +1364,12 @@
 <li><code>codeGenerator</code>: <code>XCodeGenerator</code>类型，<code>precompile</code>目录下的代码生成模板中可用</li>
 <li><code>__dsl_root</code>：<code>XNode</code>类型，在<code>x:gen-extends</code>和<code>x:post-extends</code>这样的元编程处理段中可用</li>
 </ul>
+<h2 id="JS兼容性"><a href="#JS兼容性" class="headerlink" title="JS兼容性"></a>JS兼容性</h2><p>XScript可以看作是使用JavaScript语法的Java，它使用的对象和库都是Java语言的，因此很多地方并不兼容JavaScript.</p>
+<h3 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h3><p>XScript中没有JSON、Object等全局对象，所有的全局对象名都以<code>$</code>开头，例如<code>$JSON</code>、<code>$Math</code>、<code>$Date</code>等。</p>
+<h3 id="集合函数"><a href="#集合函数" class="headerlink" title="集合函数"></a>集合函数</h3><ul>
+<li>通过ListFunctions上的扩展函数为Java的List对象增加了一些JavaScript中Array对象的方法，例如<code>push/pop/shift/unshift/includes/some/reduceRight/slice/splice</code>等。</li>
+<li><code>forEach/map</code>等函数只支持一个参数，使用的是Java Collection上定义的方法。JavaScript的map和forEach都具有两个参数，可以获知记录的下标。XScript增加了<code>map2/forEach2</code>，它们的语义类似JavaScript。</li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">
