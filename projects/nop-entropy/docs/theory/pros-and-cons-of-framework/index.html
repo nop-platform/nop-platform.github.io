@@ -1426,7 +1426,7 @@
 <li><strong>每一个组件能够提供哪些扩展方式和扩展能力都需要单独去设计，每个组件都不一样</strong></li>
 <li><strong>扩展机制往往会影响性能，扩展点越多，系统性能越差</strong></li>
 </ol>
-<p>以Hibernate中增加Gis扩展为例，需要实现ContribuerImplementor接口，实现contributionFunctions等函数，在其中注册GIS相关函数。</p>
+<p>以Hibernate中增加Gis扩展为例，需要实现ContributorImplementor接口，实现contributionFunctions等函数，在其中注册GIS相关函数。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">    @Override<br>public void contributeFunctions(FunctionContributions functionContributions) &#123;<br>    HSMessageLogger.SPATIAL_MSG_LOGGER.functionContributions( this.getClass().getCanonicalName() );<br><br>    KeyedSqmFunctionDescriptors functionDescriptors;<br>    if ( useSTGeometry ) &#123;<br>        functionDescriptors = new OracleSQLMMFunctionDescriptors( functionContributions );<br>    &#125;<br>    else &#123;<br>        functionDescriptors = new OracleSDOFunctionDescriptors( functionContributions );<br>    &#125;<br>    SqmFunctionRegistry functionRegistry = functionContributions.getFunctionRegistry();<br>    functionDescriptors.asMap().forEach( (key, funcDescr) -&gt; &#123;<br>        functionRegistry.register( key.getName(), funcDescr );<br>        key.getAltName().ifPresent( altName -&gt; functionRegistry.register( altName, funcDescr ) );<br>    &#125; );<br><br>    &#125; sdoGeometryType );<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>而<strong>在Nop平台中我们可以通过统一的Delta定制来实现扩展</strong>。具体介绍参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/628770810">如何在不修改基础产品源码的情况下实现定制化开发</a></p>

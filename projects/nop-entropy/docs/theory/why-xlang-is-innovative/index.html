@@ -1336,6 +1336,10 @@
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zGfo7pvKjOCa11PYLJHzzA">写给程序员的可逆计算理论辨析补遗</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例</a></li>
 </ol>
+<p>根据可逆计算理论，Tree结构的特殊性在于它对应于一个全局坐标系统：树结构上的每个节点和属性都对应于一个唯一的xpath。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/tasks/task[name=&#x27;test&#x27;]/@name<br></code></pre></td></tr></table></figure>
+
+<p>上述的xpath表示tasks节点下的名称为test的子节点的name属性。</p>
 <p>通过严密的理论分析，可逆计算得出的一个必然推论是差量的独立性和可复合性要求存在稳定的领域坐标系，而正是无所不在的、整体性的领域坐标系导致了Tree结构空间和Map结构空间的本质性差异。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>X&#x27; = (A + dA) + (B + dB) + (C + dC)  // 差量无处不在<br>   = (A + B + C) + (dA + dB + dC)  // 差量可以聚合在一起，独立于基础代码存放<br>   = X + Delta // 差量满足结合律，可以独立于Base实现合并运算<br></code></pre></td></tr></table></figure>
 
