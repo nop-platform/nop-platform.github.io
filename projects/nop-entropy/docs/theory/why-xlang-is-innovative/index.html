@@ -1263,7 +1263,8 @@
 <h2 id="一-为什么需要设计XLang语言"><a href="#一-为什么需要设计XLang语言" class="headerlink" title="一. 为什么需要设计XLang语言"></a>一. 为什么需要设计XLang语言</h2><p><img src="https://gitee.com/canonical-entropy/nop-entropy/raw/master/docs/tutorial/simple/images/xlang.png"></p>
 <p>XLang语言是Nop平台底层的关键性支撑技术，在形式上它包含了XDef、Xpl、XScript等多个子语言。因为XLang与其他单一语法形式的程序语言有着较大的差异，所以很多人第一次接触时可能会有疑惑，它到底算不算是一种程序语言？它是不是只是在多种现有语言的基础上增加了一些零散的扩展？</p>
 <p>这里我想提出一个对程序语言的本质的理解：<strong>一门程序语言定义了一种程序结构空间，程序语言是程序结构空间的构造规则</strong>。也就是说，一门程序语言所能够创造的所有结构以及这些结构之间的所有可行演化路径构成了一个特定的程序结构空间，所有可行的计算都在这个结构空间中发生。</p>
-<p>基于以上理解，<strong>XLang语言之所以是一门创新的程序语言，是因为它创造了一个新的程序结构空间，在这个结构空间中可以很方便的实现可逆计算理论所提出的<code>Y = F(X) + Delta</code>的计算范式</strong>。虽然XLang可以认为是包含XDef, XPL, XScript等多个子语言，但是它们作为一个整体才是实现可逆计算的关键所在。<br><strong>XLang是世界上第一个在语言中明确定义领域结构坐标并内置通用的差量计算规则的程序语言</strong>。</p>
+<p>基于以上理解，<strong>XLang语言之所以是一门创新的程序语言，是因为它创造了一个新的程序结构空间，在这个结构空间中可以很方便的实现可逆计算理论所提出的<code>Y = F(X) + Delta</code>的计算范式</strong>。虽然XLang可以认为是包含XDef, XPL, XScript等多个子语言，但是它们作为一个整体才是实现可逆计算的关键所在。<strong>XLang是世界上第一个在语言中明确定义领域结构坐标并内置通用的差量计算规则的程序语言</strong>。</p>
+<p><strong>目前大部分人对于软件结构构造的基本理解都是基于还原论的，总是不断向下分解，寻找原子化的成分，然后使用原子进行组装</strong>。原本虚拟化的组件概念在潜意识中实际上是被看作是真实存在的离散个体，类似于物质世界中的粒子，通过嵌套组合来构造世界。但是物理世界中存在着另一种构造方式，那就是波。波是连续存在的模式，通过干涉叠加来构造世界。<strong>XLang语言的特异性就在于它通过差量运算支持连续的叠加构造</strong>。</p>
 <h3 id="从结构的观点看程序语言"><a href="#从结构的观点看程序语言" class="headerlink" title="从结构的观点看程序语言"></a>从结构的观点看程序语言</h3><p>通用的高级程序语言从FORTRAN开始，经历了几十年的长期发展，目前已经发展到某种瓶颈。新语言所带来的本质上新颖的特性越来越少，各个高级语言都发展到了所谓的多范式编程阶段，它们的语法特性逐渐开始融合、趋同，比如大部分语言现在都同时支持面向对象式的结构声明，支持函数式的Lambda表达式，支持元编程所需要的自定义注解，支持异步编程所需的Async相关语法和支持库等。</p>
 <p>一个有趣的问题是，是否还存在着通用的可抽象的语法特性，它们具有足够的技术价值以至于需要一个新的程序语言来承载？XLang的创新是指出目前主流的的程序语言虽然表面上语法形式差异很大，但是在语法层面之下的基本结构层面是非常相似的，在基本结构层面的创新仍然大有可为。</p>
 <p>程序的结构空间本质上是由数据+函数构成，将相关的数据和函数组织在一起就构成自定义的类型，在一般的程序语言中就对应于类（Class）或者接口（Interface）。从结构的层面看，类结构不过是一个Map，可以通过名称来获取到属性或者方法。</p>
@@ -1301,6 +1302,7 @@
 <p>在 1994 年的 C++ 标准委员会会议 上，Erwin Unruh 进行了一次技惊四座的演示。他编写了一段模板元程序，能够在编译期计算一个数是否是质数，如果是质数，编译器会在错误信息中输出这个质数。这段代码被称为 “Unruh 质数计算”，成为了 C++ 模板元编程的经典示例。<br>Unruh 的演示证明了 C++ 模板在编译期是图灵完备的，这意味着理论上可以在编译期执行任何计算。这一发现开启了 产生式编程（Generative Programming） 的新时代，即利用编译期的计算能力生成代码或优化程序。<br>C++ 的模板元编程（Template Metaprogramming）成为了实现产生式编程的重要工具。通过模板，开发者可以在编译期完成复杂的计算、类型推导和代码生成，从而在运行时获得更高的性能和灵活性。</p>
 <p>参见<a target="_blank" rel="noopener" href="https://accu.org/journals/overload/32/183/wu/">C++ Compile-Time Programming</a></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-type">int</span> p, <span class="hljs-type">int</span> i&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">is_prime</span> &#123;<br>  <span class="hljs-keyword">enum</span> &#123;<br>    prim = (p==<span class="hljs-number">2</span>) ||<br>           (p%i) &amp;&amp; is_prime&lt;(i&gt;<span class="hljs-number">2</span>?p:<span class="hljs-number">0</span>),<br>                             i<span class="hljs-number">-1</span>&gt; :: prim &#125;;<br>&#125;;<br><br><span class="hljs-keyword">template</span>&lt;&gt;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">is_prime</span>&lt;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&gt; &#123; <span class="hljs-keyword">enum</span> &#123;prim=<span class="hljs-number">1</span>&#125;; &#125;;<br><br><span class="hljs-keyword">template</span>&lt;&gt;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">is_prime</span>&lt;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>&gt; &#123; <span class="hljs-keyword">enum</span> &#123;prim=<span class="hljs-number">1</span>&#125;; &#125;;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-type">int</span> i&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">D</span> &#123; <span class="hljs-built_in">D</span>(<span class="hljs-type">void</span>*); &#125;;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-type">int</span> i&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Prime_print</span> &#123;<br>  Prime_print&lt;i<span class="hljs-number">-1</span>&gt; a;<br>  <span class="hljs-keyword">enum</span> &#123; prim = is_prime&lt;i, i<span class="hljs-number">-1</span>&gt;::prim &#125;;<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123; D&lt;i&gt; d = prim ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>; a.<span class="hljs-built_in">f</span>();&#125;<br>&#125;;<br><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Prime_print</span>&lt;<span class="hljs-number">1</span>&gt; &#123;<br>  <span class="hljs-keyword">enum</span> &#123;prim=<span class="hljs-number">0</span>&#125;;<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123; D&lt;<span class="hljs-number">1</span>&gt; d = prim ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>; &#125;;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>  Prime_print&lt;<span class="hljs-number">18</span>&gt; a;<br>  a.<span class="hljs-built_in">f</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>输出</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;17&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;13&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;11&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;7&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;5&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;3&gt;’<br>…<br>unruh.cpp:20:19: error: no viable conversion from ‘int’ to ‘D&lt;2&gt;’<br></code></pre></td></tr></table></figure>
 
@@ -1324,7 +1326,7 @@
 <p>Map扩展为Tree，则Map结构之间的extends运算也需要被扩展为Tree结构上的x-extends运算。</p>
 </blockquote>
 <p>显然Map是Tree的一个特例，Tree结构的每一个节点都可以看作是一个Map， <code>Tree = Map + Nested</code>，因此上面的公式确实可以被看作是对<code>Map extends Map&lt;Map&gt;</code>构造模式的一种推广。<br>但是从另外一个角度去考虑，Tree结构可以通过嵌套组合多个Map构造出来，Map是一种更基本的、更细粒度的结构，那么有必要强调Tree结构吗？所有Tree结构上的运算最终不都能分解为每一级的Map结构上的运算吗？</p>
-<p>XLang对这个问题的回答是：在更复杂的Tree结构上建立的软件结构空间（以及这个结构空间中的构造规律）并不能简单的划归到以Map为基础的软件结构空间。也就是说，这里出现了<code>整体 &gt; 部分之和</code>的情况，Tree的构造规律所具有的整体性分解到Map结构的构造规律之后会丢失一些关键性信息。</p>
+<p>XLang对这个问题的回答是：在更复杂的Tree结构上建立的软件结构空间（以及这个结构空间中的构造规律）并不能简单的划归到以Map为基础的软件结构空间。也就是说，这里出现了<code>整体 &gt; 部分之和</code>的情况，<strong>Tree的构造规律所具有的整体性分解到Map结构的构造规律之后会丢失一些关键性信息</strong>。</p>
 <p>要真正的理解XLang语言的创新之处，必须要了解XLang语言设计背后的下一代软件构造理论：可逆计算理论。可逆计算明确提出逆元和差量的概念，指出全量是差量的一个特例(A&#x3D;0+A)，我们需要在（包含逆元的）差量概念的基础上重建所有对软件世界的理解。可逆计算提出了一个通用的图灵完备的软件构造公式：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = Delta x-extends Generator&lt;DSL&gt;<br></code></pre></td></tr></table></figure>
 
@@ -1340,17 +1342,33 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/tasks/task[name=&#x27;test&#x27;]/@name<br></code></pre></td></tr></table></figure>
 
 <p>上述的xpath表示tasks节点下的名称为test的子节点的name属性。</p>
-<p>通过严密的理论分析，可逆计算得出的一个必然推论是差量的独立性和可复合性要求存在稳定的领域坐标系，而正是无所不在的、整体性的领域坐标系导致了Tree结构空间和Map结构空间的本质性差异。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>X&#x27; = (A + dA) + (B + dB) + (C + dC)  // 差量无处不在<br>   = (A + B + C) + (dA + dB + dC)  // 差量可以聚合在一起，独立于基础代码存放<br>   = X + Delta // 差量满足结合律，可以独立于Base实现合并运算<br></code></pre></td></tr></table></figure>
+<p>首先我们来明确一下坐标系统的作用: 每一个业务上关心的值在坐标系统中都具有唯一的坐标，可以通过这个坐标来实现值的读取和修改。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">value = get(path);<br>set(path,value);<br></code></pre></td></tr></table></figure>
 
-<p>假设X由A、B、C等多个部分构成，<code>X&#39;</code>是需求变更后对原系统进行改造后的结果。需求变更导致的差异性修改是遍布系统各处的，<strong>如果要求所有零碎的修改都可以独立于原系统源码来管理和存放</strong>（差量的独立性），并且小的差量还可以复合为一个更大粒度的差量（差量的可复合性），那么这就意味着软件结构空间中存在一个完善的坐标系统，每个差量</p>
-<p>每个差量都需要关联一个稳定的坐标，</p>
-<p>整个系统中必须存在一个完善的坐标系统，每个Delta都明确知道它应该作用到哪个坐标处。<br>则我们在完全不修改基础产品源码的情况下就可以实现深度的定制开发。</p>
-<p>首先需要强调的是，类似于Git的Patch和分支管理不满足Delta的独立性和可复合性。Patch总是和特定的Base代码版本绑定在一起，在不知道Base的情况下无法将多个Patch合并为一个更大的Patch。详细分析参见文章<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例</a>。</p>
+<p>Map结构的问题在于它只提供两级坐标：第一级定位到Map，第二级在Map内定位到属性或者方法。但是这种简单的坐标系统无法实现业务层面上精确的区分。比如说</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dialog</span>&#123;<br>    String title;<br>    List&lt;Button&gt; actions;<br>    List&lt;Component&gt; body;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Dialog对象具有一组操作按钮，如果我们想定位到其中的【提交】按钮，把它的label属性修改为【确定】，在现有的程序语言中是没有一种简便直观的定位手段的。如果我们只想定制在某个场景下使用的Dialog（比如为它增加一个属性），使用一般程序语言配套的AOP机制也无法实现：因为<strong>AOP的定位系统是基于类型的</strong>。而在XLang语言中，可以直接使用如下描述</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dialog</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">actions</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;确定&quot;</span> /&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">actionss</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>目前程序语言的研究一般集中在类型系统，但是研究类型的原因在于不同的对象可以具有相同的类型，从而研究类型比研究原本的对象结构要简单而且不会涉及到对象的生命周期问题。<strong>这导致类型系统并不是一个合格的坐标系：类型相同的对象在类型系统坐标系中无法被区分开来，因而也就无法继续建立精细的差量构造</strong>。</p>
+<h2 id="可扩展设计必然需要领域结构坐标系"><a href="#可扩展设计必然需要领域结构坐标系" class="headerlink" title="可扩展设计必然需要领域结构坐标系"></a>可扩展设计必然需要领域结构坐标系</h2><p>在软件开发中，所谓的可扩展性指的是在不需要修改原始代码的情况下，通过添加额外的代码或差异信息，可以满足新的需求或实现新的功能。如果在完全抽象的数学层面去理解软件开发中的扩展机制，我们可以认为它对应于如下公式：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Y = X + Delta<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>X对应于我们已经编写完毕的基础代码，它不会随需求的变化而变化  </li>
+<li>Delta对应于额外增加的配置信息或者差异化代码</li>
+</ul>
+<p>在这个视角下，所谓的可扩展性方面的研究就等价于Delta差量的定义和运算关系方面的研究。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>Y = (A + dA) + (B + dB) + (C + dC)  // 差量无处不在<br>   = (A + B + C) + (dA + dB + dC)  // 差量可以聚合在一起，独立于基础代码存放<br>   = X + Delta // 差量满足结合律，可以独立于Base实现合并运算<br></code></pre></td></tr></table></figure>
+
+<p>假设X由A、B、C等多个部分构成，需求变更导致的差异性修改是遍布系统各处的，<strong>如果要求所有零碎的修改都可以独立于原系统源码来管理和存放</strong>（差量的独立性），并且小的差量还可以复合为一个更大粒度的差量（差量的可复合性），那么必然需要一个坐标系统用于精确定位。具体来说，<code>dA</code>与<code>A</code>分离之后，存放到独立存在的Delta中，那么它必然保留了某种定位坐标，只有这样，当Delta与<code>X</code>结合的时候，才可以重新找到原始的结构<code>A</code>，然后与<code>A</code>相结合。</p>
+<h3 id="Delta与Patch和插件机制的区别"><a href="#Delta与Patch和插件机制的区别" class="headerlink" title="Delta与Patch和插件机制的区别"></a>Delta与Patch和插件机制的区别</h3><p>首先需要指出的是，类似于Git的Patch和分支管理不满足Delta的独立性和可复合性。Patch总是和特定的Base代码版本绑定在一起，在不知道Base的情况下无法将多个Patch合并为一个更大的Patch。详细分析参见文章<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例</a>。</p>
 <p>第二个需要强调的地方是，差量与传统编程领域中的扩展点和插件机制有着本质性差异。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>Y = A + B + D<br>  = X + (-C) + D<br>  = X + Delta<br></code></pre></td></tr></table></figure>
 
 <p>Delta差量不仅仅是向系统中增加内容。如果我们要实现粗粒度的系统级别的复用，所对应的差量必然包含减少的语义（比如，我们需要去除基础产品中定义的一个Bean）。实际上一个粗粒度的差量一定是加和减的混合。</p>
+<p>另外需要注意的是，<strong>插件机制只支持少量事先确定的扩展点</strong>，我们并不可能在原始设计之外通过插件来定制原有系统的功能。但是Delta的概念则不同，只要存在一个全局的结构坐标系，这个坐标系中的任何一点上都可以引入Delta差量。</p>
 <p>如果TypeScript被认为是JavaScript + JSX + Type扩展，那么XLang可以看作是 JavaScript + XPL + 差量计算 + 元模型+ 元编程扩展。</p>
 <p>一般的程序语言很强调语法形式，但是XLang强调的是语法形式不重要，不同展现形式之间可以进行可逆转换，此外语义结构应该支持差量分解、合并。</p>
 <ol>
