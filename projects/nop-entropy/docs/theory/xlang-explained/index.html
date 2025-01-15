@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>关于”为什么XLang是一门创新的程序语言”一文的答疑 - Nop</title>
+
+
+  <meta property="og:title" content="关于”为什么XLang是一门创新的程序语言”一文的答疑">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">关于&#34;为什么XLang是一门创新的程序语言&#34;一文的答疑</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>我在上一篇文章<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O4VeA7Dw8cRF7HTHxi6pNw">为什么XLang是一门创新的程序语言</a>中介绍了XLang语言的设计思想，指出XLang语言之所以是一门创新的程序语言，是因为它创造了一个新的程序结构空间，在这个结构空间中可以很方便的实现可逆计算理论所提出的<code>Y = F(X) + Delta</code>的计算范式。本文是对一些反馈的问题所做的进一步的解释。</p>
+<h2 id="1-如何基于XLang将差量计算压缩到编译期执行？"><a href="#1-如何基于XLang将差量计算压缩到编译期执行？" class="headerlink" title="1. 如何基于XLang将差量计算压缩到编译期执行？"></a>1. 如何基于XLang将差量计算压缩到编译期执行？</h2><blockquote>
+<p>为了实现属性继承，UIOTOS做了大量特殊的设计，并且在运行时引擎中引入了大量与属性继承相关的代码。但是，如果基于XLang语言，可以把差量计算完全压缩到编译期来执行，运行时引擎只需要知道普通组件结构即可，不需要有任何差量分解、合并的知识。</p>
+</blockquote>
+<p><img src="/knosys/project-nop-entropy/theory/nop/uiotos.webp"></p>
+<p>UIOTOS是一个用于IOT领域的无代码平台，它引入了一种容器组件，在这个组件中可以应用已经存在的页面，然后利用属性机制机制覆盖页面对象中的属性，从而实现不重新实现页面，但是又能灵活定制该页面内容的效果。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  type<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;container&quot;</span><span class="hljs-punctuation">,</span><br>  baseUrl<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;a.page.json&quot;</span><span class="hljs-punctuation">,</span><br>  overrideProps<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;form/title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sss&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;actions/0/label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vvv&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>大致方案如上述所示，基本相当于是通过baseUrl引入页面对象，然后通过多个继承属性来覆盖页面对象中的内容。通过类似JsonPath的语法，可以修改页面对象中的任何嵌套内容，因此它和一般的组件框架中调用组件，然后给组件传递参数是不同的。</p>
+<p>UIOTOS在前端运行时框架中专门针对属性继承编写了不少代码，并且需要引入一个特殊的container控件。UIOTOS的方案有一个限制，就是它只能覆盖已有页面中的属性值，并不能改变被继承页面的结构。另外有一个同学做的低代码平台采用了一个功能类似的方案，它不需要引入特殊的container的组件，对于任何组件都可以进行差量定制。具体做法就是在组件中引入一个特殊的overwrite属性。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;component&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;MyComponent&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;version&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <br>     <span class="hljs-attr">&quot;a&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 直接设置组件属性</span><br>   <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>   <span class="hljs-attr">&quot;overwrite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;这里记录可视化编辑器中对组件的编辑动作&quot;</span><br> <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>基本操作模式是在编辑器中推拽一个组件之后，如果发现组件有些细节需要调整，可以进入组件定制模式，在可视化设计器中对组件进行微调。<strong>调整过程中的操作步骤被自动录制下来，作为overwrite保存在页面文件中</strong>。这个方案可以任意调整组件结构，比UIOTOS的方案适应性更强，但是记录操作动作会比较冗长，多个动作也难以压缩成一个精简的最终结果（相当于没有利用结合律进行化简）。</p>
+<p>无论是上面的哪种方案在编辑器和前端运行时框架里都要加入差量概念相关的处理代码。但是如果使用XLang语言作为底层模型的表达语言，则可以把差量计算完全压缩到编译期来执行，运行时引擎只需要知道普通组件结构即可，不需要有任何差量分解、合并的知识。具体做法是通过<code>x:extends</code>来实现组件继承。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;component.xdef&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">import</span> <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;comp:MyComponent/1.0.0&quot;</span>/&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;MyComponentEx&quot;</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;comp:MyComponent/1.0.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;remove&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;b&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x:override</span>=<span class="hljs-string">&quot;merge&quot;</span>&gt;</span><br>      这里可以只显示Delta修正的部分<br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;a.form.xml&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">actions</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ss&quot;</span> <span class="hljs-attr">x:id</span>=<span class="hljs-string">&quot;ss&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">actions</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">component</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">MyComponentEx</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">component</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果不需要定制，直接通过import引入组件来使用即可。如果需要定制，则启用局部组件定义，通过<code>x:extends</code>引入已有的组件。XLang定义了Tree结构之间的Delta合并算法，通过统一的DslNodeLoader来加载模型文件时会自动执行这个算法。伪代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">loadDeltaModel</span>(<span class="hljs-params">path</span>)&#123;<br>   rootNode = <span class="hljs-title class_">VirtualFileSystem</span>.<span class="hljs-title function_">loadXml</span>(path);<br>   <span class="hljs-keyword">for</span> each node <span class="hljs-keyword">with</span> <span class="hljs-attr">x</span>:<span class="hljs-keyword">extends</span> attribute  <span class="hljs-comment">// 递归遍历rootNode以及rootNode的子节点</span><br>       baseNode = <span class="hljs-title function_">loadDeltaNode</span>(node.<span class="hljs-title function_">removeAttr</span>(<span class="hljs-string">&#x27;x:extends&#x27;</span>));<br>       genNodes = <span class="hljs-title function_">processGenExtends</span>(node);<br><br>       <span class="hljs-keyword">for</span> each genNode <span class="hljs-keyword">in</span> genNodes<br>           baseNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeltaMerger</span>().<span class="hljs-title function_">merge</span>(baseNode, genNode);<br>       node = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeltaMerger</span>().<span class="hljs-title function_">merge</span>(baseNode,node);    <br><br>   <span class="hljs-title function_">processPostExtends</span>(node);<br>   <span class="hljs-keyword">return</span> node;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p><code>DslNodeLoader.loadDeltaModel(&quot;comp:MyComponent/1.0.0&quot;)</code>返回的XNode是最终合并后的节点，其中已经不包含任何x名字空间的属性和子节点。</p>
+<p><strong>Loader可以看作是一种即时编译器，它加载模型文件的时候进行的结构转换可以看作是编译过程的一部分</strong>。</p>
+<h3 id="在结构层而不是对象层定义的差量运算"><a href="#在结构层而不是对象层定义的差量运算" class="headerlink" title="在结构层而不是对象层定义的差量运算"></a>在结构层而不是对象层定义的差量运算</h3><blockquote>
+<p>维特根斯坦说过，语言的边界就是我们世界的边界。可逆计算理论进一步的诠释是：<strong>一种程序语言定义了一个软件结构空间，各种根据已有结构产生新结构的复用机制相当于是这个结构空间中的变换规律</strong>。</p>
+</blockquote>
+<p>一个真正实用的DSL必然需要考虑可扩展性的问题，需要内置一些分解、合并、复用的机制。但是目前大部分DSL设计者都习惯于在具有语义的对象层引入这些结构运算，导致每个DSL设计者实际上都是拍脑袋设计，缺乏通用性和内在的一致性。</p>
+<p>XLang提供了一整套标准化的做法，一劳永逸的解决所有DSL的可扩展性问题。DSL引擎只要考虑最小化的运行时问题即可。XLang完全只在编译期（模型解析和加载）执行，运行期完全没有任何XLang相关的内容。这里的关键就在于<strong>XLang是在对象之下的结构层实现Delta合并运算</strong>。所谓结构层就是XNode层面，类似Lisp中的S表达式，它本身是没有任何语义的。<strong>脱离语义，正是Delta合并运算通用性的表现</strong>。</p>
+<p>举例来说，Spring的<code>beans.xml</code>可以看作是组件装配领域的DSL。Spring1.0引入了parent属性用于实现某种继承功能，引入了Import语法来实现复杂文件分解和复用。Spring2.0引入了自定义节点，简化复杂结构Bean的配置。SpringBoot则引入了@ConditionalOnProperty注解，允许通过配置开关来选择是否启用Bean。为了实现这些功能，都需要Spring框架在内核中专门编写相应的处理代码。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:myns</span>=<span class="hljs-string">&quot;http://www.example.com/schema/myns&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">           http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="hljs-string"><span class="hljs-tag">           http://www.example.com/schema/myns</span></span><br><span class="hljs-string"><span class="hljs-tag">           http://www.example.com/schema/myns/myns.xsd&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">import</span> <span class="hljs-attr">resource</span>=<span class="hljs-string">&quot;classpath:config/services.beans.xml&quot;</span>/&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 父Bean --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;parentBean&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.ParentClass&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;commonProperty&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;commonValue&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 子Bean，继承父Bean的配置 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;childBean&quot;</span> <span class="hljs-attr">parent</span>=<span class="hljs-string">&quot;parentBean&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extProp&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;extValue&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>     <span class="hljs-comment">&lt;!-- 使用自定义命名空间配置Bean --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">myns:customBean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;customBean&quot;</span> <span class="hljs-attr">customProperty</span>=<span class="hljs-string">&quot;customValue&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@ConditionalOnProperty(name = &quot;mycomponent.enabled&quot;, havingValue = &quot;true&quot;, matchIfMissing = false)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">MyComponent</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;MyComponent is initialized!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doSomething</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;MyComponent is doing something!&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>而如果是使用XLang，这些功能完全不需要开发</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;config/base.beans.ml&quot;</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">x:gen-extends</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">c:include</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;config/services.beans.xml&quot;</span> /&gt;</span><br><br>     <span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">myns:customBean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;customBean&quot;</span> <span class="hljs-attr">customProperty</span>=<span class="hljs-string">&quot;customValue&quot;</span> </span><br><span class="hljs-tag">                      <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/example/myns.xlib&quot;</span> /&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>  <br>   <span class="hljs-tag">&lt;/<span class="hljs-name">x:gen-extends</span>&gt;</span>  <br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;parentBean&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.ParentClass&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;commonProperty&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;commonValue&quot;</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;childBean&quot;</span> <span class="hljs-attr">x:prototype</span>=<span class="hljs-string">&quot;parentBean&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;extProp&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;extValue&quot;</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myComponent&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.MyComponent&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">feature:on</span>=<span class="hljs-string">&quot;mycomponent.enabled&quot;</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;propA&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;xxx&quot;</span> <span class="hljs-attr">feature:on</span>=<span class="hljs-string">&quot;mycomponent.xxx.enabled&quot;</span> /&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>首先，我们注意到，在不引入任何可扩展机制的情况下，Spring1.0中bean的定义就是一个完备的组件装配模型。也就是说，任何可以通过<code>get/set</code>函数和<code>constructor</code>构造器来装配的bean，都可以使用<code>beans.xml</code>这个DSL来描述式的定义装配逻辑。在数学上，我们可以说Spring1.0定义了一个完备的装配运算集合。</p>
+</li>
+<li><p>XLang的做法是在已有的DSL基础上引入一组Delta差量运算，但是这些<strong>Delta运算的结果是将<code>DSL + Delta</code>结构划归为原始的DSL结构</strong>。这里有趣的是，Spring2.0引入的自定义名字空间的做法是不能化归到1.0语法的，也就是说<strong>用Spring2.0语法配置的bean并不能保证一定可以使用Spring1.0语法来配置，即使Spring1.0语法是一个完备运算集</strong>。Spring2.0的自定义名字空间，比如<code>&lt;myns:customBean&gt;</code>会触发Java中的一个NamespaceHandler去处理，它在Java中执行的逻辑可以任意复杂，甚至可能会隐含的引入顺序依赖（bean的声明顺序有可能影响到装配结果），实际上会破坏了Spring1.0的POJO声明式装配设计。</p>
+</li>
+<li><p><code>x:extends</code>可以继承已有的DSL文件，功能类似于Spring1.0的import语法。</p>
+</li>
+<li><p><code>x:gen-extends</code>中执行Xpl模板语言来动态生成bean的定义。这里可以使用Xpl模板语言内置的<code>c:include</code>来引入外部XNode节点，同样可以取代Spring1.0的import语法。</p>
+</li>
+<li><p><code>x:gen-extends</code>段中通过Xpl自定义标签的功能可以模拟Spring2.0的自定义名字空间机制。只不过Xpl标签的做法是代码生成，无论标签函数的执行逻辑多么复杂，只要它能生成我们期望的bean配置定义即可。比如上面的<code>&lt;myns:customBean&gt;</code>可能实际会生成多个bean的定义。真正在运行时起作用的是标签函数的生成结果。<code>x:gen-extends</code>本身是在编译期执行。</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">myns:customBean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;customBean&quot;</span> <span class="hljs-attr">customProperty</span>=<span class="hljs-string">&quot;customValue&quot;</span> </span><br><span class="hljs-tag">                      <span class="hljs-attr">xpl:lib</span>=<span class="hljs-string">&quot;/example/myns.xlib&quot;</span> /&gt;</span><br><br>实际展开成如下两个Bean的定义：<br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;customBean&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.CustomBean&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;customProperty&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;customValue&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;otherProperty&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;otherBean&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;otherBean&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.OtherBean&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>XLang中，同级的兄弟节点之间可以通过<code>x:prototype</code>属性来指定继承关系。这可以取代Spring1.0语法中的parent属性的作用。同时XLang中的节点进行合并时，可以通过<code>x:override</code>来精细的控制合并逻辑：到底是覆盖、合并还是删除等。需要强调的是，XLang的这种机制是在任何节点上都可以实施的，比如在property也可以指定<code>x:prototype</code>继承其他Property的配置。但是Spring中的parent属性只能用于bean的定义的继承。</p>
+</li>
+<li><p>XLang中每一个节点上都可以通过<code>feature:on</code>和<code>feature:off</code>这种特性开关来控制条件加载。当特性开关不满足时，对应的节点会被自动删除，实际上并不会进入运行时。这可以取代SpringBoot的条件Bean的作用。同样的，feature开关在任何节点上都可以使用，比如在<code>&lt;property&gt;</code>节点上可以控制是否配置某个属性。但是在SpringBoot中条件开关只能作用于bean的创建，是没有任何声明式的机制来控制是否配置某个property的。</p>
+</li>
+</ul>
+<p>综上所述，Spring框架中内置了很多用于增加扩展性的机制，这些机制都需要专门针对组件装配这个领域，针对Spring这个特殊的框架进行编写。如果迁移到另外一个运行时引擎，这些机制都需要重新编写。比如Quarkus框架也支持Bean的装配定义，所有这些扩展方案它都需要自己实现一遍。Spring实现完毕之后，Hibernate等框架也无法利用这些机制来实现自己的扩展。</p>
+<p>XLang的关键是将XML或者JSON解析为XNode节点之后，在XNode这个层面完成Delta运算，而不是将XNode转换为强类型的BeanDefinition之后再执行Delta运算。因此它所做的这些功能可以自动应用到其他的DSL上，比如MyBatis的mapper文件，Hibernate的hbm文件等。</p>
+<p>其实类似的可扩展性问题在很多领域都存在，比如Facebook发明的GraphQL服务协议中引入了类型扩展语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs graphql">type User &#123;<br>  id: ID!<br>  name: String!<br>  email: String!<br>&#125;<br><br>extend type User &#123;<br>  age: Int<br>  email: String @deprecated(reason: &quot;Use &#x27;contactEmail&#x27; instead&quot;)<br>  contactEmail: String!<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>graphql-java</code>包的实现中，是先将graphql定义解析为TypeDefinition和TypeExtensionDefinition，然后在对象层实现类型合并。</p>
+<p>在XLang的技术体系中，NopGraphQL框架使用XMeta元数据模型来定义Type，所以可以直接使用XLang内置的XNode层面的差量机制实现扩展，无需专门设计一个TypeExtension语法。在NopGraphQL的运行时，也无需具有任何类型扩展的知识。对于运行时框架而言，类型就是类型，不存在类型+类型扩展的情况</p>
+<h3 id="Loader-as-Generator"><a href="#Loader-as-Generator" class="headerlink" title="Loader as Generator"></a>Loader as Generator</h3><p>在XLang的技术体系中，Loader这个抽象具有特殊地位。因为所有可逆计算相关的内容原则上都是在Loader抽象中完成，所以第三方框架集成XLang原则上非常简单：直接将DSL的Loader替换为XLang的Delta Loader即可。</p>
+<p>一个通用的模型加载器可以看作是具有如下类型定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">    Loader :: Path -&gt; Model<br></code></pre></td></tr></table></figure>
+
+<p>对于一种通用设计，我们需要意识到一件事情，所谓的代码编写并不仅仅是为了应对眼前的需求，而是需要同时考虑到未来的需求变化，需要考虑到系统在时空中的演化。 换句话说，编程所面向的不是当前的、唯一的世界，而是<strong>所有可能的世界</strong>。在形式上，我们可以引入一个Possible算子来描述这件事情。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">    Loader :: Possible Path -&gt; Possible Model<br>    Possible Path = deltaPath + stdPath<br></code></pre></td></tr></table></figure>
+
+<p>stdPath指模型文件所对应的标准路径，而deltaPath指对已有的模型文件进行定制时所使用的差量定制路径。举个例子，在base产品中我们内置了一个业务处理流程main.wf.xml，在针对客户A进行定制时，我们需要使用一个不同的处理流程，但是我们并不想修改base产品中的代码。此时，我们可以增加一个delta差量模型文件<code>/_delta/a/main.wf.xml</code>，它表示针对客户a定制的main.wf.xml，Loader会自动识别这个文件的存在，并自动使用这个文件，而所有已经存在的业务代码都不需要被修改。</p>
+<p>如果我们只是想对原有的模型进行微调，而不是要完全取代原有模型，则可以使用<code>x:extends</code>继承机制来继承原有模型。XLang中的DeltaLoader的执行逻辑在数学层面上由下面的公式描述</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Loader&lt;Possible Path&gt; = Loader&lt;deltaPath + stdPath&gt; <br>                      = Loader&lt;deltaPath&gt; x-extends Loader&lt;stdPath&gt;<br>                      = DeltaModel x-extends Model<br>                      = Possible Model<br></code></pre></td></tr></table></figure>
+
+<p>这里需要强调的是，Loader抽象实际上具有非常广阔的应用场景，大量的与可扩展性相关的功能都可以下放到Loader层面统一实现，比如说多租户定制问题可以由一个识别租户参数的Loader来解决。更进一步的介绍参见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BFCTN73pH8ZZID3Dukhx3Q">从张量积看低代码平台的设计</a></p>
+<h2 id="2-如何理解XLang中差量叠加与波的类比关系？"><a href="#2-如何理解XLang中差量叠加与波的类比关系？" class="headerlink" title="2. 如何理解XLang中差量叠加与波的类比关系？"></a>2. 如何理解XLang中差量叠加与波的类比关系？</h2><blockquote>
+<p>物理世界中存在着另一种构造方式，那就是波。波是连续存在的模式，通过干涉叠加来构造世界。XLang语言的特异性就在于它通过差量运算支持连续的叠加构造。</p>
+</blockquote>
+<p>传统上构造好X之后，如果要修改，一定是要修改X本身。而如果是一种叠加方式，则可以<strong>通过额外补充一个Delta，在不直接改变X的情况下得到一个新的Y</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>Y = A + B + D<br>  = X + (-C + D)<br>  = X + Delta<br></code></pre></td></tr></table></figure>
+
+<p>传统的软件工程体系下，即使可以做到某种增量式开发，往往也是需要特殊设计很多扩展点，并不是任意地方的修改都可以通过Delta方式进行定制修改的。特别是传统的软件工程中增量一般都意味着增加新的功能，很少涉及到逆向减少已有的功能特性这种设计。Delta定制使得我们可以<strong>通过增加实现减少</strong>。</p>
+<p><strong>使用XLang开发的系统无需做任何额外的工作，就自动支持Delta定制。这使得产品化产品的开发成本得以大幅降低</strong>。比如说一个银行核心系统在打包成jar包之后，无需修改基础产品的代码，所有针对特定用户的定制修改、二次开发都可以作为Delta差量单独存放，通过切换Delta就可以实现多个不同的定制版本。同样的机制可以用于多租户定制。</p>
+<p>Delta定制可以实现精确到单个属性的定制。而传统软件工程只能提供少数事先定义的扩展点，很难实现所有地方都支持细粒度定制。比如我只想定义一个按钮的某个属性，往往都需要增加一个新的组件或者页面。<strong>所有业务层面关注的概念都可以逐个进行定制</strong>，这是所谓的连续性的一种表现。</p>
+<h2 id="3-在已经开发好的标准系统中能否引入XLang？"><a href="#3-在已经开发好的标准系统中能否引入XLang？" class="headerlink" title="3. 在已经开发好的标准系统中能否引入XLang？"></a>3. 在已经开发好的标准系统中能否引入XLang？</h2><blockquote>
+<p>XLang是一种创新的技术，它能否应用到已有的系统中？这样在遇到定制需求后，可以使用XLang表达出差量，然后基于标准系统和差量表述生成定制版系统。</p>
+</blockquote>
+<p>首先需要明确的是，差量需要在差量化的结构空间中表达。传统的软件是使用通用语言来表达，它所在的结构空间也就由通用程序语言来定义。通用程序语言如<code>Java</code>,<code>C#</code>等表达差量的时候非常受限，无法实现细粒度的差量定义。</p>
+<p>在面向对象程序语言中，能够直接利用的差量机制只有继承机制。Nop平台的做法是采用一种所谓的三明治架构，代码生成的时候采用如下生成方案</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NopAuthUser</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">_NopAuthUser</span>&#123;<br><br>    <span class="hljs-comment">// 这里可以增加额外的方法，从基类继承模型驱动生成的代码。</span><br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">_NopAuthUser</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">OrmEntity</span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>也就是说，模型驱动生成的类从系统内置的基础类继承，这样可以自动得到一些内置的属性和方法，而最外层再生成一个类从代码生成的类继承，这样手工修改的代码可以和自动生成的代码隔离。代码生成的时候，我们约定如下规则: <strong>文件名以下划线为前缀的文件以及<code>_gen</code>目录下的所有文件都会被自动覆盖，其它文件只有不存在时才新建</strong>。这样的话，当模型发生变动的时候，可以直接重新生成，不会导致手工修改的内容丢失，从而实现模型驱动的增量式开发。</p>
+<p>虽然不能从面向对象语言中直接得到更多的差量化支持，但是在架构层面可以自行构建更多的差量机制。最基本的方案是所有使用到XML&#x2F;JSON&#x2F;YAML等配置文件或者模型文件的地方都可以引入XLang。</p>
+<p><img src="/knosys/project-nop-entropy/tutorial/simple/images/solon-chain.png"></p>
+<p>在上面的示例中，Chain是一种可以通过json文件定义的模型对象，它的解析和装载可以通过<code>Chain.parseByUrl</code>函数进行。如果使用XLang来改造，可以直接将·<code>Chain.parseByUrl</code>替换为<code>ResourceComponentManager.loadComponentModel(path)</code>，然后把json文件移动到<code>resources/_vfs</code>目录下即可。在这个json就可以使用<code>x:extends</code>，<code>x:post-extends</code>，<code>x:override</code>等XLang的Delta差量语法。</p>
+<p>Nop平台提供了一个<code>nop-spring-delta</code>模块，其中对Spring的<code>beans.xml</code>文件和MyBatis的<code>mapper.xml</code>文件增加了Delta定制支持，可以把这些XML文件放到<code>resources/_vfs</code>目录下。具体做法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@ConditionalOnProperty(name = &quot;nop.spring.delta.mybatis.enabled&quot;, matchIfMissing = true)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NopMybatisSessionFactoryCustomizer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">SqlSessionFactoryBeanCustomizer</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">customize</span><span class="hljs-params">(SqlSessionFactoryBean factoryBean)</span> &#123;<br><br>        List&lt;IResource&gt; resources = ModuleManager.instance().findModuleResources(<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;/mapper&quot;</span>, <span class="hljs-string">&quot;.mapper.xml&quot;</span>);<br><br>        <span class="hljs-keyword">if</span> (!resources.isEmpty()) &#123;<br>            List&lt;Resource&gt; locations = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(resources.size());<br>            <span class="hljs-keyword">for</span> (IResource resource : resources) &#123;<br>                <span class="hljs-comment">// 忽略自动生成的mapper文件，它们只能作为基类存在</span><br>                <span class="hljs-keyword">if</span> (resource.getName().startsWith(<span class="hljs-string">&quot;_&quot;</span>))<br>                    <span class="hljs-keyword">continue</span>;<br><br>                <span class="hljs-type">XDslExtendResult</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> DslNodeLoader.INSTANCE.loadFromResource(resource);<br>                <span class="hljs-type">XNode</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> result.getNode();<br>                node.removeAttr(<span class="hljs-string">&quot;xmlns:x&quot;</span>);<br><br>                <span class="hljs-type">String</span> <span class="hljs-variable">xml</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot; ?&gt;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;&lt;!DOCTYPE mapper\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        PUBLIC \&quot;-//mybatis.org//DTD Mapper 3.0//EN\&quot;\n&quot;</span> +<br>                        <span class="hljs-string">&quot;        \&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd\&quot;&gt;\n&quot;</span> + node.xml();<br>                locations.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ByteArrayResource</span>(xml.getBytes(StandardCharsets.UTF_8), resource.getPath()));<br>            &#125;<br>            factoryBean.addMapperLocations(locations.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Resource</span>[<span class="hljs-number">0</span>]));<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>ModuleManager.instance().findModuleResources(false, &quot;/mapper&quot;, &quot;.mapper.xml&quot;)</code>会在各个模块的mapper目录下查找<code>mapper.xml</code>文件。这个过程会自动考虑Delta目录下的文件。如果在<code>_vfs/_delta/&#123;deltaId&#125;/</code>目录下存在同名的文件，则会自动选择Delta目录下的版本。Nop平台内置的VirutalFileSystem是一种类似Docker的分层文件系统，上一层的文件会覆盖下一层的同名文件。每个Delta目录就构成一个独立分层，可以通过<code>nop.core.vfs.delta-layer-ids</code>来指定多个Delta层。</p>
+</li>
+<li><p>通过XLang提供的DslNodeLoader加载XML的文件的时候，会根据根节点上的<code>x:schema</code>属性读取到对应的XDef元模型，然后按照元模型规范定义实现节点的Delta合并。</p>
+</li>
+<li><p>合并完成之后得到一个XNode节点，可以将它转换为XML的DOM节点，这里直接序列化为XML，送入MyBatis的工厂bean。MyBatis本身不需要做任何改造，只是为它增加了一种新的获取mapper文件的方式而已。</p>
+</li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/xlang-explained.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
