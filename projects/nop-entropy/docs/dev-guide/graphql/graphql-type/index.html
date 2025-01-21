@@ -1263,7 +1263,8 @@
 <li>在Excel数据模型中定义一个domain，string-long，在【域定义中】设置它对应的Java类型为String。这样在生成实体属性的时候会修改为String类型。</li>
 <li>另外一种做法是在XMeta的prop上指定<code>graphql:type</code>为String，这样在GraphQL中返回的时候会自动转换成String类型。</li>
 </ol>
-
+<h2 id="Java类型映射到GraphQL类型"><a href="#Java类型映射到GraphQL类型" class="headerlink" title="Java类型映射到GraphQL类型"></a>Java类型映射到GraphQL类型</h2><p>有时会使用弱类型的Java属性，但是希望为它指定某个确定性的GraphQL类型。可以通过<code>@GraphQLReturn(&quot;MyObject&quot;)</code>这种注解来指定函数返回值类型中的对象类型为指定类型。如果返回类型是列表类型，则GraphQLReturn指定的是列表中的元素的类型。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ResultBean</span> &#123;<br>      List&lt;IOrmEntity&gt; list;<br><br>        <span class="hljs-meta">@GraphQLReturn(bizObjName = &quot;MyObject&quot;)</span><br>        <span class="hljs-keyword">public</span> List&lt;IPropGetMissingHook&gt; <span class="hljs-title function_">getList</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> list;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
