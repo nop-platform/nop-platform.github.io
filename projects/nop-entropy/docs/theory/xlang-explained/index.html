@@ -1364,6 +1364,9 @@
 <li><p>合并完成之后得到一个XNode节点，可以将它转换为XML的DOM节点，这里直接序列化为XML，送入MyBatis的工厂bean。MyBatis本身不需要做任何改造，只是为它增加了一种新的获取mapper文件的方式而已。</p>
 </li>
 </ul>
+<h2 id="4-XLang语言的差量计算和Delta机制在提高可扩展性和定制化的同时，是否会引入额外的性能开销？"><a href="#4-XLang语言的差量计算和Delta机制在提高可扩展性和定制化的同时，是否会引入额外的性能开销？" class="headerlink" title="4. XLang语言的差量计算和Delta机制在提高可扩展性和定制化的同时，是否会引入额外的性能开销？"></a>4. XLang语言的差量计算和Delta机制在提高可扩展性和定制化的同时，是否会引入额外的性能开销？</h2><p>首先，XLang实现DSL的差量合并和Delta定制时，主要是在模型加载时刻通过统一<code>ResourceComponentManager.loadComponentModel</code>函数进行，在这个过程中实现了模型缓存、模型编译依赖追踪（依赖文件变化时自动使得模型缓存失效）。</p>
+<p>在开发阶段通过延迟加载、即时编译、并行加载等技术可以减少系统初始化时间。</p>
+<p>对于正式发布版本，可以通过maven打包工具在编译期执行合并，最终生成合并后的模型文件到<code>_delta</code>目录下，并在模型根节点上标注<code>x:validated=&quot;true&quot;</code>。运行时会优先加载<code>_delta</code>目录下的模型文件（这个文件是最终合并后的结果），并且因为已经标注为模型已验证，会自动跳过合并过程，所以再复杂的差量合并逻辑也不会影响运行时性能。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
