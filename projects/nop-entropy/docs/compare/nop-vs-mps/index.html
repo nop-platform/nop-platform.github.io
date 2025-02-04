@@ -1259,19 +1259,19 @@
       </header>
       <div class="Article-content col-md-9"><p>语法制导翻译（Syntax-Directed Translation，SDT）是编译原理中的核心技术，它将语义动作与上下文无关文法的产生式相结合，在语法分析过程中逐步执行翻译任务。以下是其核心要点：</p>
 <h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ol>
-<li><strong>基础框架</strong>：</li>
-</ol>
+<li><p><strong>基础框架</strong>：</p>
 <ul>
 <li><strong>上下文无关文法</strong>：描述语言结构。</li>
 <li><strong>语义动作</strong>：附加在文法产生式上的代码片段，用于属性计算、生成代码或执行其他翻译任务。</li>
 </ul>
-<ol start="2">
-<li><strong>属性类型</strong>：</li>
-</ol>
+</li>
+<li><p><strong>属性类型</strong>：</p>
 <ul>
 <li><strong>综合属性</strong>：自底向上传递，由子节点属性计算父节点属性（如表达式求值）。</li>
 <li><strong>继承属性</strong>：自顶向下传递，父节点向子节点传递上下文信息（如变量类型声明）。</li>
 </ul>
+</li>
+</ol>
 <h3 id="实现机制"><a href="#实现机制" class="headerlink" title="实现机制"></a>实现机制</h3><ul>
 <li><p><strong>动作触发时机</strong>：</p>
 <ul>
@@ -1294,6 +1294,7 @@
 </ol>
 <h3 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h3><p>以算术表达式为例：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">E → E + T   &#123; E.val = E₁.val + T.val &#125;<br>E → T       &#123; E.val = T.val &#125;<br>T → T * F   &#123; T.val = T₁.val * F.val &#125;<br>T → F       &#123; T.val = F.val &#125;<br>F → (E)     &#123; F.val = E.val &#125;<br>F → num     &#123; F.val = num.val &#125;<br></code></pre></td></tr></table></figure>
+
 <p>每个产生式附加的语义动作用于计算表达式的值，属性<code>val</code>自底向上传递，最终得到根节点的值。</p>
 <h3 id="挑战与解决方案"><a href="#挑战与解决方案" class="headerlink" title="挑战与解决方案"></a>挑战与解决方案</h3><ul>
 <li><strong>继承属性处理</strong>：在自底向上分析中，需通过全局符号表或标记非终结符间接传递。</li>
@@ -1365,9 +1366,12 @@
 <h4 id="3-核心机制深度对比"><a href="#3-核心机制深度对比" class="headerlink" title="3. 核心机制深度对比"></a><strong>3. 核心机制深度对比</strong></h4><h5 id="（1）多DSL集成原理"><a href="#（1）多DSL集成原理" class="headerlink" title="（1）多DSL集成原理"></a><strong>（1）多DSL集成原理</strong></h5><ul>
 <li><p><strong>XLang</strong>：</p>
 <ul>
-<li>所有DSL均基于XDef元模型定义，生成统一AST结构。</li>
-<li>不同DSL的AST通过<code>x-extends</code>在编译期合并为单一逻辑树，形成<strong>全局坐标系</strong>（通过XPath唯一标识节点）。</li>
-<li><strong>示例</strong>：<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># DSL1: 定义数据模型</span><br><span class="hljs-attr">model:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">User</span><br>    <span class="hljs-attr">fields:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">id</span><br>        <span class="hljs-attr">type:</span> <span class="hljs-string">string</span><br><br><span class="hljs-comment"># DSL2: 定义API接口（通过x:extends集成DSL1）</span><br><span class="hljs-attr">x:extends:</span> <span class="hljs-string">dsl1.yaml</span><br><span class="hljs-attr">api:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">path:</span> <span class="hljs-string">/user/&#123;id&#125;</span><br>    <span class="hljs-attr">method:</span> <span class="hljs-string">GET</span><br>    <span class="hljs-attr">response:</span> <span class="hljs-string">User</span>  <span class="hljs-comment"># 直接引用DSL1中定义的User模型</span><br></code></pre></td></tr></table></figure></li>
+<li><p>所有DSL均基于XDef元模型定义，生成统一AST结构。</p>
+</li>
+<li><p>不同DSL的AST通过<code>x-extends</code>在编译期合并为单一逻辑树，形成<strong>全局坐标系</strong>（通过XPath唯一标识节点）。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># DSL1: 定义数据模型</span><br><span class="hljs-attr">model:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">User</span><br>    <span class="hljs-attr">fields:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">id</span><br>        <span class="hljs-attr">type:</span> <span class="hljs-string">string</span><br><br><span class="hljs-comment"># DSL2: 定义API接口（通过x:extends集成DSL1）</span><br><span class="hljs-attr">x:extends:</span> <span class="hljs-string">dsl1.yaml</span><br><span class="hljs-attr">api:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">path:</span> <span class="hljs-string">/user/&#123;id&#125;</span><br>    <span class="hljs-attr">method:</span> <span class="hljs-string">GET</span><br>    <span class="hljs-attr">response:</span> <span class="hljs-string">User</span>  <span class="hljs-comment"># 直接引用DSL1中定义的User模型</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p><strong>MPS</strong>：</p>
@@ -1572,6 +1576,9 @@ Any modification in the project may affect the performance of internal DSL.
 <p><a target="_blank" rel="noopener" href="http://voelter.de/data/pub/SLE2019.pdf">Shadow Models: Incremental Transformations for MPS</a><br>The name is motivated by the realization that many analyses are easier to do on an model whose structure is different from what the user edits.<br>A problem when representing information formally with models is that different tasks suggest different representations of the same information</p>
 <p>Transformation DSL The language is functional: each function takes one or more source nodes as input and produces one or more output nodes.<br>局部结构变换<br>he result of the transformation can either be analyzed directly on the INode structure or after materializion to an MPS AST (through another COW). The latter is slower,<br>but has the advantage that existing MPS analyses (such as type checks) can be used unchanged; it is also the basis for visualization in the editor.</p>
 <p>MPS models are trees with cross-references (or: graphs with a single containment hierarchy).</p>
+<p>Technically there is no reason why one could not build languages that allow<br>users to build their own abstractions, just like any programming language.</p>
+<p>提供更强大的建立抽象的手段。</p>
+<p>MPS’s distinctive feature is its projectional editor,<br>which unlike textual editors, does not rely on a parser. Instead, the visual no-<br>tation is a projection of the Abstract Syntax Tree (AST).</p>
 
 </div>
       <footer class="Article-footer col-md-3">
