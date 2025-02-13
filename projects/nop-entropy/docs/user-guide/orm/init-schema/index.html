@@ -37,10 +37,10 @@
 
 
 
-  <title>ORM���ݿ��ʼ�� - Nop</title>
+  <title>ORM数据库初始化 - Nop</title>
 
 
-  <meta property="og:title" content="ORM���ݿ��ʼ��">
+  <meta property="og:title" content="ORM数据库初始化">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,15 +1251,15 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">ORM���ݿ��ʼ��</h1>
+    <h1 class="Article-title">ORM数据库初始化</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><h2 id="����ʱ�Զ������ݿ������������"><a href="#����ʱ�Զ������ݿ������������" class="headerlink" title="����ʱ�Զ������ݿ������������"></a>����ʱ�Զ������ݿ������������</h2><ul>
-<li>���Զ�ִ�б��������ֶ��ض��塢�ֶ�������ΨһԼ��������ΨһԼ��ɾ����ΨһԼ���ض���ȱ�������������ֶε�ɾ�����ֶ�ɾ���޷������Ƿ�Ϊ��������ɵģ���ɾ�����ܻ���ɱȶԷ�Χ����ı�����ɾ��</li>
-<li>�����Զ����������ڹ������������� io.github.entropy-cloud:nop-dbtool-core�������� nop.orm.db-differ.auto-upgrade-database Ϊ true</li>
+      <div class="Article-content col-md-9"><h2 id="启动时自动对数据库进行增量更新"><a href="#启动时自动对数据库进行增量更新" class="headerlink" title="启动时自动对数据库进行增量更新"></a>启动时自动对数据库进行增量更新</h2><ul>
+<li>仅自动执行表新增、字段重定义、字段新增、唯一约束新增、唯一约束删除、唯一约束重定义等变更，不做表和字段的删除：字段删除无法区分是否为重命名造成的，表删除可能会造成比对范围以外的表被误删除</li>
+<li>启用自动升级，需在工程内引入依赖 io.github.entropy-cloud:nop-dbtool-core，并设置 nop.orm.db-differ.auto-upgrade-database 为 true</li>
 </ul>
 
 </div>

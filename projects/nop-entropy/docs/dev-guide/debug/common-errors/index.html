@@ -37,10 +37,10 @@
 
 
 
-  <title>���ô��� - Nop</title>
+  <title>常用错误 - Nop</title>
 
 
-  <meta property="og:title" content="���ô���">
+  <meta property="og:title" content="常用错误">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,14 +1251,14 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">���ô���</h1>
+    <h1 class="Article-title">常用错误</h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><h2 id="u��session"><a href="#u��session" class="headerlink" title="û��session"></a>û��session</h2><p><img src="/knosys/project-nop-entropy/dev-guide/debug/images/no-session-orm.png"></p>
-<p>ʹ��<code>@SingleSession</code>��<code>@Transactional</code>��ע�������Ҫ��maven�����ʱ��ִ�д�����������CodeGenTask��<br>������Ҫ������mvn compile -DskipTests��Ȼ��ſ�����IDEA���������ԡ�</p>
+      <div class="Article-content col-md-9"><h2 id="没有session"><a href="#没有session" class="headerlink" title="没有session"></a>没有session</h2><p><img src="/knosys/project-nop-entropy/dev-guide/debug/images/no-session-orm.png"></p>
+<p>使用<code>@SingleSession</code>和<code>@Transactional</code>的注解的类需要在maven打包的时候执行代码生成任务CodeGenTask。<br>所以需要先运行mvn compile -DskipTests，然后才可以在IDEA里启动调试。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
