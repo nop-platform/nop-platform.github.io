@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>编程与量子力学的似是而非的联系 - Nop</title>
+
+
+  <meta property="og:title" content="编程与量子力学的似是而非的联系">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">编程与量子力学的似是而非的联系</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>如 <a target="_blank" rel="noopener" href="https://www.zhihu.com/people/li-hui-53-72">@拉格朗日的忧郁</a> 所说，编程与量子力学的类比目前并没有严格的科学基础，那些概念层面的联系都是似是而非的。不过在这些似是而非的联系中，我发现了一些有趣且非常有启发性的内容。这些内容引导我提出了一种新的软件构造理论-可逆计算理论，它可以超越传统软件构造理论如面向对象和组件理论的限制，实现粗粒度的、系统级别的复用。</p>
+<p><strong>注意，这里的可逆计算理论与物理中已经存在的可逆计算机概念并不一致，虽然它们都强调了可逆性的重要性</strong>。</p>
+<blockquote>
+<p>可逆计算与可逆计算机有着同样的物理学思想来源，虽然具体的技术内涵并不一致，但它们目标却是统一的。正如云计算试图实现计算的云化一样，<strong>可逆计算和可逆计算机试图实现的都是计算的可逆化</strong>。参见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64007521">可逆计算的方法论来源</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/CwCQgYqQZxYmlZcfXEWlgA">可逆计算:下一代软件构造理论</a></p>
+<h2 id="一-两阶段提交与量子纠缠"><a href="#一-两阶段提交与量子纠缠" class="headerlink" title="一. 两阶段提交与量子纠缠"></a>一. 两阶段提交与量子纠缠</h2><p>向DeepSeek提问:</p>
+<blockquote>
+<p>先简单介绍量子纠缠和两阶段提交，然后用|提交&gt;+|提交&gt; 与 |回滚&gt;+|回滚&gt;这种叠加态来说明两者的相似性</p>
+</blockquote>
+<p>以下是DeepSeek AI的回答：</p>
+<h3 id="量子纠缠（Quantum-Entanglement）"><a href="#量子纠缠（Quantum-Entanglement）" class="headerlink" title="量子纠缠（Quantum Entanglement）"></a><strong>量子纠缠（Quantum Entanglement）</strong></h3><p>量子纠缠是量子力学中的核心现象。当两个或多个粒子形成纠缠态时，它们的量子态将不可分割地关联：  </p>
+<ul>
+<li><strong>叠加性</strong>：纠缠系统的状态是各粒子状态的叠加（如 |↑↑&gt; + |↓↓&gt;）  </li>
+<li><strong>非定域性</strong>：对其中一个粒子的测量会瞬间决定其他粒子的状态（即使相隔光年）  </li>
+<li><strong>概率坍缩</strong>：测量前系统处于概率性叠加态，测量后坍缩为确定态</li>
+</ul>
+<h3 id="两阶段提交（2-Phase-Commit-2PC）"><a href="#两阶段提交（2-Phase-Commit-2PC）" class="headerlink" title="两阶段提交（2-Phase Commit, 2PC）"></a><strong>两阶段提交（2-Phase Commit, 2PC）</strong></h3><p>2PC是分布式事务的原子性协议，通过协调者（Coordinator）确保所有参与者（Participants）的一致性：  </p>
+<ol>
+<li><strong>准备阶段</strong>：协调者询问所有参与者能否提交  <ul>
+<li>参与者锁定资源并返回”就绪”（Ready）或”中止”（Abort）</li>
+</ul>
+</li>
+<li><strong>提交阶段</strong>：若所有参与者就绪，协调者广播提交（Commit）；否则广播回滚（Rollback）</li>
+</ol>
+<h3 id="参与者状态的量子化表示"><a href="#参与者状态的量子化表示" class="headerlink" title="参与者状态的量子化表示"></a><strong>参与者状态的量子化表示</strong></h3><p>假设每个参与者的事务状态可以用量子态描述：  </p>
+<ul>
+<li><strong>基态</strong>：<br><code>|提交&gt; = |0&gt;</code><br><code>|回滚&gt; = |1&gt;</code>  </li>
+<li><strong>准备阶段的叠加态</strong>：<br>当参与者响应”就绪”时，其状态进入叠加态：<br><code>|状态&gt; = α|0&gt; + β|1&gt;</code><br>（其中 |α|² 为提交概率，|β|² 为回滚概率）</li>
+</ul>
+<h3 id="全局纠缠态的形成"><a href="#全局纠缠态的形成" class="headerlink" title="全局纠缠态的形成"></a><strong>全局纠缠态的形成</strong></h3><p>所有参与者与协调者形成<strong>逻辑纠缠态</strong>：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">|全局状态&gt; = (|0&gt;₁⊗|0&gt;₂⊗...⊗|0&gt;ₙ) + (|1&gt;₁⊗|1&gt;₂⊗...⊗|1&gt;ₙ)  <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>物理意义</strong>：<br>所有参与者要么全部提交（|0&gt;⊗|0&gt;⊗…），要么全部回滚（|1&gt;⊗|1&gt;⊗…）  </li>
+<li><strong>纠缠特征</strong>：<br>单个参与者的状态无法独立描述，必须通过全局状态定义</li>
+</ul>
+<h3 id="协议执行与量子坍缩的类比"><a href="#协议执行与量子坍缩的类比" class="headerlink" title="协议执行与量子坍缩的类比"></a><strong>协议执行与量子坍缩的类比</strong></h3><h4 id="阶段演化示意图"><a href="#阶段演化示意图" class="headerlink" title="阶段演化示意图"></a><strong>阶段演化示意图</strong></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">        准备阶段                  协调者决策                  状态坍缩  <br>|?&gt; ────────────&gt; α|0&gt; + β|1&gt; ───[Commit/Abort]───&gt; |0&gt; 或 |1&gt;<br>（初始不确定态）   （叠加态）           （观测行为）          （确定态）<br></code></pre></td></tr></table></figure>
+
+<h4 id="关键对应关系"><a href="#关键对应关系" class="headerlink" title="关键对应关系"></a><strong>关键对应关系</strong></h4><ol>
+<li><p><strong>准备阶段</strong> → <strong>量子叠加态</strong>  </p>
+<ul>
+<li>参与者进入”就绪”状态 ≈ 量子系统处于<code>|0&gt; + |1&gt;</code>叠加态  </li>
+<li>此时事务结果仍具有不确定性</li>
+</ul>
+</li>
+<li><p><strong>协调者决策</strong> → <strong>量子测量</strong>  </p>
+<ul>
+<li>协调者的最终指令（Commit&#x2F;Abort）相当于对系统进行测量  </li>
+<li>触发所有参与者的状态同步坍缩</li>
+</ul>
+</li>
+<li><p><strong>日志持久化</strong> → <strong>量子退相干抑制</strong>  </p>
+<ul>
+<li>事务日志确保状态可追溯 ≈ 量子纠错维持纠缠态</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>这里强调的是观察者层面观测到的事实，与底层世界是经典的还是量子的没有关系。</p>
+</blockquote>
+<h2 id="二-Paxos协议与量子纠缠"><a href="#二-Paxos协议与量子纠缠" class="headerlink" title="二. Paxos协议与量子纠缠"></a>二. Paxos协议与量子纠缠</h2><p>Paxos是一个分布式一致性算法，用于在不可靠的节点间达成共识。它的核心阶段包括准备阶段和接受阶段，通过多数派原则确保一致性。在没有全局时钟或即时通信的情况下，各个节点无法实时知道整个系统的状态，因此存在不确定期。如果把整个分布式系统看作是一个宏观世界，那么在这个宏观世界中系统在任一时刻（由逻辑时钟模拟的全局时间）的状态就处于<code>|已达成共识&gt; + |未达成共识&gt;</code>的叠加状态中。</p>
+<p>对Paxos协议的详细分析，参见</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LD8fDbyPohJkA9sbWGjXkQ">小学生也能轻松掌握的Paxos&#x2F;Raft算法奥秘</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/fo2iih0u0ECzQO3pgsKOhg">普通小学生也能理解的Paxos算法讲解</a></p>
+</li>
+</ul>
+<p>向DeepSeek提问:</p>
+<blockquote>
+<p>先简单介绍Paxos协议，然后说明分布式系统中因为没有全局知识无法判定当前是否已经达成共识，然后通过主动选择一个不冲突的选项造成选择空间塌缩。说明这种情况与量子纠缠的相似性。</p>
+</blockquote>
+<p>以下是DeepSeek的回答：</p>
+<h3 id="Paxos协议核心机制"><a href="#Paxos协议核心机制" class="headerlink" title="Paxos协议核心机制"></a><strong>Paxos协议核心机制</strong></h3><h4 id="共识达成三阶段"><a href="#共识达成三阶段" class="headerlink" title="共识达成三阶段"></a><strong>共识达成三阶段</strong></h4><ol>
+<li><p><strong>提案阶段（Prepare）</strong>  </p>
+<ul>
+<li>Proposer生成递增提案编号n，向Acceptor广播Prepare请求  </li>
+<li>Acceptor承诺：不再接受编号≤n的提案，并返回已接受的最大编号提案（若存在）</li>
+</ul>
+</li>
+<li><p><strong>承诺阶段（Promise）</strong>  </p>
+<ul>
+<li>Proposer收到多数派响应后，选择已存在的最⼤编号提案值v（或自定新值）  </li>
+<li>向Acceptor发送Accept(n, v)请求</li>
+</ul>
+</li>
+<li><p><strong>接受阶段（Accept）</strong>  </p>
+<ul>
+<li>Acceptor接受编号n的提案（若未违背承诺），持久化存储(n, v)  </li>
+<li>多数派接受后，值v被确定为系统共识</li>
+</ul>
+</li>
+</ol>
+<h3 id="分布式系统的认知局限"><a href="#分布式系统的认知局限" class="headerlink" title="分布式系统的认知局限"></a><strong>分布式系统的认知局限</strong></h3><h4 id="全局知识缺失的困境"><a href="#全局知识缺失的困境" class="headerlink" title="全局知识缺失的困境"></a><strong>全局知识缺失的困境</strong></h4><ol>
+<li><p><strong>无上帝视角</strong>：  </p>
+<ul>
+<li>节点仅掌握局部信息，无法实时感知全网状态  </li>
+<li>不同节点对”当前是否已达成共识”存在观测延迟</li>
+</ul>
+</li>
+<li><p><strong>不确定叠加态</strong>：  </p>
+<ul>
+<li>在共识最终确定前，系统处于潜在多值叠加态  </li>
+<li>例如可能同时存在：<br><code>|共识值&gt; = α|A&gt; + β|B&gt; + γ|C&gt;</code><br>（α,β,γ为各值被接受的概率权重）</li>
+</ul>
+</li>
+<li><p><strong>活锁风险</strong>：  </p>
+<ul>
+<li>多个Proposer持续生成更高编号提案，导致共识无法收敛  </li>
+<li>类似量子系统无法稳定坍缩的叠加震荡</li>
+</ul>
+</li>
+</ol>
+<h3 id="主动选择与空间坍缩"><a href="#主动选择与空间坍缩" class="headerlink" title="主动选择与空间坍缩"></a><strong>主动选择与空间坍缩</strong></h3><h4 id="Paxos的坍缩触发机制"><a href="#Paxos的坍缩触发机制" class="headerlink" title="Paxos的坍缩触发机制"></a><strong>Paxos的坍缩触发机制</strong></h4><ol>
+<li><p><strong>多数派观测器原理</strong>：  </p>
+<ul>
+<li>任意多数派Acceptor构成等效观测系统  </li>
+<li>一旦多数派接受某个提案，其值即成为客观事实（即使部分节点未感知）</li>
+</ul>
+</li>
+<li><p><strong>选择空间坍缩过程</strong>：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">|A&gt;+|B&gt;+|C&gt;  ——[多数派Accept(n,v)]——&gt; |v&gt;  <br>（叠加态）       （主动选择触发）      （确定态）<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过强制选择一个不冲突的值（如取最大编号提案值），消除其他可能性  </li>
+<li>类似量子测量打破叠加态，使系统坍缩到单一基态</li>
+</ul>
+</li>
+<li><p><strong>坍缩传递性</strong>：  </p>
+<ul>
+<li>新加入节点通过查询Acceptor历史记录同步状态  </li>
+<li>类似量子纠缠态的信息同步（但受限于光速延迟）</li>
+</ul>
+</li>
+</ol>
+<h3 id="与量子纠缠的隐喻对比"><a href="#与量子纠缠的隐喻对比" class="headerlink" title="与量子纠缠的隐喻对比"></a><strong>与量子纠缠的隐喻对比</strong></h3><h4 id="相似性维度"><a href="#相似性维度" class="headerlink" title="相似性维度"></a><strong>相似性维度</strong></h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Paxos协议</th>
+<th>量子纠缠系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>状态不确定性</strong></td>
+<td>共识达成前存在多值可能性</td>
+<td>测量前处于概率叠加态</td>
+</tr>
+<tr>
+<td><strong>坍缩触发机制</strong></td>
+<td>多数派接受提案行为</td>
+<td>观测测量行为</td>
+</tr>
+<tr>
+<td><strong>状态传播方式</strong></td>
+<td>通过消息传递同步确定态</td>
+<td>非定域性关联瞬时同步</td>
+</tr>
+<tr>
+<td><strong>容错能力</strong></td>
+<td>容忍少数派故障（拜占庭容错）</td>
+<td>量子纠错容忍局部退相干</td>
+</tr>
+</tbody></table>
+<h3 id="思想实验：薛定谔的共识值"><a href="#思想实验：薛定谔的共识值" class="headerlink" title="思想实验：薛定谔的共识值"></a><strong>思想实验：薛定谔的共识值</strong></h3><p>假设一个未决提案：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">|共识值&gt; = 0.6|X&gt; + 0.4|Y&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>工程视角</strong>：60%节点倾向X，40%倾向Y，但尚未达成多数派  </li>
+<li><strong>Paxos操作</strong>：  <ol>
+<li>Proposer探测到最高编号提案为X  </li>
+<li>通过Accept(n,X)使系统坍缩到|X&gt;</li>
+</ol>
+</li>
+<li><strong>量子隐喻</strong>：<br>相当于对纠缠粒子进行关联测量，迫使整个系统选择一致状态</li>
+</ul>
+<h2 id="三-软件构造与波粒二象性"><a href="#三-软件构造与波粒二象性" class="headerlink" title="三. 软件构造与波粒二象性"></a>三. 软件构造与波粒二象性</h2><p><strong>目前大部分人对于软件结构构造的基本理解都是基于还原论的，总是不断向下分解，寻找原子化的成分，然后使用原子进行组装</strong>。原本虚拟化的组件概念在潜意识中实际上是被看作是真实存在的离散个体，类似于物质世界中的粒子，通过嵌套组合来构造世界。但是物理世界中存在着另一种构造方式，那就是波。波是连续存在的模式，通过干涉叠加来构造世界。</p>
+<p>一个有趣的问题是，我们能不能通过类似波的叠加的方式来构造软件，从而超越整体-部分这种组合方式？</p>
+<p>传统上构造好X之后，如果要修改，一定是要修改X本身。而如果是一种叠加方式，则可以<strong>通过额外补充一个Delta，在不直接改变X的情况下得到一个新的Y</strong>。  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">X = A + B + C<br>Y = A + B + D<br>  = X + (-C + D)<br>  = X + Delta<br></code></pre></td></tr></table></figure>
+
+<p>传统的软件工程体系下，即使可以做到某种增量式开发，往往也是需要特殊设计很多扩展点，并不是任意地方的修改都可以通过Delta方式进行定制修改的。特别是传统的软件工程中增量一般都意味着增加新的功能，很少涉及到逆向减少已有的功能特性这种设计。Delta定制使得我们可以<strong>通过增加实现减少</strong>。  </p>
+<blockquote>
+<p>需要注意的是，叠加构造要求Delta必然是正和负的混合体，必须扩大软件的结构空间包含逆元。</p>
+</blockquote>
+<p>XLang语言是世界上第一个在语言中明确定义领域结构坐标并内置通用的差量计算规则的程序语言，它的设计遵循可逆计算理论的指导。</p>
+<p><strong>使用XLang开发的系统无需做任何额外的工作，就自动支持Delta定制。这使得产品化产品的开发成本得以大幅降低</strong>。比如说一个银行核心系统在打包成jar包之后，无需修改基础产品的代码，所有针对特定用户的定制修改、二次开发都可以作为Delta差量单独存放，通过切换Delta就可以实现多个不同的定制版本。同样的机制可以用于多租户定制。  </p>
+<p>Delta定制可以实现精确到单个属性的定制。而传统软件工程只能提供少数事先定义的扩展点，很难实现所有地方都支持细粒度定制。比如我只想定义一个按钮的某个属性，往往都需要增加一个新的组件或者页面。<strong>所有业务层面关注的概念都可以逐个进行定制</strong>，这是所谓的连续性的一种表现。</p>
+<p>组件的黑箱模型类似于高中阶段牛顿力学的世界观，它是完全机械化的：刚体的运动完全由它的质心坐标和尺寸形状朝向等少数几个参数来描述，刚体的内部构造无法被观测也无关紧要，刚体之间通过直接接触发生相互作用， 刚体的形状必须精确匹配才能构成一个无缝的整体。即使是在古典力学中，稍微高级一点的观点也都会转换到拉格朗日表述或者哈密尔顿表述，它的精神实质是转向场论的世界观。 所谓的场（Field），其实就是建立一个无所不在的坐标系，然后在坐标系的每一点上都可以指定一个物理量。<strong>场的自由度是无限的，但是通过坐标系它是可描述的、可定义的、可研究的</strong>，在坐标系的每一点上我们都可以精确的度量局部的变化。在场的世界观中，我们面对的核心图像是对象总是浸泡在场（无所不在的坐标系）中，而不再是孤立对象之间的两两相互作用。</p>
+<p>XLang的详细介绍参见</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O4VeA7Dw8cRF7HTHxi6pNw">为什么说XLang是一门创新的程序语言？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XtqjqoC8bhDSuCwGhrMbnw">关于”为什么说XLang是一门创新的程序语言”一文的答疑</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GsGrmaXMqKmmrYW7EuAuig">DeepSeek的通俗版解释：XLang为什么是一门创新的编程语言？</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TtTfcVqklEeZm-UdLBaaZA">关于”为什么XLang是一门创新的程序语言”一文的进一步解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/uw88ceRGPcEDlb4W8cNC1g">关于XLang语言的第三轮答疑</a></li>
+</ul>
+<h2 id="四-可逆计算与相互作用绘景"><a href="#四-可逆计算与相互作用绘景" class="headerlink" title="四. 可逆计算与相互作用绘景"></a>四. 可逆计算与相互作用绘景</h2><p>计算机科学存在两种基本的世界观：图灵机和Lambda演算，它们指出了到达图灵完备的两条技术路线。但是量子力学中却存在着三种世界图景：薛定谔图景，海森堡图景和狄拉克图景。为什么计算机科学有两种基本世界观，但是量子力学却存在三种世界图景？它们之间是否存在什么对应关系？</p>
+<p>实际上，计算机科学中实现图灵完备的基本技术路线也可以被看作是有三条，它们和量子力学的世界图景存在如下对应关系：</p>
+<ul>
+<li>图灵机            &lt;&#x3D;&gt; 薛定谔图景</li>
+<li>Lambda演算  &lt;&#x3D;&gt; 海森堡图景</li>
+<li>可逆计算        &lt;&#x3D;&gt; 狄拉克图景</li>
+</ul>
+<p>以下是具体的分析。首先，量子力学中最基本的世界图景同样是两个，狄拉克图景是前两种图景自然衍生的结果</p>
+<ol>
+<li>薛定谔图景中算子固定，态函数演化</li>
+<li>海森堡图景中态函数固定，而算子演化</li>
+<li>狄拉克图景（相互作用图景）中态函数和算符都不固定，它们都随时间演化</li>
+</ol>
+<p>在狄拉克图景中，我们将系统的Hamiltion量拆分为已知的部分和待研究的微小扰动</p>
+<p>$$<br>H &#x3D; H_0 + H_1<br>$$</p>
+<p>然后研究系统如何偏离已知模型进行演化，即我们所关心的是差量描述的演化情况。在相互作用图景下，态函数和算符都随时间演化。</p>
+<p>$$<br>i\hbar \frac d {dt} |\psi_I(t)\rangle &#x3D; H_1|\psi_I(t)\rangle \<br>  i\hbar \frac d {dt} |A_I(t)\rangle &#x3D; [A_I(t), H_0]<br>$$</p>
+<p>根据这三种图景都可以得到完全一致的物理测量结果</p>
+<p>$$<br>\langle \psi_S(t)|A_S|\psi_S(t)\rangle &#x3D; \langle \psi_H|A_H(t)|\psi_H\rangle<br> &#x3D; \langle \psi_I(t)|A_I(t)|\psi_I(t)\rangle<br>$$</p>
+<p>有趣的是，相互作用图景是物理学家在实际工作中使用最多的图景。事实上，数学物理中存在一个专门的分支：微扰论（Perturbation Theroy），它系统化的研究在已知模型的基础上添加微小的扰动量，新的模型如何演化的问题。而理论物理中绝大多数有价值的计算都是在微扰论的框架下进行。</p>
+<p>如果把量子力学和计算机理论做个对比，我们会发现量子力学中的世界图景和计算机理论的世界观之间存在一个有趣的对应关系。</p>
+<ol>
+<li>图灵机是一种结构固化的机器，它具有可枚举的有限的状态集合，只能执行有限的几条操作指令，但是可以从无限长的纸带上读取和保存数据。例如我们日常使用的电脑，它在出厂的时候硬件功能就已经确定了，但是通过安装不同的软件，传入不同的数据文件，最终它可以自动产生任意复杂的目标输出。图灵机的计算过程在形式上可以写成</li>
+</ol>
+<p>$$<br>目标输出 &#x3D; 固定的机器 （无限复杂的输入）<br>$$</p>
+<ol start="2">
+<li>与图灵机相反的是，lambda演算的核心概念是函数，一个函数就是一台小型的计算机器，函数的复合仍然是函数，也就是说可以通过机器和机器的递归组合来产生更加复杂的机器。lambda演算的计算能力与图灵机等价，这意味着如果允许我们不断创建更加复杂的机器，即使输入一个常数0，我们也可以得到任意复杂的目标输出。</li>
+</ol>
+<p>$$<br>目标输出 &#x3D; 无限复杂的机器（固定的输入）<br>$$</p>
+<p>计算机科学中的两个基本理论在形式上都可以被表达为 Y &#x3D; F(X)这样一种抽象的形式。如果仿照狄拉克图景的导出过程，我们认识到在真实的物理世界中，人类的认知总是有限的，所有的量都需要区分已知的部分和未知的部分，因此我们需要进行如下分解：</p>
+<p>$$<br>\begin{aligned}<br> Y &amp;&#x3D; F(X) \<br>   &amp;&#x3D; (F_0 + F_1) (X_0+X_1)\<br>   &amp;&#x3D; F_0(X_0) + \Delta<br>\end{aligned}<br>$$</p>
+<p>重新整理一下符号，我们就得到了一个适应范围更加广泛的计算模式</p>
+<p>$$<br>Y &#x3D; F(X) \oplus \Delta<br>$$</p>
+<p>除了函数运算F(X)之外，这里出现了一个新的结构运算符⊕，它表示两个元素之间的合成运算，并不是普通数值意义上的加法，同时引出了一个新的概念：差量△。△的特异之处在于，它必然包含某种负元素，F(X)与△合并在一起之后的结果并不一定是“增加”了输出，而完全可能是“减少”。<br>在物理学中，差量△存在的必然性以及△包含逆元这一事实完全是不言而喻的，因为物理学的建模必须要考虑到两个基本事实：</p>
+<ol>
+<li>世界是“测不准”的，噪声永远存在</li>
+<li>模型的复杂度要和问题内在的复杂度相匹配，它捕获的是问题内核中稳定不变的趋势及规律。</li>
+</ol>
+<p>例如，对以下的数据<br><img src="https://pic4.zhimg.com/80/v2-91f19a10faa36653267ffbd4eab86b7f_1440w.webp"></p>
+<p>我们所建立的模型只能是类似图(a)中的简单曲线，图(b)中的模型试图精确拟合每一个数据点在数学上称之为过拟合，它难以描述新的数据，而图(c)中限制差量只能为正值则会极大的限制模型的描述精度。</p>
+<p><strong>可逆计算理论提出了一个新的软件构造公式，将以上的计算模式落实为实现图灵完备的一条具体的技术路线</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">App = Delta x-extends Generator&lt;DSL&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>App :  所需要构建的目标应用程序</li>
+<li>DSL: 领域特定语言（Domain Specific Language），针对特定业务领域定制的业务逻辑描述语言，也是所谓领域模型的文本表示形式</li>
+<li>Generator : 根据领域模型提供的信息，反复应用生成规则可以推导产生大量的衍生代码。实现方式包括独立的代码生成工具，以及基于元编程（Metaprogramming）的编译期模板展开</li>
+<li>Delta : 根据已知模型推导生成的逻辑与目标应用程序逻辑之间的差异被识别出来，并收集在一起，构成独立的差量描述</li>
+<li>x-extends:  差量描述与模型生成部分通过类似面向切面编程（Aspect Oriented Programming）的技术结合在一起，这其中涉及到对模型生成部分的增加、修改、替换、删除等一系列操作</li>
+</ul>
+<p>DSL是对关键性领域信息的一种高密度的表达，它直接指导Generator生成代码，这一点类似于图灵计算通过输入数据驱动机器执行内置指令。而如果把Generator看作是文本符号的替换生成，则它的执行和复合规则完全就是lambda演算的翻版。差量合并在某种意义上是一种很新奇的操作，因为它要求我们具有一种细致入微、无所不达的变化收集能力，能够把散布系统各处的同阶小量分离出来并合并在一起，这样差量才具有独立存在的意义和价值。同时，系统中必须明确建立逆元和逆运算的概念，在这样的概念体系下差量作为“存在”与“不存在”的混合体才可能得到表达。</p>
+<p><strong>图灵机能够实现图灵完备的根本原因在于图灵机可以被看作是一种虚拟机</strong>，它可以模拟所有其他的自动计算机器，而如果我们不断提升虚拟机的抽象层次，就会得到可以直接”运行”所谓领域特定语言(DSL)的虚拟机，但是因为DSL关注的重点是特定领域概念，它必然无法以最便利的方式表达所有通用计算逻辑（否则它就成为了通用语言），必然会导致某种信息溢出，成为所谓的Delta项。</p>
+<p>图灵机和lambda演算建立了通用计算机的概念基础，在理论上解决了计算的可行性问题，即为什么可以存在一种通用的机器执行机械化的动作，使用有限资源来完成所有我们能够想见的计算。在通用计算机已经普及的今天，我们所面临的最大的实际问题是如何有效的进行计算的问题。<strong>计算效率的提高依赖于我们发现计算中的“捷径”，而这依赖于我们对问题本质的洞察，而洞察的产生与问题的表述形式息息相关</strong>。表象（representation）变换本身甚至就是解决问题的一种方式，因为变换后的问题表象有可能使得解决方案变得清晰可见。可逆计算借助于领域模型和差量描述，提供了一种新的、系统化的表象变换方式，使我们的注意力得以聚焦在待解决的新问题上。</p>
+<blockquote>
+<p>关于表象变换的作用，参见 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/550923860">解耦的方法远不止依赖注入</a></p>
+</blockquote>
+<p>基于可逆计算的基本公式，我们可以很自然的得到如下推广的软件构造方法</p>
+<p>$$<br>\begin{aligned}<br> App &amp;&#x3D; Biz \oplus G1(DSL1) \oplus G2(DSL2) + …\<br>   &amp; \equiv (Biz, DSL1, DSL2, …)<br>\end{aligned}<br>$$</p>
+<p>如果把Generator（也可以是Translator或者Transformer）看作是已知的背景知识，在符号层面隐去它们的存在（类似于物理学中引入泊松括号），我们可以将App看作是一组DSL所构成的特性向量。也就是说，在第一代、第二代、第三代程序语言的发展过程中，不断的提升抽象层次，但它们仍然都是通用程序语言，但是<strong>发展到第四代程序语言，我们很可能得到的不是另一种通用程序语言，而是大量领域特定语言所构成的DSL森林</strong>，通过它们我们可以形成对原有程序结构的一种新的表示和认知。</p>
+<p>进一步的介绍参见：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aT99VX6ecmZXdemBPnBcoQ">写给程序员的可逆计算理论辨析</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zGfo7pvKjOCa11PYLJHzzA">写给程序员的可逆计算理论辨析补遗</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D5bDNkMJ9gYrFb0uDj2EzQ">写给程序员的差量概念辨析,以Git和Docker为例</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Fngl7vYWhULn0VKeAEKPkQ">可逆计算理论中的可逆到底指的是什么？</a></li>
+</ul>
+<h2 id="五-DSL森林与微分流形"><a href="#五-DSL森林与微分流形" class="headerlink" title="五. DSL森林与微分流形"></a>五. DSL森林与微分流形</h2><p>现代物理学所研究的时空不能用一个全局性的欧几里得坐标系来描述，必须使用多个欧式空间拼接所构成的所谓微分流形来描述。</p>
+<p>在编程领域，传统上都是使用所谓的通用程序语言如Java, C等来表达业务逻辑。如果把一个语言看作是一种描述坐标系，编程相当于是将业务映射到这个坐标空间中。问题在于通用程序语言的坐标在业务层面是不稳定的。比如说，在数据模型层面增加了一个字段，用通用语言表达的时候，可能很多地方都需要手动修改代码。但是如果是模型驱动架构，在数据模型这个DSL（领域特定语言，Domain Specific Language）中可能只需要修改一个地方，然后会自动推导得到其他地方的修改。我们可以说，增加字段这个变化在数据模型所定义的坐标系中只会产生一个局部的扰动。</p>
+<blockquote>
+<p>类比圆在欧几里得坐标系中的描述以及在最适宜的极坐标系中的描述。</p>
+</blockquote>
+<p>可逆计算理论指出了一条系统化的利用多个DSL来表达业务逻辑的技术路线。</p>
+<p>$$<br>\begin{aligned}<br>&amp; \text{&#x2F;&#x2F; 横向分解，产生多个 $DSL$} \<br>App &amp;&#x3D; Delta +  G_1\langle DSL_1\rangle + G_2\langle DSL_2\rangle + … \<br>\<br>&amp;\text{&#x2F;&#x2F; 深度分解，产生多个 $DSL$} \<br>App &amp;&#x3D; Delta + G_1\langle Delta_2 + G_2\langle Delta_3 + G_3\langle DSL_3\rangle\rangle\rangle<br>\end{aligned}<br>$$</p>
+<p>大量的DSL构成DSL森林，然后协同解决问题。</p>
+<p>这里需要强调的是，<strong>每个DSL语言都自动定义了一个适用于局部领域的坐标系统</strong>。这个概念听起来有点微妙，但是如果学习过微分几何中的活动标架法，就可以很快理解它。一般情况下我们都是在一个选定的坐标系统中来定义运动，但是活动标架法利用运动本身的内在特性自动定义了一个附着在运动轨迹上的内禀坐标系统，换句话说<strong>运动在坐标系中发生，同时运动本身生成了一个坐标系</strong>。类似的，业务逻辑使用DSL来表达，同时表达业务的时候使用的DSL的抽象语法树及其节点属性就自动构成了一个坐标系。具体来说，抽象语法树上的每个属性具有唯一的xpath，比如<code>/task/steps[@name=a]/@name</code> 表示步骤a的name属性。<strong>因为任何逻辑都是需要用程序语言来表达，所以不存在这个坐标系没有覆盖的情况，所有业务必然是在这个坐标系所定义的坐标空间中发生</strong>。</p>
+<blockquote>
+<p>活动标架法的本质是<strong>用几何对象的内在特性替代外部强加的坐标系</strong>，这与现代物理中“背景无关性”（如广义相对论）和计算机科学中“领域专用语言”（DSL）的设计理念不谋而合——<strong>通过对象自身结构定义描述框架</strong>，而非依赖外部抽象。</p>
+</blockquote>
+<p>基于可逆计算理论设计的低代码平台NopPlatform已开源：</p>
+<ul>
+<li>gitee: <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy">https://gitee.com/canonical-entropy/nop-entropy</a></li>
+<li>github: <a target="_blank" rel="noopener" href="https://github.com/entropy-cloud/nop-entropy">https://github.com/entropy-cloud/nop-entropy</a></li>
+<li>gitcode:<a target="_blank" rel="noopener" href="https://gitcode.com/canonical-entropy/nop-entropy">https://gitcode.com/canonical-entropy/nop-entropy</a></li>
+<li>开发示例：<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md">https://gitee.com/canonical-entropy/nop-entropy/blob/master/docs/tutorial/tutorial.md</a></li>
+<li>可逆计算原理和Nop平台介绍及答疑：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14u411T715/">https://www.bilibili.com/video/BV14u411T715/</a></li>
+<li>官网国际站: <a target="_blank" rel="noopener" href="https://nop-platform.github.io/">https://nop-platform.github.io/</a></li>
+<li>网友Crazydan Studio建立的Nop开发实践分享网站: <a target="_blank" rel="noopener" href="https://nop.crazydan.io/">https://nop.crazydan.io/</a></li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/coding-vs-quantum-theory.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+
