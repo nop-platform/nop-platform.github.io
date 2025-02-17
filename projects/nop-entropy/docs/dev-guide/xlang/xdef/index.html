@@ -1275,7 +1275,7 @@
 </ul>
 <p>xdef文件中的所有属性（除去<code>xdef</code>名字空间以及<code>x</code>名字空间中的内置属性）的值类型都是<code>def-type</code>类型，它的格式为 <code>(!~#)?&#123;stdDomain&#125;:&#123;options&#125;=&#123;defaultValue&#125;</code>。</p>
 <ul>
-<li><code>!</code>表示必填属性，<code>~</code>表示内部属性，<code>#</code>表示可以使用编译期表达式</li>
+<li><code>!</code>表示必填属性，<code>~</code>表示内部属性或者已经被废弃的属性，<code>#</code>表示可以使用编译期表达式</li>
 <li><code>stdDomain</code>是比数据类型更严格的格式限制，例如<code>stdDomain=email</code>等，具体值参见字典定义<a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-xlang/src/main/resources/_vfs/dict/core/std-domain.dict.yaml">core&#x2F;std-domain</a></li>
 <li>某些<code>def-type</code>定义需要<code>options</code>参数，例如<code>enum:xxx.yyy</code>，通过<code>options</code>来设置具体的字典名称</li>
 <li>可以为属性指定缺省值</li>

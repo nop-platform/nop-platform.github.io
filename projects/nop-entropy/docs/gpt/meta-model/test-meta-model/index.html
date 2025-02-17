@@ -12,8 +12,11 @@
 
 
   
-  
-  
+    
+    
+
+    
+      
     
   
 
@@ -37,10 +40,10 @@
 
 
 
-  <title>实用主义观点下的函数式编程思想 - Nop</title>
+  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
 
 
-  <meta property="og:title" content="实用主义观点下的函数式编程思想">
+  <meta property="og:title" content="Nop">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -1251,148 +1254,76 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">实用主义观点下的函数式编程思想</h1>
+    <h1 class="Article-title"></h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>函数式编程思想虽然已经进入主流开发领域，但是很多人对于它的理解还是仅限于map&#x2F;flatMap等大量使用Lambda表达式的集合处理函数，似乎使用了Lambda表达式就是函数式编程。<br>另外有一些人会强调Haskell、Scala等支持复杂类型定义的函数式编程语言，似乎在一般的命令式语言如Java中很难真正的实现所谓的函数式编程，并进而收获函数式编程所带来的好处。<br>但以上观点都是片面的。因为函数式编程是一种通用的编程范式，它并不是一种语言特性，在Java语言中一样可以充分落实函数式编程思想。函数式编程的内容也很丰富，并不仅仅是使用高阶函数这么简单。</p>
-<p>本文主要介绍在实用主义观点下使用常规的命令式语言来实践函数式编程思想的一些实践经验。文中介绍的内容主要参考如下文章：</p>
-<ul>
-<li><a href="">函数式编程为什么有利于解耦(Decouple)</a></li>
-<li>[写给小白的Monad指北]</li>
-<li>[Y组合子的一个启发式推导]</li>
-</ul>
-<h2 id="一-函数式编程的核心思想"><a href="#一-函数式编程的核心思想" class="headerlink" title="一. 函数式编程的核心思想"></a>一. 函数式编程的核心思想</h2><p>如果问DeepSeek AI，函数式编程的核心思想是什么，它会做出如下回答：</p>
-<p>数学的世界是一个没有时间的世界，没有因果。</p>
-<ol>
-<li>函数具有相当良好的数学特性，充分利用函数的数学特性可以获得科学意义上的好处。</li>
-<li>函数的适用范围非常广，与面向对象编程思想中的<strong>一切都是对象</strong>这个口号类似，函数式编程也可以鼓吹<strong>一切都是函数</strong>。</li>
-</ol>
-<p>数学意义上的函数并不一定需要用具体程序语言中的一个函数去承载和表达。比如说，在Java语言中对流程模型进行建模，流程的每个步骤在数学层面上可以对应于一个函数，但是在Java中我们实际是将这个函数建模为一个步骤对象，通过StepModel去表达这个函数以及这个函数相关的元数据信息。</p>
-<h3 id="2-1-纯函数与不可变性"><a href="#2-1-纯函数与不可变性" class="headerlink" title="2.1 纯函数与不可变性"></a>2.1 纯函数与不可变性</h3><ul>
-<li>纯函数的定义与特性</li>
-<li>不可变数据结构的优势</li>
-<li>纯函数在实践中的应用场景</li>
-</ul>
-<h3 id="2-2-高阶函数与函数组合"><a href="#2-2-高阶函数与函数组合" class="headerlink" title="2.2 高阶函数与函数组合"></a>2.2 高阶函数与函数组合</h3><ul>
-<li>高阶函数的概念与作用</li>
-<li>函数组合：将小函数组合成复杂逻辑</li>
-<li>实际案例：使用高阶函数简化代码</li>
-</ul>
-<h3 id="2-3-声明式编程"><a href="#2-3-声明式编程" class="headerlink" title="2.3 声明式编程"></a>2.3 声明式编程</h3><ul>
-<li>声明式编程与命令式编程的对比</li>
-<li>如何通过声明式编程提高代码可读性</li>
-<li>实际案例：使用声明式风格处理数据</li>
-</ul>
-<h2 id="一-什么是函数"><a href="#一-什么是函数" class="headerlink" title="一. 什么是函数"></a>一. 什么是函数</h2><h2 id="二-什么是Monad"><a href="#二-什么是Monad" class="headerlink" title="二. 什么是Monad"></a>二. 什么是Monad</h2><h2 id="三-从函数到函子"><a href="#三-从函数到函子" class="headerlink" title="三. 从函数到函子"></a>三. 从函数到函子</h2><h2 id="一-引言"><a href="#一-引言" class="headerlink" title="一. 引言"></a>一. 引言</h2><h3 id="1-1-函数式编程的兴起"><a href="#1-1-函数式编程的兴起" class="headerlink" title="1.1 函数式编程的兴起"></a>1.1 函数式编程的兴起</h3><ul>
-<li>函数式编程的历史背景</li>
-<li>为什么函数式编程在现代开发中越来越重要</li>
-<li>实用主义视角下的函数式编程：从理论到实践</li>
-</ul>
-<h3 id="1-2-文章目标"><a href="#1-2-文章目标" class="headerlink" title="1.2 文章目标"></a>1.2 文章目标</h3><ul>
-<li>探讨函数式编程的核心思想</li>
-<li>从实用主义角度分析函数式编程的优势与挑战</li>
-<li>提供实际案例，帮助读者理解如何将函数式编程应用于现实问题</li>
-</ul>
-<hr>
-<h2 id="二-函数式编程的核心思想"><a href="#二-函数式编程的核心思想" class="headerlink" title="二. 函数式编程的核心思想"></a>二. 函数式编程的核心思想</h2><h3 id="2-1-纯函数与不可变性-1"><a href="#2-1-纯函数与不可变性-1" class="headerlink" title="2.1 纯函数与不可变性"></a>2.1 纯函数与不可变性</h3><ul>
-<li>纯函数的定义与特性</li>
-<li>不可变数据结构的优势</li>
-<li>纯函数在实践中的应用场景</li>
-</ul>
-<h3 id="2-2-高阶函数与函数组合-1"><a href="#2-2-高阶函数与函数组合-1" class="headerlink" title="2.2 高阶函数与函数组合"></a>2.2 高阶函数与函数组合</h3><ul>
-<li>高阶函数的概念与作用</li>
-<li>函数组合：将小函数组合成复杂逻辑</li>
-<li>实际案例：使用高阶函数简化代码</li>
-</ul>
-<h3 id="2-3-声明式编程-1"><a href="#2-3-声明式编程-1" class="headerlink" title="2.3 声明式编程"></a>2.3 声明式编程</h3><ul>
-<li>声明式编程与命令式编程的对比</li>
-<li>如何通过声明式编程提高代码可读性</li>
-<li>实际案例：使用声明式风格处理数据</li>
-</ul>
-<hr>
-<h2 id="三-函数式编程的核心工具"><a href="#三-函数式编程的核心工具" class="headerlink" title="三. 函数式编程的核心工具"></a>三. 函数式编程的核心工具</h2><h3 id="3-1-函子（Functor）"><a href="#3-1-函子（Functor）" class="headerlink" title="3.1 函子（Functor）"></a>3.1 函子（Functor）</h3><ul>
-<li>函子的定义与基本操作（<code>fmap</code>）</li>
-<li>函子的实际应用：处理容器中的值</li>
-<li>实际案例：使用函子处理可选值（<code>Maybe</code>）</li>
-</ul>
-<h3 id="3-2-单子（Monad）"><a href="#3-2-单子（Monad）" class="headerlink" title="3.2 单子（Monad）"></a>3.2 单子（Monad）</h3><ul>
-<li>单子的定义与核心操作（<code>return</code> 和 <code>bind</code>）</li>
-<li>单子的实际意义：处理副作用与计算顺序</li>
-<li>实际案例：使用单子处理异步操作（<code>Promise</code>）</li>
-</ul>
-<h3 id="3-3-应用函子（Applicative-Functor）"><a href="#3-3-应用函子（Applicative-Functor）" class="headerlink" title="3.3 应用函子（Applicative Functor）"></a>3.3 应用函子（Applicative Functor）</h3><ul>
-<li>应用函子的定义与操作</li>
-<li>应用函子与函子、单子的关系</li>
-<li>实际案例：使用应用函子处理多个上下文中的函数</li>
-</ul>
-<hr>
-<h2 id="四-函数式编程的实用价值"><a href="#四-函数式编程的实用价值" class="headerlink" title="四. 函数式编程的实用价值"></a>四. 函数式编程的实用价值</h2><h3 id="4-1-代码的可维护性"><a href="#4-1-代码的可维护性" class="headerlink" title="4.1 代码的可维护性"></a>4.1 代码的可维护性</h3><ul>
-<li>纯函数与不可变性如何提高代码的可维护性</li>
-<li>实际案例：重构命令式代码为函数式风格</li>
-</ul>
-<h3 id="4-2-并行与并发编程"><a href="#4-2-并行与并发编程" class="headerlink" title="4.2 并行与并发编程"></a>4.2 并行与并发编程</h3><ul>
-<li>函数式编程如何简化并行与并发编程</li>
-<li>实际案例：使用函数式编程处理多线程任务</li>
-</ul>
-<h3 id="4-3-测试与调试"><a href="#4-3-测试与调试" class="headerlink" title="4.3 测试与调试"></a>4.3 测试与调试</h3><ul>
-<li>纯函数如何简化单元测试</li>
-<li>实际案例：为函数式代码编写测试</li>
-</ul>
-<h3 id="4-4-函数式编程的局限性"><a href="#4-4-函数式编程的局限性" class="headerlink" title="4.4 函数式编程的局限性"></a>4.4 函数式编程的局限性</h3><ul>
-<li>函数式编程的学习曲线</li>
-<li>性能问题与优化策略</li>
-<li>何时选择函数式编程，何时选择其他范式</li>
-</ul>
-<hr>
-<h2 id="五-函数式编程在现代开发中的应用"><a href="#五-函数式编程在现代开发中的应用" class="headerlink" title="五. 函数式编程在现代开发中的应用"></a>五. 函数式编程在现代开发中的应用</h2><h3 id="5-1-前端开发"><a href="#5-1-前端开发" class="headerlink" title="5.1 前端开发"></a>5.1 前端开发</h3><ul>
-<li>函数式编程在前端框架中的应用（如React、Redux）</li>
-<li>实际案例：使用函数式编程构建UI组件</li>
-</ul>
-<h3 id="5-2-后端开发"><a href="#5-2-后端开发" class="headerlink" title="5.2 后端开发"></a>5.2 后端开发</h3><ul>
-<li>函数式编程在服务器端开发中的应用（如Node.js、Scala）</li>
-<li>实际案例：使用函数式编程处理API请求</li>
-</ul>
-<h3 id="5-3-数据处理与机器学习"><a href="#5-3-数据处理与机器学习" class="headerlink" title="5.3 数据处理与机器学习"></a>5.3 数据处理与机器学习</h3><ul>
-<li>函数式编程在数据处理中的应用（如MapReduce）</li>
-<li>实际案例：使用函数式编程处理大规模数据集</li>
-</ul>
-<hr>
-<h2 id="六-函数式编程的未来"><a href="#六-函数式编程的未来" class="headerlink" title="六. 函数式编程的未来"></a>六. 函数式编程的未来</h2><h3 id="6-1-函数式编程与新兴技术"><a href="#6-1-函数式编程与新兴技术" class="headerlink" title="6.1 函数式编程与新兴技术"></a>6.1 函数式编程与新兴技术</h3><ul>
-<li>函数式编程在区块链、物联网等领域的应用</li>
-<li>函数式编程与人工智能的结合</li>
-</ul>
-<h3 id="6-2-函数式编程的普及与教育"><a href="#6-2-函数式编程的普及与教育" class="headerlink" title="6.2 函数式编程的普及与教育"></a>6.2 函数式编程的普及与教育</h3><ul>
-<li>如何降低函数式编程的学习门槛</li>
-<li>函数式编程在计算机教育中的角色</li>
-</ul>
-<h3 id="6-3-函数式编程的社区与生态"><a href="#6-3-函数式编程的社区与生态" class="headerlink" title="6.3 函数式编程的社区与生态"></a>6.3 函数式编程的社区与生态</h3><ul>
-<li>函数式编程语言的发展趋势（如Haskell、Elm、Clojure）</li>
-<li>函数式编程工具与库的生态系统</li>
-</ul>
-<hr>
-<h2 id="七-结论"><a href="#七-结论" class="headerlink" title="七. 结论"></a>七. 结论</h2><h3 id="7-1-函数式编程的核心价值"><a href="#7-1-函数式编程的核心价值" class="headerlink" title="7.1 函数式编程的核心价值"></a>7.1 函数式编程的核心价值</h3><ul>
-<li>从实用主义角度总结函数式编程的优势</li>
-<li>函数式编程如何改变开发者的思维方式</li>
-</ul>
-<h3 id="7-2-如何开始学习函数式编程"><a href="#7-2-如何开始学习函数式编程" class="headerlink" title="7.2 如何开始学习函数式编程"></a>7.2 如何开始学习函数式编程</h3><ul>
-<li>推荐学习资源与路径</li>
-<li>实践建议：从小项目开始，逐步深入</li>
-</ul>
-<h3 id="7-3-函数式编程的未来展望"><a href="#7-3-函数式编程的未来展望" class="headerlink" title="7.3 函数式编程的未来展望"></a>7.3 函数式编程的未来展望</h3><ul>
-<li>函数式编程在软件开发中的长期影响</li>
-<li>开发者如何拥抱函数式编程的思想</li>
-</ul>
-<hr>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li>相关书籍、论文与在线资源</li>
-<li>函数式编程语言与工具的官方文档</li>
-</ul>
-<hr>
-<p>这个大纲从实用主义的角度出发，系统地探讨了函数式编程的核心思想、工具、应用场景以及未来发展方向。通过理论与实际案例的结合，旨在帮助读者深入理解函数式编程的价值，并将其应用于实际开发中。</p>
+      <div class="Article-content col-md-9"><p>你是计算机专家，理解元模型的作用。下面是一个元模型的定义。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">prompt</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;string&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>string<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">defaultChatOptions</span> <span class="hljs-attr">xdef:ref</span>=<span class="hljs-string">&quot;chat-options.xdef&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">vars</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">        声明模板中使用的变量信息。主要用于模板管理</span><br><span class="hljs-comment">        --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">var</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;var-name&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;string&quot;</span> <span class="hljs-attr">xdef:name</span>=<span class="hljs-string">&quot;PromptVarModel&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">schema</span> <span class="hljs-attr">xdef:ref</span>=<span class="hljs-string">&quot;../schema/schema.xdef&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>string<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">var</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">vars</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">    通过xpl模板语言生成prompt，可以利用xpl的扩展能力实现Prompt的结构化抽象</span><br><span class="hljs-comment">    --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>生成的Prompt提示词<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">    执行完AI模型调用后得到AiResultMessage对象，可以通过模板内置的后处理器对返回结果进行再加工。</span><br><span class="hljs-comment">    这样在切换不同的Prompt模板的时候可以自动切换使用不同的后处理器。</span><br><span class="hljs-comment">    比如Prompt中可以额外增加一些特殊的标记提示，用于简化结果解析，在processResultMessage中自动识别这些标记并做处理。</span><br><span class="hljs-comment">    --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">processResultMessage</span>&gt;</span>JS函数，可以使用resultMessage变量<span class="hljs-tag">&lt;/<span class="hljs-name">processResultMessage</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prompt</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
+<p>chat-options.xdef的定义如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">options</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&quot;string&quot;</span> <span class="hljs-attr">seed</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">temperature</span>=<span class="hljs-string">&quot;float&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">topP</span>=<span class="hljs-string">&quot;float&quot;</span> <span class="hljs-attr">topK</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">maxTokens</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">contextLength</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">stop</span>=<span class="hljs-string">&quot;comma seperated string&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>要求：分析上面的元模型的定义，并自动生成一个符合元模型要求的示例Prompt，它描述一个发送给chatgpt的提示词，功能是将中文翻译为英文。</p>
+<ol>
+<li>元模型中节点的body部分表示的是该部分的数据类型</li>
+<li>!string中的!表示这个属性非空，!这个字符在最终的结果中不需要出现</li>
+<li>xpl模板语言类似JavaScript的模板字符串</li>
+<li>xdef为名字空间的属性是元模型属性，在最后的XML中不出现。</li>
+<li>输出结果为满足元模型要求的XML格式，且仅包含XML，不要额外解释</li>
+<li>XML标签名和属性名的大小写要与元模型保持一致</li>
+<li>xdef:ref表示引用已经存在的元模型定义，本节点的格式由引入的元模型来定义</li>
+</ol>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>你是计算机专家，理解元模型的作用。下面是一个元模型的定义。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">displayName:</span> <span class="hljs-string">string</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">string</span><br><span class="hljs-attr">defaultChatOptions:</span><br>  <span class="hljs-attr">xdef:ref:</span> <span class="hljs-string">chat-options.xdef</span><br><br><span class="hljs-attr">vars:</span><br>  <span class="hljs-comment"># 声明模板中使用的变量信息。主要用于模板管理</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-type">!var</span><span class="hljs-string">-name</span><br>    <span class="hljs-attr">displayName:</span> <span class="hljs-string">string</span><br>    <span class="hljs-attr">xdef:name:</span> <span class="hljs-string">PromptVarModel</span><br>    <span class="hljs-attr">schema:</span><br>      <span class="hljs-attr">xdef:ref:</span> <span class="hljs-string">../schema/schema.xdef</span><br>    <span class="hljs-attr">description:</span> <span class="hljs-string">string</span><br><br><span class="hljs-comment"># 通过xpl模板语言生成prompt，可以利用xpl的扩展能力实现Prompt的结构化抽象</span><br><span class="hljs-attr">template:</span> <span class="hljs-string">xpl-text</span><br><br><span class="hljs-comment"># 执行完AI模型调用后得到AiResultMessage对象，可以通过模板内置的后处理器对返回结果进行再加工。</span><br><span class="hljs-comment"># 这样在切换不同的Prompt模板的时候可以自动切换使用不同的后处理器。</span><br><span class="hljs-comment"># 比如Prompt中可以额外增加一些特殊的标记提示，用于简化结果解析，在processResultMessage中自动识别这些标记并做处理。</span><br><span class="hljs-attr">processResultMessage:</span> <span class="hljs-string">xpl-fn:(resultMessage)=&gt;void</span><br></code></pre></td></tr></table></figure>
+
+<p>chat-options.xdef的定义如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">model: string<br>seed: string<br>temperature: float<br>topP: float<br>topK: int<br>maxTokens: int<br>contextLength: int<br>stop: comma seperated string<br></code></pre></td></tr></table></figure>
+
+<p>要求：分析上面的元模型的定义，并自动生成一个符合元模型要求的示例Prompt，它描述一个发送给chatgpt的提示词，功能是将中文翻译为英文。</p>
+<ol>
+<li>元模型中节点的body部分表示的是该部分的数据类型</li>
+<li>!string中的!表示这个属性非空，!这个字符在最终的结果中不需要出现</li>
+<li>xpl模板语言类似JavaScript的模板字符串</li>
+<li>xdef为名字空间的属性是元模型属性，在最后的YAML中不出现。</li>
+<li>输出结果为满足元模型要求的YAML格式，且仅包含YAML，不要额外解释</li>
+<li>节点名和属性名的大小写要与元模型保持一致</li>
+</ol>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>你是计算机专家，理解元模型的作用。下面是一个元模型的定义。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs json5">&#123;<br>  // 基本信息<br>  displayName: &quot;string&quot;,<br>  description: &quot;string&quot;,<br><br>  // 聊天选项定义（关联 XML schema）<br>  defaultChatOptions: &#123;<br>    &quot;xdef:ref&quot;: &quot;chat-options.xdef&quot;  // 对应 XML 定义:<br>  &#125;,<br><br>  // 变量声明配置<br>  vars: [<br>    &#123;<br>      // 声明模板中使用的变量信息。主要用于模板管理<br>      name: &quot;!string&quot;,<br>      displayName: &quot;string&quot;,<br>      schema: &#123;<br>        &quot;xdef:ref&quot;: &quot;../schema/schema.xdef&quot;<br>      &#125;,<br>      description: &quot;string&quot;<br>    &#125;<br>  ],<br><br>  // 通过xpl模板语言生成prompt，可以利用xpl的扩展能力实现Prompt的结构化抽象<br>  template: &quot;这里使用xpl模板语言&quot;,<br><br>  // 后处理配置<br>  /*<br>  执行完AI模型调用后得到AiResultMessage对象，可以通过模板内置的后处理器对返回结果进行再加工。<br>  这样在切换不同的Prompt模板的时候可以自动切换使用不同的后处理器。<br>  比如Prompt中可以额外增加一些特殊的标记提示，用于简化结果解析，在processResultMessage中自动识别这些标记并做处理。<br>  */<br>  processResultMessage: &quot;xpl-fn:(resultMessage)=&gt;void&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>chat-options.xdef的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs json5">&#123;<br>	model: &quot;string&quot;<br>	seed: &quot;string&quot;<br>	temperature: &quot;float&quot;<br>	topP: &quot;float&quot;<br>	topK: &quot;int&quot;<br>	maxTokens: &quot;int&quot;<br>	contextLength: &quot;int&quot;<br>	stop: &quot;comma seperated string&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>要求：分析上面的元模型的定义，并自动生成一个符合元模型要求的示例Prompt，它描述一个发送给chatgpt的提示词，功能是将中文翻译为英文。</p>
+<ol>
+<li>元模型中节点的body部分表示的是该部分的数据类型</li>
+<li>!string中的!表示这个属性非空，!这个字符在最终的结果中不需要出现</li>
+<li>xpl模板语言类似JavaScript的模板字符串</li>
+<li>xdef为名字空间的属性是元模型属性，在最后的YAML中不出现。</li>
+<li>输出结果为满足元模型要求的JSON格式，且仅包含JSON，不要额外解释</li>
+<li>节点名和属性名的大小写要与元模型保持一致</li>
+</ol>
+<p>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<ol>
+<li><code>xdef:name=&quot;PromptModel&quot;</code>会误导大模型，让它误以为这是输出的xml节点的名字</li>
+<li><code>xdef:value</code>用于表示body段的内容很难被模型理解，32B模型也经常作为属性输出。</li>
+<li><code>xdef:body-type</code>和<code>xdef:key-attr</code>对于生成代码而言并不重要，可以去除</li>
+<li>32B可以理解<code>&lt;template&gt;xpl-text&lt;/template&gt;</code>的含义，但7B不能。</li>
+<li>32B可以理解<code>xdef:ref</code>，生成模型正确，但7B不能。</li>
+<li>理解<code>!string</code>中的!需要详细解释，32B也经常搞错。</li>
+<li>7B的think部分看着也理解了一些内容，但是生成不正确。</li>
+<li>32B可以识别YAML格式的元模型，但是输出的时候有时会出现格式混乱。</li>
+<li>7B会被<code>xdef:name</code>和<code>name</code>搞混，不清楚哪个是真正的名称属性</li>
+<li>32B可以识别YAML格式的元模型，但是template有时没有正确生成。</li>
+<li><code>deepseek-r1:8b-32k</code>在本机运行可以识别JSON格式的元模型，并正确生成。</li>
+<li>7B理解var-name存在困难。</li>
+<li>14B模型占用13G的GPU内存。8B-32k占用10G。而8B占用8G左右。</li>
+<li>14B模型可以正确生成template，也可以识别var-name，不能稳定识别xdef:ref定义。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">You are a professional translator. <br>Translate the following Chinese text to natural English while:<br>1. Maintaining original terminology<br>2. Preserving contextual nuances<br>3. Using appropriate idioms where applicable<br><br>Chinese Input:<br>$&#123;inputText&#125;<br><br>Respond ONLY with the translated text without additional commentary.<br><br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
@@ -1404,7 +1335,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/thinking-in-functional-programming.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/gpt/meta-model/test-meta-model.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
