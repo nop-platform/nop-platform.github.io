@@ -1293,6 +1293,11 @@
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&quot;nop.err.my-error?myParam=xx&quot; : &quot;异常消息A&quot;<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>异常消息定制<br>异常码对应的异常消息可以通过i18n文件进行定制。例如在 <code>/i18n/zh-CN/error.i18n.yaml</code>文件中为每个错误码指定对应的错误消息，它会替代错误码定义时所使用的缺省消息。<br>I18nMessageManager会自动读取<code>_vfs/i18n/</code>目录下所有的不以下划线为前缀的<code>i18n.yaml</code>文件。Nop平台并没有约定一定要在<code>error.i18n.yaml</code>中定制错误消息，这里的名称是自定义的。</li>
+</ol>
+
 </div>
       <footer class="Article-footer col-md-3">
         
