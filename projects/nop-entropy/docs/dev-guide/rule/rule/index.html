@@ -1312,6 +1312,9 @@
 <li><p>支持所有XScript中注册的全局函数</p>
 </li>
 </ol>
+<h2 id="规则匹配后自动执行函数"><a href="#规则匹配后自动执行函数" class="headerlink" title="规则匹配后自动执行函数"></a>规则匹配后自动执行函数</h2><p>有时我们希望Rule表达式匹配后，通过一个复杂的函数来动态生成输出变量。此时可以在输出变量栏中调用自定义函数。在【Config】这个Sheet中可以定义函数。</p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/rule/images/rule-output-var.png"></p>
+<p><img src="/knosys/project-nop-entropy/dev-guide/rule/images/rule-define-function.png"></p>
 <h2 id="2-3-决策表配置"><a href="#2-3-决策表配置" class="headerlink" title="2.3 决策表配置"></a>2.3 决策表配置</h2><p>决策表的配置示例可以参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rule/nop-rule-service/cases/io/nop/rule/service/entity/TestNopRuleDefinitionBizModel/testImport/input/decision-tree.rule.xlsx">decision-tree.rule.xlsx</a><br><img src="/knosys/project-nop-entropy/dev-guide/rule/decision-tree.png"></p>
 <p>决策表的左上角的内容必须是字母T，表示Table。然后是输入列和输出列。输入列和输出列的每一列都是对应的输入输出变量名。</p>
 <h2 id="2-4-决策矩阵配置"><a href="#2-4-决策矩阵配置" class="headerlink" title="2.4 决策矩阵配置"></a>2.4 决策矩阵配置</h2><p>决策矩阵的配置示例可以参见 <a target="_blank" rel="noopener" href="https://gitee.com/canonical-entropy/nop-entropy/blob/master/nop-rule/nop-rule-service/cases/io/nop/rule/service/entity/TestNopRuleDefinitionBizModel/testDecisionMatrix/input/decision-matrix.rule.xlsx">decision-matrix.rule.xlsx</a></p>
