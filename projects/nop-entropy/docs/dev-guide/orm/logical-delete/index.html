@@ -1262,9 +1262,13 @@
 <p>deleteVersionProp用于避免逻辑删除时唯一键依然存在导致与正常实体的唯一键冲突。</p>
 <p>也就是说假设实体上有一个属性name，要求唯一，那么在启用逻辑删除的时候，需要把name和deleteVersion这两个字段建立成联合唯一键。</p>
 <p>新建的时候deleteVersion为0，而当逻辑删除的时候，deleteVersion设置为删除时刻的时间戳。这样以后仍然可以插入指定name的新记录，不会与已经逻辑删除的记录发生冲突。</p>
+<h2 id="deleteVersionProp"><a href="#deleteVersionProp" class="headerlink" title="deleteVersionProp"></a>deleteVersionProp</h2><p>如果设置了deleteVersionProp，但是没有设置deleteFlagProp，则会自动将deleteFlagProp设置为deleteVersionProp。这样的话，初始设置deleteVersion&#x3D;0，删除的时候设置deleteVersion为时间戳。</p>
 <h2 id="2-EQL查询"><a href="#2-EQL查询" class="headerlink" title="2. EQL查询"></a>2. EQL查询</h2><p>缺省情况下EQL查询和关联集合查询都会考虑到逻辑删除条件，只查询<code>delFlag=0</code>的记录。</p>
 <p>QueryBean和SQL对象都支持disableLogicalDelete设置，从而禁用逻辑删除的过滤条件。</p>
 <p>IOrmEntity上也具有<code>orm_disableLogicalDelete()</code>方法，则可以真正执行物理删除，否则<code>session.delete(entity)</code>实际只会设置entity的deleteFlag属性。</p>
+<h2 id="权限控制"><a href="#权限控制" class="headerlink" title="权限控制"></a>权限控制</h2><p>缺省情况下已经标记为逻辑删除的记录无法通过CrudBizModel的get&#x2F;batchGet&#x2F;findPage等方法读取到。</p>
+<p>CrudBizModel提供了专用的deleted_get&#x2F;deleted_findPage&#x2F;recoverDeleted等方法用于管理已经被逻辑删除的记录。<br>这几个方法缺省情况下处于禁用状态，如果访问会抛出nop.err.biz.not-allow-get-deleted异常消息。</p>
+<p>在meta文件的根节点上配置biz:allowGetDeleted&#x3D;true会放开限制，此时原则上应该通过操作权限机制进行访问限制，确保只有某些角色才能调用这些方法。</p>
 
 </div>
       <footer class="Article-footer col-md-3">

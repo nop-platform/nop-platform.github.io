@@ -1310,6 +1310,8 @@
 <li>rowParent和colParent如果设置为A0，则表示它们是根单元格，没有父格。</li>
 <li>formatExpr: 单元格具有value和formattedValue两个属性。value是计算出来的值，而formattedValue是格式化后的值。如果配置了formatExpr，则formattedValue会被设置为formatExpr的值。</li>
 <li>dict: 如果配置了字典表，且没有配置formatExpr，则自动计算formattedValue为字典项的label。也就是说显示在界面上的是经过字典翻译后的文本。<br> 如果没有配置formatExpr，也没有配置dict，则会考虑Excel的单元格样式中是否配置了格式化规则，会尝试使用Excel格式化规则来得到formattedValue</li>
+<li>rowTestExpr: 如果返回false，则本行会自动删除</li>
+<li>colTestExpr: 如果返回false，则本列会被自动删除</li>
 </ul>
 <p>批注中可配置的属性参考 workflow.xdef元模型中的cell节点的model部分。</p>
 <p>在单元格的文本中，我们可以直接写表达式语法。优点是在界面上可以直接看见表达式内容，而不需要把批注展开。<br>支持两种格式的文本表达式语法：</p>
@@ -1366,9 +1368,10 @@
 <h2 id="常见问题解答："><a href="#常见问题解答：" class="headerlink" title="常见问题解答："></a>常见问题解答：</h2><h3 id="1-单元格的展开值cell-expandValue和单元格个的值cell-value之间有什么区别"><a href="#1-单元格的展开值cell-expandValue和单元格个的值cell-value之间有什么区别" class="headerlink" title="1. 单元格的展开值cell.expandValue和单元格个的值cell.value之间有什么区别?"></a>1. 单元格的展开值<code>cell.expandValue</code>和单元格个的值<code>cell.value</code>之间有什么区别?</h3><p>展开和计算单元格的值是两个步骤，第一步是按照层次坐标展开，此时使用的是展开表达式expandType，得到的是展开值expandValue。<br>只有设置了expandType和expandExpr的单元格才具有展开值。</p>
 <p>全部展开完毕后再执行单元格计算，此时根据valueExpr计算单元格的值。如果没有设置valueExpr，则单元格会取展开值expandValue为自己的缺省值。</p>
 <h3 id="2-如何支持默认多个空行"><a href="#2-如何支持默认多个空行" class="headerlink" title="2. 如何支持默认多个空行"></a>2. 如何支持默认多个空行</h3><ul>
-<li>在单元格中配置expandInplaceCount，然后在模板中实现插入多行。如果展开表达式返回个数小于这个值，则不需要新增单元格。</li>
+<li>在单元格中配置expandInplaceCount，然后在模板中实现插入多行。如果展开表达式返回个数小于这个值，则不需要新增单元格。也就是说，如果模板中已经预留了空间，可以直接复用</li>
 </ul>
-<h3 id="3-数据条数过多，怎么支持-只显示-前-几个"><a href="#3-数据条数过多，怎么支持-只显示-前-几个" class="headerlink" title="3. 数据条数过多，怎么支持  只显示 前 几个"></a>3. 数据条数过多，怎么支持  只显示 前 几个</h3><p>可以配置单元格的expandExpr，通过表达式去控制具体展开时返回的条目。 更简单的方式是通过expandMinCount来控制</p>
+<h3 id="3-数据条数过多，怎么支持只显示前几个"><a href="#3-数据条数过多，怎么支持只显示前几个" class="headerlink" title="3. 数据条数过多，怎么支持只显示前几个"></a>3. 数据条数过多，怎么支持只显示前几个</h3><p>可以配置单元格的expandExpr，通过表达式去控制具体展开时返回的条目。 更简单的方式是通过expandMinCount来控制</p>
+<h3 id="4-放在右方的单元格不想跟随左侧单元格展开"><a href="#4-放在右方的单元格不想跟随左侧单元格展开" class="headerlink" title="4. 放在右方的单元格不想跟随左侧单元格展开"></a>4. 放在右方的单元格不想跟随左侧单元格展开</h3><p>通过rowParent设置行父格。报表展开的规则是单元格展开时自动复制所有子单元格，同时会自动扩展处于同一行的父单元格。缺省情况下，右侧的单元格会向左查找展开单元格作为自己的行父格。通过调整父子关系可以改变展开结果。</p>
 
 </div>
       <footer class="Article-footer col-md-3">

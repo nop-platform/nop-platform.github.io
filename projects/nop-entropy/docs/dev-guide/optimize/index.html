@@ -1262,6 +1262,8 @@
 <li>nop.core.component.resource-cache.check-changed: 配置为false，禁用动态修改检查。<br>模型一旦加载到缓存中就不会自动失效，除非被主动删除。</li>
 <li>nop.web.validate-page-model: 配置为false，则启动的时候就不会检查所有page.yaml文件都会加载</li>
 </ul>
+<h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><p>通过<code>/DevStat__jdbcStats</code>和<code>/DevStat__rpcServerStats</code>等函数来查看后端的调用时间统计信息</p>
+<h2 id="Dev模式"><a href="#Dev模式" class="headerlink" title="Dev模式"></a>Dev模式</h2><p>quarkus在IDE中启动时会自动启用dev模式，dev模式会自动启用Live Reload，自动检查类文件等是否被修改，发现修改会自动重启容器，这会影响运行时性能。<br>可以将<code>quarkus.live-reload.enabled</code>设置为false来禁用这一特性。</p>
 
 </div>
       <footer class="Article-footer col-md-3">

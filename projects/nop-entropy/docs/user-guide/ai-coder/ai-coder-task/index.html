@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>AI代码生成任务 - Nop</title>
+
+
+  <meta property="og:title" content="AI代码生成任务">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">AI代码生成任务</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="核心流程：ai-coder-task-xml"><a href="#核心流程：ai-coder-task-xml" class="headerlink" title="核心流程：ai-coder.task.xml"></a>核心流程：ai-coder.task.xml</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[init] --&gt; B[createProject]<br>    B --&gt; C[refactorRequirements]<br>    C --&gt; D[designOrm]<br>    D --&gt; E[designMenu]<br>    E --&gt; F[designApi]<br>    F --&gt; G[designService]<br></code></pre></td></tr></table></figure>
+
+<h3 id="简要说明："><a href="#简要说明：" class="headerlink" title="简要说明："></a>简要说明：</h3><ol>
+<li><strong>整体流程</strong>：</li>
+</ol>
+<ul>
+<li>这是一个AI驱动的应用代码生成主流程，通过调用多个子任务实现完整开发周期</li>
+<li>采用顺序执行模式：初始化→创建项目→需求重构→ORM设计→菜单设计→API设计→服务设计</li>
+<li>基于Nop平台的任务扩展机制（<code>x:extends</code>继承基础任务模板）</li>
+</ul>
+<ol start="2">
+<li><strong>关键步骤</strong>：</li>
+</ol>
+<ul>
+<li><strong>init</strong>：初始化阶段<ul>
+<li>计算需求文档路径（<code>requirementsPath</code>）</li>
+</ul>
+</li>
+<li><strong>createProject</strong>：创建项目骨架<ul>
+<li>调用<code>ai-create-project.task.xml</code>子任务</li>
+<li>输入：Maven组ID、应用名称、基础包名、输出目录</li>
+</ul>
+</li>
+<li><strong>refactorRequirements</strong>：需求文档重构<ul>
+<li>调用<code>ai-biz-analyzer.task.xml</code>子任务</li>
+<li>使用条件标志（<code>flags match=&quot;req or EMPTY&quot;</code>）控制执行</li>
+<li>处理需求文档的标准化和扩展</li>
+</ul>
+</li>
+<li><strong>designOrm</strong>：ORM模型设计<ul>
+<li>调用<code>ai-orm-design.task.xml</code>子任务</li>
+<li>基于重构后的需求生成数据模型</li>
+</ul>
+</li>
+<li><strong>designMenu</strong>：菜单权限设计<ul>
+<li>调用<code>ai-menu-design.task.xml</code>子任务</li>
+<li>生成菜单结构和权限配置</li>
+</ul>
+</li>
+<li><strong>designApi</strong>：API接口设计<ul>
+<li>调用<code>ai-api-design.task.xml</code>子任务</li>
+<li>设计系统API接口规范</li>
+</ul>
+</li>
+<li><strong>designService</strong>：服务层设计<ul>
+<li>调用<code>ai-service-design.task.xml</code>子任务</li>
+<li>完成业务逻辑服务设计</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>输入参数</strong>：</li>
+</ol>
+<ul>
+<li>必需参数：<code>mavenGroupId</code>, <code>appName</code>, <code>basePackageName</code>, <code>outputDir</code>, <code>inputRequirementsPath</code>, <code>needExpand</code></li>
+<li>AI可选参数：<code>aiProvider</code>, <code>aiModel</code>, <code>sessionId</code>（传递给各设计子任务）</li>
+<li>条件执行：通过<code>flags</code>属性控制子任务执行（如<code>flags match=&quot;menu or EMPTY&quot;</code>）</li>
+</ul>
+<ol start="4">
+<li><strong>设计特点</strong>：</li>
+</ol>
+<ul>
+<li><strong>模块化设计</strong>：将开发过程分解为独立可重用的子任务</li>
+<li><strong>AI驱动</strong>：各设计阶段均使用AI子任务实现自动化生成</li>
+<li><strong>可扩展性</strong>：通过条件标志(<code>flags</code>)灵活控制流程执行节点</li>
+<li><strong>工程规范</strong>：遵循标准Maven项目结构（<code>mavenGroupId</code>）</li>
+<li><strong>配置继承</strong>：AI参数（provider&#x2F;model）贯穿整个设计流程</li>
+</ul>
+<p>该主控任务实现了从项目创建到详细设计的完整AI辅助开发流程，通过串联多个专业领域的AI设计子任务，将需求文档自动转换为可直接使用的工程代码。每个设计阶段都可以通过条件标志独立启用或跳过，提供了灵活的流程控制能力。</p>
+<h2 id="业务分析：ai-biz-analyzer-task-xml"><a href="#业务分析：ai-biz-analyzer-task-xml" class="headerlink" title="业务分析：ai-biz-analyzer.task.xml"></a>业务分析：ai-biz-analyzer.task.xml</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[loadRequirements] --&gt; B[refactorRequirements]<br>    B --&gt; C[saveRequirements]<br>    C --&gt; D[expandModuleRequirements]<br>    D --&gt; E[expandOneModuleRequirements]<br>    E --&gt; F[saveModuleDoc]<br></code></pre></td></tr></table></figure>
+
+<h3 id="简要说明：-1"><a href="#简要说明：-1" class="headerlink" title="简要说明："></a>简要说明：</h3><ol>
+<li><strong>任务结构</strong>：</li>
+</ol>
+<ul>
+<li>定义了5个输入参数：<code>inputRequirementsPath</code>, <code>basePackageName</code>, <code>outputDir</code>, <code>needExpand</code>, <code>sessionId</code></li>
+<li>配置AI聊天选项（<code>ai:chatOptions</code>），使用动态传入的AI参数</li>
+<li>通过<code>x:extends</code>继承基础任务模板<code>/nop/task/lib/common.task.xml</code></li>
+<li>启用了AI编码器（<code>ai-coder</code>）和文件工具（<code>file-utils</code>）命名空间</li>
+</ul>
+<ol start="2">
+<li><strong>核心流程</strong>：</li>
+</ol>
+<ul>
+<li><strong>loadRequirements</strong>：读取需求文档<ul>
+<li>使用<code>file-utils:ReadText</code>自定义类型</li>
+<li>从<code>inputRequirementsPath</code>读取原始需求文档</li>
+<li>输出：原始需求文本(<code>inputRequirements</code>)</li>
+</ul>
+</li>
+<li><strong>refactorRequirements</strong>：重构需求文档<ul>
+<li>使用AI任务步骤(<code>ai:TaskStep</code>)重构需求文档</li>
+<li>应用<code>coder/refactor-requirements</code>提示模板</li>
+<li>输入：原始需求文本和是否扩展标志(<code>needExpand</code>)</li>
+<li>输出：结构化需求文档(<code>requirementsDoc</code>)</li>
+</ul>
+</li>
+<li><strong>saveRequirements</strong>：保存重构后的需求<ul>
+<li>将重构后的需求保存到<code>docs/requirements/refactored-requirements.md</code></li>
+</ul>
+</li>
+<li><strong>expandModuleRequirements</strong>：并行处理模块需求<ul>
+<li>遍历需求文档中”3.2 核心功能模块”的所有子模块</li>
+<li>为每个模块创建并行处理分支</li>
+</ul>
+</li>
+<li><strong>expandOneModuleRequirements</strong>：扩展单个模块需求<ul>
+<li>使用AI扩展特定模块的需求</li>
+<li>应用<code>coder/expand-module-requirements</code>提示模板</li>
+<li>添加并发限制(<code>throttle</code>)，最大并发数为1</li>
+</ul>
+</li>
+<li><strong>saveModuleDoc</strong>：保存模块文档<ul>
+<li>将扩展后的模块需求保存到<code>docs/requirements/sections/&#123;sectionNo&#125;.md</code></li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>关键特性</strong>：</li>
+</ol>
+<ul>
+<li><strong>AI文档重构</strong>：使用AI将原始需求文档重构为标准格式</li>
+<li><strong>并行处理</strong>：通过<code>fork</code>实现模块级并行处理</li>
+<li><strong>并发控制</strong>：使用<code>throttle</code>限制AI调用频率（最大并发1）</li>
+<li><strong>模块化存储</strong>：按模块编号(<code>sectionNo</code>)保存扩展后的需求文档</li>
+<li><strong>模板化AI提示</strong>：使用预定义的AI提示模板(<code>promptName</code>)指导AI处理</li>
+</ul>
+<p>该任务实现了需求文档的自动化处理流程：读取→AI重构→保存→并行模块扩展→分模块保存。核心是通过AI将原始需求文档转换为结构化、标准化的技术需求文档，并针对核心功能模块进行深度扩展。</p>
+<h2 id="ORM设计-ai-orm-design-task-xml"><a href="#ORM设计-ai-orm-design-task-xml" class="headerlink" title="ORM设计: ai-orm-design.task.xml"></a>ORM设计: ai-orm-design.task.xml</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[loadRequirements] --&gt; B[splitRequirements]<br>    B --&gt; C[designOrm]<br>    C --&gt; D[saveOrmModel]<br></code></pre></td></tr></table></figure>
+
+<h3 id="简要说明：-2"><a href="#简要说明：-2" class="headerlink" title="简要说明："></a>简要说明：</h3><ol>
+<li><strong>任务结构</strong>：</li>
+</ol>
+<ul>
+<li>定义了一个包含7个输入参数的任务：<code>requirementsPath</code>, <code>appName</code>, <code>basePackageName</code>, <code>outputDir</code>, <code>aiProvider</code>,<br><code>aiModel</code>, <code>sessionId</code></li>
+<li>配置了AI聊天选项（<code>ai:chatOptions</code>），使用动态传入的AI提供商和模型参数</li>
+<li>通过<code>x:extends</code>继承基础任务模板<code>/nop/task/lib/common.task.xml</code></li>
+</ul>
+<ol start="2">
+<li><strong>流程步骤</strong>：</li>
+</ol>
+<ul>
+<li><strong>loadRequirements</strong>：加载Markdown格式的需求文档<ul>
+<li>使用自定义类型<code>ai-coder:LoadMarkdown</code></li>
+<li>输入：需求文件路径和模板路径</li>
+<li>输出：结构化文档对象(<code>requirementsDoc</code>)</li>
+</ul>
+</li>
+<li><strong>splitRequirements</strong>：拆分需求文档<ul>
+<li>从<code>requirementsDoc</code>中提取标记为<code>ORM</code>的需求部分</li>
+<li>输出：ORM相关需求文本(<code>ormRequirements</code>)</li>
+</ul>
+</li>
+<li><strong>designOrm</strong>：设计ORM模型<ul>
+<li>使用自定义类型<code>ai:TaskStep</code>调用AI能力</li>
+<li>输入：ORM需求文本</li>
+<li>输出：ORM模型(<code>ormModel</code>)</li>
+<li>启用响应缓存(<code>ai:useResponseCache=&quot;true&quot;</code>)</li>
+</ul>
+</li>
+<li><strong>saveOrmModel</strong>：保存ORM模型<ul>
+<li>调用外部任务库(<code>ai-coder.task-lib.xml</code>)中的保存步骤</li>
+<li>输入：生成的ORM模型和应用名称</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>关键特性</strong>：</li>
+</ol>
+<ul>
+<li>使用AI辅助代码生成（<code>ai-coder</code>命名空间）</li>
+<li>支持多AI提供商配置（Ollama&#x2F;DeepSeek&#x2F;VolcEngine等）</li>
+<li>采用模板化文档处理（<code>.tpl.md</code>模板文件）</li>
+<li>实现需求文档的模块化拆分（<code>selectSectionByTplTag</code>）</li>
+</ul>
+<p>该任务实现了从需求文档解析→ORM需求提取→AI模型设计→模型保存的自动化流程，核心是通过AI将自然语言需求转换为ORM数据模型。</p>
+<h2 id="菜单设计-ai-menu-design-task-xml"><a href="#菜单设计-ai-menu-design-task-xml" class="headerlink" title="菜单设计: ai-menu-design.task.xml"></a>菜单设计: ai-menu-design.task.xml</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[init] --&gt; B[loadRequirements]<br>    B --&gt; C[splitRequirements]<br>    D[loadOrmModel] --&gt; E[designMenu]<br>    C --&gt; E<br>    E --&gt; F[checkMenu]<br>    F --&gt; G[saveMenuXml]<br>    F --&gt; H[saveMenuXml2]<br></code></pre></td></tr></table></figure>
+
+<h3 id="简要说明：-3"><a href="#简要说明：-3" class="headerlink" title="简要说明："></a>简要说明：</h3><ol>
+<li><strong>任务结构</strong>：</li>
+</ol>
+<ul>
+<li>定义了一个包含7个输入参数的任务：<code>requirementsPath</code>, <code>appName</code>, <code>basePackageName</code>, <code>outputDir</code>, <code>aiProvider</code>,<br><code>aiModel</code>, <code>sessionId</code></li>
+<li>配置了AI聊天选项（<code>ai:chatOptions</code>），使用动态传入的AI提供商和模型参数</li>
+<li>通过<code>x:extends</code>继承基础任务模板<code>/nop/task/lib/common.task.xml</code></li>
+</ul>
+<ol start="2">
+<li><strong>核心流程</strong>：</li>
+</ol>
+<ul>
+<li><strong>init</strong>：初始化步骤<ul>
+<li>生成应用ID（<code>appId</code>），将应用名称中的连字符替换为斜杠</li>
+</ul>
+</li>
+<li><strong>loadRequirements</strong>：加载需求文档<ul>
+<li>使用自定义类型<code>ai-coder:LoadMarkdown</code>加载Markdown格式的需求文档</li>
+<li>应用模板处理文档结构</li>
+</ul>
+</li>
+<li><strong>splitRequirements</strong>：拆分需求文档<ul>
+<li>从需求文档中提取标记为<code>MENU</code>的菜单需求部分</li>
+</ul>
+</li>
+<li><strong>loadOrmModel</strong>：加载ORM模型<ul>
+<li>从指定路径(<code>model/ai-gen.orm.xml</code>)加载预生成的ORM数据模型</li>
+</ul>
+</li>
+<li><strong>designMenu</strong>：设计菜单结构<ul>
+<li>使用AI根据菜单需求和ORM模型设计菜单及角色权限</li>
+<li>启用响应缓存(<code>ai:useResponseCache=&quot;true&quot;</code>)</li>
+</ul>
+</li>
+<li><strong>checkMenu</strong>：校验菜单设计<ul>
+<li>使用AI对设计的菜单进行校验和优化</li>
+</ul>
+</li>
+<li><strong>saveMenuXml</strong>：保存菜单配置<ul>
+<li>将菜单设计保存为DSL格式的XML文件</li>
+</ul>
+</li>
+<li><strong>saveMenuXml2</strong>：保存备用菜单配置<ul>
+<li>将菜单设计保存到应用特定的路径中</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>关键特性</strong>：</li>
+</ol>
+<ul>
+<li>双路径保存：菜单配置同时保存到标准位置(<code>model/ai-gen.action-auth.xml</code>)和应用特定路径</li>
+<li>AI辅助设计：使用AI生成菜单结构和权限配置</li>
+<li>设计校验：专门的<code>checkMenu</code>步骤确保菜单设计质量</li>
+<li>模板化处理：使用预定义的Markdown模板(<code>requirements.tpl.md</code>)解析需求文档</li>
+</ul>
+<p>该任务实现了从需求文档解析→菜单需求提取→ORM模型加载→AI菜单设计→设计校验→双路径保存的完整工作流，核心是通过AI将自然语言需求转换为菜单权限配置。</p>
+<h2 id="API设计：ai-api-design-task-xml"><a href="#API设计：ai-api-design-task-xml" class="headerlink" title="API设计：ai-api-design.task.xml"></a>API设计：ai-api-design.task.xml</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">flowchart TD<br>    A([开始]) --&gt; B[loadRequirements]<br>    B --&gt; C[splitRequirements]<br>    C --&gt; D[loadOrmModel]<br>    D --&gt; E[designApi]<br>    E --&gt; F&#123;apiNode包含\norm:delta?&#125;<br>    F --&gt;|是| G[mergeOrmDelta]<br>    G --&gt; H[调用 saveOrmModel]<br>    H --&gt; I[checkAiNode]<br>    F --&gt;|否| I<br>    I --&gt; J[getSimpleApiNode]<br>    J --&gt; K[checkSimpleApiNode]<br>    K --&gt; L&#123;simpleApiNode\n非空?&#125;<br>    L --&gt;|是| M[mergeApiNode]<br>    M --&gt; N[normalizeApi]<br>    L --&gt;|否| N<br>    N --&gt; O[parseDslNode]<br>    O --&gt; P[saveApiXml]<br>    P --&gt; Q[saveApiExcel]<br>    Q --&gt; R([结束])<br><br>    subgraph adjustOrmModel [ORM模型调整]<br>        F --&gt; G<br>        G --&gt; H<br>    end<br></code></pre></td></tr></table></figure>
+
+<h3 id="流程说明"><a href="#流程说明" class="headerlink" title="流程说明"></a>流程说明</h3><ol>
+<li><strong>输入阶段</strong></li>
+</ol>
+<ul>
+<li>接收外部参数：<code>requirementsPath</code>, <code>appName</code>, <code>basePackageName</code>, <code>outputDir</code>, <code>aiProvider</code>, <code>aiModel</code>, <code>sessionId</code></li>
+</ul>
+<ol start="2">
+<li><strong>需求处理</strong></li>
+</ol>
+<ul>
+<li><code>loadRequirements</code>: 加载Markdown需求文档并解析结构</li>
+<li><code>splitRequirements</code>: 提取API相关需求文本</li>
+</ul>
+<ol start="3">
+<li><strong>模型加载</strong></li>
+</ol>
+<ul>
+<li><code>loadOrmModel</code>: 从文件系统加载已有的ORM模型</li>
+</ul>
+<ol start="4">
+<li><strong>API设计</strong></li>
+</ol>
+<ul>
+<li><code>designApi</code>: 使用AI生成API初始模型（基于需求文本和ORM模型）</li>
+</ul>
+<ol start="5">
+<li><strong>ORM模型调整</strong></li>
+</ol>
+<ul>
+<li>检查API节点是否包含ORM变更(<code>orm:delta</code>)</li>
+<li>若存在变更：合并到ORM模型 → 保存更新后的模型文件</li>
+</ul>
+<ol start="6">
+<li><strong>API模型验证</strong></li>
+</ol>
+<ul>
+<li><code>checkAiNode</code>: AI验证API模型合理性</li>
+<li><code>getSimpleApiNode</code>: 提取简化API模型</li>
+<li><code>checkSimpleApiNode</code>: AI二次验证简化模型</li>
+</ul>
+<ol start="7">
+<li><strong>模型合并</strong></li>
+</ol>
+<ul>
+<li>当简化模型有效时，将其与原始API模型合并</li>
+</ul>
+<ol start="8">
+<li><strong>API规范化</strong></li>
+</ol>
+<ul>
+<li>设置服务类完整路径</li>
+<li>重置消息字段的propId属性</li>
+</ul>
+<ol start="9">
+<li><strong>输出结果</strong></li>
+</ol>
+<ul>
+<li><code>parseDslNode</code>: 将DSL节点解析为API模型对象</li>
+<li><code>saveApiXml</code>: 保存XML格式的API定义</li>
+<li><code>saveApiExcel</code>: 生成Excel格式的API文档</li>
+</ul>
+<h3 id="关键特性"><a href="#关键特性" class="headerlink" title="关键特性"></a>关键特性</h3><ol>
+<li><strong>AI集成</strong>：</li>
+</ol>
+<ul>
+<li>使用<code>ai:TaskStep</code>调用AI服务完成设计&#x2F;验证任务</li>
+<li>通过<code>ai:chatOptions</code>配置AI参数（模型&#x2F;会话等）</li>
+</ul>
+<ol start="2">
+<li><strong>条件执行</strong>：</li>
+</ol>
+<ul>
+<li>ORM调整和模型合并步骤通过<code>&lt;when&gt;</code>条件触发</li>
+<li>依赖前序步骤的输出状态</li>
+</ul>
+<ol start="3">
+<li><strong>模型驱动</strong>：</li>
+</ol>
+<ul>
+<li>基于XDef模式定义（<code>/nop/schema/*.xdef</code>）</li>
+<li>支持DSL节点操作（提取&#x2F;合并&#x2F;解析）</li>
+</ul>
+<ol start="4">
+<li><strong>文件操作</strong>：</li>
+</ol>
+<ul>
+<li>多格式输出支持（XML&#x2F;Excel）</li>
+<li>文件路径通过<code>outputDir</code>参数动态配置</li>
+</ul>
+<ol start="5">
+<li><strong>扩展机制</strong>：</li>
+</ol>
+<ul>
+<li>通过<code>x:extends</code>继承基础任务模板</li>
+<li>使用<code>customType</code>复用自定义步骤逻辑</li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/user-guide/ai-coder/ai-coder-task.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

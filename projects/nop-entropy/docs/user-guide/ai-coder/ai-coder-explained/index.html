@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>AI颠覆开发：开源框架NopAiCoder实现”输入需求文档输出完整应用” - Nop</title>
+
+
+  <meta property="og:title" content="AI颠覆开发：开源框架NopAiCoder实现”输入需求文档输出完整应用”">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">AI颠覆开发：开源框架NopAiCoder实现&#34;输入需求文档输出完整应用&#34;</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="qwen3-8b结果"><a href="#qwen3-8b结果" class="headerlink" title="qwen3:8b结果"></a>qwen3:8b结果</h2><ol>
+<li>输出过多时会出现部分XML格式不正确，主要是带名字空间的属性存在困难。比如生成了<code>orm&quot;ref-prop</code>。</li>
+</ol>
+<p>AI提供的功能在程序空间中是什么？AI是一个多输入和多输出的函数。</p>
+<p>如果状态是ENABLED&#x2F;DISABLED，可以使用通用的active-status字典，并且已经提供了通用的disable和enable函数。</p>
+<p>投影选择；独立部分A + 独立部分B + 混杂部分（Delta）</p>
+<p>Y &#x3D; A + B + .. + Delta<br>如果不是完全独立，则Delta部分集中了混杂信息。</p>
+<p>Agent之间的交互信息不应该是黑箱模型，而是按维度分解的可分析向量，可以是analyzable + nlp的分块组织形式。</p>
+<p>在输入信息明确要求的情况下，如果仍然无法引导到对称破缺的情况。</p>
+<p>幻觉不可避免性<br>AI模型输出的是所有逻辑可能世界中的可行解集合，而人类所在的物理世界仅是特定随机事件（对称破缺）导致的单一样本。要求AI仅输出本宇宙事实，本质是要求从无限可能性中选出唯一解——这是信息论不可能性。</p>
+<p>局部幻觉的可解性<br>当上下文提供充分信息（对称破缺条件）时，模型仍出错源于认知结构缺陷：</p>
+<p>无法将提示词作为对称破缺扰动因子</p>
+<p>缺乏对代数结构（组合性&#x2F;可逆性）的严格映射能力</p>
+<p>群论视角下的推理崩塌：</p>
+<p>理想情况：模型应构建推理群 $G &#x3D; \langle \text{前提}, \oplus \rangle$，其中$\oplus$是组合操作</p>
+<p>实际缺陷：</p>
+<p>组合性断裂：当 $A \oplus B$ 应得 $C$ 时，模型输出 $C’$<br>例：已知“A是B祖父”和“B是C父亲”，输出“A是C叔叔”</p>
+<p>可逆性丧失：无法从 $C$ 回溯验证 $A \oplus B$<br>例：断言“A是C祖父”后，无法列出推理路径</p>
+<p>根本原因：<br>模型参数空间未形成同态映射 $h: G_{\text{现实}} \to G_{\text{模型}}$，导致群结构扭曲</p>
+<p>真理非唯一性：逻辑上可能存在多个自洽的事实版本（例如：“地球是平的”在某个物理定律不同的宇宙中成立），当前世界只是众多可能性中的一个偶然实现（对称破缺的结果）。</p>
+<p>AI的合理性：当模型输出“错误”事实时，它可能正确描述了另一个可能世界（平行宇宙中的真理）。因此，所谓“幻觉”本质是模型输出与本宇宙观测事实的错位，而非逻辑错误。</p>
+<p>不可避免性根源：人类无法通过逻辑完全排除其他可能性（例如无法证明“所有宇宙中物理定律相同”），因此AI无法绝对保证输出仅匹配本宇宙事实。</p>
+<ol start="2">
+<li>我的原理解的偏差<br>错误预设：我假设存在一个绝对参照系（“唯一真理”），将偏离此标准的输出视为“模型缺陷导致的错误”。</li>
+</ol>
+<p>正确视角：</p>
+<p>在模态逻辑框架下，AI输出的是所有可能世界中的真命题集合</p>
+<p>“幻觉”是本宇宙索引（@actual_world）的定位失败，而非命题本身无效。</p>
+<p>对于原始数据，通过代数增强器注入群结构，是否可以优化训练。至少差量概念可以单独针对性训练。</p>
+<p>文档本身不精确，基于不同的背景知识实际上可以有很多解释。而DSL模型是精确的</p>
+<p>deepseek-r1在长输出方面优于deepseek-v3，V3总是会出现对类似输出进行省略的情况，比如</p>
+<p>初步整理需求时不要指定需求的细节结构，否则可能遗漏信息。</p>
+<p>要求输出<code>需求章节（仅编号）</code>不能完全遵循。<br>V3比R1更容易遗漏信息。</p>
+<p>让AI建立一个分析框架，辅助分析当前DSL的设计是否有利于AI生成，并详细解释为什么</p>
+<p>输入&#x2F;输出位置优化</p>
+<p>✅ 参数集中管理：将input&#x2F;output移至专门的<parameters>段，语义更明确（原metadata范围过宽）</p>
+<p>✅ 显眼性增强：作为顶级元素，AI在生成流程时更容易优先处理接口定义</p>
+<p>✅ 引用预测性：AI生成步骤逻辑时，可准确预测参数位置（&#x2F;flow&#x2F;parameters&#x2F;input）</p>
+<p>AI反馈机制分离</p>
+<p>✅ 职责单一化：独立<aiFeedback>段解决原设计中的元数据污染问题</p>
+<p>✅ 生成过程友好：AI可自由输出重构建议而不影响核心DSL结构</p>
+<p>✅ 协作性提升：人类开发者能快速定位AI反馈（与参数&#x2F;步骤分离）</p>
+<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><p>一个关键设计决策是禁用 else 语句：故意不允许模型使用 ‘else’ 块，而只使用 ‘if’ 块。这要求模型为每个路径定义明确的条件，这种设计在评估中显著提高了性能。<br>从 Parahelp 的实践中可以提炼出专业级提示词的核心原则：明确的思维顺序</p>
+<ul>
+<li><p>指定模型的处理步骤结构化格式</p>
+</li>
+<li><p>使用 markdown 和 XML 组织信息角色定义</p>
+</li>
+<li><p>分配明确的角色（如”管理者”）关键指令强调</p>
+</li>
+<li><p>使用”重要”和”始终”等词突出关键要求</p>
+</li>
+<li><p>if 块可以在步骤和计划中的任何地方使用，应该简单地用<if_block condition=''>标签包装。<if_block>应该始终有一个条件。<br>通过冗余来确保关键指令被遵循</p>
+</li>
+</ul>
+<h2 id="提示词修改"><a href="#提示词修改" class="headerlink" title="提示词修改"></a>提示词修改</h2><ol>
+<li>核心数据库表设计 –&gt; 数据库表设计 ，需求中仅要求核心数据库表，会导致某些表被遗漏</li>
+</ol>
+<h2 id="豆包模型doubao-1-5-pro"><a href="#豆包模型doubao-1-5-pro" class="headerlink" title="豆包模型doubao-1.5-pro"></a>豆包模型<code>doubao-1.5-pro</code></h2><ol>
+<li>数据库设计子表属性错误</li>
+</ol>
+<h2 id="技术路线"><a href="#技术路线" class="headerlink" title="技术路线"></a>技术路线</h2><p>核心思想：</p>
+<ol>
+<li><p>坐标化</p>
+</li>
+<li><p>局域函数+自适应纠正</p>
+</li>
+<li><p>元模型提供语义验证，语法采用通用语法</p>
+</li>
+<li><p>data + metadata配对，信息紧凑存放。比如useCaseNo与业务菜单的关联</p>
+</li>
+</ol>
+<p>AIGC的困境：幻觉 + 有限上下文</p>
+<p>分析：结构空间过大，推理深度有限</p>
+<p>解决方案：解空间与问题空间复杂度适配，投影到子空间，然后将多个子空间的结果粘结在一起。</p>
+<p>不同的逻辑主体修改同一份代码结构。蓝图叠加。</p>
+<p>生成骨架 + 局部抛光</p>
+<p>通过MCP实现信息补充。</p>
+<p>将整理后的规范性示例代码放到特定目录，然后建立RAG索引。</p>
+<p>确立自动化的验证标准，要求差量化修改。自动压缩对话过程。</p>
+<ol>
+<li><p>多个方案判断哪个更优</p>
+</li>
+<li><p>对比多种AI模型的生成</p>
+</li>
+<li></li>
+</ol>
+<p>需求所在的问题空间 –&gt; 我们使用的编程语言与框架所在的软件结构空间 –&gt; AI大模型所知的所有语言（不同语言，不同版本）历史上所有编程知识所在的可行空间。</p>
+<p>这些空间本身是不匹配的。幻觉的问题：如果仔细分析，会发现在某个平行宇宙中AI的输出可能就是合理的，在那个宇宙中存在着一个这样的事实。仅从逻辑进行判断，是无法识别是否是幻觉的。<br>我们所在的这个世界是对称自发破缺的结果。</p>
+<p>上下文窗口不够大的问题：注意力只能有限集中。</p>
+<p>解决方案：投影到不同的子空间，每次解决一个局部问题，然后再拼接为一个整体。并不需要是正交的。但是需要能够识别出重叠部分，自动的进行形式转换。</p>
+<p>可逆计算理论提供了一个系统化的投影-粘结方案。</p>
+<p>具有完善解决方案的问题直接要求回答。<br>复杂的逻辑实现问题，要求AI选择一个自己认为最合适的XML格式来表达，并反复检查且改进该XML格式的实现。最后再映射到对应的TaskFlow实现。</p>
+<p>面向人类使用的XDef元模型：主要是表达格式信息。</p>
+<p>面向AI：根据语义可以自动推定一定的格式信息，不需要详细表达。</p>
+<p>如果局部可以进行纠正，没有必要和AI费口舌反复强调细节。实际上也很难严格遵守。比如字段大小写等。</p>
+<p>如果发现有多余输出，可以指定一个具有相关语义的字段引导它。</p>
+<p>调整表达格式，避免重复表达或者需要负责匹配。比如orm:ref_table属性。</p>
+<p>XDef元模型特别适合AI理解。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/xdef.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">xmlns:xdef</span>=<span class="hljs-string">&quot;/nop/schema/xdef.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">xmlns:orm</span>=<span class="hljs-string">&quot;orm&quot;</span> <span class="hljs-attr">xmlns:ext</span>=<span class="hljs-string">&quot;ext&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entities</span> <span class="hljs-attr">xdef:body-type</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">xdef:key-attr</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">comment</span>&gt;</span>description<span class="hljs-tag">&lt;/<span class="hljs-name">comment</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">columns</span> <span class="hljs-attr">xdef:body-type</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">xdef:key-attr</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span> <span class="hljs-attr">mandatory</span>=<span class="hljs-string">&quot;boolean&quot;</span> <span class="hljs-attr">primary</span>=<span class="hljs-string">&quot;boolean&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">ext:dict</span>=<span class="hljs-string">&quot;dict-name&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">stdDomain</span>=<span class="hljs-string">&quot;std-domain&quot;</span> <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;!sql-type&quot;</span> <span class="hljs-attr">precision</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-table</span>=<span class="hljs-string">&quot;table-name&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-prop</span>=<span class="hljs-string">&quot;parent-to-children-prop&quot;</span> <span class="hljs-attr">orm:ref-prop-display-name</span>=<span class="hljs-string">&quot;chinese&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entities</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>简单的说，就是将DSL中重复的内容删除，只保留唯一的部分。然后将值替换为格式约束描述。</p>
+<p>注意到xdef文件中定义了<code>xdef:body-type</code>，<code>xdef:key-attr</code>等属性，这些属性是XDef元模型的一部分，用于精确指定属性的语义并在解析的时候自动校验。<br>但是对于AI大模型来说，这些信息是多余的，而且会形成干扰。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entities</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">comment</span>&gt;</span>description<span class="hljs-tag">&lt;/<span class="hljs-name">comment</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span> <span class="hljs-attr">mandatory</span>=<span class="hljs-string">&quot;boolean&quot;</span> <span class="hljs-attr">primary</span>=<span class="hljs-string">&quot;boolean&quot;</span> <span class="hljs-attr">ext:dict</span>=<span class="hljs-string">&quot;dict-name&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">stdDomain</span>=<span class="hljs-string">&quot;std-domain&quot;</span> <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;sql-type&quot;</span> <span class="hljs-attr">precision</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-table</span>=<span class="hljs-string">&quot;table-name&quot;</span> <span class="hljs-attr">orm:ref-prop</span>=<span class="hljs-string">&quot;parent-to-children-prop&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-prop-display-name</span>=<span class="hljs-string">&quot;chinese&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entities</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>AI使用的XDef元模型经过特殊定制，强调语义。与Nop平台内置的并不相同。但是格式保持兼容性。</p>
+<h2 id="Prompt模型设计"><a href="#Prompt模型设计" class="headerlink" title="Prompt模型设计"></a>Prompt模型设计</h2><p>prompt模板需要如下能力：</p>
+<ol>
+<li>能够进行前处理，我们可能需要衍生数据</li>
+<li>需要进行后处理</li>
+</ol>
+<p>只要切换promptName，就可以得到具有动态处理能力的prompt模板。</p>
+<p>Prompt相当于是一个函数实现，因此它应该具有输入和输出。目前Nop平台的所有可编配函数都是 Map func(Map)格式<br>inputs &#x3D;&gt; outputs 从Map映射到Map</p>
+<h2 id="AI集成"><a href="#AI集成" class="headerlink" title="AI集成"></a>AI集成</h2><p>因为是函数抽象，所以很容易通过元编程集成到Nop平台中。</p>
+<h3 id="NopTaskFlow编排"><a href="#NopTaskFlow编排" class="headerlink" title="NopTaskFlow编排"></a>NopTaskFlow编排</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">task</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">steps</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;designOrm&quot;</span> <span class="hljs-attr">customType</span>=<span class="hljs-string">&quot;ai:TaskStep&quot;</span> <span class="hljs-attr">ai:promptName</span>=<span class="hljs-string">&quot;coder/orm-design&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>根据需求文档的描述，设计ORM模型<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;requirements&quot;</span>/&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">output</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ormModelText&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;RESULT.xml()&#125;&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">steps</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">task</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="NopGraphQL服务集成"><a href="#NopGraphQL服务集成" class="headerlink" title="NopGraphQL服务集成"></a>NopGraphQL服务集成</h3><p>将AI大模型调用封装为服务函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;query name=&quot;designOrm&quot; ai:promptName=&quot;coder/orm-design&quot;&gt;<br>  &lt;ai:chatOptions provider=&quot;ollama&quot; model=&quot;deepseek-r1:14b&quot; /&gt;<br>&lt;/query&gt;<br></code></pre></td></tr></table></figure>
+
+<p>根据prompt模型中定义的input和output自动生成对应的action定义。</p>
+<h2 id="基于领域知识的DSL结构空间划分"><a href="#基于领域知识的DSL结构空间划分" class="headerlink" title="基于领域知识的DSL结构空间划分"></a>基于领域知识的DSL结构空间划分</h2><p>首先按照对象分解，同一个对象名对应的相关概念属于一组。<br>纵向分解：主分解维度。</p>
+<p>整体布局和字段展现分离。</p>
+<h2 id="多种表象之间的自由转换"><a href="#多种表象之间的自由转换" class="headerlink" title="多种表象之间的自由转换"></a>多种表象之间的自由转换</h2><p>领域模型可以自由的抽取信息。比如ORM模型简化为只包含必要字段。使用Java形式展现等。</p>
+<p>但是一般输出的时候我们可以强制要求使用XML，这样便于自动解析并局部验证。</p>
+<p>XML具有自校验能力。如果标签没有封闭，则解析失败，会自动重试。</p>
+<h2 id="引言：AI编程的新范式"><a href="#引言：AI编程的新范式" class="headerlink" title="引言：AI编程的新范式"></a>引言：AI编程的新范式</h2><p>在软件开发领域，一个革命性的变革正在发生——通过开源框架NopAiCoder，开发者现在只需输入需求文档，系统就能自动输出完整的应用程序。这一突破性进展建立在可逆计算理论和XDef元模型的创新基础上，为解决AI编程中的”<br>幻觉问题”和”上下文窗口限制”提供了系统化解决方案。</p>
+<h2 id="技术架构：跨越三个认知空间"><a href="#技术架构：跨越三个认知空间" class="headerlink" title="技术架构：跨越三个认知空间"></a>技术架构：跨越三个认知空间</h2><p>NopAiCoder的核心创新在于建立了三个关键空间之间的映射关系：</p>
+<ol>
+<li><strong>问题空间</strong>：用户需求所在的业务领域</li>
+<li><strong>结构空间</strong>：具体编程语言和框架的技术实现</li>
+<li><strong>可行空间</strong>：AI大模型掌握的所有编程知识</li>
+</ol>
+<p>传统AI编程工具面临的根本挑战在于这三个空间天然不匹配。NopAiCoder通过”投影-拼接”机制解决了这一问题：</p>
+<ul>
+<li><strong>投影机制</strong>：将复杂问题分解到不同子空间处理</li>
+<li><strong>拼接机制</strong>：通过可逆计算理论实现局部解决方案的有机整合</li>
+<li><strong>重叠识别</strong>：自动检测不同子空间解决方案的重叠部分并进行形式转换</li>
+</ul>
+<h2 id="XDef元模型：人机协作的关键"><a href="#XDef元模型：人机协作的关键" class="headerlink" title="XDef元模型：人机协作的关键"></a>XDef元模型：人机协作的关键</h2><p>NopAiCoder设计了两种XDef元模型变体，分别优化人机协作：</p>
+<h3 id="面向人类的XDef"><a href="#面向人类的XDef" class="headerlink" title="面向人类的XDef"></a>面向人类的XDef</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/xdef.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">xmlns:xdef</span>=<span class="hljs-string">&quot;/nop/schema/xdef.xdef&quot;</span> <span class="hljs-attr">xmlns:orm</span>=<span class="hljs-string">&quot;orm&quot;</span> <span class="hljs-attr">xmlns:ext</span>=<span class="hljs-string">&quot;ext&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entities</span> <span class="hljs-attr">xdef:body-type</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">xdef:key-attr</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">comment</span>&gt;</span>description<span class="hljs-tag">&lt;/<span class="hljs-name">comment</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">columns</span> <span class="hljs-attr">xdef:body-type</span>=<span class="hljs-string">&quot;list&quot;</span> <span class="hljs-attr">xdef:key-attr</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span> <span class="hljs-attr">mandatory</span>=<span class="hljs-string">&quot;boolean&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">primary</span>=<span class="hljs-string">&quot;boolean&quot;</span> <span class="hljs-attr">ext:dict</span>=<span class="hljs-string">&quot;dict-name&quot;</span> <span class="hljs-attr">stdDomain</span>=<span class="hljs-string">&quot;std-domain&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;!sql-type&quot;</span> <span class="hljs-attr">precision</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-table</span>=<span class="hljs-string">&quot;table-name&quot;</span> <span class="hljs-attr">orm:ref-prop</span>=<span class="hljs-string">&quot;parent-to-children-prop&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-prop-display-name</span>=<span class="hljs-string">&quot;chinese&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entities</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="面向AI的简化XDef"><a href="#面向AI的简化XDef" class="headerlink" title="面向AI的简化XDef"></a>面向AI的简化XDef</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">orm</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">entities</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">entity</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">comment</span>&gt;</span>description<span class="hljs-tag">&lt;/<span class="hljs-name">comment</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">columns</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;english&quot;</span> <span class="hljs-attr">displayName</span>=<span class="hljs-string">&quot;chinese&quot;</span> <span class="hljs-attr">mandatory</span>=<span class="hljs-string">&quot;boolean&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">primary</span>=<span class="hljs-string">&quot;boolean&quot;</span> <span class="hljs-attr">ext:dict</span>=<span class="hljs-string">&quot;dict-name&quot;</span> <span class="hljs-attr">stdDomain</span>=<span class="hljs-string">&quot;std-domain&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;sql-type&quot;</span> <span class="hljs-attr">precision</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">scale</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-table</span>=<span class="hljs-string">&quot;table-name&quot;</span> <span class="hljs-attr">orm:ref-prop</span>=<span class="hljs-string">&quot;parent-to-children-prop&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">orm:ref-prop-display-name</span>=<span class="hljs-string">&quot;chinese&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">columns</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">entity</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">entities</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">orm</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>关键区别在于：</p>
+<ul>
+<li>人类版本包含完整的格式约束和校验信息</li>
+<li>AI版本强调语义表达，去除冗余的元数据</li>
+<li>两者保持格式兼容，确保无缝转换</li>
+</ul>
+<h2 id="Prompt工程：动态函数式设计"><a href="#Prompt工程：动态函数式设计" class="headerlink" title="Prompt工程：动态函数式设计"></a>Prompt工程：动态函数式设计</h2><p>NopAiCoder将prompt设计为具有完整输入输出规范的函数单元：</p>
+<ol>
+<li><strong>前处理能力</strong>：支持数据衍生和转换</li>
+<li><strong>后处理能力</strong>：结果自动格式化和校验</li>
+<li><strong>动态切换</strong>：通过promptName实现不同处理逻辑</li>
+</ol>
+<p>函数签名统一为Map到Map的转换：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><code class="hljs typescript"><span class="hljs-attr">inputs</span>: <span class="hljs-title class_">Map</span> → <span class="hljs-attr">outputs</span>: <span class="hljs-title class_">Map</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="系统集成：无缝融入开发流程"><a href="#系统集成：无缝融入开发流程" class="headerlink" title="系统集成：无缝融入开发流程"></a>系统集成：无缝融入开发流程</h2><h3 id="任务流编排示例"><a href="#任务流编排示例" class="headerlink" title="任务流编排示例"></a>任务流编排示例</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">task</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">steps</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">custom</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;designOrm&quot;</span> <span class="hljs-attr">customType</span>=<span class="hljs-string">&quot;ai:TaskStep&quot;</span> <span class="hljs-attr">ai:promptName</span>=<span class="hljs-string">&quot;coder/orm-design&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>根据需求文档的描述，设计ORM模型<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;requirements&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">output</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ormModelText&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;$&#123;RESULT.xml()&#125;&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">custom</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">steps</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">task</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="GraphQL服务集成"><a href="#GraphQL服务集成" class="headerlink" title="GraphQL服务集成"></a>GraphQL服务集成</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">query</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;designOrm&quot;</span> <span class="hljs-attr">ai:promptName</span>=<span class="hljs-string">&quot;coder/orm-design&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">ai:chatOptions</span> <span class="hljs-attr">provider</span>=<span class="hljs-string">&quot;ollama&quot;</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&quot;deepseek-r1:14b&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">query</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>系统自动根据prompt定义的输入输出生成对应的API接口，开发者无需额外编码。</p>
+<h2 id="领域知识的结构化处理"><a href="#领域知识的结构化处理" class="headerlink" title="领域知识的结构化处理"></a>领域知识的结构化处理</h2><p>NopAiCoder采用创新的DSL空间划分策略：</p>
+<ol>
+<li><strong>对象中心分解</strong>：相同对象名的相关概念自动归组</li>
+<li><strong>纵向分解</strong>：作为主分解维度确保逻辑一致性</li>
+<li><strong>表现分离</strong>：核心模型与展示逻辑解耦</li>
+</ol>
+<h2 id="多模态自由转换"><a href="#多模态自由转换" class="headerlink" title="多模态自由转换"></a>多模态自由转换</h2><p>系统支持领域模型在不同表现形式间的无损转换：</p>
+<ul>
+<li>可简化为仅含必要字段的ORM模型</li>
+<li>可转换为Java类实现</li>
+<li>默认输出标准化XML便于自动校验</li>
+</ul>
+<p>XML的自校验特性（标签闭合检查等）为AI输出提供了自动纠错机制，显著提高了生成代码的可靠性。</p>
+<h2 id="结论：软件开发的新纪元"><a href="#结论：软件开发的新纪元" class="headerlink" title="结论：软件开发的新纪元"></a>结论：软件开发的新纪元</h2><p>NopAiCoder框架通过创新的技术路线，实现了从需求文档到完整应用的全自动生成。这一突破不仅大幅提升开发效率，更重新定义了人机协作编程的边界。随着技术的持续演进，AI辅助开发将从”<br>工具”进化为”协作者”，开启软件开发的新纪元。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/user-guide/ai-coder/ai-coder-explained.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

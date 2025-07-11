@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Nop-CLI 数据库导入导出工具文档 - Nop</title>
+
+
+  <meta property="og:title" content="Nop-CLI 数据库导入导出工具文档">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Nop-CLI 数据库导入导出工具文档</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><code>nop-cli</code> 提供强大的数据库导入导出功能，支持 CSV、CSV.GZ 和 SQL 格式，允许字段重命名、值转换、数据过滤等高级操作。本工具基于配置文件驱动，提供灵活的数据库操作能力。</p>
+<h2 id="导出命令-export-db"><a href="#导出命令-export-db" class="headerlink" title="导出命令 (export-db)"></a>导出命令 (export-db)</h2><h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">java -jar nop-cli.jar export-db &lt;配置文件&gt; -o=&lt;输出目录&gt; [-s=&lt;状态文件&gt;]<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置文件结构"><a href="#配置文件结构" class="headerlink" title="配置文件结构"></a>配置文件结构</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">export-db</span></span><br><span class="hljs-tag">  <span class="hljs-attr">streaming</span>=<span class="hljs-string">&quot;!boolean=true&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">threadCount</span>=<span class="hljs-string">&quot;!int=0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">batchSize</span>=<span class="hljs-string">&quot;!int=0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">concurrencyPerTable</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">schemaPattern</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">tableNamePattern</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">exportAllTables</span>=<span class="hljs-string">&quot;!boolean=false&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">exportFormats</span>=<span class="hljs-string">&quot;csv-set&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">fetchSize</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">jdbc-connection</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">jdbc-connection</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">excludeTableNames</span>&gt;</span>csv-set<span class="hljs-tag">&lt;/<span class="hljs-name">excludeTableNames</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">checkExportable</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">checkExportable</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">beforeExport</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">beforeExport</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">afterExport</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">afterExport</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">tables</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!string&quot;</span> <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;string&quot;</span> <span class="hljs-attr">concurrency</span>=<span class="hljs-string">&quot;int&quot;</span> <span class="hljs-attr">exportAllFields</span>=<span class="hljs-string">&quot;!boolean=true&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span>xpl-node<span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>xpl-sql<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">transformExpr</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">transformExpr</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">beforeExport</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">beforeExport</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">afterExport</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">afterExport</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">tables</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">export-db</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="关键配置说明"><a href="#关键配置说明" class="headerlink" title="关键配置说明"></a>关键配置说明</h3><h4 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>schemaPattern</code></td>
+<td>string</td>
+<td>-</td>
+<td>数据库模式匹配（Oracle 需要指定）</td>
+</tr>
+<tr>
+<td><code>tableNamePattern</code></td>
+<td>string</td>
+<td>-</td>
+<td>表名匹配模式（如 <code>nop_%</code>）</td>
+</tr>
+<tr>
+<td><code>exportAllTables</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>是否导出所有匹配表</td>
+</tr>
+<tr>
+<td><code>exportFormats</code></td>
+<td>csv-set</td>
+<td>-</td>
+<td>导出格式：csv, csv.gz, sql</td>
+</tr>
+<tr>
+<td><code>fetchSize</code></td>
+<td>int</td>
+<td>-</td>
+<td>JDBC fetchSize（MySQL 流模式需特殊值）</td>
+</tr>
+<tr>
+<td><code>threadCount</code></td>
+<td>int</td>
+<td>0</td>
+<td>导出线程数（0&#x3D;自动）</td>
+</tr>
+<tr>
+<td><code>batchSize</code></td>
+<td>int</td>
+<td>0</td>
+<td>批量处理大小</td>
+</tr>
+<tr>
+<td><code>streaming</code></td>
+<td>boolean</td>
+<td>true</td>
+<td>是否使用流模式导出</td>
+</tr>
+<tr>
+<td><code>excludeTableNames</code></td>
+<td>csv-set</td>
+<td>-</td>
+<td>排除的表名列表</td>
+</tr>
+</tbody></table>
+<h4 id="JDBC-连接配置"><a href="#JDBC-连接配置" class="headerlink" title="JDBC 连接配置"></a>JDBC 连接配置</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">jdbc-connection</span></span><br><span class="hljs-tag">  <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">dialect</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">catalog</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">maxConnections</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">driverClassName</span>&gt;</span>string<span class="hljs-tag">&lt;/<span class="hljs-name">driverClassName</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">jdbcUrl</span>&gt;</span>string<span class="hljs-tag">&lt;/<span class="hljs-name">jdbcUrl</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">jdbc-connection</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="表级配置"><a href="#表级配置" class="headerlink" title="表级配置"></a>表级配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>string</td>
+<td><strong>必填</strong></td>
+<td>目标表名（建议小写）</td>
+</tr>
+<tr>
+<td><code>from</code></td>
+<td>string</td>
+<td>同 name</td>
+<td>源表名</td>
+</tr>
+<tr>
+<td><code>exportAllFields</code></td>
+<td>boolean</td>
+<td>true</td>
+<td>是否导出所有字段</td>
+</tr>
+<tr>
+<td><code>concurrency</code></td>
+<td>int</td>
+<td>-</td>
+<td>表级并发度</td>
+</tr>
+<tr>
+<td><code>sql</code></td>
+<td>xpl-sql</td>
+<td>-</td>
+<td>自定义 SQL 查询代替表导出</td>
+</tr>
+<tr>
+<td><code>transformExpr</code></td>
+<td>xpl</td>
+<td>-</td>
+<td>行数据转换表达式</td>
+</tr>
+</tbody></table>
+<h4 id="字段配置"><a href="#字段配置" class="headerlink" title="字段配置"></a>字段配置</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">field</span></span><br><span class="hljs-tag">  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">stdDataType</span>=<span class="hljs-string">&quot;std-data-type&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;std-sql-type&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">ignore</span>=<span class="hljs-string">&quot;!boolean=false&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">transformExpr</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">transformExpr</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">field</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong><code>stdSqlType</code> (标准 SQL 类型):</strong></p>
+</li>
+<li><p><strong>作用：</strong> 明确指定使用哪种 <strong>JDBC 标准类型</strong> 从数据库读取数据。这解决了数据库原生类型与 JDBC 标准类型之间的映射问题。</p>
+</li>
+<li><p><strong>示例 (Oracle DATE):</strong> Oracle 的原生 <code>DATE</code> 类型默认（通过 <code>getObject()</code>）会被读取为 Oracle的TIMESTAMP。通过指定<br><code>stdSqlType</code> 可以强制使用期望的 JDBC 类型读取：</p>
+<ul>
+<li><code>stdSqlType = DATETIME</code> -&gt; 返回 <code>java.time.LocalDateTime</code></li>
+<li><code>stdSqlType = TIMESTAMP</code> -&gt; 返回 <code>java.sql.Timestamp</code></li>
+<li><code>stdSqlType = DATE</code> -&gt; 返回 <code>java.time.LocalDate</code></li>
+</ul>
+</li>
+<li><p><strong><code>stdDataType</code> (标准数据类型):</strong></p>
+</li>
+<li><p><strong>作用：</strong> 指定将 <strong>从数据库读取到的值</strong> (已经是 Java 对象) <strong>转换&#x2F;导出</strong> 为何种 <strong>Java 数据类型</strong><br>。这用于处理存储格式（数据库中的字节表示）与逻辑数据类型不一致的情况。</p>
+</li>
+<li><p><strong>示例：</strong> 如果某个字段在数据库中以 <code>VARCHAR</code> 类型存储（因此 <code>stdSqlType</code> 通常是 <code>VARCHAR</code>，读取结果为 <code>String</code><br>），但逻辑上它表示一个整数，则可以配置 <code>stdDataType = int</code>。这将把读取到的 <code>String</code> 转换为 <code>Integer</code> 或 <code>int</code> 后再导出。</p>
+</li>
+<li><p><strong>配置规则：</strong> 此属性是 <strong>可选的</strong>。仅在数据库存储的物理格式 (<code>stdSqlType</code> 对应的 Java 类型) 与你最终需要使用的逻辑 Java<br>数据类型不一致时才需要配置。</p>
+</li>
+<li><p>ignore 如果设置为true，则该字段不会参与导出导出处理，会被自动忽略。</p>
+</li>
+<li><p>如果name和from配置不同，可以实现导入导出时进行字段和表的重命名。</p>
+</li>
+</ul>
+<h3 id="导出示例"><a href="#导出示例" class="headerlink" title="导出示例"></a>导出示例</h3><p><strong>配置文件：<code>test.export-db.xml</code></strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">export-db</span></span><br><span class="hljs-tag">  <span class="hljs-attr">tableNamePattern</span>=<span class="hljs-string">&quot;nop_%&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">exportAllTables</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">exportFormats</span>=<span class="hljs-string">&quot;csv,csv.gz&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">fetchSize</span>=<span class="hljs-string">&quot;1000&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">jdbc-connection</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">driverClassName</span>&gt;</span>com.mysql.cj.jdbc.Driver<span class="hljs-tag">&lt;/<span class="hljs-name">driverClassName</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">jdbcUrl</span>&gt;</span>jdbc:mysql://localhost:3306/test<span class="hljs-tag">&lt;/<span class="hljs-name">jdbcUrl</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>root<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>123456<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">jdbc-connection</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">excludeTableNames</span>&gt;</span>nop_temp_table,nop_audit_log<span class="hljs-tag">&lt;/<span class="hljs-name">excludeTableNames</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">tables</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;customers&quot;</span> <span class="hljs-attr">exportAllFields</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;customer_id&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">transformExpr</span>&gt;</span>value.toUpperCase()<span class="hljs-tag">&lt;/<span class="hljs-name">transformExpr</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">field</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">ignore</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">tables</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">export-db</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>执行命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">java -jar nop-cli.jar export-db test.export-db.xml -o=data<br></code></pre></td></tr></table></figure>
+
+<h2 id="导入命令-import-db"><a href="#导入命令-import-db" class="headerlink" title="导入命令 (import-db)"></a>导入命令 (import-db)</h2><h3 id="命令格式-1"><a href="#命令格式-1" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">java -jar nop-cli.jar import-db &lt;配置文件&gt; -i=&lt;输入目录&gt; [-s=&lt;状态文件&gt;]<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置文件结构-1"><a href="#配置文件结构-1" class="headerlink" title="配置文件结构"></a>配置文件结构</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">import-db</span></span><br><span class="hljs-tag">  <span class="hljs-attr">threadCount</span>=<span class="hljs-string">&quot;!int=0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">batchSize</span>=<span class="hljs-string">&quot;!int=0&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">concurrencyPerTable</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">schemaPattern</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">tableNamePattern</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">importAllTables</span>=<span class="hljs-string">&quot;!boolean=true&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">checkKeyFields</span>=<span class="hljs-string">&quot;!boolean=true&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">jdbc-connection</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">jdbc-connection</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">excludeTableNames</span>&gt;</span>csv-set<span class="hljs-tag">&lt;/<span class="hljs-name">excludeTableNames</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">checkImportable</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">checkImportable</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">beforeImport</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">beforeImport</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">afterImport</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">afterImport</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">tables</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span></span><br><span class="hljs-tag">      <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;!string&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">format</span>=<span class="hljs-string">&quot;string&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">concurrency</span>=<span class="hljs-string">&quot;int&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">importAllFields</span>=<span class="hljs-string">&quot;!boolean=true&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">allowUpdate</span>=<span class="hljs-string">&quot;boolean&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">maxSkipCount</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">keyFields</span>&gt;</span>csv-list<span class="hljs-tag">&lt;/<span class="hljs-name">keyFields</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">transformExpr</span>&gt;</span>xpl<span class="hljs-tag">&lt;/<span class="hljs-name">transformExpr</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">beforeImport</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">beforeImport</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">afterImport</span>&gt;</span>xpl-fn<span class="hljs-tag">&lt;/<span class="hljs-name">afterImport</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">tables</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">import-db</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="关键配置说明-1"><a href="#关键配置说明-1" class="headerlink" title="关键配置说明"></a>关键配置说明</h3><h4 id="全局配置-1"><a href="#全局配置-1" class="headerlink" title="全局配置"></a>全局配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>importAllTables</code></td>
+<td>boolean</td>
+<td>true</td>
+<td>是否导入目录下所有表</td>
+</tr>
+<tr>
+<td><code>checkKeyFields</code></td>
+<td>boolean</td>
+<td>true</td>
+<td>是否根据 keyFields 检查记录存在</td>
+</tr>
+<tr>
+<td><code>tableNamePattern</code></td>
+<td>string</td>
+<td>-</td>
+<td>表名匹配模式</td>
+</tr>
+<tr>
+<td><code>threadCount</code></td>
+<td>int</td>
+<td>0</td>
+<td>导入线程数（0&#x3D;自动）</td>
+</tr>
+<tr>
+<td><code>batchSize</code></td>
+<td>int</td>
+<td>0</td>
+<td>批量提交大小</td>
+</tr>
+</tbody></table>
+<h4 id="表级配置-1"><a href="#表级配置-1" class="headerlink" title="表级配置"></a>表级配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>format</code></td>
+<td>string</td>
+<td>-</td>
+<td>文件格式后缀（如 csv）</td>
+</tr>
+<tr>
+<td><code>importAllFields</code></td>
+<td>boolean</td>
+<td>true</td>
+<td>是否导入所有字段</td>
+</tr>
+<tr>
+<td><code>allowUpdate</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>存在时是否更新（false&#x3D;忽略）</td>
+</tr>
+<tr>
+<td><code>maxSkipCount</code></td>
+<td>int</td>
+<td>-</td>
+<td>最大跳过记录数</td>
+</tr>
+<tr>
+<td><code>keyFields</code></td>
+<td>csv-list</td>
+<td>-</td>
+<td>唯一键字段列表</td>
+</tr>
+<tr>
+<td><code>transformExpr</code></td>
+<td>xpl</td>
+<td>-</td>
+<td>行数据转换表达式</td>
+</tr>
+</tbody></table>
+<p>keyFields用于插入数据库的时候进行重复性检查。已经存在的记录会进行更新或者跳过。取胜情况下会按照主键判重。</p>
+<h3 id="导入示例"><a href="#导入示例" class="headerlink" title="导入示例"></a>导入示例</h3><p><strong>配置文件：<code>test.import-db.xml</code></strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">import-db</span> <span class="hljs-attr">importAllTables</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">checkKeyFields</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">jdbc-connection</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">driverClassName</span>&gt;</span>org.postgresql.Driver<span class="hljs-tag">&lt;/<span class="hljs-name">driverClassName</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">jdbcUrl</span>&gt;</span>jdbc:postgresql://localhost:5432/prod<span class="hljs-tag">&lt;/<span class="hljs-name">jdbcUrl</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>admin<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>secret<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">jdbc-connection</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">tables</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span></span><br><span class="hljs-tag">      <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;orders&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">format</span>=<span class="hljs-string">&quot;csv.gz&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">importAllFields</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">allowUpdate</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">maxSkipCount</span>=<span class="hljs-string">&quot;100&quot;</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">keyFields</span>&gt;</span>order_id,customer_id<span class="hljs-tag">&lt;/<span class="hljs-name">keyFields</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;order_date&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;status&quot;</span> <span class="hljs-attr">from</span>=<span class="hljs-string">&quot;order_status&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 只导入金额大于100的订单 --&gt;</span><br>        xpl: return $input.amount &gt; 100<br>      <span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">tables</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">import-db</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>执行命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><br>java -jar nop-cli.jar import-db test.import-db.xml -i=data<br><br><br>java -jar nop-cli.jar import-db test.import-db.xml -i=data -s=import-status.json<br></code></pre></td></tr></table></figure>
+
+<h2 id="高级功能"><a href="#高级功能" class="headerlink" title="高级功能"></a>高级功能</h2><h3 id="数据转换-XPL表达式"><a href="#数据转换-XPL表达式" class="headerlink" title="数据转换 (XPL表达式)"></a>数据转换 (XPL表达式)</h3><ul>
+<li><code>transformExpr</code>：支持在字段级和表级进行数据转换</li>
+<li>可用变量：<ul>
+<li><code>value</code>：当前字段值</li>
+<li><code>input</code>：当前行数据</li>
+</ul>
+</li>
+<li>示例：<code>value.toUpperCase()</code></li>
+</ul>
+<h3 id="条件过滤"><a href="#条件过滤" class="headerlink" title="条件过滤"></a>条件过滤</h3><ul>
+<li><code>filter</code>：支持在导出&#x2F;导入时过滤记录</li>
+<li>示例：<code>&lt;filter&gt;&lt;eq name=&#39;status&#39; value=&#39;1&#39; /&gt;&lt;/filter&gt;</code></li>
+</ul>
+<h3 id="自定义处理"><a href="#自定义处理" class="headerlink" title="自定义处理"></a>自定义处理</h3><ul>
+<li>生命周期钩子：<ul>
+<li><code>beforeExport</code>&#x2F;<code>afterExport</code></li>
+<li><code>beforeImport</code>&#x2F;<code>afterImport</code></li>
+<li><code>beforeExport</code>（表级）&#x2F;<code>afterExport</code>（表级）</li>
+</ul>
+</li>
+</ul>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><strong>增量导入</strong>：结合 <code>-s</code> 参数保存导入状态，实现增量导入</li>
+<li><strong>大表处理</strong>：</li>
+</ol>
+<ul>
+<li>导出：设置 <code>streaming=&quot;true&quot;</code> 和 <code>fetchSize</code></li>
+<li>导入：设置 <code>batchSize=1000</code> 和 <code>threadCount=4</code></li>
+</ul>
+<ol start="3">
+<li><strong>安全转换</strong>：在 <code>transformExpr</code> 中处理空值和异常</li>
+<li><strong>性能优化</strong>：</li>
+</ol>
+<ul>
+<li>使用 <code>concurrencyPerTable</code> 并行处理多个表</li>
+<li>大文件使用 <code>csv.gz</code> 格式减少 IO</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>MySQL 流模式导出需要设置streaming&#x3D;true，系统会根据dialect中的配置自动设置fetchSize为特殊值。</li>
+<li>Oracle 需要正确设置 <code>schemaPattern</code></li>
+</ol>
+<p>通过合理配置，nop-cli 可以高效处理各种数据库迁移、数据同步和备份恢复场景。</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/user-guide/etl.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

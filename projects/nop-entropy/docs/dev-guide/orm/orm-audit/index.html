@@ -1260,6 +1260,12 @@
       <div class="Article-content col-md-9"><h2 id="createdBy"><a href="#createdBy" class="headerlink" title="createdBy"></a>createdBy</h2><p>在Excel中如果设置了数据域domain为<code>createdBy/updatedBy</code>，则新增、修改实体时会记录当前用户名，如果domain为<code>createTime/updateTime</code>则会记录修改时间。</p>
 <p>createdBy会存放<code>IContext.getUserRefNo()</code><br>返回的值，缺省对应于userName。如果希望存放userId,需要配置<code>nop.auth.use-user-id-for-audit-fields</code>为true。</p>
 <p>如果上下文中没有用户信息，缺省会使用SYS作为用户名，可以通过<code>nop.orm.sys-user-name</code>配置。</p>
+<h2 id="字段变更记录"><a href="#字段变更记录" class="headerlink" title="字段变更记录"></a>字段变更记录</h2><p>在实体模型中增加标签 audit会启用字段变更记录，记录在NopSysChangeLog表中，会记录 实体-ID-属性-旧值-新值。</p>
+<ul>
+<li>通过<code>nop.orm.audit.enabled=false</code>来禁用这个特性，缺省为true</li>
+<li>删除会被记录为<code>prop=deleted</code>,新值为1</li>
+<li>新增缺省情况下不会记录，除非为实体增加标签<code>audit-save</code></li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">

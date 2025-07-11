@@ -1310,6 +1310,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">_AppMallDaoConstants</span> &#123;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 订单状态: 未付款</span><br><span class="hljs-comment">    */</span><br>  <span class="hljs-type">int</span> <span class="hljs-variable">ORDER_STATUS_CREATED</span> <span class="hljs-operator">=</span> <span class="hljs-number">101</span>;<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><p>表名会直接按照驼峰规则映射为GraphQL中的对象名，所以表名原则上需要全局唯一（不同模块之间的表名不应该冲突）。建议每个模块具有自己特殊的表名前缀，比如<code>litemall_xxx</code>,<code>nop_wf_xxx</code>等。<br>Nop平台内置的表名都具有前缀<code>nop_</code>。</p>
+<p>Excel模型对于每个表可以增加一个【是否视图】字段的配置，如果配置为true，则生成sql的时候会跳过。</p>
 <h2 id="数据表标签"><a href="#数据表标签" class="headerlink" title="数据表标签"></a>数据表标签</h2><ul>
 <li><code>dict</code>：标记为字典表，其他地方可以通过<code>obj/&#123;objName&#125;</code>来将该表的数据作为字典表来使用</li>
 <li><code>mapper</code>：为该表生成类似MyBatis的Mapper定义文件和Mapper接口类。</li>
@@ -1371,6 +1372,7 @@
 <li><code>ref-query</code>: 父表引用子表的关联集合属性设置<code>graphql:findMethod=&quot;findList&quot;</code>，从而支持支持对子表进行分页查询。如果不传入limit参数，也不配置fetchSize，在缺省只获取maxPageSize数据。</li>
 </ul>
 <p><code>ref-xx</code>表示的是在父表中对应子表的属性上所增加的标签。例如在子表的关联上增加<code>ref-pub</code>标签，对应于在<code>parent.children</code>这个属性上增加了<code>pub</code>标签。</p>
+<p><strong>【属性名】是子表指向主表的属性名，【关联属性名】是反方向，主表指向子表的集合属性名</strong>。如果没有设置【关联属性名】，则所有<code>ref-xxx</code>配置都无效。</p>
 <p>在逆向工程时，左对象的【属性名】会根据已有数据库的字段名自动生成（对于非逆向工程，需要自行填写【属性名】）。假设当前表为<code>PurchaseOrder</code>，它具有一个字段<code>SUPPLIER_ID</code>，关联到父表 <code>Supplier</code>，则会自动为<code>PurchaseOrder</code>表生成一个<br><code>to-one</code>关联，【属性名】为<code>supplier</code>（对应于Java中<code>Supplier#getSupplier()</code>方法）。【关联属性名】是父表实体中对应于子表实体的集合属性名，除非我们需要在内存中使用该集合，否则不要设置【关联属性名】。特别是当子表集合中条目数超过1000时，<br>在内存中操纵可能会导致消耗过多内存，同时导致性能低下。</p>
 <p>对于目标数据库中的每一列，NopOrm都会自动生成一个对应的Java属性，属性名采用驼峰形式，例如 <code>SUPPLIER_ID</code>对应Java属性<code>supplierId</code>。同时对于关联对象属性，会根据<br>关联关系中涉及到的数据库列名猜测得到Java属性名。规则如下：</p>
 <ol>

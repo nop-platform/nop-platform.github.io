@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>食堂物资管理系统详细设计 - Nop</title>
+
+
+  <meta property="og:title" content="食堂物资管理系统详细设计">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">食堂物资管理系统详细设计</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><h2 id="角色与权限设计"><a href="#角色与权限设计" class="headerlink" title="角色与权限设计"></a>角色与权限设计</h2><h3 id="1-角色定义"><a href="#1-角色定义" class="headerlink" title="1. 角色定义"></a>1. 角色定义</h3><table>
+<thead>
+<tr>
+<th>角色名称</th>
+<th>描述</th>
+<th>系统权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>学校管理员</td>
+<td>负责系统基础数据维护、日常监管和统计分析</td>
+<td>基础数据管理、数据查询、统计分析</td>
+</tr>
+<tr>
+<td>服务公司管理员</td>
+<td>食堂经营单位的管理人员，负责日常经营数据录入</td>
+<td>经营管理、数据录入、供应商结算</td>
+</tr>
+</tbody></table>
+<h3 id="2-权限矩阵"><a href="#2-权限矩阵" class="headerlink" title="2. 权限矩阵"></a>2. 权限矩阵</h3><table>
+<thead>
+<tr>
+<th>功能模块</th>
+<th>子功能</th>
+<th>学校管理员</th>
+<th>服务公司管理员</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物资管理</td>
+<td>增删改查</td>
+<td>读写</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>供应商管理</td>
+<td>增删改查</td>
+<td>读写</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>服务公司管理</td>
+<td>增删改查</td>
+<td>读写</td>
+<td>只读(仅自身)</td>
+</tr>
+<tr>
+<td>基础菜单管理</td>
+<td>增删改查</td>
+<td>读写</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>库房管理</td>
+<td>增删改查</td>
+<td>只读</td>
+<td>读写(仅自身)</td>
+</tr>
+<tr>
+<td>每日菜单管理</td>
+<td>增删改查</td>
+<td>只读</td>
+<td>读写(仅自身)</td>
+</tr>
+<tr>
+<td>出入库管理</td>
+<td>增删改查</td>
+<td>只读</td>
+<td>读写(仅自身)</td>
+</tr>
+<tr>
+<td>盘库管理</td>
+<td>操作</td>
+<td>只读</td>
+<td>读写(仅自身)</td>
+</tr>
+<tr>
+<td>供应商结算</td>
+<td>操作</td>
+<td>只读</td>
+<td>读写</td>
+</tr>
+<tr>
+<td>经营数据管理</td>
+<td>增删改查</td>
+<td>只读</td>
+<td>读写(仅自身)</td>
+</tr>
+<tr>
+<td>统计分析</td>
+<td>各类报表</td>
+<td>读写</td>
+<td>只读(仅自身数据)</td>
+</tr>
+</tbody></table>
+<h2 id="菜单设计"><a href="#菜单设计" class="headerlink" title="菜单设计"></a>菜单设计</h2><h3 id="1-学校管理员菜单"><a href="#1-学校管理员菜单" class="headerlink" title="1. 学校管理员菜单"></a>1. 学校管理员菜单</h3><ul>
+<li>基础数据管理<ul>
+<li>物资管理</li>
+<li>供应商管理</li>
+<li>服务公司管理</li>
+<li>基础菜单管理</li>
+</ul>
+</li>
+<li>监管中心<ul>
+<li>出入库查询</li>
+<li>经营数据查询</li>
+<li>库存监控</li>
+</ul>
+</li>
+<li>统计分析<ul>
+<li>物资统计报表</li>
+<li>成本分析报表</li>
+<li>经营绩效分析</li>
+</ul>
+</li>
+<li>系统设置<ul>
+<li>用户管理</li>
+<li>角色权限</li>
+<li>系统参数</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-服务公司管理员菜单"><a href="#2-服务公司管理员菜单" class="headerlink" title="2. 服务公司管理员菜单"></a>2. 服务公司管理员菜单</h3><ul>
+<li>经营管理<ul>
+<li>库房管理</li>
+<li>每日菜单</li>
+<li>出入库管理</li>
+<li>盘库管理</li>
+</ul>
+</li>
+<li>供应商结算<ul>
+<li>结算单管理</li>
+<li>付款记录</li>
+</ul>
+</li>
+<li>经营数据<ul>
+<li>订餐人数录入</li>
+<li>固定成本录入</li>
+<li>日偏差查看</li>
+</ul>
+</li>
+<li>数据查询<ul>
+<li>库存查询</li>
+<li>历史菜单</li>
+<li>出入库记录</li>
+</ul>
+</li>
+</ul>
+<h2 id="功能模块详细设计"><a href="#功能模块详细设计" class="headerlink" title="功能模块详细设计"></a>功能模块详细设计</h2><h3 id="1-基础数据管理模块"><a href="#1-基础数据管理模块" class="headerlink" title="1. 基础数据管理模块"></a>1. 基础数据管理模块</h3><h4 id="功能点列表（优先级）"><a href="#功能点列表（优先级）" class="headerlink" title="功能点列表（优先级）"></a>功能点列表（优先级）</h4><ol>
+<li>物资管理（P0）</li>
+</ol>
+<ul>
+<li>物资分类管理（多级）</li>
+<li>物资CRUD操作</li>
+<li>物资图片上传</li>
+<li>物资库存查询</li>
+</ul>
+<ol start="2">
+<li>供应商管理（P0）</li>
+</ol>
+<ul>
+<li>供应商CRUD</li>
+<li>供应商启用&#x2F;禁用</li>
+<li>供应商资质管理</li>
+</ul>
+<ol start="3">
+<li>服务公司管理（P0）</li>
+</ol>
+<ul>
+<li>服务公司CRUD</li>
+<li>服务公司启用&#x2F;禁用</li>
+</ul>
+<ol start="4">
+<li>基础菜单管理（P1）</li>
+</ol>
+<ul>
+<li>基础菜单CRUD</li>
+<li>菜单配料管理</li>
+<li>菜单成本计算</li>
+</ul>
+<h4 id="交互流程图"><a href="#交互流程图" class="headerlink" title="交互流程图"></a>交互流程图</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[登录] --&gt; B&#123;角色判断&#125;<br>    B --&gt;|学校管理员| C[基础数据管理]<br>    B --&gt;|服务公司| D[经营管理]<br>    C --&gt; E[物资管理]<br>    C --&gt; F[供应商管理]<br>    C --&gt; G[服务公司管理]<br>    C --&gt; H[基础菜单管理]<br>    E --&gt; I[物资分类维护]<br>    E --&gt; J[物资信息维护]<br>    H --&gt; K[菜单配料关联]<br></code></pre></td></tr></table></figure>
+
+<h4 id="核心业务逻辑"><a href="#核心业务逻辑" class="headerlink" title="核心业务逻辑"></a>核心业务逻辑</h4><ul>
+<li>物资分类采用树形结构，支持无限级分类</li>
+<li>物资编码采用”分类码+序列号”自动生成规则</li>
+<li>供应商和服务公司启用&#x2F;禁用状态影响相关业务操作</li>
+<li>基础菜单的配料关联物资，自动计算菜品成本</li>
+</ul>
+<h3 id="2-经营管理模块"><a href="#2-经营管理模块" class="headerlink" title="2. 经营管理模块"></a>2. 经营管理模块</h3><h4 id="功能点列表（优先级）-1"><a href="#功能点列表（优先级）-1" class="headerlink" title="功能点列表（优先级）"></a>功能点列表（优先级）</h4><ol>
+<li>库房管理（P1）</li>
+</ol>
+<ul>
+<li>库房CRUD</li>
+</ul>
+<ol start="2">
+<li>每日菜单管理（P0）</li>
+</ol>
+<ul>
+<li>从基础菜单选择</li>
+<li>按日期管理</li>
+<li>结算日锁定</li>
+</ul>
+<ol start="3">
+<li>出入库管理（P0）</li>
+</ol>
+<ul>
+<li>入库单管理</li>
+<li>出库单管理</li>
+<li>整入整出</li>
+<li>单据锁定</li>
+</ul>
+<ol start="4">
+<li>盘库管理（P1）</li>
+</ol>
+<ul>
+<li>库存盘点</li>
+<li>盘盈盘亏处理</li>
+</ul>
+<ol start="5">
+<li>供应商结算（P1）</li>
+</ol>
+<ul>
+<li>结算单生成</li>
+<li>付款记录</li>
+</ul>
+<ol start="6">
+<li>经营数据管理（P0）</li>
+</ol>
+<ul>
+<li>订餐人数录入</li>
+<li>固定成本录入</li>
+<li>日偏差计算</li>
+</ul>
+<h4 id="交互流程图-1"><a href="#交互流程图-1" class="headerlink" title="交互流程图"></a>交互流程图</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph TD<br>    A[服务公司登录] --&gt; B[每日菜单管理]<br>    B --&gt; C[从基础菜单选择]<br>    B --&gt; D[设置当日菜单]<br>    A --&gt; E[出入库管理]<br>    E --&gt; F[创建入库单]<br>    E --&gt; G[创建出库单]<br>    F --&gt; H[关联供应商]<br>    G --&gt; I[关联菜单需求]<br>    A --&gt; J[经营数据管理]<br>    J --&gt; K[录入订餐人数]<br>    J --&gt; L[录入固定成本]<br>    K --&gt; M[自动计算日偏差]<br></code></pre></td></tr></table></figure>
+
+<h4 id="核心业务逻辑-1"><a href="#核心业务逻辑-1" class="headerlink" title="核心业务逻辑"></a>核心业务逻辑</h4><ul>
+<li>每日菜单必须从基础菜单中选择，不可自定义</li>
+<li>出入库单据包含明细项，影响实时库存</li>
+<li>出库可与菜单关联，自动计算理论消耗量</li>
+<li>日偏差 &#x3D; 理论消耗量(根据订餐人数计算) - 实际出库量</li>
+<li>结算日后的数据自动锁定，不可修改</li>
+</ul>
+<h3 id="3-统计分析模块"><a href="#3-统计分析模块" class="headerlink" title="3. 统计分析模块"></a>3. 统计分析模块</h3><h4 id="功能点列表（优先级）-2"><a href="#功能点列表（优先级）-2" class="headerlink" title="功能点列表（优先级）"></a>功能点列表（优先级）</h4><ol>
+<li>物资统计（P1）</li>
+</ol>
+<ul>
+<li>出入库汇总</li>
+<li>库存预警</li>
+</ul>
+<ol start="2">
+<li>成本分析（P0）</li>
+</ol>
+<ul>
+<li>菜品成本分析</li>
+<li>经营成本分析</li>
+</ul>
+<ol start="3">
+<li>经营绩效（P1）</li>
+</ol>
+<ul>
+<li>服务公司绩效</li>
+<li>供应商评价</li>
+</ul>
+<h4 id="核心业务逻辑-2"><a href="#核心业务逻辑-2" class="headerlink" title="核心业务逻辑"></a>核心业务逻辑</h4><ul>
+<li>基于时间维度、物资维度、服务公司维度的交叉分析</li>
+<li>成本分析结合实际消耗和标准配方的理论消耗</li>
+<li>绩效评估考虑成本控制、库存周转率等指标</li>
+</ul>
+<h2 id="数据流设计"><a href="#数据流设计" class="headerlink" title="数据流设计"></a>数据流设计</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mermaid">graph LR<br>    A[基础数据] --&gt; B[每日菜单]<br>    B --&gt; C[订餐数据]<br>    C --&gt; D[理论消耗]<br>    E[实际出入库] --&gt; F[实际库存]<br>    D --&gt; G[日偏差分析]<br>    F --&gt; G<br>    E --&gt; H[供应商结算]<br>    A --&gt; I[成本核算]<br>    B --&gt; I<br>    C --&gt; I<br></code></pre></td></tr></table></figure>
+
+<h2 id="关键业务规则"><a href="#关键业务规则" class="headerlink" title="关键业务规则"></a>关键业务规则</h2><ol>
+<li>数据锁定规则：</li>
+</ol>
+<ul>
+<li>结算日后自动锁定相关数据</li>
+<li>手动锁定的单据需上级解锁</li>
+</ul>
+<ol start="2">
+<li>库存变更规则：</li>
+</ol>
+<ul>
+<li>入库增加库存</li>
+<li>出库减少库存</li>
+<li>盘盈盘亏调整库存</li>
+</ul>
+<ol start="3">
+<li>权限控制规则：</li>
+</ol>
+<ul>
+<li>服务公司只能操作自身数据</li>
+<li>敏感操作需记录操作日志</li>
+</ul>
+<ol start="4">
+<li>成本计算规则：</li>
+</ol>
+<ul>
+<li>菜品成本 &#x3D; ∑(配料数量×最新入库单价)</li>
+<li>经营成本 &#x3D; 固定成本 + 食材成本</li>
+</ul>
+<ol start="5">
+<li>偏差分析规则：</li>
+</ol>
+<ul>
+<li>日偏差率 &#x3D; (实际消耗 - 理论消耗)&#x2F;理论消耗</li>
+<li>连续异常偏差触发预警</li>
+</ul>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/gpt/nop-ai-coder/requirements.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

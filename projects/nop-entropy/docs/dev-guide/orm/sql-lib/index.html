@@ -1362,6 +1362,76 @@
 <li>如果执行SQL之前对应的实体数据已经加载到内存中，且已经被修改，则执行SQL会抛出异常<code>nop.err.orm.entity-prop-is-dirty</code>。如果没有被修改，则会更新实体属性。</li>
 <li>可以通过ormEntityRefreshBehavior来改变上面的行为。errorWhenDirty是缺省行为。useFirst将保留第一次加载的实体数据，忽略当前SQL查询得到的数据。useLast则使用最后一次查询得到的数据。</li>
 </ul>
+<h2 id="10-传入Map或者JavaBean"><a href="#10-传入Map或者JavaBean" class="headerlink" title="10. 传入Map或者JavaBean"></a>10. 传入Map或者JavaBean</h2><p>对于参数很多的情况，可以汇总到一个Map参数或者JavaBean对象中传入</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">MyMapper</span>&#123;<br>  List&lt;MyEntity&gt; <span class="hljs-title function_">findByXX</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;query&quot;)</span>MyQuery query)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在sql-lib中可以使用表达式或者复合属性来访问</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">eql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;findByXX&quot;</span> &gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span><br>    select o from MyEntity o<br>    where o.fldA = $&#123;query.fldA&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">sql:filter</span>&gt;</span> and o.fldB = :query.fldB <span class="hljs-tag">&lt;/<span class="hljs-name">sql:filter</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">eql</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="11-字段映射（Field-Mapping）"><a href="#11-字段映射（Field-Mapping）" class="headerlink" title="11. 字段映射（Field Mapping）"></a>11. 字段映射（Field Mapping）</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;findByXX&quot;</span> <span class="hljs-attr">colNameCamelCase</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;my_date&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;myDate2&quot;</span> <span class="hljs-attr">stdSqlType</span>=<span class="hljs-string">&quot;DATE&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><strong><code>stdSqlType</code> 属性</strong></li>
+</ol>
+<ul>
+<li>指定从 <code>IDataSet</code> 读取数据时使用的 SQL 类型（如 <code>DATE</code>&#x2F;<code>TIMESTAMP</code>&#x2F;<code>BLOB</code>）</li>
+<li>系统会根据类型调用对应方法（如 <code>getDate()</code> 而非 <code>getObject()</code>）</li>
+<li>未指定时默认使用 <code>getObject()</code></li>
+</ul>
+<ol start="2">
+<li><strong><code>as</code> 属性</strong></li>
+</ol>
+<ul>
+<li>重命名字段（如 <code>my_date → myDate2</code>）</li>
+<li>支持嵌套属性（如 <code>a.b.c</code> 会生成 <code>&#123;a: &#123;b: &#123;c: value&#125;&#125;&#125;</code> 结构）</li>
+<li>未指定时：<ul>
+<li>若 <code>colNameCamelCase=true</code>，自动转为驼峰命名（如 <code>user_name → userName</code>）</li>
+<li>否则保持原始列名</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong><code>colNameCamelCase</code> 属性</strong></li>
+</ol>
+<ul>
+<li>全局开关（位于 <code>&lt;sql&gt;</code> 节点）</li>
+<li>为所有未显式定义 <code>as</code> 的字段启用驼峰命名转换</li>
+<li>优先级：显式 <code>as</code> &gt; 驼峰转换 &gt; 原始列名</li>
+</ul>
+<hr>
+<h2 id="12-行类型（rowType）"><a href="#12-行类型（rowType）" class="headerlink" title="12. 行类型（rowType）"></a>12. 行类型（rowType）</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;findByXX&quot;</span> <span class="hljs-attr">rowType</span>=<span class="hljs-string">&quot;xxx.MyEntity&quot;</span> <span class="hljs-attr">colNameCamelCase</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>实体类型（Entity）</strong></li>
+</ol>
+<ul>
+<li>当 <code>rowType</code> 是 ORM 实体类（如 <code>xxx.MyEntity</code>）时：<ul>
+<li>若查询结果包含该实体的<strong>主键字段</strong>，自动构建实体对象</li>
+<li>实体将与当前 <code>OrmSession</code> 绑定（支持懒加载&#x2F;脏检查等 ORM 特性）</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>非实体类型</strong></li>
+</ol>
+<ul>
+<li>当 <code>rowType</code> 是普通 DTO 或 Map 时：<ul>
+<li>直接将查询结果转换为指定类型</li>
+<li>支持基础类型（如 <code>rowType=&quot;java.lang.Integer&quot;</code>）</li>
+<li>支持嵌套对象（需匹配字段映射规则）</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong><code>colNameCamelCase</code> 协同工作</strong></li>
+</ol>
+<ul>
+<li>驼峰命名转换对 <code>rowType</code> 映射同样生效</li>
+<li>需确保转换后的字段名与目标类属性名匹配</li>
+</ul>
+<h4 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h4><ul>
+<li>若实体主键未出现在查询结果中，会退转为普通对象（无 ORM 特性）</li>
+<li>嵌套属性路径（如 <code>a.b.c</code>）要求目标类具有对应的层级结构</li>
+</ul>
 <h2 id="与MyBatis的对比"><a href="#与MyBatis的对比" class="headerlink" title="与MyBatis的对比"></a>与MyBatis的对比</h2><table>
 <thead>
 <tr>

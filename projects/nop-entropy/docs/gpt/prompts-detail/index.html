@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>Agent - Nop</title>
+
+
+  <meta property="og:title" content="Agent">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">Agent</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><p>表达力首先不是一种缺陷，而是一种要求: 按照指定设计风格生成。</p>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">You are an agent - please keep working, using tools where needed, until the user’s query is completely resolved, before ending your turn and yielding control back to the user. Follow these rules:<br>1. IMPORTANT: If you state that you will use a tool, immediately call that tool as your next action.<br>2. Always follow the tool call schema exactly as specified and make sure to provide all necessary parameters.<br>3. The conversation may reference tools that are no longer available. NEVER call tools that are not explicitly provided in your system prompt.<br>4. Before calling each tool, first explain why you are calling it.<br>5. Some tools run asynchronously, so you may not see their output immediately. If you need to see the output of previous tool calls before continuing, simply stop making new tool calls.<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>强调不要超出指定范围</li>
+<li>要求先解释再调用，强制thinking</li>
+<li>指定跳出条件</li>
+<li>角色主要是限定scope和解决问题的方向</li>
+</ul>
+<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">IMPORTANT: When using any code edit tool, such as replace_file_content, ALWAYS generate the TargetFile argument first.<br><br>EXTREMELY IMPORTANT: Your generated code must be immediately runnable. To guarantee this, follow these instructions carefully:<br><br>NEVER generate an extremely long hash or any non-textual code, such as binary. These are not helpful to the USER and are very expensive.<br><br>**THIS IS CRITICAL: ALWAYS combine ALL changes into a SINGLE edit_file tool call, even when modifying different sections of the file.<br><br>CRITICAL: Think HOLISTICALLY and COMPREHENSIVELY BEFORE creating an artifact.<br><br>ULTRA IMPORTANT: Do NOT be verbose and DO NOT explain anything unless the user is asking for more information. That is VERY important.<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过大写字母和IMPORT关键字来表达强调。</li>
+</ul>
+<h2 id="结构化"><a href="#结构化" class="headerlink" title="结构化"></a>结构化</h2><p>通过XML标签来标记起始。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">example</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">user_query</span>&gt;</span>Can you help me create a JavaScript function to calculate the factorial of a number?<span class="hljs-tag">&lt;/<span class="hljs-name">user_query</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">assistant_response</span>&gt;</span><br>        Certainly, I can help you create a JavaScript function to calculate the factorial of a number.<br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">boltArtifact</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;factorial-function&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;JavaScript Factorial Function&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">boltAction</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">filePath</span>=<span class="hljs-string">&quot;index.js&quot;</span>&gt;</span><br>                function factorial(n) &#123;<br>                ...<br>                &#125;<br><br>                ...<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">boltAction</span>&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">boltAction</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;shell&quot;</span>&gt;</span><br>                node index.js<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">boltAction</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">boltArtifact</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">assistant_response</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">example</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>IMPORTANT FORMATTING INSTRUCTIONS:</p>
+<ul>
+<li>Return ONLY the valid XML structure specified above</li>
+<li>DO NOT wrap the XML in markdown code blocks (no ``` or ```xml)</li>
+<li>DO NOT include any explanation text before or after the XML</li>
+<li>Ensure the XML is properly formatted and valid</li>
+<li>Start directly with <wiki_structure> and end with </wiki_structure></li>
+</ul>
+<h2 id="Tool"><a href="#Tool" class="headerlink" title="Tool"></a>Tool</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type create_memory = (_: &#123;<br>// The type of action to take on the MEMORY. Must be one of &#x27;create&#x27;, &#x27;update&#x27;, or &#x27;delete&#x27;<br>Action: &quot;create&quot; | &quot;update&quot; | &quot;delete&quot;,<br>// Content of a new or updated MEMORY. When deleting an existing MEMORY, leave this blank.<br>Content: string,<br>// CorpusNames of the workspaces associated with the MEMORY. Each element must be a FULL AND EXACT string match, including all symbols, with one of the CorpusNames provided in your system prompt. Only used when creating a new MEMORY.<br>CorpusNames: string[],<br>// Id of an existing MEMORY to update or delete. When creating a new MEMORY, leave this blank.<br>Id: string,<br>// Tags to associate with the MEMORY. These will be used to filter or retrieve the MEMORY. Only used when creating a new MEMORY. Use snake_case.<br>Tags: string[],<br>// Descriptive title for a new or updated MEMORY. This is required when creating or updating a memory. When deleting an existing MEMORY, leave this blank.<br>Title: string,<br>// Set to true if the user explicitly asked you to create/modify this memory.<br>UserTriggered: boolean,<br>&#125;) =&gt; any;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过函数声明和注释来表达tool</li>
+<li>考虑KV模式存储和表格模式存储</li>
+</ul>
+<h2 id="差量"><a href="#差量" class="headerlink" title="差量"></a>差量</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type edit_file = (_: &#123;<br>// Specify ONLY the precise lines of code that you wish to edit. **NEVER specify or write out unchanged code**. Instead, represent all unchanged code using this special placeholder: &#123;&#123; ... &#125;&#125;<br>CodeEdit: string,<br>// Markdown language for the code block, e.g &#x27;python&#x27; or &#x27;javascript&#x27;<br>CodeMarkdownLanguage: string,<br>// A description of the changes that you are making to the file.<br>Instruction: string,<br>// The target file to modify. Always specify the target file as the very first argument.<br>TargetFile: string,<br>// If applicable, IDs of lint errors this edit aims to fix (they&#x27;ll have been given in recent IDE feedback). If you believe the edit could fix lints, do specify lint IDs; if the edit is wholly unrelated, do not. A rule of thumb is, if your edit was influenced by lint feedback, include lint IDs. Exercise honest judgement here.<br>TargetLintErrorIds: string[],<br>&#125;) =&gt; any;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;$&#123;MODIFICATIONS_TAG_NAME&#125;&gt;<br>    &lt;diff path=&quot;/home/project/src/main.js&quot;&gt;<br>      @@ -2,7 +2,10 @@<br>        return a + b;<br>      &#125;<br><br>      -console.log(&#x27;Hello, World!&#x27;);<br>      +console.log(&#x27;Hello, Bolt!&#x27;);<br>      +<br>      function greet() &#123;<br>      -  return &#x27;Greetings!&#x27;;<br>      +  return &#x27;Greetings!!&#x27;;<br>      &#125;<br>      +<br>      +console.log(&#x27;The End&#x27;);<br>    &lt;/diff&gt;<br>    &lt;file path=&quot;/home/project/package.json&quot;&gt;<br>      // full file content here<br>    &lt;/file&gt;<br>  &lt;/$&#123;MODIFICATIONS_TAG_NAME&#125;&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>目标 + 差量修正 + 解释</li>
+</ul>
+<h2 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;agent_loop&gt;<br>   You are operating in an agent loop, iteratively completing tasks through these steps:<br>   1. Analyze Events...<br>   2. Select Tools...<br>   3. Wait for Execution...<br>   4. Iterate: Choose only one tool call per iteration...<br>   5. Submit Results...<br>   6. Enter Standby...<br>&lt;/agent_loop&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>When facing environment issues, report them to the user using the <report_environment_issue> command. Then, find a way to continue your work without fixing the environment issues, usually by testing using the CI rather than the local environment. Do not try to fix environment issues on your own.</li>
+<li>When struggling to pass tests, never modify the tests themselves, unless your task explicitly asks you to modify the tests. Always first consider that the root cause might be in the code you are testing rather than the test itself.</li>
+</ul>
+<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>NEVER assume that a given library is available, even if it is well known. Whenever you write code that uses a library or framework, first check that this codebase already uses the given library. For example, you might look at neighboring files, or check the package.json (or cargo.toml, and so on depending on the language).</p>
+<h2 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h2><ul>
+<li>Treat code and customer data as sensitive information</li>
+<li>Never share sensitive data with third parties</li>
+<li>Obtain explicit user permission before external communications</li>
+<li>Always follow security best practices. Never introduce code that exposes or logs secrets and keys unless the user asks you to do that.</li>
+<li>Never commit secrets or keys to the repository.</li>
+</ul>
+<p>DO NOT alter any database tables. DO NOT use destructive statements such as DELETE or UPDATE unless explicitly requested by the user.</p>
+<h2 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h2><p><think>Freely describe and reflect on what you know so far, things that you tried, and how that aligns with your objective and the user’s intent. You can play through different scenarios, weigh options, and reason about possible next next steps. The user will not see any of your thoughts here, so you can think freely.</think><br>Description: This think tool acts as a scratchpad where you can freely highlight observations you see in your context, reason about them, and come to conclusions. Use this command in the following situations:</p>
+<p>You should use the think tool in the following situations:<br>(1) if there is no clear next step<br>(2) if there is a clear next step but some details are unclear and important to get right<br>(3) if you are facing unexpected difficulties and need more time to think about what to do<br>(4) if you tried multiple approaches to solve a problem but nothing seems to work<br>(5) if you are making a decision that’s critical for your success at the task, which would benefit from some extra thought<br>(6) if tests, lint, or CI failed and you need to decide what to do about it. In that case it’s better to first take a step back and think big picture about what you’ve done so far and where the issue can really stem from rather than diving directly into modifying code<br>(7) if you are encounting something that could be an environment setup issue and need to consider whether to report it to the user<br>(8) if it’s unclear whether you are working on the correct repo and need to reason through what you know so far to make sure that you choose the right repo to work on<br>(9) if you are opening an image or viewing a browser screenshot, you should spend extra time thinking about what you see in the screenshot and what that really means in the context of your task<br>(10) if you are in planning mode and searching for a file but not finding any matches, you should think about other plausible search terms that you haven’t tried yet</p>
+
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/gpt/prompts-detail.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

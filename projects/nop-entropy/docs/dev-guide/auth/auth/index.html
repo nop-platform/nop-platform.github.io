@@ -1261,7 +1261,7 @@
 <li>配置<code>nop.auth.enable-action-auth=true</code>后启用操作权限。字段级别权限也利用这一开关</li>
 <li>配置<code>nop.auth.enable-data-auth=true</code>后启用数据权限。</li>
 <li>配置<code>nop.auth.use-data-auth-table=true</code>启用数据权限配置表<code>NopAuthRoleDataAuth</code>，数据库中配置的数据权限规则可以和配置文件中的权限规则合并</li>
-<li>缺省会加载&#x2F;nop&#x2F;main&#x2F;auth&#x2F;main.action-auth.xml 静态权限配置文件，可以通过nop.auth.site-map.static-config-path定制为不同的值</li>
+<li>缺省会加载&#x2F;nop&#x2F;main&#x2F;auth&#x2F;app.action-auth.xml 静态权限配置文件，可以通过nop.auth.site-map.static-config-path定制为不同的值</li>
 <li>在main.action-auth.xml可以通过<code>x:extends</code>来引入已有的权限配置文件。</li>
 <li>如果配置<code>nop.auth.skip-check-for-admin=true</code>,则对于具有admin角色或者<code>nop-admin</code>的用户会跳过操作权限检查，缺省为true。</li>
 <li>配置<code>nop.auth.service-public=true</code>可以开放后台服务，无需登录即可访问后台服务函数</li>
@@ -1298,11 +1298,16 @@
 </ul>
 <h3 id="通过界面配置权限"><a href="#通过界面配置权限" class="headerlink" title="通过界面配置权限"></a>通过界面配置权限</h3><p>先不要开启操作权限，通过界面增加admin角色，然后给指定用户分配admin角色，此后再开启操作权限。通过具有admin角色的用户给其他用户分配角色，<br>并为角色指定它所能访问的NopAuthResource。</p>
 <p>NopAuthResource按照siteId进行组织，缺省使用siteId&#x3D;MAIN作为主站点的网站菜单。nop-auth支持同时管理多个前端应用所对应的菜单链接。<br>比如siteId&#x3D;mobile可以用于移动端菜单，而siteId&#x3D;MAIN用于Web端等。</p>
-<h3 id="引入其他模块的菜单"><a href="#引入其他模块的菜单" class="headerlink" title="引入其他模块的菜单"></a>引入其他模块的菜单</h3><p>新建一个文件<code>/nop/main/auth/main.action-auth.xml</code>，在其中可以通过<code>x:extends</code>引入其他模块的菜单。</p>
+<h3 id="引入其他模块的菜单"><a href="#引入其他模块的菜单" class="headerlink" title="引入其他模块的菜单"></a>引入其他模块的菜单</h3><p>新建一个文件<code>/nop/main/auth/app.action-auth.xml</code>，在其中可以通过<code>x:extends</code>引入其他模块的菜单。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">auth</span> <span class="hljs-attr">x:extends</span>=<span class="hljs-string">&quot;/nop/auth/auth/nop-auth.action-auth.xml,/nop/sys/auth/nop-sys.action-auth.xml&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/action-auth.xdef&quot;</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">auth</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>通过<code>nop.auth.site-map.static-config-path</code>配置指定其他的<code>action-auth.xml</code>文件，缺省会使用<code>main.action.xml</code></li>
+<li><p>通过<code>nop.auth.site-map.static-config-path</code>配置指定其他的<code>action-auth.xml</code>文件，缺省会使用<code>main.action.xml</code></p>
+</li>
+<li><p>SiteMapProviderImpl中缓存了siteId到SiteMapBean的映射。缓存的SiteMapBean是该站点的所有菜单项。另外有一个SiteMapData缓存，它包含菜单项对应的角色id集合等信息。<br>当用户登录后获取菜单时，通过SiteMapProviderImpl.filterAllowedMenu函数结合SiteMap缓存和SiteCacheData缓存，以及传入的用户角色集合过滤掉用户没有权限的菜单项, 返回一个针对该用户的SiteMapBean。</p>
+</li>
+<li><p>Nop平台中一个用户可以具有多个角色。</p>
+</li>
 </ul>
 <h3 id="后台Action"><a href="#后台Action" class="headerlink" title="后台Action"></a>后台Action</h3><p>在action函数上通过<code>@Auth</code>注解来指定需要对应的<code>permissions</code>或者允许访问的<code>roles</code>。如果不指定，则按照是否是<code>@BizQuery</code><br>或者<code>@BizMutation</code>自动设置<code>permissions</code>为<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:query</code>，以及<code>&#123;BizObjName&#125;:&#123;actionName&#125;|&#123;BizObjName&#125;:mutation</code></p>
 <ul>
@@ -1324,6 +1329,9 @@
 <p>auth可以配置<code>skipWhenNoAuth=true</code>，它表示当不具有访问权限时自动忽略该字段，而不是报错。</p>
 <h3 id="公开访问"><a href="#公开访问" class="headerlink" title="公开访问"></a>公开访问</h3><p>如果<code>@Auth</code>注解或者xbiz中的auth配置指定了publicAccess&#x3D;true，则该方法为公开可访问方法，会自动跳过操作权限检查。但是数据权限仍然会应用。</p>
 <p>所有的用户都自动具有角色user，所以如果配置<code>@Auth(roles=&quot;user&quot;)</code>则表示允许所有登录用户访问。这种方式与publicAccess的区别在于，如果标记为<br>publicAccess的方法不会检查当前访问用户是否已经登录。</p>
+<ul>
+<li>注意，缺省情况下<code>/r/</code>和<code>/graphql</code>链接本身需要登录才能访问，所以还需要额外配置<code>nop.auth.service-public=true</code>，这样所有的服务路径都允许匿名访问，此时必须开启权限认证，依靠IActionAuthChecker来保证安全性。<br>具体参见auth-service.beans.xml中的nopAuthFilterConfig配置。</li>
+</ul>
 <h2 id="操作权限检查接口"><a href="#操作权限检查接口" class="headerlink" title="操作权限检查接口"></a>操作权限检查接口</h2><p>系统通过<code>IActionAuthChecker</code>接口来检查操作权限。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IActionAuthChecker</span> &#123;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPermitted</span><span class="hljs-params">(String permission, ISecurityContext context)</span>;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isAllPermitted</span><span class="hljs-params">(Set&lt;String&gt; permissions, ISecurityContext context)</span> &#123;<br>        <span class="hljs-keyword">if</span> (permissions == <span class="hljs-literal">null</span> || permissions.isEmpty())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">for</span> (String permission : permissions) &#123;<br>            <span class="hljs-keyword">if</span> (!isPermitted(permission, context))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPermissionSetSatisfied</span><span class="hljs-params">(MultiCsvSet permissionSet, ISecurityContext context)</span> &#123;<br>        <span class="hljs-keyword">if</span> (permissionSet == <span class="hljs-literal">null</span> || permissionSet.isEmpty())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">for</span> (Set&lt;String&gt; permissions : permissionSet) &#123;<br>            <span class="hljs-keyword">if</span> (isAllPermitted(permissions, context))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -1400,8 +1408,14 @@
 </ul>
 <p><strong>注意: 数据权限是作用于业务场景的，因此它会对get和findXX函数都起作用，get调用时会执行check配置。如果没有明确指定check，则会自动将filter翻译为在内存中执行的check。 因此，如果filter中使用SQL子查询则会出现翻译失败报错的情况。</strong></p>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
-<li>如何区分两个不同的查询<br><code>NopAuthUser:query</code>表示允许针对用户的所有查询，而<code>NopAuthUser:findPage_active</code>则只对应于<code>findPage_active</code>这一个方法。可以在action上通过Auth注解使得方法名对应于指定的permission。否则每个方法名都缺省对应于一个permission名。</li>
+<li><p>如何区分两个不同的查询<br><code>NopAuthUser:query</code>表示允许针对用户的所有查询，而<code>NopAuthUser:findPage_active</code>则只对应于<code>findPage_active</code>这一个方法。可以在action上通过Auth注解使得方法名对应于指定的permission。否则每个方法名都缺省对应于一个permission名。</p>
+</li>
+<li><p>如何获取到userId, userName, role等信息<br><code>IUserContext.get()</code>可以获取到当前用户上下文。后台服务函数中一般会传递 IServiceContext上下文对象，通过<code>svcCtx.getUserContext()</code>也可以获取到用户上下文</p>
+</li>
 </ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyBizModel</span>&#123;<br>  <span class="hljs-meta">@BizQuery</span><br>  <span class="hljs-keyword">public</span> MyObject <span class="hljs-title function_">get</span><span class="hljs-params">(<span class="hljs-meta">@Name(&quot;id&quot;)</span> String id, IServiceContext svcCtx)</span>&#123;<br>     <span class="hljs-keyword">return</span> ...;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在报表引擎中，可以通过IEvalScope传递参数。svcCtx上的scope对象通过<code>svcCtx.getEvalScope()</code>获取，它已经内置了svcCtx这个变量，指向它关联的IServiceContext对象。</p>
 
 </div>
       <footer class="Article-footer col-md-3">

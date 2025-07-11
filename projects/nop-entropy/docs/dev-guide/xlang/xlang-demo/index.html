@@ -1273,12 +1273,13 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;c:for var=&quot;x&quot; items=&quot;$&#123;list&#125;&quot;&gt;<br>   &lt;c:script&gt;<br>      if(x &lt; 0)<br>        break;<br>   &lt;/c:script&gt;<br>&lt;/c:for&gt;<br></code></pre></td></tr></table></figure>
 
 <p>反过来，在XScript脚本语言中，我们可以通过xpl函数来嵌入xpl模板语言。此时存在两种调用方式</p>
-<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;c:script&gt;<br>  let list = [1,2,3];<br>  let result = xpl `&lt;c:for var=&#x27;x` items=&quot;$&#123;list&#125;&quot;&gt;<br>                      &lt;my:MyTag x=&quot;$&#123;x&#125;&quot; /&gt;<br>                    &lt;/c:for&gt;`;<br>&lt;/c:script&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;c:script&gt;<br>  let list = [1,2,3];<br>  let result = xpl `&lt;c:script&gt;<br>                      let a = 1;<br>                      return a;<br>                    &lt;/c:script&gt;`;<br>&lt;/c:script&gt;<br></code></pre></td></tr></table></figure>
 
-<p>在xpl模板表达式中，可以通过<code>$&#123;list&#125;</code>来表示获取到上下文环境中的变量。</p>
-<blockquote>
-<p>在XLang语言的设计中，我们没有选择使用jsx语法来嵌入模板语言，而是扩展了JavaScript中的模板字符串机制，将模板字符串和宏函数机制结合在一起。<br>xpl是一个宏函数，在编译期它会自动解析它的参数得到Expression抽象语法树节点，然后插入到当前脚本的编译结果中。这一设计类似于C#语言中的LinQ机制，<br>但它更为通用，可以支持嵌入任意语法。例如 xpath <code>/a/b[@a=&quot;3&quot;]</code> 可以表示嵌入xpath语法，xpath是一个宏函数，它在编译期会自动解析它的参数得到XPath对象。</p>
-</blockquote>
+<ul>
+<li>在XLang语言的设计中，我们没有选择使用jsx语法来嵌入模板语言，而是扩展了JavaScript中的模板字符串机制，将模板字符串和宏函数机制结合在一起。</li>
+<li>xpl是一个宏函数，在编译期它会自动解析它的参数得到Expression抽象语法树节点，然后插入到当前脚本的编译结果中。这一设计类似于C#语言中的LinQ机制，<br>但它更为通用，可以支持嵌入任意语法。例如 xpath <code>/a/b[@a=&quot;3&quot;]</code> 可以表示嵌入xpath语法，xpath是一个宏函数，它在编译期会自动解析它的参数得到XPath对象。</li>
+<li>每个xpl标签相当于是一个函数，它具有返回值，可以赋值给变量。</li>
+</ul>
 <h2 id="xpl函数调用标签"><a href="#xpl函数调用标签" class="headerlink" title="xpl函数调用标签"></a>xpl函数调用标签</h2><p>可以通过xpl函数来表示直接调用某个XPL标签，此时xpl函数的第一个参数不是XML格式的代码，而是标签名</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">let result = xpl(&#x27;my:MyTag&#x27;,&#123;x:3&#125;)<br></code></pre></td></tr></table></figure>
 

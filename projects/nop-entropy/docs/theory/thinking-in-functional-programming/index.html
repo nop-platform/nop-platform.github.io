@@ -1257,8 +1257,8 @@
 
 
       </header>
-      <div class="Article-content col-md-9"><p>函数式编程思想虽然已经进入主流开发领域，但是很多人对于它的理解还是仅限于map&#x2F;flatMap等大量使用Lambda表达式的集合处理函数，似乎使用了Lambda表达式就是函数式编程。<br>另外有一些人会强调Haskell、Scala等支持复杂类型定义的函数式编程语言，似乎在一般的命令式语言如Java中很难真正的实现所谓的函数式编程，并进而收获函数式编程所带来的好处。<br>但以上观点都是片面的。因为函数式编程是一种通用的编程范式，它并不是一种语言特性，在Java语言中一样可以充分落实函数式编程思想。函数式编程的内容也很丰富，并不仅仅是使用高阶函数这么简单。</p>
-<p>本文主要介绍在实用主义观点下使用常规的命令式语言来实践函数式编程思想的一些实践经验。文中介绍的内容主要参考如下文章：</p>
+      <div class="Article-content col-md-9"><p>讲解视频: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hrADeZE6v/">https://www.bilibili.com/video/BV1hrADeZE6v/</a></p>
+<p>函数式编程思想虽然已经进入主流开发领域，但是很多人对于它的理解还是仅限于map&#x2F;flatMap等大量使用Lambda表达式的集合处理函数，似乎使用了Lambda表达式就是函数式编程。<br>另外有一些人会强调Haskell、Scala等支持复杂类型定义的函数式编程语言，似乎在一般的命令式语言如Java中很难真正的实现所谓的函数式编程，并进而收获函数式编程所带来的好处。<br>但以上观点都是片面的。因为函数式编程的内容也很丰富，并不仅仅是使用高阶函数这么简单。<br>函数式编程是一种通用的编程范式，它并不是一种语言特性，在Java语言中一样可以充分落实函数式编程思想。<br>本文主要介绍在实用主义观点下使用常规的命令式语言来实践函数式编程思想的一些实践经验。文中介绍的内容主要参考如下文章：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dWbnBmBLM9LW7hlw8x2jDw">函数式编程为什么有利于解耦(Decouple)</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/65449477">写给小白的Monad指北</a></li>
@@ -1288,56 +1288,48 @@
 <p>函数式编程（FP）的本质性原因，需从<strong>数学逻辑、计算机科学哲学</strong>和<strong>现实工程问题</strong>三个层面进行深度解析：</p>
 <h3 id="A、数学逻辑的映射：从λ演算到确定性"><a href="#A、数学逻辑的映射：从λ演算到确定性" class="headerlink" title="A、数学逻辑的映射：从λ演算到确定性"></a><strong>A、数学逻辑的映射：从λ演算到确定性</strong></h3><p>函数式编程的根源是数学中的<strong>λ演算</strong>（Lambda Calculus），其核心思想是：</p>
 <ol>
-<li><strong>将计算视为数学函数的映射</strong></li>
-</ol>
-<ul>
+<li><strong>将计算视为数学函数的映射</strong><ul>
 <li>函数是输入到输出的<strong>纯映射关系</strong>，而非带有副作用的“过程”（如命令式编程中的变量修改）。</li>
 <li>例如：<code>f(x) = x + 1</code> 是数学函数，而 <code>void increment(int&amp; x)</code> 是命令式过程。</li>
 </ul>
-<ol start="2">
-<li><strong>消除“时间”与“状态”的干扰</strong></li>
-</ol>
-<ul>
+</li>
+<li><strong>消除“时间”与“状态”的干扰</strong><ul>
 <li>数学函数的结果仅依赖于参数，而非外部环境或执行顺序（如全局变量、IO操作）。</li>
 <li><strong>确定性（Referential Transparency）</strong>：同一表达式在任何时间、任何上下文中求值结果一致。</li>
 </ul>
+</li>
+</ol>
 <p><strong>本质目的</strong>：用数学的确定性对抗软件工程中的<strong>不确定性</strong>（如竞态条件、不可预测的副作用）。</p>
 <h3 id="B、计算机科学哲学：从“机器模型”到“数学模型”"><a href="#B、计算机科学哲学：从“机器模型”到“数学模型”" class="headerlink" title="B、计算机科学哲学：从“机器模型”到“数学模型”"></a><strong>B、计算机科学哲学：从“机器模型”到“数学模型”</strong></h3><p>传统命令式编程（如C、Java）基于<strong>冯·诺依曼体系</strong>，将程序视为“指令序列+内存状态”的操作，核心是<strong>如何改变状态</strong>。而函数式编程的哲学是：</p>
 <ol>
-<li><strong>将程序视为数学命题的构造</strong></li>
-</ol>
-<ul>
+<li><strong>将程序视为数学命题的构造</strong><ul>
 <li>程序是<strong>表达式（Expression）</strong>而非语句（Statement），通过组合函数推导结果，而非逐步改变状态。</li>
 <li>例如：<code>map(f, filter(g, list))</code> 是声明式逻辑，而非循环计数器+临时变量。</li>
 </ul>
-<ol start="2">
-<li><strong>抽象机器复杂性</strong></li>
-</ol>
-<ul>
+</li>
+<li><strong>抽象机器复杂性</strong><ul>
 <li>通过不可变数据和高阶函数，隐藏底层内存管理和执行顺序的细节，专注于逻辑本身。</li>
 </ul>
+</li>
+</ol>
 <p><strong>本质矛盾</strong>：<br>软件复杂性的根源之一是<strong>状态管理</strong>（如多线程锁、全局变量污染）。函数式编程通过<strong>消除可变状态</strong>，将问题简化为“输入→输出”的静态关系，降低认知负担。</p>
 <h3 id="C、现实工程问题的倒逼"><a href="#C、现实工程问题的倒逼" class="headerlink" title="C、现实工程问题的倒逼"></a><strong>C、现实工程问题的倒逼</strong></h3><p>函数式编程的复兴（如Scala、React Hooks的流行）与<strong>现代软件复杂性</strong>直接相关：</p>
 <ol>
-<li><strong>并发与分布式系统的挑战</strong></li>
-</ol>
-<ul>
+<li><strong>并发与分布式系统的挑战</strong><ul>
 <li>多核CPU、分布式计算要求无共享状态（Shared-Nothing），而纯函数和不可变数据天然避免锁竞争与数据污染。</li>
 <li>案例：Erlang通过Actor模型和不可变消息传递，实现电信级高可靠系统。</li>
 </ul>
-<ol start="2">
-<li><strong>软件可维护性的需求</strong></li>
-</ol>
-<ul>
+</li>
+<li><strong>软件可维护性的需求</strong><ul>
 <li>纯函数和声明式代码更易测试、推理和重构（因无隐式依赖）。</li>
 <li>案例：React中UI &#x3D; f(state)，通过不可变状态更新保证视图一致性。</li>
 </ul>
-<ol start="3">
-<li><strong>复杂系统的可组合性</strong></li>
-</ol>
-<ul>
+</li>
+<li><strong>复杂系统的可组合性</strong><ul>
 <li>函数组合（如<code>compose(f, g)</code>）和类型系统（如Haskell的Monad）允许模块化构建复杂逻辑。</li>
 </ul>
+</li>
+</ol>
 <p><strong>本质动力</strong>：<br>函数式编程通过数学的<strong>严谨性</strong>和<strong>组合性</strong>，对抗软件规模扩大后的熵增（混乱度上升）。</p>
 <h3 id="D、深层哲学：计算的另一种世界观"><a href="#D、深层哲学：计算的另一种世界观" class="headerlink" title="D、深层哲学：计算的另一种世界观"></a><strong>D、深层哲学：计算的另一种世界观</strong></h3><p>函数式编程的本质是<strong>对“计算”的另一种定义</strong>：</p>
 <ul>
@@ -1446,6 +1438,7 @@
 </ul>
 <p><strong>示例</strong>（伪代码）：</p>
 <figure class="highlight ocaml"><table><tr><td class="code"><pre><code class="hljs ocaml"><span class="hljs-keyword">function</span> getUser<span class="hljs-literal">()</span> &#123;<br>  const token = perform <span class="hljs-type">GetToken</span><span class="hljs-literal">()</span>;  // 声明需要 token<br>  return fetchUser(token);          // 恢复执行时 token 已由处理器提供<br>&#125;<br><br>// 外部处理器提供具体实现<br>handle <span class="hljs-type">GetToken</span> &#123;<br>  resume <span class="hljs-keyword">with</span> <span class="hljs-string">&quot;xxx_token&quot;</span>;  // 注入 token 并恢复原函数<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p><strong>价值</strong>：提升代码的<strong>组合性</strong>（自由组合效应处理器）和<strong>可维护性</strong>（分离纯逻辑与副作用）。<br>（如 React Hooks 通过 Fiber 架构模拟了类似模式，实现状态管理的声明式抽象。）</p>
 <h2 id="五-Y组合子"><a href="#五-Y组合子" class="headerlink" title="五. Y组合子"></a>五. Y组合子</h2><p><img src="https://gitee.com/canonical-entropy/nop-entropy/raw/master/docs/theory/fp/Y-combinator.png"></p>
 <p>Y组合子（Y-combinator）是一种用于实现递归函数的技巧，它的定义如下：</p>

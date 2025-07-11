@@ -1301,13 +1301,55 @@
 <p>读取<code>inputs.json</code>文件作为task的输入参数，运行<code>my.task.xml</code>逻辑编排模型。</p>
 <h2 id="重打包操作"><a href="#重打包操作" class="headerlink" title="重打包操作"></a>重打包操作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cli.jar repackage -i=app -o=my-tool.jar<br></code></pre></td></tr></table></figure>
 
-<p>repackage指令将根据输入目录下的<code>_vfs</code>目录以及<code>application.yaml</code>、<code>bootstrap.yaml</code>文件，把它们打包到当前<code>nop-cli.jar</code>包中，输出一个新的可执行的jar包。</p>
+<p>repackage指令将根据输入目录下的<code>_vfs</code>目录以及<code>application.yaml</code>、<code>bootstrap.yaml</code>文件，把它们打包到当前<code>nop-cli.jar</code><br>包中，输出一个新的可执行的jar包。</p>
+<h2 id="数据库导入导出"><a href="#数据库导入导出" class="headerlink" title="数据库导入导出"></a>数据库导入导出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cl.jar export-db test.export-db.xml -o=data<br></code></pre></td></tr></table></figure>
+
+<p>根据<code>export-db.xml</code>中的配置，将数据库中的数据导出到data目录下，可以选择导出为csv或者sql格式。导出时可以执行字段重命名，值的变换等操作。可以选择只导出部分字段。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cl.jar import-db test.import-db.xml -i=data<br></code></pre></td></tr></table></figure>
+
+<p>从data目录下导入数据到指定数据库中，导入时可以按照keyFields去重，并可以选择是否允许更新，还是只允许插入。导入时可以进行字段重命名和值的变换。可以选择只导入部分字段。</p>
+<p>可以通过指定<code>-s</code>参数来保存导入状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cl.jar import-db test.import-db.xml -i=data -s=import-status.json<br></code></pre></td></tr></table></figure>
+
+<h2 id="convert格式转换"><a href="#convert格式转换" class="headerlink" title="convert格式转换"></a>convert格式转换</h2><p>在 DSL 模型的 XML&#x2F;JSON&#x2F;YAML&#x2F;XLSX 格式间进行转换</p>
+<h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">java -jar nop-cli.jar transform &lt;inputFile&gt;<br>    [-o|--output &lt;outputFile&gt;]<br></code></pre></td></tr></table></figure>
+
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;inputFile&gt;</code></td>
+<td>输入文件（必须指定明确的文件类型，比如app.orm.xml, app.orm.xlsx等）</td>
+</tr>
+<tr>
+<td><code>-o, --output</code></td>
+<td>输出文件（波希指定明确的文件类型）</td>
+</tr>
+</tbody></table>
+<p>具体实现是使用DocumentConvertManager。</p>
+<ol>
+<li>通过convert.xml注册文件注册各种格式之间的转换逻辑</li>
+<li>register-model.xml中注册的DSL各种格式之间可以自动双向转换</li>
+<li>如果注册了 A-&gt;B和B-&gt;C，则可以自动支持A-&gt;C的转换（仅支持一级推导）</li>
+</ol>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3> <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># XML → XLSX</span><br>java -jar nop-cli.jar convert app.orm.xml  -o app.orm.xlsx<br><br><span class="hljs-comment"># JSON → YAML</span><br>java -jar nop-cli.jar convert app.orm.json -o app.orm.yaml<br></code></pre></td></tr></table></figure>
+
+<h2 id="根据page-yaml文件生成页面json文件"><a href="#根据page-yaml文件生成页面json文件" class="headerlink" title="根据page.yaml文件生成页面json文件"></a>根据<code>page.yaml</code>文件生成页面json文件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -jar nop-cli.jar run scripts/render-pages.xrun -i=&quot;&#123;moduleId:&#x27;app/demo&#x27;&#125;&quot; -o=target<br></code></pre></td></tr></table></figure>
+
+<p>run指令可以用于执行xpl脚本文件，<code>render-pages.xrun</code>脚本中调用PageProvider来生成页面json文件，<code>-i</code>参数指定输入参数，<code>-o</code><br>参数指定输出目录。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- render-pages.xrun文件的内容--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">c:script</span>&gt;</span><br>  import io.nop.web.page.PageProvider;<br>  import java.io.File;<br><br>  const pageProvider = new PageProvider();<br>  const options = &#123;<br>  moduleId: moduleId,<br>  resolveI18n: true,<br>  useResolver: true,<br>  threadCount: 4<br>  &#125;;<br><br>  pageProvider.renderPagesTo(options, outputDir);<br><span class="hljs-tag">&lt;/<span class="hljs-name">c:script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>renderPagesTo函数会遍历<code>_vfs/&#123;moduleId&#125;/pages/*/*.page.yaml</code>文件，并执行模板渲染。在<code>page.yaml</code>中可以通过<code>&lt;web:GenPage&gt;</code><br>等标签来引入View模型。</p>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
 <li>如何调整日志输出级别</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">java -Dquarkus.config.locations=application.yaml -jar nop-cli.jar gen-file my.orm.json -t=/nop/orm/imp/orm.imp.xml<br></code></pre></td></tr></table></figure>
 
-<p>缺省配置了<code>quarkus.log.level=INFO</code>，以及<code>quarkus.log.category.&quot;io.nop&quot;.level=ERROR</code>，可以通过外部的application.yaml来覆盖缺省的quarkus配置。</p>
+<p>缺省配置了<code>quarkus.log.level=INFO</code>，以及<code>quarkus.log.category.&quot;io.nop&quot;.level=ERROR</code><br>，可以通过外部的application.yaml来覆盖缺省的quarkus配置。</p>
 <ol start="2">
 <li>如何使用外部的application.yaml配置文件</li>
 </ol>

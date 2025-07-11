@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <title>AI设计的描述格式 - Nop</title>
+
+
+  <meta property="og:title" content="AI设计的描述格式">
+
+
+  <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+  <meta property="og:description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
+
+
+
+  
+    
+  
+
+
+  <meta name="keywords" content="Nop,Nop平台,Nop 平台,Nop Platform,Nop社区,Nop 社区,Nop Community,可逆计算,软件构造理论,低代码,lowcode,low-code,low code,低代码平台,lcdp,软件工程">
+
+
+<!-- 页面渲染兼容性 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- 订阅 -->
+
+<meta name="theme-color" content="#0871ab">
+<link rel="shortcut icon" href="/images/nop/logo.png">
+
+
+    
+<link rel="stylesheet" href="/stylesheets/global.css">
+
+    
+<link rel="stylesheet" href="/stylesheets/ksio/vendors/share.css">
+
+<link rel="stylesheet" href="/local/syntax-highlighting.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/post.css">
+
+<link rel="stylesheet" href="/stylesheets/pages/doc.css">
+
+    
+    
+<script src="/javascripts/ksio/vendors/jquery-1.11.3.min.js"></script>
+
+    
+<script src="/javascripts/ksio/vendors/bootstrap.min.js"></script>
+
+  </head>
+  
+  
+  <body class="Page" itemscope itemtype="http://schema.org/WebPage">
+    
+
+  <header class="Page-header">
+  <div class="navbar navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        
+          <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse">
+            <span class="sr-only">Toggle navs</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        
+        
+          
+
+
+  <a class="navbar-brand" href="/">Nop</a>
+
+
+        
+      </div>
+      <!-- Nav menus -->
+      <nav class="Page-navs navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">学习 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy/docs">指南</a>
+</li>
+  
+
+  
+    <li><a href="https://www.zhihu.com/column/reversible-computation?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">文章</a>
+</li>
+  
+
+  
+    <li><a href="https://space.bilibili.com/3493261219990250?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-header" target="_blank" rel="external nofollow">视频</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">项目 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/projects/nop-entropy">Nop Entropy</a>
+</li>
+  
+
+  
+    <li><a href="/projects/nop-chaos">Nop Chaos</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+  
+    <li class="dropdown">
+      <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">关于 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+  
+    <li><a href="/community">社区</a>
+</li>
+  
+
+  
+    <li><a href="/team">团队</a>
+</li>
+  
+
+</ul>
+    </li>
+  
+
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="Page-content">
+  
+  
+    <aside class="Page-aside">
+      <div class="AsideBrand">
+
+
+  <a href="/">Nop</a>
+
+</div>
+      <nav class="AsideNav"><ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/why-nop/">介绍</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+        
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/tutorial/">入门教程</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/1-simple-service/">1. 极简服务层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/2-simple-dao/">2. 极简数据访问层开发</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/4-complex-query/">4. 复杂查询</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/tutorial/simple/5-dynamic-sql/">5. 动态SQL管理</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/compare/">与其他平台的对比</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/">用户指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/installation/">安装和配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/report/">报表引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/idea/idea-plugin/">IDEA插件使用</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/user-guide/monitor/grafana/">监控</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/">软件架构</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/arch/module-dependency/">模块依赖关系</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/core-code-guidance/">核心代码阅读导引</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/theory/">理论基础</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/">开发指南</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/codegen/">代码生成器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/cli/">命令行工具</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/command/command/">命令行开发支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/config/">配置管理</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/">IoC容器</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ioc/aop/">AOP支持</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/orm/">ORM框架</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/">XLang语言</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdef/">XDef元模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xdsl/">XDSL领域语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xscript/">XScript脚本语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/xpl/">Xpl模板语言</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xlang/meta-programming/">元编程</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/model/">Excel模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/graphql/">GraphQL引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/microservice/">分布式微服务</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/rule/rule/">规则引擎</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/workflow/task-flow/">逻辑编排</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/autotest/">自动化测试</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/tenant/">多租户</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/delta/delta-customization/">Delta定制</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/vfs/">Delta文件系统</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/auth/">权限配置</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/biz/">业务规则</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/nocode/">动态模型</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/xui/">前端模型</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/integration/">第三方集成</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/spring/">spring集成</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/quarkus/">quarkus集成</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/idea/">IDEA插件</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/ide/plugin-dev/">插件开发</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/faq/">常见问题</a>
+      
+      
+        <ul>
+  
+  
+    
+  
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/faq/debug-errors/">错误诊断</a>
+      
+      
+    </li>
+  
+    <li>
+      
+      
+      
+      
+      
+        
+        
+        
+        
+          
+          
+        
+        <a href="/projects/nop-entropy/docs/dev-guide/recipe/">常见问题解决方案</a>
+      
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+</nav>
+    </aside>
+  
+  <main class="Page-main">
+    <article class="Article container-fluid">
+      <header class="Article-header">
+        
+  
+    <h1 class="Article-title">AI设计的描述格式</h1>
+  
+  
+
+
+      </header>
+      <div class="Article-content col-md-9"><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">backend-implementation</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 结算日自动锁定服务配置 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;AutoLockService&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;scheduled&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">trigger</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">cron-expression</span>&gt;</span>0 0 23 * * ?<span class="hljs-tag">&lt;/<span class="hljs-name">cron-expression</span>&gt;</span> <span class="hljs-comment">&lt;!-- 每天23点执行 --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">conditional</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">check</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;isSettlementDay&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.util.SettlementDayChecker&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">conditional</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">trigger</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">execution-flow</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;IdentifyLockTargets&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dao-operation</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;query&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>&lt;![CDATA[<br>                    SELECT DISTINCT business_type<br>                    FROM lock_config<br>                    WHERE auto_lock = true<br>                    ]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dao-operation</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">output-param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;targetTypes&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;list&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ProcessLocking&quot;</span> <span class="hljs-attr">loop-over</span>=<span class="hljs-string">&quot;targetTypes&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">switch</span> <span class="hljs-attr">on</span>=<span class="hljs-string">&quot;currentType&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;MENU&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dao-operation</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;update&quot;</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>&lt;![CDATA[<br>                            UPDATE daily_menu<br>                            SET lock_status = &#x27;LOCKED&#x27;,<br>                                lock_time = NOW(),<br>                                lock_operator = &#x27;SYSTEM_AUTO&#x27;<br>                            WHERE menu_date = :settlementDate<br>                            AND lock_status = &#x27;UNLOCKED&#x27;<br>                            ]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;settlementDate&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#settlementDate&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dao-operation</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">case</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">case</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;IN_OUT&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dao-operation</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;batch-update&quot;</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>&lt;![CDATA[<br>                            UPDATE inventory_bill<br>                            SET lock_flag = 1,<br>                                lock_reason = &#x27;结算日自动锁定&#x27;,<br>                                lock_time = NOW()<br>                            WHERE bill_date = :settlementDate<br>                            AND lock_flag = 0<br>                            ]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">batch-size</span>&gt;</span>100<span class="hljs-tag">&lt;/<span class="hljs-name">batch-size</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dao-operation</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">case</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">switch</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">audit-log</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">message</span>&gt;</span>自动锁定$&#123;currentType&#125;类型数据<span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">fields</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;date&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#settlementDate&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">field</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;count&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;affectedRows&quot;</span>/&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">fields</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">audit-log</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br><br>      <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;PostLockActions&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">service-call</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;NotificationService&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;结算日数据已自动锁定&quot;</span>/&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;target&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;FINANCE_DEPT&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">service-call</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">transaction-manager</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;commit&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">execution-flow</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exception-handling</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">policy</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;retry&quot;</span> <span class="hljs-attr">max-attempts</span>=<span class="hljs-string">&quot;3&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">policy</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;fallback&quot;</span> <span class="hljs-attr">handler</span>=<span class="hljs-string">&quot;LockFallbackHandler&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">notification-channel</span>&gt;</span>SYSTEM_ALERT<span class="hljs-tag">&lt;/<span class="hljs-name">notification-channel</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exception-handling</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 依赖的配置数据 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">config</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LockRules&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rule</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;MENU&quot;</span> <span class="hljs-attr">lock-days</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;每日菜单锁定&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rule</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;IN_OUT&quot;</span> <span class="hljs-attr">lock-days</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;出入库单据锁定&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rule</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;INVENTORY&quot;</span> <span class="hljs-attr">lock-days</span>=<span class="hljs-string">&quot;7&quot;</span> <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;库存记录锁定&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">config</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 数据库变更记录（DDL示例） --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">schema-changes</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_records&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(36)&quot;</span> <span class="hljs-attr">pk</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;business_type&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(20)&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;business_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(36)&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;datetime&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_operator&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(50)&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_reason&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(200)&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;is_auto&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;tinyint&quot;</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;0&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;unlock_requests&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;request_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(36)&quot;</span> <span class="hljs-attr">pk</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lock_id&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(36)&quot;</span> <span class="hljs-attr">fk</span>=<span class="hljs-string">&quot;lock_records.lock_id&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;requester&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(50)&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;request_time&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;datetime&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">column</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;approval_status&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;varchar(20)&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">schema-changes</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">backend-implementation</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 新增内容 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">improvements</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 1. 增加结算日配置检查 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">addition</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/service/execution-flow/step[1]&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;0.5&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CheckSettlementConfig&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dao-operation</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;query&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>&lt;![CDATA[<br>                SELECT lock_days FROM settlement_config<br>                WHERE org_id = :orgId<br>                ]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;orgId&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#currentOrgId&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dao-operation</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">validation</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">rule</span> <span class="hljs-attr">if</span>=<span class="hljs-string">&quot;result.empty&quot;</span> <span class="hljs-attr">error-code</span>=<span class="hljs-string">&quot;CONFIG_MISSING&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">validation</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">addition</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 2. 精确锁定范围（仅当前服务公司数据） --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modification</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/service/execution-flow/step[2]/case[sql]&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">sql</span>&gt;</span>&lt;![CDATA[<br>        UPDATE daily_menu<br>        SET lock_status = &#x27;LOCKED&#x27;,<br>            lock_time = NOW(),<br>            lock_operator = &#x27;SYSTEM_AUTO&#x27;<br>        WHERE menu_date = DATE_SUB(:settlementDate, INTERVAL :lockDays DAY)<br>        AND company_id = :currentCompanyId  &lt;!-- 新增公司限制 --&gt;<br>        AND lock_status = &#x27;UNLOCKED&#x27;<br>        ]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">modification</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 3. 增加数据锁定影响分析 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">addition</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/service/execution-flow/step[3]&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">step</span> <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;2.5&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ImpactAnalysis&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">service-call</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;CostCalculateService&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;recalculate&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startDate&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#settlementDate&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endDate&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#settlementDate&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;companyId&quot;</span> <span class="hljs-attr">source</span>=<span class="hljs-string">&quot;#currentCompanyId&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">service-call</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">step</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">addition</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 4. 增加供应商结算关联锁定 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">addition</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/config/LockRules&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rule</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;SUPPLIER_SETTLEMENT&quot;</span> <span class="hljs-attr">lock-days</span>=<span class="hljs-string">&quot;14&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;供应商结算单锁定&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">addition</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 5. 增强异常处理 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">modification</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/service/exception-handling&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">policy</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;partial-rollback&quot;</span> <span class="hljs-attr">handler</span>=<span class="hljs-string">&quot;PartialRollbackHandler&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">exclude-types</span>&gt;</span>MENU,IN_OUT<span class="hljs-tag">&lt;/<span class="hljs-name">exclude-types</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">policy</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">notification-template</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">subject</span>&gt;</span>结算日锁定异常 - $&#123;exceptionType&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">subject</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>锁定失败的服务公司：$&#123;companyName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">notification-template</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">modification</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 移除内容 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">removals</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 简化过度的通用错误通知 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remove</span> <span class="hljs-attr">xpath</span>=<span class="hljs-string">&quot;/backend-implementation/service/exception-handling/notification-channel&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">removals</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">improvements</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</div>
+      <footer class="Article-footer col-md-3">
+        
+          
+          
+          
+          
+            
+          
+          
+            <div class="Widget">
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/gpt/nop-ai-coder/ai-design.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+            </div>
+          
+        
+        
+  
+
+  <section class="Widget Widget--toc">
+  <div class="Widget-header">
+    <h2 class="Widget-title">目录</h2>
+  </div>
+  <div class="Widget-body"></div>
+</section>
+
+
+
+      </footer>
+    </article>
+    <footer class="Page-footer Footer">
+  <div class="container-fluid">
+    
+    <div class="Footer-description">
+      
+        <!-- Important links -->
+        <nav class="Footer-navs">
+          <ul><li><a href="/projects/nop-entropy/docs"><span>指南</span></a>
+</li><li><a href="/community"><span>社区</span></a>
+</li><li><a href="https://github.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>GitHub</span></a>
+</li><li><a href="https://gitee.com/nop-platform?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow"><span>Gitee</span></a>
+</li></ul>
+        </nav>
+      
+      
+        <!-- Copyright -->
+        <div class="Footer-copyright">
+          <p>
+
+&copy; 2024-2025 <a href="https://nop-platform.gitee.io?utm_source=https://nop-platform.gitee.io&amp;utm_medium=common-footer" target="_blank" rel="external nofollow">Nop 社区</a> 版权所有
+
+</p>
+          
+          
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+  </main>
+</div>
+
+
+
+
+    <script>$('.Article-content > table').addClass('table table-bordered')</script>
+    
+<script src="/javascripts/ksio/vendors/share.min.js"></script>
+
+<script src="/javascripts/ksio/components/page.js"></script>
+
+<script src="/javascripts/ksio/components/toc.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.timeago.zh-CN.js"></script>
+
+<script src="/javascripts/ksio/initializers/time.js"></script>
+
+<script src="/javascripts/ksio/vendors/jquery.lazyload.js"></script>
+
+<script src="/javascripts/ksio/initializers/lazyload.js"></script>
+
+  </body>
+</html>
+

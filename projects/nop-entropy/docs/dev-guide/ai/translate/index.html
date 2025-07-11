@@ -1266,6 +1266,12 @@
 </li>
 <li><p><code>deepseek-r1:8b</code><br>比前两个模型要好，同样的问题和高温度设置，<code>deepseek-r1:7b</code>开始胡言乱语，<code>deepseek-r1:8b</code>还可以保证基本正常。</p>
 </li>
+<li><p><code>deepseek-r1:14b</code><br>有时会报错，执行速度也慢。一些数字似乎会被改写</p>
+</li>
+<li><p><code>ollama3.1:8b</code><br>如果选择输入为8k，则输出会被缩写。2k也会被缩写。</p>
+</li>
+<li><p><code>phi4:14b</code><br>占用内存12G, 4k的情况比<code>ollam3.1:8b</code>要好，但8k也无法完整翻译。</p>
+</li>
 </ol>
 <h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>我的笔记本型号是ThinkPad X1 Carbon 2024，它具有Intel Arc系列显卡，可以提供GPU加速功能。</p>
 <p>为了让ollama支持Intel的GPU，可以从 <a target="_blank" rel="noopener" href="https://github.com/francisol/ollatel/releases">https://github.com/francisol/ollatel/releases</a> 下载ollatel的安装包，直接执行即可。</p>

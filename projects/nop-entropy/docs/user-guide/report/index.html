@@ -1341,7 +1341,14 @@
 <li><p>配置单元格的styleIdExpr</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">styleIdExpr=cell.ev == 2002 ? &#x27;red&#x27; : null<br></code></pre></td></tr></table></figure></li>
 </ol>
-
+<h2 id="PDF导出"><a href="#PDF导出" class="headerlink" title="PDF导出"></a>PDF导出</h2><p>具体示例参见 nop-report-pdf的单元测试</p>
+<ol>
+<li>引入nop-report-pdf模块</li>
+<li>使用的字体需要保存为<code>/_vfs/fonts/&#123;fontName&#125;.ttf</code>，<code>/_vfs/fonts/&#123;fontName&#125;-&#123;Bold&#125;&#123;Italic&#125;.ttf</code></li>
+<li>缺省字体需要保存为<code>/_vfs/fonts/default.ttf</code></li>
+<li>导出时使用<code>renderType</code>参数为<code>pdf</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">reportEngine.getRenderer(&quot;/test/test-pdf.xpt.xlsx&quot;, &quot;pdf&quot;).generateToFile(file, XLang.newEvalScope());<br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
         
