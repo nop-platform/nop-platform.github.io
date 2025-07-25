@@ -1257,53 +1257,51 @@
 
 
       </header>
-      <div class="Article-content col-md-9"><p>在Nop平台中，所有的DSL都采用XML语法格式，使用统一的xdef元模型来提供规范化的形式约束和基本的属性语义。基于xdef元模型，我们可以实现统一的语法提示、关联分析、断点调试等功能，而无需针对每个DSL语言单独编写IDE插件。</p>
+      <div class="Article-content col-md-9"><p>在 Nop 平台中，所有的 DSL 都采用 XML 语法格式，使用统一的 xdef 元模型来提供规范化的形式约束和基本的属性语义。基于 xdef 元模型，我们可以实现统一的语法提示、关联分析、断点调试等功能，而无需针对每个 DSL 语言单独编写 IDE 插件。</p>
 <blockquote>
 <p>插件的编译、安装可以参考文档： <a href="../../../dev-guide/ide/idea/">idea.md</a></p>
 </blockquote>
-<h2 id="DSL语法格式"><a href="#DSL语法格式" class="headerlink" title="DSL语法格式"></a>DSL语法格式</h2><p>XLang DSL采用XML格式，根节点上必须通过x:schema属性来指定所对应的xdef元模型，例如</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/beans.xdef&quot;</span> </span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">...</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="DSL-语法格式"><a href="#DSL-语法格式" class="headerlink" title="DSL 语法格式"></a>DSL 语法格式</h2><p>XLang DSL 采用 XML 格式，根节点上必须通过 <code>x:schema</code> 属性来指定所对应的 xdef 元模型，例如</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/beans.xdef&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span> <span class="hljs-attr">...</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="语法提示"><a href="#语法提示" class="headerlink" title="语法提示"></a>语法提示</h2><p>输入标签名、属性名、属性值的时候，会弹出xdef中定义的相关信息。</p>
+<h2 id="语法提示"><a href="#语法提示" class="headerlink" title="语法提示"></a>语法提示</h2><p>输入标签名、属性名、属性值的时候，会弹出 xdef 中定义的相关信息。</p>
 <p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-completion.jpg" alt="idea-completion"></p>
-<h2 id="语法检查"><a href="#语法检查" class="headerlink" title="语法检查"></a>语法检查</h2><p>插件会根据xdef定义检查标签名、属性名以及属性值的格式。不符合要求的语法元素会被增加Error标记。</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-completion-1.jpg" alt="idea-completion-1"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-completion-2.jpg" alt="idea-completion-2"></p>
+<h2 id="语法检查"><a href="#语法检查" class="headerlink" title="语法检查"></a>语法检查</h2><p>插件会根据 xdef 定义检查标签名、属性名以及属性值的格式。不符合要求的语法元素会被增加 Error 标记。</p>
 <p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-check.jpg" alt="idea-check"></p>
-<h2 id="快速文档"><a href="#快速文档" class="headerlink" title="快速文档"></a>快速文档</h2><p>鼠标悬停在标签名、属性名以及属性值上时，会显示xdef文件中定义的文档<br><img src="/knosys/project-nop-entropy/user-guide/idea/idea-quick-doc.jpg" alt="idea-quick-doc"></p>
-<h2 id="路径链接"><a href="#路径链接" class="headerlink" title="路径链接"></a>路径链接</h2><p>鼠标悬停在路径格式的属性值上，同时按CTRL键，会提示跳转到路径所对应的文件。<br>对于XPL模板标签，则提示跳转到标签库的定义处。<br><img src="/knosys/project-nop-entropy/user-guide/idea/idea-link.png" alt="idea-link"></p>
-<h2 id="DSL文档格式增强"><a href="#DSL文档格式增强" class="headerlink" title="DSL文档格式增强"></a>DSL文档格式增强</h2><p>在 DSL 中的文档内容，推荐采用如下形式：</p>
-<example>
-    <!-- [这是节点名称]
-    > - 第一级列表 #1
-    > - 第一级列表 #2
-    > - 第一级列表 #3
-    >   - 第二级列表 #1
-    >   - 第二级列表 #2
-    >   - 第二级列表 #3
-
-<pre><code>@type [这是属性名称]
-    &gt; (可选) 属性使用说明
-    &gt; - 说明 1
-    &gt; - 说明 2
-@name [这也是属性名称]
-    &gt; 说明 xxx
---&gt;
-&lt;xdef:define type=&quot;generic-type&quot; name=&quot;string&quot; /&gt;
-</code></pre>
-</example>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-check-1.jpg" alt="idea-check-1"></p>
+<h2 id="快速文档"><a href="#快速文档" class="headerlink" title="快速文档"></a>快速文档</h2><p>鼠标悬停在标签名、属性名以及属性值上时，会显示 xdef 文件中定义的文档</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-quick-doc.jpg" alt="idea-quick-doc"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-quick-doc-1.jpg" alt="idea-quick-doc-1"></p>
+<h2 id="路径链接"><a href="#路径链接" class="headerlink" title="路径链接"></a>路径链接</h2><p>鼠标悬停在路径格式的属性值上，同时按 CTRL 键，会提示跳转到路径所对应的文件。<br>对于 XPL 模板标签，则提示跳转到标签库的定义处。</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-link.png" alt="idea-link"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-link-1.png" alt="idea-link-1"></p>
+<h2 id="XScript-代码高亮"><a href="#XScript-代码高亮" class="headerlink" title="XScript 代码高亮"></a>XScript 代码高亮</h2><p><code>&lt;c:script/&gt;</code> 标签内的 XScript 代码高亮、代码文档、代码跳转、代码补全等。</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-xscript.png" alt="idea-xscript"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-xscript-1.png" alt="idea-xscript-1"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-xscript-2.png" alt="idea-xscript-2"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-xscript-3.png" alt="idea-xscript-3"></p>
+<h2 id="DSL-文档格式增强"><a href="#DSL-文档格式增强" class="headerlink" title="DSL 文档格式增强"></a>DSL 文档格式增强</h2><p>在 DSL 中的文档内容，推荐采用如下形式：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">example</span> <span class="hljs-attr">xmlns:x</span>=<span class="hljs-string">&quot;/nop/schema/xdsl.xdef&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">x:schema</span>=<span class="hljs-string">&quot;/nop/schema/xdef.xdef&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>    <span class="hljs-comment">&lt;!-- [这是节点]</span><br><span class="hljs-comment">    &gt; - 第一级列表 #1</span><br><span class="hljs-comment">    &gt; - 第一级列表 #2</span><br><span class="hljs-comment">    &gt; - 第一级列表 #3</span><br><span class="hljs-comment">    &gt;   - 第二级列表 #1</span><br><span class="hljs-comment">    &gt;   - 第二级列表 #2</span><br><span class="hljs-comment">    &gt;   - 第二级列表 #3</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    @type [这是节点类型]</span><br><span class="hljs-comment">        &gt; 属性使用说明</span><br><span class="hljs-comment">        &gt; - 说明 1</span><br><span class="hljs-comment">        &gt; - 说明 2</span><br><span class="hljs-comment">    @name [这是节点名称]</span><br><span class="hljs-comment">        &gt; 说明 xxx</span><br><span class="hljs-comment">    --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;!#generic-type=string&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;string&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">example</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>文档最开始的 [xxx] 表示标签或属性名称为 xxx；</li>
-<li>其余行开头的 &gt; （含一个空格）可仅用于多级列表开头，以避免因行首空白被移除而无法正确渲染 markdown 多级列表的问题；</li>
+<li>文档最开始的 <code>[xxx]</code> 表示标签或属性名称为 <code>xxx</code>；</li>
+<li>其余行开头的 <code>&gt; </code>（含一个空格）可仅用于多级列表开头，以避免因行首空白被移除而无法正确渲染 markdown 多级列表的问题；</li>
 </ul>
-<p>节点文档渲染结果：<br><img src="/knosys/project-nop-entropy/user-guide/idea/node-doc.png"></p>
-<p>属性文档渲染结果：<br><img src="/knosys/project-nop-entropy/user-guide/idea/attr-doc.png"></p>
-<p>为了避免恶意链接，markdown 中的链接和图片的地址均完整显示，以方便用户确认链接是否可信：<br><img src="/knosys/project-nop-entropy/user-guide/idea/link-ref.png"></p>
+<p>节点文档渲染结果：</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/node-doc.png"></p>
+<p>属性文档渲染结果：</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/attr-doc.png"></p>
+<p>为了避免恶意链接，markdown 中的链接和图片的地址均完整显示，以方便用户确认链接是否可信：</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/link-ref.png"></p>
 <h2 id="断点调试"><a href="#断点调试" class="headerlink" title="断点调试"></a>断点调试</h2><p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-runner.png"></p>
 <p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-runner2.png"></p>
-<p>在XScript脚本或者Xpl模板片段中可以增加断点。<br>插件增加了一个与Run和Debug指令平级的执行器XLangDebug，通过它启动后会同时启动Java调试器和启动XLang脚本语言调试器。</p>
-<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-executor.png" alt="idea-executor"><br><img src="/knosys/project-nop-entropy/user-guide/idea/idea-test-executor.png" alt="idea-test-executor"></p>
+<p>在 XScript 脚本或者 Xpl 模板片段中可以增加断点。<br>插件增加了一个与 <code>Run</code> 和 <code>Debug</code> 指令平级的执行器 <code>XLangDebug</code>，通过它启动后会同时启动 Java 调试器和启动 XLang 脚本语言调试器。</p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-executor.png" alt="idea-executor"></p>
+<p><img src="/knosys/project-nop-entropy/user-guide/idea/idea-test-executor.png" alt="idea-test-executor"></p>
 <p><img src="/knosys/project-nop-entropy/user-guide/idea/xlang-debugger.png" alt="xlang-debugger"></p>
-<p>为了调试XLang，需要引入nop-xlang-debugger模块</p>
+<p>为了调试 XLang，需要引入 <code>nop-xlang-debugger</code> 模块</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.entropy-cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nop-xlang-debugger<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </div>
       <footer class="Article-footer col-md-3">
