@@ -1364,6 +1364,11 @@
 <li><code>codeGenerator</code>: <code>XCodeGenerator</code>类型，<code>precompile</code>目录下的代码生成模板中可用</li>
 <li><code>__dsl_root</code>：<code>XNode</code>类型，在<code>x:gen-extends</code>和<code>x:post-extends</code>这样的元编程处理段中可用</li>
 </ul>
+<h2 id="隐式传递scope"><a href="#隐式传递scope" class="headerlink" title="隐式传递scope"></a>隐式传递scope</h2><p>在XLang表达式中，也提供了隐式传递IEvalScope的机制。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">@EvalMethod<br>public static ExcelImage QRCODE(IEvalScope scope) &#123;<br>    IXptRuntime xptRt = IXptRuntime.fromScope(scope);<br>    ExpandedCell cell = xptRt.getCell();<br><br>    QrcodeOptions options = new QrcodeOptions();<br>    cell.getModel().readExtProps(&quot;qr:&quot;, true, options);<br>    ...<br>    return image;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果函数上标记了<code>@EvalMethod</code>注解，则第一个参数必须是IEvalScope。在表达式中调用的时候会自动传入表达式的运行时scope。通过scope可以获取到上下文中的其他变量。</p>
+<p>比如ReportFunctions中的上述静态函数，在XScript中调用时只需要<code>QRCODE()</code>，scope参数会自动传递，不需要明确传递。</p>
 <h2 id="JS兼容性"><a href="#JS兼容性" class="headerlink" title="JS兼容性"></a>JS兼容性</h2><p>XScript可以看作是使用JavaScript语法的Java，它使用的对象和库都是Java语言的，因此很多地方并不兼容JavaScript.</p>
 <h3 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h3><p>XScript中没有JSON、Object等全局对象，所有的全局对象名都以<code>$</code>开头，例如<code>$JSON</code>、<code>$Math</code>、<code>$Date</code>等。</p>
 <h3 id="集合函数"><a href="#集合函数" class="headerlink" title="集合函数"></a>集合函数</h3><ul>
