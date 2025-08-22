@@ -12,8 +12,11 @@
 
 
   
-  
-  
+    
+    
+
+    
+      
     
   
 
@@ -37,10 +40,10 @@
 
 
 
-  <title>概览 - Nop</title>
+  <title>Nop - 基于可逆计算原理从零开始构建的新一代低代码平台</title>
 
 
-  <meta property="og:title" content="概览">
+  <meta property="og:title" content="Nop">
 
 
   <meta name="description" content="Nop Platform 2.0 是基于可逆计算原理从零开始构建的新一代低代码平台，它致力于克服低代码平台无法摆脱穷举法的困境，从理论层面超越组件技术，有效的解决粗粒度软件复用的问题。">
@@ -233,7 +236,7 @@
         
           
         
-        <a class="is-selected" href="/projects/nop-entropy/docs/">文档概览</a>
+        <a href="/projects/nop-entropy/docs/">文档概览</a>
       
       
     </li>
@@ -1251,37 +1254,140 @@
       <header class="Article-header">
         
   
-    <h1 class="Article-title">概览</h1>
+    <h1 class="Article-title"></h1>
   
   
 
 
       </header>
-      <div class="Article-content col-md-9"><p>Nop平台包含大量创新设计，一开始接触可能会感觉内容过多。但实际上，Nop平台内部设计全部遵循可逆计算原理，它的一致性非常高，只要掌握了可逆计算的基本理论，即可通过查看XDef元模型来直接获知关于模型的大部分知识。</p>
-<p>B站视频： <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1u84y1w7kX/">Nop平台开发</a>，可以按照合集中的顺序观看</p>
-<p>初次接触时建议按照以下顺序浏览一遍文档：</p>
-<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a><a href="./tutorial/tutorial/">快速入门</a></h2><p>介绍了基于数据模型进行系统开发的整体流程。<br>可以参考视频 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1384y1g78L/">使用Nop平台开发商品列表页面的完整示例</a></p>
-<p>关于Nop平台的定位和发展规划，参见<a href="./why-nop/">why-nop.md</a></p>
-<h2 id="XLang语言"><a href="#XLang语言" class="headerlink" title="XLang语言"></a><a href="./dev-guide/xlang/">XLang语言</a></h2><p>XLang语言是Nop平台实现可逆计算的核心技术，它包含XDef, XScript, Xpl等一系列子语言，需要有一个整体认知才容易理解Nop平台的其他部分。<br>特别是 <a href="./dev-guide/xlang/xdsl/">XDSL: 通用的领域特定语言设计</a>中介绍了Nop平台中XDSL领域特定语言的共性语法特征，是理解Nop平台定制化开发的关键。</p>
-<h2 id="代码生成器"><a href="#代码生成器" class="headerlink" title="代码生成器"></a><a href="./dev-guide/codegen/">代码生成器</a></h2><p>如何使用以及扩展Nop平台的代码生成器。Nop平台的代码生成器可以在Nop平台之外使用，可以定制生成模板，用于生成其他框架以及其他语言的代码。</p>
-<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a><a href="./arch/">架构设计</a></h2><p>介绍了Nop平台内部众多模块之间的依赖关系，实现可逆计算原理的最核心模块只有nop-commons、nop-core以及nop-xlang等少数几个模块</p>
-<p>系统内部模型文件的路径模式和自动加载顺序说明，参见<a href="./dev-guide/vfs/std-resource-path/">std-resource-path.md</a></p>
-<h2 id="核心代码导引"><a href="#核心代码导引" class="headerlink" title="核心代码导引"></a><a href="./core-code-guidance/">核心代码导引</a></h2><p>介绍每个模块中的核心代码所在的Java类，以及每个类大致的功能</p>
-<h2 id="Excel模型"><a href="#Excel模型" class="headerlink" title="Excel模型"></a><a href="./dev-guide/model/">Excel模型</a></h2><p>除了使用平台内置的数据模型，API模型等，我们还可以利用Nop平台的机制定制实现专属于自己的Excel模型。比如我们可以用Excel模型来实现网络协议包的格式定义等。</p>
-<h2 id="IoC容器"><a href="#IoC容器" class="headerlink" title="IoC容器"></a><a href="./dev-guide/ioc/">IoC容器</a></h2><p>AOP相关原理，参见<a href="./dev-guide/ioc/aop/">aop.md</a></p>
-<h2 id="Config配置管理"><a href="#Config配置管理" class="headerlink" title="Config配置管理"></a><a href="./dev-guide/config/">Config配置管理</a></h2><h2 id="GraphQL"><a href="#GraphQL" class="headerlink" title="GraphQL"></a><a href="./dev-guide/graphql/graphql-java/">GraphQL</a></h2><p>Nop平台采用GraphQL引擎来实现后台服务，对外同时暴露GraphQL接口以及传统的REST接口。所有的REST服务都能够支持GraphQL的结果字段选择能力。<br>类似于SpringCloud以及Dubbo框架的分布式RPC服务的实现参见<a href="./dev-guide/microservice/rpc/">rpc.md</a>，它的设计原理参见<a href="./dev-guide/microservice/rpc-design/">rpc-design.md</a></p>
-<p>NopGraphQL可以暴露为Grpc接口，参见<a href="./dev-guide/microservice/grpc/">grpc.md</a></p>
-<h2 id="ORM框架"><a href="#ORM框架" class="headerlink" title="ORM框架"></a><a href="./dev-guide/orm/">ORM框架</a></h2><h2 id="前端界面开发"><a href="#前端界面开发" class="headerlink" title="前端界面开发"></a><a href="./dev-guide/xui/">前端界面开发</a></h2><p>前端我们的做法是根据XView视图模型生成百度AMIS框架的JSON描述。我们在AMIS的基础上也为它增加了一些扩展，可以在AMIS页面中直接使用Vue组件。<br>AMIS的文档参见 <a target="_blank" rel="noopener" href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index">AMIS Docs</a></p>
-<h2 id="权限配置"><a href="#权限配置" class="headerlink" title="权限配置"></a><a href="./dev-guide/auth/auth/">权限配置</a></h2><p>可以控制到按钮级别的操作权限，也可以实现列级别的数据权限控制，可以针对不同的角色应用不同的过滤条件。<br>Nop平台内置了sso支持，可以集成keycloak单点认证服务。</p>
-<h2 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a><a href="./dev-guide/debug/">开发调试</a></h2><p>出错的时候如何进行错误诊断，如何打印调试信息。</p>
-<h2 id="常见开发任务"><a href="#常见开发任务" class="headerlink" title="常见开发任务"></a><a href="./dev-guide/recipe/">常见开发任务</a></h2><p>汇集一些常见的开发任务的实现方式，例如如何增加一个字段，如何为列表增加过滤条件等。<br>常见的一些问题解决可以参见<a href="./faq/faq/">faq.md</a></p>
-<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a><a href="./dev-guide/autotest/">自动化测试</a></h2><p>Nop平台内置了一个自动化测试框架，可以通过录制回放机制自动实现测试用例，无需手工编写数据初始化和结果验证代码。</p>
-<h2 id="报表引擎"><a href="#报表引擎" class="headerlink" title="报表引擎"></a><a href="./dev-guide/report/">报表引擎</a></h2><p>采用Excel作为设计器配置中国式报表: <a href="./user-guide/report/">report.md</a><br>采用Word作为设计器配置导出报表: <a href="./dev-guide/report/word-template/">word-template.md</a></p>
-<h2 id="无代码开发"><a href="#无代码开发" class="headerlink" title="无代码开发"></a><a href="./dev-guide/nocode/">无代码开发</a></h2><p>Nop平台支持无代码开发，无需通过编码、打包的过程，在线就可以设计数据模型，并编写后台服务函数。<br>当无代码开发复杂到一定程度，我们可以还可以平滑的迁移到代码生成方案，使用高代码开发的方式。</p>
-<h2 id="与其他低代码平台的对比"><a href="#与其他低代码平台的对比" class="headerlink" title="与其他低代码平台的对比"></a><a href="./compare/nop-vs-skyve/">与其他低代码平台的对比</a></h2><p>Nop平台的设计与传统的低代码平台有着非常大的差异，可以做到传统低代码平台无法做到的灵活性和可扩展性。</p>
-<p>Nop平台如果不作为低代码平台来使用，也可以作为类似于SpringCloud的开发框架来使用。Nop平台与Spring框架的对比参见<a href="./compare/nop-vs-springcloud/">nop-vs-spring</a></p>
-<h2 id="定制化开发"><a href="#定制化开发" class="headerlink" title="定制化开发"></a><a href="./dev-guide/delta/delta-customization/">定制化开发</a></h2><p>基于Nop平台开发的产品，无需做任何特殊的设计，即可实现Delta差量化定制。例如基于Nop平台开发的银行核心应用产品在各个银行部署实施的时候，可以做到完全不修改基础产品的源码，<br>对数据库结构、业务逻辑、前端界面等进行全方位的定制化开发，满足客户最特异性的需求。交付给客户的基础产品就是一系列Jar包，无论调整后台还是前台逻辑都不需要修改Jar包中的源码。</p>
-<h2 id="AI生成的评论文章"><a href="#AI生成的评论文章" class="headerlink" title="AI生成的评论文章"></a><a href="./theory/xlang-review/">AI生成的评论文章</a></h2><p>使用GPT5阅读docs&#x2F;theory目录下的理论文章（总长约500K），然后要求它作为绝对客观专业的软件专家，写的一篇评论和解读文章。GPT5相对客观，但是文笔较差，因此写完初稿后，使用gemini-2.5-pro进行了文字润色</p>
+      <div class="Article-content col-md-9"><p>【评论】<br>把“魔法”请下神坛——《Paxos的魔法学研究报告》深度思辨<br>（一篇写给所有曾被Paxos折磨过的人的评论）</p>
+<p>一、为什么值得你先把原文读完<br>如果你曾被下面这些问题逼到怀疑人生——  </p>
+<ul>
+<li>“Paxos第二阶段为什么必须选最大 Proposal ID 的值？我能不能任性一点？”  </li>
+<li>“Raft 到底比 Paxos 简单在哪儿？它真的只是‘加了点限制’吗？”  </li>
+<li>“FLP 定理说共识不可能，可我们天天用 ZooKeeper、Etcd，它们怎么还活着？”<br>那么这篇“魔法学”文章给出了一条令人耳目一新的解释路径：把共识问题想象成“让时间静止”，把 Accept 阶段想象成“冻结宇宙后写入”，把多数派想象成“宏观世界的观测窗口”。<br>它不是又一份“把协议步骤再翻译一遍”的快餐笔记，而是试图回答——<strong>为什么非得这么干？</strong><br>读完这篇评论，你会知道：</li>
+</ul>
+<ol>
+<li>作者真正原创的“魔法学”到底新在哪儿，值不值得我们把它纳入教学大纲；  </li>
+<li>哪些地方只是换了比喻外衣，骨子里还是老故事；  </li>
+<li>哪些地方作者其实轻轻带过，却可能误导初学者。</li>
+</ol>
+<p>二、“魔法学”叙事的三重创新  </p>
+<ol>
+<li><p>物理图像的再引入<br>分布式圈子里早已把 Lamport 的“逻辑时钟—偏序—因果”当成老生常谈。作者往前再走半步：把“多数派写成功”定义为一次<strong>相变临界点</strong>，把 Accept 阶段看成<strong>冻结时间后原子写入</strong>。<br>这个类比之所以有效，是因为它把 Safety 里“一旦写死就不能改”说成了“时间静止期间宇宙不会偷偷跑掉”，从而把 Safety 与 Liveness 的张力翻译成“魔法是否成功发动”与“魔法是否来得及发动”。<br>这种翻译在课堂上是利器：学生不再需要先背住“P2a、P2b”四条规则，而是先背住“先冻结，再写入”。  </p>
+</li>
+<li><p>“主时间线”视角的提出<br>作者反复强调：别去管某个 Acceptor 宕机后有没有把 Accept 写进磁盘，只看<strong>主时间线</strong>上这一刀有没有砍下去。<br>这相当于把传统证明里“考虑所有可能执行”的噩梦级状态空间，直接折叠成一条<strong>宏观观测序列</strong>。FLP 的不可能性被翻译成“神可以永远挑最关键的时刻拔网线”，但工程上我们赌“神不会这么无聊”。<br>这条折叠手法，其实就是把“Quorum 交集”这一数学条件转译成“宏观事件不可重叠”的直观陈述。  </p>
+</li>
+<li><p>“认知删除”作为工程方法论<br>作者用“低魔世界靠认知删除”来解释为什么 Acceptor 要无情地 ignore 过期消息。<br>这个梗听上去像玩笑，却点出了一个严肃的设计哲学：  </p>
+<ul>
+<li>工程系统无法消除不确定性，只能把它<strong>压到用户看不见的角落</strong>；  </li>
+<li>所谓“正确性”不是消除异常，而是让异常永远<strong>无法在主时间线留下痕迹</strong>。<br>这与数据库里“把未提交事务的脏页挡在读视图之外”是同一条思路。</li>
+</ul>
+</li>
+</ol>
+<p>三、金句细读  </p>
+<ol>
+<li><p>“时间静止的前提是时间需要先存在”<br>这是在提醒：你必须先给出<strong>单调递增的逻辑时钟</strong>，否则“冻结”无从谈起。Raft 的 Term、ZooKeeper 的 zxid、Kafka 的 epoch，本质上都是“造时间”。  </p>
+</li>
+<li><p>“看不见的就不存在！”<br>一句话把“忽略旧消息”正当化。传统教学里我们得先证明“旧消息不会破坏安全”，作者直接说：它们被魔法抹除了。对初学者而言，这个咒语比数学归纳法更容易记。  </p>
+</li>
+<li><p>“共识被确定时，没有任何参与者立即知道”<br>这句戳中了分布式系统最反直觉的点：  </p>
+<ul>
+<li>Safety 是全局属性，任何单一节点只能看到局部；  </li>
+<li>Learner 的引入不是优化，而是<strong>把全局属性翻译成局部可观测信号</strong>的必需步骤。</li>
+</ul>
+</li>
+</ol>
+<p>四、值得警惕的“魔法”副作用  </p>
+<ol>
+<li><p>把 Safety 讲得太轻巧<br>作者用“时间静止”解释为何第二阶段必须选最大 ID 的值，却略过了<strong>为什么这条规则足够</strong>的硬核证明。<br>事实上，Paxos 的经典证明需要展示：  </p>
+<ul>
+<li>任何两个多数派在“最后被冻结的时刻”必然重叠；  </li>
+<li>重叠节点会把自己见过的最大 ID 值带回来，从而阻止新 Proposer 随意改值。<br>魔法学故事把“重叠”说成“宏观事件不会交错”，但<strong>重叠的数学必然性</strong>并未被直观呈现。初学者如果只背故事，很容易在换场景（例如 Flexible Quorum）时翻车。</li>
+</ul>
+</li>
+<li><p>对 Raft 的“降维”可能过火<br>文中一句“Raft 只是 Paxos 加了限制”听上去很爽，但掩盖了 Raft 真正解决的痛点：  </p>
+<ul>
+<li>Multi-Paxos 的 Leader 选举、日志空洞、成员变更在原始论文里几乎空白；  </li>
+<li>Raft 用“Term+Vote”把 Leader 选举变成了<strong>可形式化验证的状态机</strong>，这才是工程落地的关键。<br>把 Raft 简单看成“八级魔法大傀儡术”虽有趣，却容易让学生误以为“理解了魔法就理解了实现”，而忽视 Raft 论文里那 30 页的状态机证明。</li>
+</ul>
+</li>
+<li><p>幽灵复现与 epoch 的讨论略显仓促<br>作者用“StartWorking 日志”一笔带过幽灵复现，但没有指出：  </p>
+<ul>
+<li>这条日志必须<strong>以新的 epoch 写进新 Leader 的日志索引首位</strong>；  </li>
+<li>客户端如果缓存了旧 epoch 的读结果，仍可能看到“复活数据”。<br>这些细节在工程上是血淋淋的踩坑总结，魔法故事反而把它们淡化了。</li>
+</ul>
+</li>
+</ol>
+<p>五、横向对比：魔法学 vs. 传统教学  </p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统数学证明</th>
+<th>魔法学叙事</th>
+<th>评论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>直觉建立</td>
+<td>逻辑时钟+归纳法</td>
+<td>时间静止+主时间线</td>
+<td>后者对初学者更友好</td>
+</tr>
+<tr>
+<td>形式化强度</td>
+<td>高</td>
+<td>中等（需补数学）</td>
+<td>魔法学需要二次翻译才能用于形式验证</td>
+</tr>
+<tr>
+<td>场景迁移</td>
+<td>直接</td>
+<td>需重新讲故事</td>
+<td>Flexible Quorum 下“时间线”概念会失效</td>
+</tr>
+<tr>
+<td>工程陷阱</td>
+<td>明确指出</td>
+<td>轻描淡写</td>
+<td>幽灵复现、成员变更等需额外材料</td>
+</tr>
+</tbody></table>
+<p>六、把魔法学放到更大的知识地图里  </p>
+<ol>
+<li><p>与并发理论的对应<br>“时间静止”本质上是<strong>线性化点</strong>(linearization point)的戏剧化说法：  </p>
+<ul>
+<li>在单对象意义上，Paxos 提供了原子写；  </li>
+<li>在多对象意义上，Raft&#x2F;Multi-Paxos 把日志条目串成全序，相当于把<strong>线性化点扩展成线性化序列</strong>。</li>
+</ul>
+</li>
+<li><p>与量子计算的类比边界<br>作者借“薛定谔猫态”解释未决提案的叠加，但需注意：  </p>
+<ul>
+<li>量子测量不可逆，而 Paxos 的“观测”只是读取，真正的<strong>写操作才是不可逆</strong>；  </li>
+<li>量子纠缠的非局域性在分布式系统里并不存在——我们仍要靠消息传递。<br>因此，魔法学类比在“解释”层面有效，在“预测”层面需小心。</li>
+</ul>
+</li>
+<li><p>与 CRDT 的对照<br>CRDT 通过“交换律+幂等律”直接消解冲突，相当于<strong>允许任意时间线最终收敛</strong>；<br>Paxos 族算法则通过<strong>强制所有节点对齐到同一条主时间线</strong>来避免冲突。<br>魔法学故事把两者说成“九级 vs. 十级魔法”，倒意外地凸显了设计哲学的根本差异：  </p>
+<ul>
+<li>对齐 vs. 收敛；  </li>
+<li>牺牲可用性换一致性 vs. 牺牲实时一致性换可用性。</li>
+</ul>
+</li>
+</ol>
+<p>七、结论：魔法学到底算不算一次成功的科普<br>优点  </p>
+<ul>
+<li>用一条“冻结时间”的主轴把 Safety 与 Liveness 打包成直觉；  </li>
+<li>把“多数派”翻译成“宏观观测窗口”，显著降低了记忆负担；  </li>
+<li>把工程细节（Learner、epoch、幂等重试）嵌进叙事，避免了“只会考试不会写代码”的尴尬。</li>
+</ul>
+<p>缺点  </p>
+<ul>
+<li>数学严谨性被稀释，学生仍需二次补课才能做形式化验证；  </li>
+<li>对 Raft、Flexible Paxos 等变体的解释过于轻描淡写，容易误导；  </li>
+<li>“量子”“神谕”等修辞虽精彩，却可能让部分读者产生“玄学”误解。</li>
+</ul>
+<p>总体评价<br>这是一篇<strong>极其成功的“概念迁移”作品</strong>：它把原本需要 30 页数学符号才能讲清的道理，压缩成三句“魔法咒语”，而且咒语在 80% 的日常工程场景里确实够用。<br>如果你从未彻底搞懂 Paxos，读完魔法学故事再去读 Lamport 的原始证明，会发现后者的符号不再冰冷；<br>如果你已经能把 Paxos 证明倒背如流，魔法学至少提供了一套给学生“讲人话”的话术。<br>但请记住：咒语可以帮你入门，真正上线抗流量时，你还得回到<strong>多数派交集、epoch 单调性、幽灵日志</strong>这些“麻瓜”细节里。</p>
 
 </div>
       <footer class="Article-footer col-md-3">
@@ -1294,7 +1400,7 @@
           
           
             <div class="Widget">
-              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/index.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
+              <div class="Widget-body"><a href="https://gitee.com/canonical-entropy/nop-entropy/edit/master/docs/theory/paxos-review/paxos-explained-review-k2.md" target="_blank" rel=" rel="external nofollow"">在 Gitee 上编辑文档内容</a></div>
             </div>
           
         
