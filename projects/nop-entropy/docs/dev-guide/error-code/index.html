@@ -1297,6 +1297,31 @@
 <ol start="6">
 <li>异常消息定制<br>异常码对应的异常消息可以通过i18n文件进行定制。例如在 <code>/i18n/zh-CN/error.i18n.yaml</code>文件中为每个错误码指定对应的错误消息，它会替代错误码定义时所使用的缺省消息。<br>I18nMessageManager会自动读取<code>_vfs/i18n/</code>目录下所有的不以下划线为前缀的<code>i18n.yaml</code>文件。Nop平台并没有约定一定要在<code>error.i18n.yaml</code>中定制错误消息，这里的名称是自定义的。</li>
 </ol>
+<h2 id="错误码映射"><a href="#错误码映射" class="headerlink" title="错误码映射"></a>错误码映射</h2><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>NopPlatform允许通过错误码映射机制，将系统内部的错误码（例如 <code>nop.err.auth.login-check-fail</code>）转换为对外API的错误响应格式。这使得您可以统一API的错误码规范、自定义HTTP状态码和返回消息，而无需修改底层业务代码。</p>
+<h3 id="2-配置文件"><a href="#2-配置文件" class="headerlink" title="2. 配置文件"></a>2. 配置文件</h3><p>错误码映射规则在 <code>app.errors.yaml</code> 文件中进行配置。</p>
+<ul>
+<li><strong>模块配置</strong>: 每个模块可以有自己的配置文件，路径为 <code>/&#123;moduleId&#125;/conf/app.errors.yaml</code>。</li>
+<li><strong>全局配置</strong>: 主应用可以提供一个全局配置文件，路径为 <code>/main/conf/app.errors.yaml</code>。</li>
+<li><strong>加载顺序与优先级</strong>: 系统会先加载所有模块的配置，然后加载全局配置。如果存在相同的错误码映射，<strong>全局配置会覆盖模块配置</strong>。</li>
+</ul>
+<h3 id="3-配置项说明"><a href="#3-配置项说明" class="headerlink" title="3. 配置项说明"></a>3. 配置项说明</h3><p>YAML文件的<strong>键</strong>是内部错误的<strong>字符串ID</strong> (例如 <code>nop.err.auth.invalid-login-request</code>)。<strong>值</strong>是一个包含映射规则的对象，常用属性如下：</p>
+<ul>
+<li><code>mapToCode</code>: <strong>(核心)</strong> 将内部错误码映射为新的、对外的错误码字符串。</li>
+<li><code>httpStatus</code>: <strong>(常用)</strong> 为此错误指定返回的HTTP状态码，例如 <code>401</code> (未授权)、<code>404</code> (未找到)。</li>
+<li><code>messageKey</code>: 覆盖默认的国际化(i18n)消息键，以返回不同的错误描述。</li>
+<li><code>includeCause</code>: 是否在错误描述中包含根本原因(cause)的异常信息。**生产环境建议关闭 (<code>false</code>)**，以防泄露内部实现细节。</li>
+<li><code>status</code>: 业务状态码，缺省为-1</li>
+<li>其他属性如 <code>returnParams</code>, <code>bizFatal</code>, <code>mapToParams</code> 等可用于更精细的控制。</li>
+</ul>
+<h3 id="4-配置示例"><a href="#4-配置示例" class="headerlink" title="4. 配置示例"></a>4. 配置示例</h3><p>根据 <code>NopAuthErrors</code> 接口中的错误码定义，以下是一个 <code>app.errors.yaml</code> 的配置示例。</p>
+<p><strong>文件路径</strong>: <code>/main/conf/app.errors.yaml</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><br><br><br><span class="hljs-attr">nop.err.auth.login-check-fail:</span><br>  <span class="hljs-comment"># 映射为对外的错误码 AUTH_FAILURE</span><br>  <span class="hljs-attr">mapToCode:</span> <span class="hljs-string">&quot;AUTH_FAILURE&quot;</span><br>  <span class="hljs-comment"># 返回 401 Unauthorized HTTP状态码</span><br>  <span class="hljs-attr">httpStatus:</span> <span class="hljs-number">401</span><br>  <span class="hljs-comment"># 使用自定义的i18n消息</span><br>  <span class="hljs-attr">messageKey:</span> <span class="hljs-string">&quot;err.api.login-failed&quot;</span><br><br><br><span class="hljs-attr">nop.err.auth.login-with-unknown-user:</span><br>  <span class="hljs-comment"># 映射为对外的错误码 USER_NOT_FOUND</span><br>  <span class="hljs-attr">mapToCode:</span> <span class="hljs-string">&quot;USER_NOT_FOUND&quot;</span><br>  <span class="hljs-comment"># 返回 400 Bad Request，因为这是一个客户端输入错误</span><br>  <span class="hljs-attr">httpStatus:</span> <span class="hljs-number">400</span><br>  <span class="hljs-attr">status:</span> <span class="hljs-number">-401</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>效果</strong>:<br>当系统内部抛出 <code>NopAuthErrors.ERR_AUTH_LOGIN_CHECK_FAIL</code> 异常时，通过此映射，最终对外的API响应：</p>
+<ul>
+<li>HTTP状态码将是 <code>401</code>。</li>
+<li>响应体中的 <code>code</code> 字段值为 <code>AUTH_FAILURE</code>。</li>
+</ul>
 
 </div>
       <footer class="Article-footer col-md-3">
